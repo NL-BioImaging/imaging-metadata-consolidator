@@ -3,8 +3,9 @@ import glob
 from helper import create_source
 
 
-def consolidation(input_filenames):
+def consolidation(schema_filename, input_filenames):
     consolidator = Consolidator()
+    consolidator.import_schema(schema_filename)
 
     for filename in input_filenames:
         source = create_source(filename)
@@ -15,6 +16,10 @@ def consolidation(input_filenames):
 
 
 if __name__ == '__main__':
-    input_filenames = glob.glob('C:/Project/slides/tiff/*.tif*') + glob.glob('C:/Project/slides/ome-xml/*')
-    consolidated = consolidation(input_filenames)
-    print(consolidated)
+    schema_filename = 'models/fullSchema.json'
+    input_filenames = glob.glob('C:/Project/slides/tiff/*.tif*')
+    consolidated = consolidation(schema_filename, input_filenames)
+    #print(consolidated)
+
+    for key, value in consolidated.items():
+        print(key, value)
