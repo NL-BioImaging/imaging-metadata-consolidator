@@ -3,15 +3,10 @@
 		"Name": "string",
 		"ID": "string",
 		"Description": "string",
-		"Tier": "integer",
 		"type": "string",
 		"softwareVersion": "string",
 		"uniqueID": "string",
 		"edition": "string",
-		"sampleHolder": {
-			"type": "integer",
-			"id": "string"
-		},
 		"ControlSoftwareVersion": "string",
 		"Manufacturer": "string",
 		"InstrumentId": "string",
@@ -29,7 +24,6 @@
 		"FocusStabilizationDevice": "array",
 		"AcquisitionSoftware": "array",
 		"Description": "string",
-		"Tier": "integer",
 		"Pixels": {
 			"ID": "string",
 			"DimensionOrder": "string",
@@ -49,8 +43,7 @@
 			"PixelType": "string",
 			"Interleaved": "boolean",
 			"SignificantBits": "integer",
-			"BigEndian": "boolean",
-			"Tier": "integer"
+			"BigEndian": "boolean"
 		},
 		"Plane": {
 			"ID": "string",
@@ -72,8 +65,7 @@
 			"PlaneXOffset": "number",
 			"PlaneYOffset": "number",
 			"PlaneZOffset": "number",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Channel": {
 			"Name": "string",
@@ -83,8 +75,7 @@
 			"ContrastMethod": "string",
 			"Color": "integer",
 			"SamplesPerPixel": "integer",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Width": "integer",
 		"Height": "integer",
@@ -112,27 +103,23 @@
 			"AnalogGain": "number",
 			"AmplificationGain": "number",
 			"Offset": "number",
-			"OffsetMode": "string",
-			"Tier": "integer"
+			"OffsetMode": "string"
 		},
 		"MicroscopeTableSettings": {
 			"ID": "string",
-			"Floating": "boolean",
-			"Tier": "integer"
+			"Floating": "boolean"
 		},
 		"PrismSettings": {
 			"ID": "string",
 			"PositionSetting": "string",
 			"TransmissionWavelengthRangeSettings": "array",
-			"ReflectionWavelengthRangeSettings": "array",
-			"Tier": "integer"
+			"ReflectionWavelengthRangeSettings": "array"
 		},
 		"MicroscopeStandSettings": {
 			"ID": "string",
 			"TotalEffectiveMagnification": "number",
 			"FieldOfView": "number",
-			"FieldOfViewUnit": "string",
-			"Tier": "integer"
+			"FieldOfViewUnit": "string"
 		},
 		"LightSourceSettings": {
 			"ID": "string",
@@ -140,16 +127,14 @@
 			"lluminationPowerSettingsUnit": "string",
 			"Attenuation": "number",
 			"AttenuationMethod": "string",
-			"UsedAcoustoOpticalDevice": "boolean",
-			"Tier": "integer"
+			"UsedAcoustoOpticalDevice": "boolean"
 		},
 		"ShutterSettings": {
 			"ID": "string",
 			"OpenDuringZMovement": "boolean",
 			"ApertureDiameter": "number",
 			"ApertureDiameterUnit": "string",
-			"Mode": "string",
-			"Tier": "integer"
+			"Mode": "string"
 		},
 		"GenericDetectorSettings": {
 			"ID": "string",
@@ -157,14 +142,12 @@
 			"AnalogGain": "number",
 			"AmplificationGain": "number",
 			"Offset": "number",
-			"OffsetMode": "string",
-			"Tier": "integer"
+			"OffsetMode": "string"
 		},
 		"GenericOpticalApertureSettings": {
 			"ID": "string",
 			"TransmissionWavelengthRangeSettings": "array",
-			"ReflectionWavelengthRangeSettings": "array",
-			"Tier": "integer"
+			"ReflectionWavelengthRangeSettings": "array"
 		},
 		"SamplePositioningSettings": {
 			"ID": "string",
@@ -175,18 +158,15 @@
 			"XYReproducibilitySettings": "number",
 			"XYReproducibilitySettingsUnit": "string",
 			"ZReproducibilitySettings": "number",
-			"ZReproducibilitySettingsUnit": "string",
-			"Tier": "integer"
+			"ZReproducibilitySettingsUnit": "string"
 		},
 		"MirroringDeviceSettings": {
 			"ID": "string",
-			"ActualMountedAngle": "number",
-			"Tier": "integer"
+			"ActualMountedAngle": "number"
 		},
 		"LensSettings": {
 			"ID": "string",
-			"Function": "string",
-			"Tier": "integer"
+			"Function": "string"
 		},
 		"ObjectiveSettings": {
 			"ID": "string",
@@ -195,8 +175,7 @@
 			"MeasuredRefractiveIndex": "number",
 			"Temperature": "number",
 			"TemperatureUnit": "string",
-			"IrisAperture": "number",
-			"Tier": "integer"
+			"IrisAperture": "number"
 		},
 		"StageLabel": {
 			"Name": "string",
@@ -205,8 +184,7 @@
 			"Y": "number",
 			"YUnits": "string",
 			"Z": "number",
-			"ZUnits": "string",
-			"Tier": "integer"
+			"ZUnits": "string"
 		},
 		"PointDetectorSettings": {
 			"Voltage": "number",
@@ -217,8 +195,7 @@
 			"AnalogGain": "number",
 			"AmplificationGain": "number",
 			"Offset": "number",
-			"OffsetMode": "string",
-			"Tier": "integer"
+			"OffsetMode": "string"
 		}
 	},
 	"OpticsHolder": {
@@ -235,8 +212,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"EmissionFilter": "array",
-			"Tier": "integer"
+			"EmissionFilter": "array"
 		},
 		"FilterCubeTurret": {
 			"Name": "string",
@@ -251,8 +227,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"FilterCube": "array",
-			"Tier": "integer"
+			"FilterCube": "array"
 		},
 		"OpticsTurret": {
 			"Name": "string",
@@ -272,8 +247,7 @@
 			"Aperture": "array",
 			"Filter": "array",
 			"Prism": "array",
-			"PolarizationOptics": "array",
-			"Tier": "integer"
+			"PolarizationOptics": "array"
 		},
 		"ExcitationFilterSlider": {
 			"Name": "string",
@@ -288,8 +262,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"ExcitationFilter": "array",
-			"Tier": "integer"
+			"ExcitationFilter": "array"
 		},
 		"ExcitationFilterWheel": {
 			"Name": "string",
@@ -304,8 +277,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"ExcitationFilter": "array",
-			"Tier": "integer"
+			"ExcitationFilter": "array"
 		},
 		"DichroicFilterSlider": {
 			"Name": "string",
@@ -320,8 +292,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"StandardDichroic": "array",
-			"Tier": "integer"
+			"StandardDichroic": "array"
 		},
 		"EmissionFilterSlider": {
 			"Name": "string",
@@ -336,8 +307,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"EmissionFilter": "array",
-			"Tier": "integer"
+			"EmissionFilter": "array"
 		},
 		"DichroicFilterWheel": {
 			"Name": "string",
@@ -352,8 +322,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"StandardDichroic": "array",
-			"Tier": "integer"
+			"StandardDichroic": "array"
 		}
 	},
 	"ChildElement": {
@@ -445,8 +414,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"InvertedMicroscopeStand": {
 			"Name": "string",
@@ -459,8 +427,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Transmitted_LightSource": {
@@ -477,8 +444,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		},
 		"LightEmittingDiode": {
 			"Type": "string",
@@ -493,8 +459,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"LEDModule": "array",
-			"Tier": "integer"
+			"LEDModule": "array"
 		},
 		"GenericExcitationSource": {
 			"Name": "string",
@@ -508,8 +473,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		}
 	},
 	"Fluorescence_LightSource": {
@@ -526,8 +490,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		},
 		"Arc": {
 			"Type": "string",
@@ -542,8 +505,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		},
 		"MultiLaserEngine": {
 			"SingleMode": "boolean",
@@ -562,8 +524,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"Laser": "array",
-			"Tier": "integer"
+			"Laser": "array"
 		},
 		"Laser": {
 			"Type": "string",
@@ -593,8 +554,7 @@
 			"SpecsFile": "string",
 			"Description": "string",
 			"IlluminationWavelengthRange": "array",
-			"Pump": "string",
-			"Tier": "integer"
+			"Pump": "string"
 		},
 		"LightEmittingDiode": {
 			"Type": "string",
@@ -609,8 +569,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"LEDModule": "array",
-			"Tier": "integer"
+			"LEDModule": "array"
 		},
 		"GenericExcitationSource": {
 			"Name": "string",
@@ -624,8 +583,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		}
 	},
 	"OpticalAssembly": {
@@ -643,8 +601,7 @@
 			"Aperture": "array",
 			"PolarizationOptics": "array",
 			"Prism": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"BeamExpander": {
 			"Configuration": "string",
@@ -661,8 +618,7 @@
 			"Aperture": "array",
 			"PolarizationOptics": "array",
 			"Prism": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"MicroscopeTube": {
 			"Type": "string",
@@ -684,8 +640,7 @@
 			"Aperture": "array",
 			"PolarizationOptics": "array",
 			"Prism": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Condenser": {
 			"Correction": "string",
@@ -703,8 +658,7 @@
 			"Aperture": "array",
 			"PolarizationOptics": "array",
 			"Prism": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Software": {
@@ -722,8 +676,7 @@
 			"ReleaseDate": "string",
 			"Language": "string",
 			"SoftwareModule": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"SoftwareModule": {
 			"Name": "string",
@@ -739,8 +692,7 @@
 			"ReleaseDate": "string",
 			"Language": "string",
 			"SoftwareModule": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"SamplePreparation": {
@@ -759,7 +711,7 @@
 			"MetrologySample": "boolean",
 			"FacingTheObjective": "string",
 			"Description": "string",
-			"Tier": "integer"
+			"SampleId": "string"
 		},
 		"Fluorophore": {
 			"Name": "string",
@@ -777,8 +729,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		},
 		"MountingMedium": {
 			"ID": "string",
@@ -788,8 +739,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		},
 		"ImmersionLiquid": {
 			"ID": "string",
@@ -800,8 +750,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		},
 		"Experiment": {
 			"Name": "string",
@@ -813,8 +762,7 @@
 			"TagTermAccession": "string",
 			"HystochemistryType": "string",
 			"Experimenter": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"CoverGlass": {
 			"ID": "string",
@@ -825,8 +773,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		},
 		"SampleHolder": {
 			"ID": "string",
@@ -835,8 +782,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		}
 	},
 	"MicroscopyAccessories": {
@@ -863,8 +809,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"MicroscopeTable": {
 			"Name": "string",
@@ -880,8 +825,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Magnification": {
@@ -918,8 +862,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Aperture": {
@@ -935,8 +878,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"VarelRing": {
 			"Name": "string",
@@ -949,8 +891,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"IrisDiaphragm": {
 			"MaxApertureDiameter": "number",
@@ -966,8 +907,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"DarkFieldStop": {
 			"CenterStopDiameter": "number",
@@ -982,8 +922,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"PhaseRing": {
 			"PhaseNumber": "string",
@@ -1001,8 +940,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Shutter": {
 			"ResponseTime": "number",
@@ -1024,8 +962,17 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
+		},
+		"Name": "string",
+		"Number": "string",
+		"MechanismType": "string",
+		"Type": "string",
+		"Diameter": "string",
+		"Enabled": "string",
+		"PositionOffset": {
+			"x": "string",
+			"y": "string"
 		}
 	},
 	"Detector": {
@@ -1062,8 +1009,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"PhotoDiode": {
 				"Avalanche": "boolean",
@@ -1099,8 +1045,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"PhotoMultiplierTube": {
 				"CollectionEfficiency": "number",
@@ -1139,8 +1084,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			}
 		},
 		"Camera": {
@@ -1186,8 +1130,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"CCD": {
 				"Type": "string",
@@ -1234,8 +1177,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"IntensifiedCamera": {
 				"SensorType": "string",
@@ -1282,8 +1224,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"AnalogVideo": {
 				"ArrayWidth": "integer",
@@ -1326,8 +1267,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			}
 		},
 		"GenericDetector": {
@@ -1354,8 +1294,7 @@
 			"SpecsFile": "string",
 			"RelayLens": "string",
 			"Description": "string",
-			"WavelengthRange": "array",
-			"Tier": "integer"
+			"WavelengthRange": "array"
 		},
 		"Brightness": "number",
 		"Channel": "integer",
@@ -1364,7 +1303,52 @@
 		"Contrast": "number",
 		"DetectorName": "string",
 		"Gain": "integer",
-		"PMT": "number"
+		"PMT": "number",
+		"DetectorType": "string",
+		"Inserted": "string",
+		"Enabled": "string",
+		"Offset": "string",
+		"CollectionAngleRange": {
+			"begin": "string",
+			"end": "string"
+		},
+		"ExposureMode": "string",
+		"Binning": {
+			"width": "string",
+			"height": "string"
+		},
+		"ReadOutArea": {
+			"left": "string",
+			"top": "string",
+			"right": "string",
+			"bottom": "string"
+		},
+		"ExposureTime": "string",
+		"DarkGainCorrectionType": "string",
+		"ElevationAngle": "string",
+		"AzimuthAngle": "string",
+		"CollectionAngle": "string",
+		"Dispersion": "string",
+		"PulseProcessTime": "string",
+		"RealTime": "string",
+		"LiveTime": "string",
+		"InputCountRate": "string",
+		"OutputCountRate": "string",
+		"AnalyticalDetectorShutterState": "string",
+		"OffsetEnergy": "string",
+		"ElectronicsNoise": "string",
+		"BeginEnergy": "string",
+		"Shutter": {
+			"Position": "string",
+			"Type": "string"
+		},
+		"IncidentAngle": "string",
+		"SpectrumBeginEnergy": "string",
+		"Temperature": "string",
+		"Selected": "string",
+		"CommercialName": "string",
+		"DetectorConfigID": "string",
+		"DistanceToSample": "string"
 	},
 	"SamplePositioning": {
 		"Stage": {
@@ -1379,8 +1363,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"MechanicalStage": {
 				"XYMaxVelocity": "number",
@@ -1425,8 +1408,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"PiezoElectricStage": {
 				"XYMaxVelocity": "number",
@@ -1471,9 +1453,47 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
-			}
+				"Description": "string"
+			},
+			"Position": {
+				"x": "string",
+				"y": "string",
+				"z": "string"
+			},
+			"AlphaTilt": "string",
+			"BetaTilt": "string",
+			"HolderType": "string",
+			"X": {
+				"units": "string",
+				"value": "integer"
+			},
+			"Y": {
+				"units": "string",
+				"value": "integer"
+			},
+			"Z": {
+				"units": "string",
+				"value": "integer"
+			},
+			"Tilt": {
+				"units": "string",
+				"value": "integer"
+			},
+			"Rot": {
+				"units": "string",
+				"value": "integer"
+			},
+			"M": {
+				"units": "string",
+				"value": "integer"
+			},
+			"NavCoordinate": "integer",
+			"StagePosR": "number",
+			"StagePosT": "number",
+			"StagePosX": "number",
+			"StagePosY": "number",
+			"StagePosZ": "number",
+			"StageType": "string"
 		},
 		"Focusing": {
 			"Z-Drive": {
@@ -1504,8 +1524,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"TurretObjectiveFocusing": {
 				"Name": "string",
@@ -1535,8 +1554,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"FocusStabilizationDevice": {
 				"Name": "string",
@@ -1550,8 +1568,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"IndividualObjectiveFocusing": {
 				"PiezoElectric": "boolean",
@@ -1582,8 +1599,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			}
 		}
 	},
@@ -1622,8 +1638,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"BeamCollimatorLens": {
 			"Name": "string",
@@ -1659,8 +1674,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"MagnificationChanger": {
 			"Name": "string",
@@ -1696,8 +1710,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"CouplingLens": {
 			"Name": "string",
@@ -1733,8 +1746,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"BeamExpanderLens": {
 			"Name": "string",
@@ -1770,8 +1782,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"CondenserLens": {
 			"Name": "string",
@@ -1807,8 +1818,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"RelayLens": {
 			"Name": "string",
@@ -1844,8 +1854,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"TubeLens": {
 			"Name": "string",
@@ -1881,8 +1890,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"AdditionalOptics": {
@@ -1905,8 +1913,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"WavelengthRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Prism": {
 			"Name": "string",
@@ -1936,8 +1943,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"WavelengthRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"LightSourceCoupling": {
@@ -1964,8 +1970,7 @@
 			"SpecsFile": "string",
 			"CouplingLens": "string",
 			"Description": "string",
-			"WavelengthRange": "array",
-			"Tier": "integer"
+			"WavelengthRange": "array"
 		},
 		"FreeBeam": {
 			"DirectMount": "boolean",
@@ -1980,8 +1985,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"CouplingLens": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"FluorescenceLightPath": {
@@ -2001,8 +2005,7 @@
 			"Description": "string",
 			"ExcitationFilter": "string",
 			"StandardDichroic": "string",
-			"EmissionFilter": "string",
-			"Tier": "integer"
+			"EmissionFilter": "string"
 		},
 		"StandardDichroic": {
 			"Type": "string",
@@ -2035,8 +2038,7 @@
 			"SpecsFile": "string",
 			"Description": "string",
 			"TransmittanceRange": "array",
-			"ReflectanceRange": "array",
-			"Tier": "integer"
+			"ReflectanceRange": "array"
 		},
 		"ExcitationFilter": {
 			"Name": "string",
@@ -2061,8 +2063,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"TransmittanceRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"EmissionFilter": {
 			"Name": "string",
@@ -2087,8 +2088,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"TransmittanceRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"SampleConditions": {
@@ -2100,8 +2100,7 @@
 			"Humidity": "string",
 			"AirPressure": "number",
 			"AirPressureUnit": "string",
-			"O2Percent": "number",
-			"Tier": "integer"
+			"O2Percent": "number"
 		}
 	},
 	"MirroringDevice": {
@@ -2136,8 +2135,7 @@
 			"SpecsFile": "string",
 			"Description": "string",
 			"TransmittanceRange": "array",
-			"ReflectanceRange": "array",
-			"Tier": "integer"
+			"ReflectanceRange": "array"
 		},
 		"BeamSplitter": {
 			"Transmittance": "number",
@@ -2164,8 +2162,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"ReflectingMirror": {
 			"Reflectance": "number",
@@ -2188,8 +2185,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Filter": {
@@ -2216,8 +2212,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"TransmittanceRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"NeutralDensityFilter": {
 			"NDType": "string",
@@ -2244,23 +2239,20 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"TransmittanceRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"LightPath": {
 		"Name": "string",
 		"ID": "string",
 		"Description": "string",
-		"Tier": "integer",
 		"FilterSet": {
 			"Name": "string",
 			"ID": "string",
 			"ExcitationFilter": "string",
 			"StandardDichroic": "string",
 			"EmissionFilter": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"CalibrationTools": {
@@ -2276,8 +2268,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"LightSensor": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"databarHeight": "integer",
@@ -2322,95 +2313,6 @@
 	"displayWhiteLevel": "integer",
 	"samplePressureEstimate": "number",
 	"acquisition": {
-		"scan": {
-			"scanHW": "string",
-			"acqHW": "string",
-			"dwellTime": {
-				"unit": "string",
-				"value": "number"
-			},
-			"spotSize": "number",
-			"spotPresetName": "string",
-			"rotation": "integer",
-			"interlace": "integer",
-			"detector": "string",
-			"detectorMixFactors": {
-				"bsdA": "integer",
-				"bsdB": "integer",
-				"bsdC": "integer",
-				"bsdD": "integer",
-				"sed": "integer",
-				"stem": "integer"
-			},
-			"detectors": {
-				"QBSD": {
-					"gain": "integer",
-					"offset": "number",
-					"mixFactor": "integer",
-					"A": "string",
-					"B": "string",
-					"C": "string",
-					"D": "string"
-				},
-				"SED": {
-					"gain": "integer",
-					"offset": "integer",
-					"scintillatorVoltage": "integer",
-					"mixFactor": "integer"
-				},
-				"STEM": {
-					"mixFactor": "integer",
-					"segmentSelection": {
-						"bf1": "boolean",
-						"bf2": "boolean",
-						"bf3": "boolean",
-						"bf4": "boolean",
-						"df1": "boolean",
-						"ha1": "boolean",
-						"ha2": "boolean",
-						"ha3": "boolean",
-						"ha4": "boolean",
-						"ha5": "boolean",
-						"ha6": "boolean"
-					}
-				}
-			},
-			"beamShift": {
-				"x": "integer",
-				"y": "integer"
-			},
-			"sourceTilt": {
-				"x": "number",
-				"y": "number"
-			},
-			"stigmator": {
-				"x": "number",
-				"y": "number"
-			},
-			"sourceTime": {
-				"unit": "string",
-				"value": "integer"
-			},
-			"sourceId": "integer",
-			"highVoltage": {
-				"unit": "string",
-				"value": "integer"
-			},
-			"emissionCurrent": {
-				"unit": "string",
-				"value": "number"
-			},
-			"emissionCurrentPresetName": "string",
-			"filamentPower": {
-				"unit": "string",
-				"value": "integer"
-			},
-			"scanCenter": {
-				"x": "integer",
-				"y": "integer"
-			},
-			"scanScale": "integer"
-		},
 		"AcquisitionStartDatetime": {
 			"DateTime": "string"
 		},
@@ -2457,20 +2359,6 @@
 		"StemFocus": "string",
 		"Defocus": "string",
 		"HighMagnificationMode": "string",
-		"Apertures": {
-			"Aperture": {
-				"Name": "string",
-				"Number": "string",
-				"MechanismType": "string",
-				"Type": "string",
-				"Diameter": "string",
-				"Enabled": "string",
-				"PositionOffset": {
-					"x": "string",
-					"y": "string"
-				}
-			}
-		},
 		"OperatingMode": "string",
 		"TemOperatingSubMode": "string",
 		"ProjectorMode": "string",
@@ -2478,58 +2366,21 @@
 		"ObjectiveLensMode": "string",
 		"IlluminationMode": "string",
 		"ProbeMode": "string",
-		"CameraLength": "string"
+		"CameraLength": "string",
+		"BeamBlanked": "string"
 	},
 	"EnergyFilter": {
 		"EntranceApertureType": "string"
-	},
-	"Stage": {
-		"Position": {
-			"x": "string",
-			"y": "string",
-			"z": "string"
-		},
-		"AlphaTilt": "string",
-		"BetaTilt": "string",
-		"HolderType": "string",
-		"X": {
-			"units": "string",
-			"value": "integer"
-		},
-		"Y": {
-			"units": "string",
-			"value": "integer"
-		},
-		"Z": {
-			"units": "string",
-			"value": "integer"
-		},
-		"Tilt": {
-			"units": "string",
-			"value": "integer"
-		},
-		"Rot": {
-			"units": "string",
-			"value": "integer"
-		},
-		"M": {
-			"units": "string",
-			"value": "integer"
-		},
-		"NavCoordinate": "integer",
-		"StagePosR": "number",
-		"StagePosT": "number",
-		"StagePosX": "number",
-		"StagePosY": "number",
-		"StagePosZ": "number",
-		"StageType": "string"
 	},
 	"Scan": {
 		"ScanSize": {
 			"width": "string",
 			"height": "string"
 		},
-		"DwellTime": "string",
+		"DwellTime": {
+			"unit": "string",
+			"value": "number"
+		},
 		"ScanArea": {
 			"left": "string",
 			"top": "string",
@@ -2571,59 +2422,105 @@
 		"LineAdd": "integer",
 		"PointTime": "number",
 		"ResolutionX": "integer",
-		"ResolutionY": "integer"
+		"ResolutionY": "integer",
+		"ScanTransformation": {
+			"A11": "string",
+			"A12": "string",
+			"A13": "string",
+			"A21": "string",
+			"A22": "string",
+			"A23": "string"
+		},
+		"scanHW": "string",
+		"acqHW": "string",
+		"spotSize": "number",
+		"spotPresetName": "string",
+		"rotation": "integer",
+		"interlace": "integer",
+		"detector": "string",
+		"detectorMixFactors": {
+			"bsdA": "integer",
+			"bsdB": "integer",
+			"bsdC": "integer",
+			"bsdD": "integer",
+			"sed": "integer",
+			"stem": "integer"
+		},
+		"detectors": {
+			"QBSD": {
+				"gain": "integer",
+				"offset": "number",
+				"mixFactor": "integer",
+				"A": "string",
+				"B": "string",
+				"C": "string",
+				"D": "string"
+			},
+			"SED": {
+				"gain": "integer",
+				"offset": "integer",
+				"scintillatorVoltage": "integer",
+				"mixFactor": "integer"
+			},
+			"STEM": {
+				"mixFactor": "integer",
+				"segmentSelection": {
+					"bf1": "boolean",
+					"bf2": "boolean",
+					"bf3": "boolean",
+					"bf4": "boolean",
+					"df1": "boolean",
+					"ha1": "boolean",
+					"ha2": "boolean",
+					"ha3": "boolean",
+					"ha4": "boolean",
+					"ha5": "boolean",
+					"ha6": "boolean"
+				}
+			}
+		},
+		"beamShift": {
+			"x": "integer",
+			"y": "integer"
+		},
+		"sourceTilt": {
+			"x": "number",
+			"y": "number"
+		},
+		"stigmator": {
+			"x": "number",
+			"y": "number"
+		},
+		"sourceTime": {
+			"unit": "string",
+			"value": "integer"
+		},
+		"sourceId": "integer",
+		"highVoltage": {
+			"unit": "string",
+			"value": "integer"
+		},
+		"emissionCurrent": {
+			"unit": "string",
+			"value": "number"
+		},
+		"emissionCurrentPresetName": "string",
+		"filamentPower": {
+			"unit": "string",
+			"value": "integer"
+		},
+		"scanCenter": {
+			"x": "integer",
+			"y": "integer"
+		},
+		"scanScale": "integer"
 	},
 	"Vacuum": {
 		"VacuumMode": "string",
 		"BufferVacuum": "number",
 		"GunVacuum": "number",
-		"SampleVacuum": "number"
-	},
-	"Detectors": {
-		"Detector": {
-			"DetectorName": "string",
-			"DetectorType": "string",
-			"ExposureMode": "string",
-			"Binning": {
-				"width": "string",
-				"height": "string"
-			},
-			"ReadOutArea": {
-				"left": "string",
-				"top": "string",
-				"right": "string",
-				"bottom": "string"
-			},
-			"ExposureTime": "string",
-			"Shutters": {
-				"Shutter": {
-					"Position": "string",
-					"Type": "string"
-				}
-			},
-			"DarkGainCorrectionType": "string",
-			"Inserted": "string",
-			"Enabled": "string",
-			"ElevationAngle": "string",
-			"AzimuthAngle": "string",
-			"CollectionAngle": "string",
-			"Dispersion": "string",
-			"PulseProcessTime": "string",
-			"RealTime": "string",
-			"LiveTime": "string",
-			"InputCountRate": "string",
-			"OutputCountRate": "string",
-			"AnalyticalDetectorShutterState": "string",
-			"OffsetEnergy": "string",
-			"ElectronicsNoise": "string",
-			"BeginEnergy": "string",
-			"Gain": "string",
-			"Offset": "string",
-			"CollectionAngleRange": {
-				"begin": "string",
-				"end": "string"
-			}
-		}
+		"SampleVacuum": "number",
+		"ValvesOpen": "string"
 	},
 	"BinaryResult": {
 		"AcquisitionUnit": "string",
@@ -2640,172 +2537,29 @@
 			"y": "string"
 		},
 		"Encoding": "string",
-		"DetectorIndex": "string"
-	},
-	"Sample": {
-		"SampleId": "string"
-	},
-	"GasInjectionSystems": "string",
-	"CustomProperties": {
-		"Aperture[C1].Name": {
-			"type": "string",
-			"value": "string"
-		},
-		"Aperture[C2].Name": {
-			"type": "string",
-			"value": "string"
-		},
-		"Aperture[OBJ].Name": {
-			"type": "string",
-			"value": "string"
-		},
-		"Aperture[SA].Name": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX1].IncidentAngle": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX1].SpectrumBeginEnergy": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX1].Temperature": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX2].IncidentAngle": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX2].SpectrumBeginEnergy": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX2].Temperature": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX].Selected": {
-			"type": "string",
-			"value": "string"
-		},
-		"IntegratedFrameCount": {
-			"type": "string",
-			"value": "string"
-		},
-		"Scan.ScanTransformation.A11": {
-			"type": "string",
-			"value": "string"
-		},
-		"Scan.ScanTransformation.A12": {
-			"type": "string",
-			"value": "string"
-		},
-		"Scan.ScanTransformation.A13": {
-			"type": "string",
-			"value": "string"
-		},
-		"Scan.ScanTransformation.A21": {
-			"type": "string",
-			"value": "string"
-		},
-		"Scan.ScanTransformation.A22": {
-			"type": "string",
-			"value": "string"
-		},
-		"Scan.ScanTransformation.A23": {
-			"type": "string",
-			"value": "string"
-		},
-		"StemMagnification": {
-			"type": "string",
-			"value": "string"
-		},
-		"BinaryResult.AcquisitionArea.bottom": {
-			"type": "string",
-			"value": "string"
-		},
-		"BinaryResult.AcquisitionArea.left": {
-			"type": "string",
-			"value": "string"
-		},
-		"BinaryResult.AcquisitionArea.right": {
-			"type": "string",
-			"value": "string"
-		},
-		"BinaryResult.AcquisitionArea.top": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX1].CommercialName": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX1].DetectorConfigID": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX1].DistanceToSample": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX2].CommercialName": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX2].DetectorConfigID": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[DualX2].DistanceToSample": {
-			"type": "string",
-			"value": "string"
-		},
-		"Detectors[Fluscreen].Inserted": {
-			"type": "string",
-			"value": "string"
-		},
-		"Optics.BeamBlanked": {
-			"type": "string",
-			"value": "string"
-		},
-		"Vacuum.ValvesOpen": {
-			"type": "string",
-			"value": "string"
+		"DetectorIndex": "string",
+		"AcquisitionArea": {
+			"bottom": "string",
+			"left": "string",
+			"right": "string",
+			"top": "string"
 		}
 	},
+	"GasInjectionSystems": "string",
 	"Operations": {
 		"DisplayLevelsOperation": {},
 		"EDSInputOperation": {},
 		"ImageQuantificationOperation": {},
 		"IntegrationRectangleOperation": {},
 		"MixOperation": {},
-		"Operations": {
-			"operations": "array"
-		},
 		"SpectrumQuantificationOperation": {},
-		"StemInputOperation": {}
+		"StemInputOperation": {},
+		"operations": "array"
 	},
 	"Features": {
-		"Features": {
-			"features": "array"
-		},
 		"IntegratedSpectraFeature": {},
-		"SIFeature": {}
-	},
-	"DetectorMetadata": {
-		"DetectorName": "string",
-		"DetectorType": "string",
-		"Inserted": "string",
-		"Enabled": "string",
-		"Gain": "string",
-		"Offset": "string",
-		"CollectionAngleRange": {
-			"begin": "string",
-			"end": "string"
-		}
+		"SIFeature": {},
+		"features": "array"
 	},
 	"Application": {
 		"Version": "string",
@@ -2817,32 +2571,6 @@
 		"BiasType": "string",
 		"Mode": "string",
 		"Volts": "integer"
-	},
-	"RawStage": {
-		"X": {
-			"units": "string",
-			"value": "integer"
-		},
-		"Y": {
-			"units": "string",
-			"value": "integer"
-		},
-		"Z": {
-			"units": "string",
-			"value": "integer"
-		},
-		"Tilt": {
-			"units": "string",
-			"value": "integer"
-		},
-		"Rot": {
-			"units": "string",
-			"value": "integer"
-		},
-		"M": {
-			"units": "string",
-			"value": "integer"
-		}
 	},
 	"ImageCorrections": {
 		"Invert": "boolean",
@@ -2930,5 +2658,7 @@
 	"pixelsizex": "number",
 	"pixelsizey": "number",
 	"cameraname": "string",
-	"picturetype": "string"
+	"picturetype": "string",
+	"IntegratedFrameCount": "string",
+	"StemMagnification": "string"
 }
