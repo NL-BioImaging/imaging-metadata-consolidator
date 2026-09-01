@@ -1,0 +1,12 @@
+Image:
+  Name: ''
+  AcquisitionDate: '2025-05-28 10:54:00'
+  Pixels:
+    PhysicalSizeX: 1.652845302290227e-09
+    PhysicalSizeY: 1.652845302290227e-09
+  Type: ''
+Magnification:
+  Objective:
+    CalibratedMagnification: 6000.0
+Detector:
+  Name: ''
