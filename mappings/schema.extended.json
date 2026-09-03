@@ -229,6 +229,8 @@
 			"ID": "string",
 			"CorrectionCollarPosition": "string",
 			"NumericalApertureSetting": "string",
+			"Medium": "string",
+			"RefractiveIndex": "number",
 			"MeasuredRefractiveIndex": "number",
 			"Temperature": "number",
 			"TemperatureUnit": "string",

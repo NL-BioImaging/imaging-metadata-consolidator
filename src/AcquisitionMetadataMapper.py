@@ -79,25 +79,69 @@ class AcquisitionMetadataMapper:
         components = tuple(part.lower() for part in source_path.split('.'))
         return self._schema_index.get(components)
 
+    def _resolve_wildcard_path(self, source_path):
+        """Resolve a dotted source path via a "*"-containing mapping entry, or None.
+
+        A pattern ending in ".*" remaps a whole subtree: the matched prefix
+        is replaced by the target namespace and the remainder of the path is
+        kept, so nested fields under the subtree keep their relative
+        structure (e.g. "Beam.*" -> "ElectronBeam" turns "Beam.Focus" into
+        "ElectronBeam.Focus").
+
+        Any other "*"-containing pattern (e.g. one wildcarding a single,
+        variable path segment such as "Annotation:...:Image:*") is treated
+        as a whole-path match instead: on a match the target is the bare
+        namespace with no remainder appended, since the varying segment
+        (an index, a generated ID, ...) carries no information worth
+        preserving in the consolidated schema.
+        """
+        for pattern, namespace in self.mappings.items():
+            if '*' not in pattern or not fnmatchcase(source_path, pattern):
+                continue
+            if pattern.endswith('.*'):
+                prefix = pattern[:-2]
+                remainder = source_path[len(prefix) + 1:]
+                return f'{namespace}.{remainder}' if remainder else namespace
+            return namespace
+        return None
+
+    def _resolve_whole_segment_wildcard_path(self, source_path):
+        """Resolve a dict's own path via a whole-segment wildcard entry, or None.
+
+        Only patterns that do *not* end in ".*" are considered here. A
+        ".*" pattern describes a subtree to expand field-by-field during
+        recursion, so it must never collapse an intermediate dict early
+        just because a *shallower* "Prefix.*" rule also happens to match
+        that dict's own path — a more specific "Prefix.Sub.*" rule for one
+        of its children would otherwise never get the chance to apply (see
+        `_apply_mappings`). A pattern wildcarding a whole, variable path
+        segment instead (e.g. an index or generated ID) has no such
+        subtree semantics, so a match here collapses the entire dict as
+        one opaque unit under the target namespace.
+        """
+        for pattern, namespace in self.mappings.items():
+            if '*' not in pattern or pattern.endswith('.*'):
+                continue
+            if fnmatchcase(source_path, pattern):
+                return namespace
+        return None
+
     def _resolve_target_path(self, source_path):
         """Resolve a dotted source path to a dotted target path, or None.
 
         Tries mappings.json first: exact entries rename a single field, and
-        wildcard entries ("Prefix.*") remap a whole subtree, replacing the
-        matched prefix with the target namespace while keeping the remainder
-        of the path so nested fields keep their relative structure. Only
-        when no mappings.json rule applies does this fall back to matching
-        the path directly against the schema.
+        wildcard entries remap a whole subtree or a single variable path
+        segment (see `_resolve_wildcard_path`). Only when no mappings.json
+        rule applies does this fall back to matching the path directly
+        against the schema.
         """
         target = resolve_exact_path(source_path, self.mappings)
         if target is not None:
             return target
 
-        for pattern, namespace in self.mappings.items():
-            if pattern.endswith('.*') and fnmatchcase(source_path, pattern):
-                prefix = pattern[:-2]
-                remainder = source_path[len(prefix) + 1:]
-                return f'{namespace}.{remainder}' if remainder else namespace
+        target = self._resolve_wildcard_path(source_path)
+        if target is not None:
+            return target
 
         return self._resolve_schema_path(source_path)
 
@@ -107,12 +151,14 @@ class AcquisitionMetadataMapper:
         Recurses into nested dictionaries, extending the dotted path as it
         goes, and writes every resolved field directly into the shared
         `result` dict. A dict is only moved as a whole (without recursing
-        into it) when its own path has an exact mapping entry, so that a
-        more specific mapping further down the tree still takes precedence
-        over a shallower wildcard rule. Scalars and lists are always
-        resolved (and placed) as a unit, using exact, embedded-metadata,
-        wildcard or schema-fallback rules. Fields with no matching rule are
-        kept at their original path so no data is silently dropped.
+        into it) when its own path has an exact or whole-segment wildcard
+        mapping entry, so that a more specific "Prefix.Sub.*" rule for one
+        of its children still gets the chance to apply, and so a shallower
+        "Prefix.*" subtree rule never fires early on an intermediate node.
+        Scalars and lists are always resolved (and placed) as a unit, using
+        exact, embedded-metadata, wildcard or schema-fallback rules. Fields
+        with no matching rule are kept at their original path so no data is
+        silently dropped.
         """
         if result is None:
             result = {}
@@ -120,6 +166,8 @@ class AcquisitionMetadataMapper:
             source_path = f'{path}.{key}' if path else str(key)
             if isinstance(value, dict):
                 target_path = resolve_exact_path(source_path, self.mappings)
+                if target_path is None:
+                    target_path = self._resolve_whole_segment_wildcard_path(source_path)
                 if target_path is not None:
                     set_nested_value(result, target_path, value)
                 else:
