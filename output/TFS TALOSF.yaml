@@ -12,6 +12,8 @@ Instrument:
 Software:
   AcquisitionSoftware:
     Version: 2.10.1
+Acquisition:
+  StartDate: '1683922216'
 Image:
   AcquisitionDate: '0'
   Pixels:
@@ -57,9 +59,6 @@ ElectronOptics:
   MiniCondenserLensIntensity: '0.61476558926006819'
   ScreenCurrent: '0'
   LastMeasuredScreenCurrent: '4.8587396462493915e-09'
-  FullScanFieldOfView:
-    x: '8.1920000000000022e-06'
-    y: '8.1920000000000022e-06'
   Focus: '0'
   HighMagnificationMode: None
   Apertures:
@@ -108,27 +107,12 @@ ElectronOptics:
   ProbeMode: '1'
   CameraLength:
     Value: '0.20499999999999999'
-EnergyFilter:
-  EntranceApertureType: ''
-SamplePositioning:
-  Stage:
-    Position:
-      X:
-        Value: '-3.5551395000000088e-05'
-      Y:
-        Value: '2.7880518000000015e-05'
-      Z:
-        Value: '-0.00016588146'
-    Tilt:
-      Alpha:
-        Value: '-0.00010274500000013157'
-      Beta:
-        Value: '8.4731148788705459e-06'
-SamplePreparation:
-  SampleHolder:
-    Type: FEI Double Tilt
-  Sample: ''
 Scan:
+  FieldOfView:
+    X:
+      Value: '8.1920000000000022e-06'
+    Y:
+      Value: '8.1920000000000022e-06'
   ScanArea:
     left: '0'
     top: '0'
@@ -143,6 +127,27 @@ Scan:
     Value: '424.55040000000002'
   Rotation:
     Value: '0'
+EnergyFilter:
+  EntranceApertureType: ''
+SamplePositioning:
+  Stage:
+    Position:
+      X:
+        Value: '-3.565290000000008e-05'
+      Y:
+        Value: '2.7880518000000015e-05'
+      Z:
+        Value: '-0.00016588146'
+    Tilt:
+      Alpha:
+        Value: '-0.00010274500000013157'
+      Beta:
+        Value: '8.4731148788705459e-06'
+SamplePreparation:
+  SampleHolder:
+    Type: FEI Double Tilt
+  Sample:
+    SampleId: '6232'
 Detector:
   Configuration:
     Detector-0:
@@ -228,6 +233,7 @@ Detector:
       CollectionAngleRange:
         begin: '0.046715186654504498'
         end: '0.20000000000000001'
+  ActiveConfiguration:
     DetectorName: HAADF
     DetectorType: ScanningDetector
     Inserted: 'true'
@@ -239,109 +245,96 @@ Detector:
       end: '0.20000000000000001'
 GasInjectionSystems: ''
 CustomProperties:
-  Aperture[C1]:
-    Name:
-      type: string
-      value: '2000'
-  Aperture[C2]:
-    Name:
-      type: string
-      value: '150'
-  Aperture[OBJ]:
-    Name:
-      type: string
-      value: None
-  Aperture[SA]:
-    Name:
-      type: string
-      value: None
-  BinaryResult:
-    AcquisitionArea:
-      bottom:
-        type: double
-        value: '1'
-      left:
-        type: double
-        value: '0'
-      right:
-        type: double
-        value: '1'
-      top:
-        type: double
-        value: '0'
-  Detectors[DualX1]:
-    CommercialName:
-      type: string
-      value: Dual-X
-    DetectorConfigID:
-      type: string
-      value: 7fbdbec3-c4f4-4ab3-addd-0658add03070
-    DistanceToSample:
-      type: double
-      value: '7.0199999999999996'
-    IncidentAngle:
-      type: double
-      value: '-0.34906585000000001'
-    SpectrumBeginEnergy:
-      type: long
-      value: '150'
-    Temperature:
-      type: double
-      value: '219.84999999999997'
-  Detectors[DualX2]:
-    CommercialName:
-      type: string
-      value: Dual-X
-    DetectorConfigID:
-      type: string
-      value: 7fbdbec3-c4f4-4ab3-addd-0658add03070
-    DistanceToSample:
-      type: double
-      value: '7.0199999999999996'
-    IncidentAngle:
-      type: double
-      value: '-0.34906585000000001'
-    SpectrumBeginEnergy:
-      type: long
-      value: '150'
-    Temperature:
-      type: double
-      value: '221.84999999999997'
-  Detectors[Fluscreen]:
-    Inserted:
-      type: bool
-      value: '0'
-  Optics:
-    BeamBlanked:
-      type: bool
-      value: '0'
-  Scan:
-    ScanTransformation:
-      A11:
-        type: double
-        value: '1'
-      A12:
-        type: double
-        value: '0'
-      A13:
-        type: double
-        value: '0'
-      A21:
-        type: double
-        value: '0'
-      A22:
-        type: double
-        value: '1'
-      A23:
-        type: double
-        value: '0'
+  Aperture[C1].Name:
+    type: string
+    value: '2000'
+  Aperture[C2].Name:
+    type: string
+    value: '150'
+  Aperture[OBJ].Name:
+    type: string
+    value: None
+  Aperture[SA].Name:
+    type: string
+    value: None
+  BinaryResult.AcquisitionArea.bottom:
+    type: double
+    value: '1'
+  BinaryResult.AcquisitionArea.left:
+    type: double
+    value: '0'
+  BinaryResult.AcquisitionArea.right:
+    type: double
+    value: '1'
+  BinaryResult.AcquisitionArea.top:
+    type: double
+    value: '0'
+  Detectors[DualX1].CommercialName:
+    type: string
+    value: Dual-X
+  Detectors[DualX1].DetectorConfigID:
+    type: string
+    value: 7fbdbec3-c4f4-4ab3-addd-0658add03070
+  Detectors[DualX1].DistanceToSample:
+    type: double
+    value: '7.0199999999999996'
+  Detectors[DualX1].IncidentAngle:
+    type: double
+    value: '-0.34906585000000001'
+  Detectors[DualX1].SpectrumBeginEnergy:
+    type: long
+    value: '150'
+  Detectors[DualX1].Temperature:
+    type: double
+    value: '219.84999999999997'
+  Detectors[DualX2].CommercialName:
+    type: string
+    value: Dual-X
+  Detectors[DualX2].DetectorConfigID:
+    type: string
+    value: 7fbdbec3-c4f4-4ab3-addd-0658add03070
+  Detectors[DualX2].DistanceToSample:
+    type: double
+    value: '7.0199999999999996'
+  Detectors[DualX2].IncidentAngle:
+    type: double
+    value: '-0.34906585000000001'
+  Detectors[DualX2].SpectrumBeginEnergy:
+    type: long
+    value: '150'
+  Detectors[DualX2].Temperature:
+    type: double
+    value: '221.84999999999997'
+  Detectors[Fluscreen].Inserted:
+    type: bool
+    value: '0'
+  Optics.BeamBlanked:
+    type: bool
+    value: '0'
+  Scan.ScanTransformation.A11:
+    type: double
+    value: '1'
+  Scan.ScanTransformation.A12:
+    type: double
+    value: '0'
+  Scan.ScanTransformation.A13:
+    type: double
+    value: '0'
+  Scan.ScanTransformation.A21:
+    type: double
+    value: '0'
+  Scan.ScanTransformation.A22:
+    type: double
+    value: '1'
+  Scan.ScanTransformation.A23:
+    type: double
+    value: '0'
   StemMagnification:
     type: double
     value: '14500'
-  Vacuum:
-    ValvesOpen:
-      type: bool
-      value: '1'
+  Vacuum.ValvesOpen:
+    type: bool
+    value: '1'
 Operations:
   DisplayLevelsOperation:
     0e5d7c5c8e8042d9ae753847a479dd65:
@@ -1868,11 +1861,24 @@ Operations:
           MetadataSchemaVersion: v1/2013/07
           guid: '00000000000000000000000000000000'
         Instrument:
+          ControlSoftwareVersion: 2.10.1
           Manufacturer: FEI Company
+          InstrumentId: '9953543'
+          InstrumentClass: Talos
+          InstrumentModel: Talos
           ComputerName: TALOSF-9953543
+        Acquisition:
+          AcquisitionStartDatetime:
+            DateTime: '1683922214'
+          AcquisitionDatetime:
+            DateTime: '0'
+          BeamType: ''
+          SourceType: SFEG
         Optics:
           GunLensSetting: '1'
           ExtractorVoltage: '4500'
+          AccelerationVoltage: '80000'
+          SpotIndex: '5'
           C1LensIntensity: '0.18007874086202763'
           C2LensIntensity: '0.53735048495642079'
           ObjectiveLensIntensity: '0.79786133252710034'
@@ -1881,12 +1887,15 @@ Operations:
           Projector1LensIntensity: '0.58924160881194898'
           Projector2LensIntensity: '0.98021738114573065'
           MiniCondenserLensIntensity: '0.61476558926006819'
+          BeamConvergence: '0.01575'
           ScreenCurrent: '0'
           LastMeasuredScreenCurrent: '4.8587396462493915e-09'
           FullScanFieldOfView:
             x: '8.1920000000000022e-06'
             y: '8.1920000000000022e-06'
           Focus: '0'
+          StemFocus: '0.00049394757581738011'
+          Defocus: '4.357877185027627e-07'
           HighMagnificationMode: None
           Apertures:
             Aperture-0:
@@ -1925,21 +1934,40 @@ Operations:
               PositionOffset:
                 x: '0.00013104000000000002'
                 y: '-0.00066224000000000003'
+          OperatingMode: '2'
+          TemOperatingSubMode: None
+          ProjectorMode: '1'
           EFTEMOn: 'false'
           ObjectiveLensMode: HM
           IlluminationMode: None
           ProbeMode: '1'
+          CameraLength: '0.20499999999999999'
         EnergyFilter:
           EntranceApertureType: ''
+        Stage:
+          Position:
+            x: '-3.5551395000000088e-05'
+            y: '2.7880518000000015e-05'
+            z: '-0.00016588146'
+          AlphaTilt: '-0.00010274500000013157'
+          BetaTilt: '8.4731148788705459e-06'
+          HolderType: FEI Double Tilt
         Scan:
+          ScanSize:
+            width: '2048'
+            height: '2048'
+          DwellTime: '0.0001'
           ScanArea:
             left: '0'
             top: '0'
             right: '1'
             bottom: '1'
           MainsLockOn: 'false'
+          LineTime: '0.20730000000000001'
           LineIntegrationCount: '1'
           LineInterlacing: '1'
+          FrameTime: '424.55040000000002'
+          ScanRotation: '0'
         Vacuum:
           VacuumMode: Ready
         Detectors:
@@ -2030,90 +2058,87 @@ Operations:
           AcquisitionUnit: ''
           CompositionType: ''
           Detector: DualX
+          PixelSize:
+            width: '4.0000000000000011e-09'
+            height: '4.0000000000000011e-09'
+          PixelUnitX: m
+          PixelUnitY: m
           Offset:
             x: '-4.0960000000000011e-06'
             y: '-4.0960000000000011e-06'
           Encoding: ''
+        Sample: ''
         GasInjectionSystems: ''
         CustomProperties:
-          Aperture[C1]:
-            Name:
-              type: string
-              value: '2000'
-          Aperture[C2]:
-            Name:
-              type: string
-              value: '150'
-          Aperture[OBJ]:
-            Name:
-              type: string
-              value: None
-          Aperture[SA]:
-            Name:
-              type: string
-              value: None
-          Detectors[DualX1]:
-            CommercialName:
-              type: string
-              value: Dual-X
-            DetectorConfigID:
-              type: string
-              value: 7fbdbec3-c4f4-4ab3-addd-0658add03070
-            DistanceToSample:
-              type: double
-              value: '7.0199999999999996'
-            IncidentAngle:
-              type: double
-              value: '-0.34906585000000001'
-            SpectrumBeginEnergy:
-              type: long
-              value: '150'
-            Temperature:
-              type: double
-              value: '220.84999999999997'
-          Detectors[DualX2]:
-            CommercialName:
-              type: string
-              value: Dual-X
-            DetectorConfigID:
-              type: string
-              value: 7fbdbec3-c4f4-4ab3-addd-0658add03070
-            DistanceToSample:
-              type: double
-              value: '7.0199999999999996'
-            IncidentAngle:
-              type: double
-              value: '-0.34906585000000001'
-            SpectrumBeginEnergy:
-              type: long
-              value: '150'
-            Temperature:
-              type: double
-              value: '222.44999999999999'
-          Detectors[DualX]:
-            Selected:
-              type: bool
-              value: '1'
-          Scan:
-            ScanTransformation:
-              A11:
-                type: double
-                value: '1'
-              A12:
-                type: double
-                value: '0'
-              A13:
-                type: double
-                value: '0.020808495581150055'
-              A21:
-                type: double
-                value: '0'
-              A22:
-                type: double
-                value: '1'
-              A23:
-                type: double
-                value: '-0.032149676233530045'
+          Aperture[C1].Name:
+            type: string
+            value: '2000'
+          Aperture[C2].Name:
+            type: string
+            value: '150'
+          Aperture[OBJ].Name:
+            type: string
+            value: None
+          Aperture[SA].Name:
+            type: string
+            value: None
+          Detectors[DualX1].CommercialName:
+            type: string
+            value: Dual-X
+          Detectors[DualX1].DetectorConfigID:
+            type: string
+            value: 7fbdbec3-c4f4-4ab3-addd-0658add03070
+          Detectors[DualX1].DistanceToSample:
+            type: double
+            value: '7.0199999999999996'
+          Detectors[DualX1].IncidentAngle:
+            type: double
+            value: '-0.34906585000000001'
+          Detectors[DualX1].SpectrumBeginEnergy:
+            type: long
+            value: '150'
+          Detectors[DualX1].Temperature:
+            type: double
+            value: '220.84999999999997'
+          Detectors[DualX2].CommercialName:
+            type: string
+            value: Dual-X
+          Detectors[DualX2].DetectorConfigID:
+            type: string
+            value: 7fbdbec3-c4f4-4ab3-addd-0658add03070
+          Detectors[DualX2].DistanceToSample:
+            type: double
+            value: '7.0199999999999996'
+          Detectors[DualX2].IncidentAngle:
+            type: double
+            value: '-0.34906585000000001'
+          Detectors[DualX2].SpectrumBeginEnergy:
+            type: long
+            value: '150'
+          Detectors[DualX2].Temperature:
+            type: double
+            value: '222.44999999999999'
+          Detectors[DualX].Selected:
+            type: bool
+            value: '1'
+          Scan.ScanTransformation.A11:
+            type: double
+            value: '1'
+          Scan.ScanTransformation.A12:
+            type: double
+            value: '0'
+          Scan.ScanTransformation.A13:
+            type: double
+            value: '0.020808495581150055'
+          Scan.ScanTransformation.A21:
+            type: double
+            value: '0'
+          Scan.ScanTransformation.A22:
+            type: double
+            value: '1'
+          Scan.ScanTransformation.A23:
+            type: double
+            value: '-0.032149676233530045'
           StemMagnification:
             type: double
             value: '14500'

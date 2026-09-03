@@ -2,11 +2,82 @@
 	"Instrument": {
 		"Name": "string",
 		"ID": "string",
-		"Description": "string"
+		"Manufacturer": "string",
+		"Model": "string",
+		"Type": "string",
+		"Description": "string",
+		"ComputerName": "string",
+		"Vacuum": "object"
+	},
+	"Acquisition": {
+		"Operator": {
+			"Name": "string"
+		}
+	},
+	"ElectronSource": {
+		"Type": "string"
+	},
+	"ElectronBeam": {
+		"Type": "string",
+		"Mode": "string",
+		"Focus": "number",
+		"SpotSize": "number",
+		"SpotIndex": "integer",
+		"WorkingDistance": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"AccelerationVoltage": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"Current": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"EmissionCurrent": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"ConvergenceAngle": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"Defocus": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"Shift": {
+			"X": "number",
+			"Y": "number"
+		},
+		"SourceTilt": {
+			"X": "number",
+			"Y": "number"
+		},
+		"Stigmator": {
+			"X": "number",
+			"Y": "number"
+		},
+		"HighVoltage": "object"
+	},
+	"ElectronOptics": {
+		"CameraLength": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"OperatingMode": "string",
+		"OperatingSubMode": "string",
+		"ProjectorMode": "string",
+		"Apertures": "object"
 	},
 	"Image": {
 		"Name": "string",
 		"ID": "string",
+		"Type": "string",
+		"CropHint": "object",
+		"Corrections": "object",
+		"BinaryResult": "object",
 		"AcquisitionDate": "string",
 		"InstrumentName": "string",
 		"InstrumentID": "string",
@@ -66,7 +137,12 @@
 			"Color": "integer",
 			"SamplesPerPixel": "integer",
 			"Description": "string"
-		}
+		},
+		"BoundingBoxLeft": "integer",
+		"BoundingBoxRight": "integer",
+		"BoundingBoxTop": "integer",
+		"BoundingBoxBottom": "integer",
+		"InvertedSignal": "boolean"
 	},
 	"Settings": {
 		"CameraSettings": {
@@ -153,6 +229,8 @@
 			"ID": "string",
 			"CorrectionCollarPosition": "string",
 			"NumericalApertureSetting": "string",
+			"Medium": "string",
+			"RefractiveIndex": "number",
 			"MeasuredRefractiveIndex": "number",
 			"Temperature": "number",
 			"TemperatureUnit": "string",
@@ -691,7 +769,8 @@
 			"SamplePreparationMethodTermAccession": "string",
 			"MetrologySample": "boolean",
 			"FacingTheObjective": "string",
-			"Description": "string"
+			"Description": "string",
+			"SampleId": "string"
 		},
 		"Fluorophore": {
 			"Name": "string",
@@ -946,6 +1025,11 @@
 		}
 	},
 	"Detector": {
+		"Name": "string",
+		"Manufacturer": "string",
+		"Model": "string",
+		"Type": "string",
+		"Configuration": "object",
 		"PointDetector": {
 			"HybridPhotoDetector": {
 				"Coating": "string",
@@ -1265,10 +1349,50 @@
 			"RelayLens": "string",
 			"Description": "string",
 			"WavelengthRange": "array"
-		}
+		},
+		"Brightness": "number",
+		"ConsumerBrightness": "number",
+		"ConsumerContrast": "number",
+		"Contrast": "number",
+		"DetectorName": "string",
+		"Gain": "integer",
+		"Pmt": "number"
 	},
 	"SamplePositioning": {
 		"Stage": {
+			"RawPosition": "object",
+			"Bias": "object",
+			"MultiStage": "object",
+			"Position": {
+				"X": {
+					"Value": "number",
+					"Unit": "string"
+				},
+				"Y": {
+					"Value": "number",
+					"Unit": "string"
+				},
+				"Z": {
+					"Value": "number",
+					"Unit": "string"
+				}
+			},
+			"Tilt": {
+				"Value": "number",
+				"Unit": "string",
+				"Alpha": {
+					"Value": "number",
+					"Unit": "string"
+				},
+				"Beta": {
+					"Value": "number",
+					"Unit": "string"
+				}
+			},
+			"Rotation": {
+				"Value": "number",
+				"Unit": "string"
+			},
 			"StageInsert": {
 				"Name": "string",
 				"ID": "string",
@@ -1371,7 +1495,17 @@
 				"LotNumber": "string",
 				"SpecsFile": "string",
 				"Description": "string"
-			}
+			},
+			"NavCoordinate": "integer",
+			"StagePosR": "number",
+			"StagePosT": "number",
+			"StagePosX": "number",
+			"StagePosY": "number",
+			"StagePosZ": "number",
+			"StageType": "string",
+			"AlphaTilt": "string",
+			"BetaTilt": "string",
+			"HolderType": "string"
 		},
 		"Focusing": {
 			"Z-Drive": {
@@ -2148,5 +2282,338 @@
 			"LightSensor": "string",
 			"Description": "string"
 		}
+	},
+	"BeamDownX": "integer",
+	"BeamDownY": "integer",
+	"BeamUpX": "integer",
+	"BeamUpY": "integer",
+	"Condenser2": "integer",
+	"ElectricMoveX": "number",
+	"ElectricMoveY": "number",
+	"ElectricRotate": "number",
+	"ImagingMode": "integer",
+	"TiltX": "number",
+	"TiltY": "number",
+	"VisibleMultiple": "integer",
+	"Hv": {
+		"Bv": "number",
+		"Bia": "number",
+		"Cv": "number",
+		"ExtCurrent": "number",
+		"ExtVoltage": "number",
+		"Fv": "number",
+		"FcCurrent": "number",
+		"FcVoltage": "number",
+		"HighEmissionMode": "boolean",
+		"HvCurrent": "number",
+		"HvMode": "integer",
+		"HvVoltage": "number",
+		"Mid10KvVoltage": "number",
+		"Sv": "number",
+		"SchCurrent": "number",
+		"SchVoltage": "number"
+	},
+	"Other": {
+		"BottomInfoVacuum": "string"
+	},
+	"Scan": {
+		"FieldOfView": {
+			"X": {
+				"Value": "number",
+				"Unit": "string"
+			},
+			"Y": {
+				"Value": "number",
+				"Unit": "string"
+			}
+		},
+		"Rotation": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"LineTime": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"FrameTime": {
+			"Value": "number",
+			"Unit": "string"
+		},
+		"LineIntegrationCount": "integer",
+		"Drift": "boolean",
+		"FramAdd": "integer",
+		"Interlaced": "string",
+		"LineAdd": "integer",
+		"ScanHw": "string",
+		"AcqHw": "string",
+		"SpotPresetName": "string",
+		"Interlace": "integer",
+		"DetectorMixFactors": {
+			"BsdA": "integer",
+			"BsdB": "integer",
+			"BsdC": "integer",
+			"BsdD": "integer",
+			"Sed": "integer",
+			"Stem": "integer"
+		},
+		"MixFactor": "integer",
+		"A": "string",
+		"B": "string",
+		"C": "string",
+		"D": "string",
+		"SourceId": "integer",
+		"EmissionCurrentPresetName": "null",
+		"ScanScale": "integer",
+		"ScanSize": {
+			"Width": "string",
+			"Height": "string"
+		},
+		"MainsLockOn": "string",
+		"LineInterlacing": "string",
+		"LineAvg": "integer",
+		"Units": "string",
+		"Ux": "number",
+		"Uy": "integer",
+		"Vx": "integer",
+		"Vy": "number",
+		"AppliedScaleCorrection": "integer"
+	},
+	"TiltCorrect": {
+		"CorrectAngle": "number",
+		"IonWorkTilt": "number",
+		"IsTiltCorrent": "boolean",
+		"PreTiltAngle": "number",
+		"TiltCompensateMode": "integer"
+	},
+	"BottomInfoShowEnable": "integer",
+	"DateTimeFmt": "string",
+	"MagType": "integer",
+	"RulerText": "string",
+	"VacuumType": "integer",
+	"Vacuum": {
+		"BufferVacuum": "number",
+		"GunVacuum": "number",
+		"SampleVacuum": "number",
+		"VacuumMode": "string"
+	},
+	"DatabarHeight": "integer",
+	"DatabarFields": "integer",
+	"DatabarLabel": "null",
+	"DisplayWidth": "integer",
+	"Integrations": "integer",
+	"CropHint": {
+		"Left": "integer",
+		"Top": "integer",
+		"Right": "integer",
+		"Bottom": "integer"
+	},
+	"MultiStage": {
+		"SampleRadius": {
+			"Unit": "string",
+			"Value": "integer"
+		},
+		"SampleHeight": {
+			"Unit": "string",
+			"Value": "integer"
+		}
+	},
+	"AppliedContrast": "number",
+	"AppliedBrightness": "number",
+	"AppliedGamma": "integer",
+	"DisplayBlackLevel": "integer",
+	"DisplayWhiteLevel": "integer",
+	"SamplePressureEstimate": "number",
+	"ApplicationId": "null",
+	"Core": {
+		"MetadataDefinitionVersion": "string",
+		"MetadataSchemaVersion": "string",
+		"Guid": "string"
+	},
+	"GunLensSetting": "string",
+	"ExtractorVoltage": "string",
+	"1LensIntensity": "string",
+	"2LensIntensity": "string",
+	"ObjectiveLensIntensity": "string",
+	"IntermediateLensIntensity": "string",
+	"DiffractionLensIntensity": "string",
+	"Projector1LensIntensity": "string",
+	"Projector2LensIntensity": "string",
+	"MiniCondenserLensIntensity": "string",
+	"ScreenCurrent": "string",
+	"LastMeasuredScreenCurrent": "string",
+	"HighMagnificationMode": "string",
+	"Number": "string",
+	"MechanismType": "string",
+	"Enabled": "string",
+	"EftemOn": "string",
+	"ObjectiveLensMode": "string",
+	"IlluminationMode": "string",
+	"ProbeMode": "string",
+	"EnergyFilter": {
+		"EntranceApertureType": "string"
+	},
+	"DetectorType": "string",
+	"ExposureMode": "string",
+	"DarkGainCorrectionType": "string",
+	"Inserted": "string",
+	"ElevationAngle": "string",
+	"AzimuthAngle": "string",
+	"CollectionAngle": "string",
+	"Dispersion": "string",
+	"PulseProcessTime": "string",
+	"RealTime": "string",
+	"LiveTime": "string",
+	"InputCountRate": "string",
+	"OutputCountRate": "string",
+	"AnalyticalDetectorShutterState": "string",
+	"OffsetEnergy": "string",
+	"ElectronicsNoise": "string",
+	"BeginEnergy": "string",
+	"CollectionAngleRange": {
+		"Begin": "string",
+		"End": "string"
+	},
+	"AcquisitionUnit": "string",
+	"CompositionType": "string",
+	"PixelUnitX": "string",
+	"PixelUnitY": "string",
+	"Encoding": "string",
+	"GasInjectionSystems": "string",
+	"DisplayLevelsOperation": {
+		"07C53Cacbd7C4Da8B72746327D824D52": {
+			"Outputs": {
+				"OutputIndex": "string",
+				"Operation": "string",
+				"InputIndex": "string"
+			}
+		},
+		"2Ec3A7D699Db46678D0E3Bd5A03E43B3": {
+			"Outputs": {
+				"OutputIndex": "string",
+				"Operation": "string",
+				"InputIndex": "string"
+			}
+		},
+		"3B80E8F0C8F2458295B46A628Fdeb877": {
+			"Outputs": {
+				"OutputIndex": "string",
+				"Operation": "string",
+				"InputIndex": "string"
+			}
+		},
+		"973Eff94D21C4Db4B9D4F0Afae9D056A": {
+			"Outputs": {
+				"OutputIndex": "string",
+				"Operation": "string",
+				"InputIndex": "string"
+			}
+		},
+		"Bd9Db81B963B4De2B46Dd045A706Caf9": {
+			"Outputs": {
+				"OutputIndex": "string",
+				"Operation": "string",
+				"InputIndex": "string"
+			}
+		},
+		"E0A6Db0Ea1E84395Ae7E838121592F3C": {
+			"Outputs": {
+				"OutputIndex": "string",
+				"Operation": "string",
+				"InputIndex": "string"
+			}
+		},
+		"Ef103366Bff14811Bd09A70C2A03708C": {
+			"Outputs": {
+				"OutputIndex": "string",
+				"Operation": "string",
+				"InputIndex": "string"
+			}
+		},
+		"F19650074Ab44930A090E21A90Ef61D1": {
+			"Outputs": {
+				"OutputIndex": "string",
+				"Operation": "string",
+				"InputIndex": "string"
+			}
+		}
+	},
+	"DataPath": "string",
+	"ColormixSelection": {
+		"Name": "string",
+		"Color": "string",
+		"Selected": "string",
+		"Stem": "string"
+	},
+	"ElementProperties": {
+		"Element": "string",
+		"XrayTransitions": "string",
+		"AtomicShellFamily": "string",
+		"Quantify": "string",
+		"IncludeInAutoPeakId": "string",
+		"DefaultLineSelect": "string"
+	},
+	"ElementSelection": "array",
+	"ElementsIdentified": "string",
+	"UseAbsorptionCorrection": "string",
+	"SampleThickness": "string",
+	"UseDensity": "string",
+	"CalibrationError": "string",
+	"IonizationCrossSectionModel": "string",
+	"BackgroundCorrection": {
+		"BackgroundWindows": "string",
+		"UseManualBackgroundWindows": "string",
+		"BackgroundModel": "string",
+		"BackgroundModelModeled": {
+			"UseBackgroundWindows": "string"
+		},
+		"BackgroundModelMultiPoly": {
+			"UseBackgroundWindows": "string",
+			"PeakOrder": "string",
+			"BackgroundOrder": "string"
+		}
+	},
+	"QuantificationMode": "string",
+	"QuantificationKernelFilter": "string",
+	"UseQuantificationKernelFilter": "string",
+	"QuantificationKernelFilterSigma": "string",
+	"QuantificationKernelFilterSize": "string",
+	"QuantificationWienerFilterFrequency": "string",
+	"QuantificationRadialFilterEdge": "string",
+	"UseSpectralFilter": "string",
+	"SpectralFilter": "string",
+	"SpectralFilterSigma": "string",
+	"SpectralFilterSize": "string",
+	"UseOptimizedCalibration": "string",
+	"Blend": {
+		"Input": "string",
+		"Mode": "string",
+		"Factor": "string"
+	},
+	"Operations": {
+		"MixOperation": "string",
+		"ImageQuantificationOperation": "string",
+		"StemInputOperation": "string",
+		"SpectrumQuantificationOperation": "string",
+		"IntegrationRectangleOperation": "string",
+		"EdsInputOperation": "string"
+	},
+	"Features": {
+		"IntegratedSpectraFeature": "string",
+		"SiFeature": "string"
+	},
+	"CustomProperties": "object",
+	"DetectorMetadata": "null",
+	"DetectorIndex": "string",
+	"Date": "string",
+	"SupportsTransparency": "boolean",
+	"TransparentPixelValue": "integer",
+	"BiasType": "null",
+	"Volts": "integer",
+	"Invert": "boolean",
+	"XBrightSlope": "integer",
+	"YBrightSlope": "integer",
+	"RBrightSlope": "integer",
+	"Microscope": {
+		"SystemVacuum": "integer"
 	}
 }

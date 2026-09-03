@@ -1,4 +1,10 @@
-Software: 1.2
+Software:
+  AcquisitionSoftware:
+    Version: ZEISS Atlas 5 Client v5.3.2
+  Date: '1899-12-30T00:00:00.000+01:00'
+  SupportsTransparency: true
+  TransparentPixelValue: 0
+  Version: 1.2
 Image:
   Pixels:
     SizeX: 50595
@@ -69,22 +75,22 @@ SamplePositioning:
       value: 0
     RawPosition:
       X:
-        units: um
-        value: 0
+        Unit: um
+        Value: 0
       Y:
-        units: um
-        value: 0
+        Unit: um
+        Value: 0
       Z:
-        units: um
-        value: 0
+        Unit: um
+        Value: 0
       Tilt:
-        units: deg
-        value: 0
+        Unit: deg
+        Value: 0
       Rot:
-        units: deg
-        value: 0
+        Unit: deg
+        Value: 0
       M:
-        units: mm
-        value: 0
+        Unit: mm
+        Value: 0
 Microscope:
   SystemVacuum: 0
