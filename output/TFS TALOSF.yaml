@@ -62,42 +62,42 @@ ElectronOptics:
   Focus: '0'
   HighMagnificationMode: None
   Apertures:
-    Aperture-0:
-      Name: C1
-      Number: '1'
-      MechanismType: Motorized
-      Type: Circular
-      Diameter: '0.002'
-      Enabled: '0'
-      PositionOffset:
-        x: '0.00058848000000000006'
-        y: '0.00154032'
-    Aperture-1:
-      Name: C2
-      Number: '2'
-      MechanismType: Motorized
-      Type: Circular
-      Diameter: '0.00014999999999999999'
-      Enabled: '0'
-      PositionOffset:
-        x: '0.00029952000000000001'
-        y: '0.0006912'
-    Aperture-2:
-      Name: OBJ
-      Number: '4'
-      MechanismType: Motorized
-      Type: None
-      PositionOffset:
-        x: '1.984e-05'
-        y: '-0.00061936000000000001'
-    Aperture-3:
-      Name: SA
-      Number: '5'
-      MechanismType: Motorized
-      Type: None
-      PositionOffset:
-        x: '0.00013104000000000002'
-        y: '-0.00066224000000000003'
+  - Name: C1
+    Number: '1'
+    MechanismType: Motorized
+    Type: Circular
+    Diameter: '0.002'
+    Enabled: '0'
+    PositionOffset:
+      x: '0.00058848000000000006'
+      y: '0.00154032'
+    id: Aperture-0
+  - Name: C2
+    Number: '2'
+    MechanismType: Motorized
+    Type: Circular
+    Diameter: '0.00014999999999999999'
+    Enabled: '0'
+    PositionOffset:
+      x: '0.00029952000000000001'
+      y: '0.0006912'
+    id: Aperture-1
+  - Name: OBJ
+    Number: '4'
+    MechanismType: Motorized
+    Type: None
+    PositionOffset:
+      x: '1.984e-05'
+      y: '-0.00061936000000000001'
+    id: Aperture-2
+  - Name: SA
+    Number: '5'
+    MechanismType: Motorized
+    Type: None
+    PositionOffset:
+      x: '0.00013104000000000002'
+      y: '-0.00066224000000000003'
+    id: Aperture-3
   OperatingMode: '2'
   OperatingSubMode: None
   ProjectorMode: '1'
@@ -150,89 +150,89 @@ SamplePreparation:
     SampleId: '6232'
 Detector:
   Configuration:
-    Detector-0:
-      DetectorName: BM-Ceta
-      DetectorType: ImagingDetector
-      ExposureMode: ''
-      Binning:
-        width: '1'
-        height: '1'
-      ReadOutArea:
-        left: '0'
-        top: '0'
-        right: '4096'
-        bottom: '4096'
-      ExposureTime: '0.5'
-      Shutters:
-        Shutter-0:
-          Position: PostSpecimen
-          Type: Electrostatic
-      DarkGainCorrectionType: '3'
-    Detector-1:
-      DetectorName: DualX1
-      DetectorType: AnalyticalDetector
-      Inserted: 'true'
-      Enabled: 'true'
-      ElevationAngle: '0.34906585000000001'
-      AzimuthAngle: '1.5707963267948966'
-      CollectionAngle: '0.90101100000000001'
-      Dispersion: '5'
-      PulseProcessTime: '2.9081620097620193e-06'
-      RealTime: '424.70166195152729'
-      LiveTime: '285.18219999999997'
-      InputCountRate: '132519'
-      OutputCountRate: '88985'
-      AnalyticalDetectorShutterState: '1'
-      OffsetEnergy: '-480.05000000000001'
-      ElectronicsNoise: '12.145301744118672'
-      BeginEnergy: '150'
-    Detector-2:
-      DetectorName: DualX2
-      DetectorType: AnalyticalDetector
-      Inserted: 'true'
-      Enabled: 'true'
-      ElevationAngle: '0.34906585000000001'
-      AzimuthAngle: '-1.5707963267948966'
-      CollectionAngle: '0.90101100000000001'
-      Dispersion: '5'
-      PulseProcessTime: '2.9081620097620193e-06'
-      RealTime: '424.70166195152729'
-      LiveTime: '285.18219999999997'
-      InputCountRate: '132519'
-      OutputCountRate: '88985'
-      AnalyticalDetectorShutterState: '1'
-      OffsetEnergy: '-480.05000000000001'
-      ElectronicsNoise: '13.249420084493098'
-      BeginEnergy: '150'
-    Detector-3:
-      DetectorName: Flucam
-      DetectorType: ImagingDetector
-      ExposureMode: ''
-      Gain: '0.69999999999999996'
-      Binning:
-        width: '2'
-        height: '2'
-      ReadOutArea:
-        left: '0'
-        top: '0'
-        right: '512'
-        bottom: '512'
-      ExposureTime: '0.0016000000000000001'
-      Shutters:
-        Shutter-0:
-          Position: None
-          Type: Electrostatic
-      DarkGainCorrectionType: '3'
-    Detector-4:
-      DetectorName: HAADF
-      DetectorType: ScanningDetector
-      Inserted: 'true'
-      Enabled: 'true'
-      Gain: '18.579199760535872'
-      Offset: '-4.5638399999999999'
-      CollectionAngleRange:
-        begin: '0.046715186654504498'
-        end: '0.20000000000000001'
+  - DetectorName: BM-Ceta
+    DetectorType: ImagingDetector
+    ExposureMode: ''
+    Binning:
+      width: '1'
+      height: '1'
+    ReadOutArea:
+      left: '0'
+      top: '0'
+      right: '4096'
+      bottom: '4096'
+    ExposureTime: '0.5'
+    Shutters:
+      Shutter-0:
+        Position: PostSpecimen
+        Type: Electrostatic
+    DarkGainCorrectionType: '3'
+    id: Detector-0
+  - DetectorName: DualX1
+    DetectorType: AnalyticalDetector
+    Inserted: 'true'
+    Enabled: 'true'
+    ElevationAngle: '0.34906585000000001'
+    AzimuthAngle: '1.5707963267948966'
+    CollectionAngle: '0.90101100000000001'
+    Dispersion: '5'
+    PulseProcessTime: '2.9081620097620193e-06'
+    RealTime: '424.70166195152729'
+    LiveTime: '285.18219999999997'
+    InputCountRate: '132519'
+    OutputCountRate: '88985'
+    AnalyticalDetectorShutterState: '1'
+    OffsetEnergy: '-480.05000000000001'
+    ElectronicsNoise: '12.145301744118672'
+    BeginEnergy: '150'
+    id: Detector-1
+  - DetectorName: DualX2
+    DetectorType: AnalyticalDetector
+    Inserted: 'true'
+    Enabled: 'true'
+    ElevationAngle: '0.34906585000000001'
+    AzimuthAngle: '-1.5707963267948966'
+    CollectionAngle: '0.90101100000000001'
+    Dispersion: '5'
+    PulseProcessTime: '2.9081620097620193e-06'
+    RealTime: '424.70166195152729'
+    LiveTime: '285.18219999999997'
+    InputCountRate: '132519'
+    OutputCountRate: '88985'
+    AnalyticalDetectorShutterState: '1'
+    OffsetEnergy: '-480.05000000000001'
+    ElectronicsNoise: '13.249420084493098'
+    BeginEnergy: '150'
+    id: Detector-2
+  - DetectorName: Flucam
+    DetectorType: ImagingDetector
+    ExposureMode: ''
+    Gain: '0.69999999999999996'
+    Binning:
+      width: '2'
+      height: '2'
+    ReadOutArea:
+      left: '0'
+      top: '0'
+      right: '512'
+      bottom: '512'
+    ExposureTime: '0.0016000000000000001'
+    Shutters:
+      Shutter-0:
+        Position: None
+        Type: Electrostatic
+    DarkGainCorrectionType: '3'
+    id: Detector-3
+  - DetectorName: HAADF
+    DetectorType: ScanningDetector
+    Inserted: 'true'
+    Enabled: 'true'
+    Gain: '18.579199760535872'
+    Offset: '-4.5638399999999999'
+    CollectionAngleRange:
+      begin: '0.046715186654504498'
+      end: '0.20000000000000001'
+    id: Detector-4
   ActiveConfiguration:
     DetectorName: HAADF
     DetectorType: ScanningDetector

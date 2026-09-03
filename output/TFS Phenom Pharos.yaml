@@ -95,33 +95,33 @@ ElectronBeam:
     Value: 3.334999999999997
 Detector:
   Configuration:
-    QBSD:
-      gain: 45
-      offset: -1.444569852509731
-      mixFactor: 1
-      A: +
-      B: +
-      C: +
-      D: +
-    SED:
-      gain: 0
-      offset: 0
-      scintillatorVoltage: 0
-      mixFactor: 0
-    STEM:
-      mixFactor: 0
-      segmentSelection:
-        bf1: true
-        bf2: true
-        bf3: true
-        bf4: true
-        df1: true
-        ha1: true
-        ha2: true
-        ha3: true
-        ha4: true
-        ha5: true
-        ha6: true
+  - gain: 45
+    offset: -1.444569852509731
+    mixFactor: 1
+    A: +
+    B: +
+    C: +
+    D: +
+    id: QBSD
+  - gain: 0
+    offset: 0
+    scintillatorVoltage: 0
+    mixFactor: 0
+    id: SED
+  - mixFactor: 0
+    segmentSelection:
+      bf1: true
+      bf2: true
+      bf3: true
+      bf4: true
+      df1: true
+      ha1: true
+      ha2: true
+      ha3: true
+      ha4: true
+      ha5: true
+      ha6: true
+    id: STEM
 Software:
   AcquisitionSoftware:
     Version: 6.6.0.rel.d7a92301af.27465

@@ -9,8 +9,8 @@ Settings:
   ObjectiveSettings:
     Medium: Oil
     RefractiveIndex: 1.518
-CustomProperties:
-  Geometry:
+Annotation:
+- Geometry:
     SamplingSizes:
       DeltaX: 0.064967
       DeltaXState: Reported
@@ -71,7 +71,9 @@ CustomProperties:
     MicroscopeSpecState: Reported
     ExPhotonCnt: 1
     ExPhotonCntState: Default
-    RefrIndexMedium: 1.458
+    SamplePreparation:
+      MountingMedium:
+        RefractiveIndex: 1.458
     RefrIndexMediumState: Estimated
     RefrIndexLensMedium: 1.518
     RefrIndexLensMediumState: Reported
@@ -122,7 +124,9 @@ CustomProperties:
     MicroscopeSpecState: Reported
     ExPhotonCnt: 1
     ExPhotonCntState: Default
-    RefrIndexMedium: 1.458
+    SamplePreparation:
+      MountingMedium:
+        RefractiveIndex: 1.458
     RefrIndexMediumState: Estimated
     RefrIndexLensMedium: 1.518
     RefrIndexLensMediumState: Reported
@@ -147,6 +151,9 @@ CustomProperties:
     - String: Parameter states and STED, SPIM and pdim parameters;
     - String: Scaling factors;
     - String: Array detector STED;
-    HuygensVersion: 24.10.0p6
-    OmeWriterVersion: 1.3p0
     FeatureCnt: 5
+  Software:
+    SoftwareModule:
+      Version: 24.10.0p6
+    AcquisitionSoftware:
+      Version: 1.3p0
