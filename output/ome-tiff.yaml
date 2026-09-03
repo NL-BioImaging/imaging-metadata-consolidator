@@ -34,7 +34,7 @@ CustomProperties:
       InterFacePrimaryState: Estimated
       InterFaceSecondary: 999993.616
       InterFaceSecondaryState: Default
-  RandomData:
+  ChannelData:
   - MicrParamData:
       Mode: fluorescence
       ModeState: Estimated

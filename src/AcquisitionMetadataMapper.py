@@ -187,6 +187,34 @@ class AcquisitionMetadataMapper:
 
         return self._apply_mappings(metadata)
 
+    def unmatched_fields(self, metadata):
+        """List the output paths of leaf fields not represented in schema.extended.json.
+
+        Converts `metadata`, then walks the *full* output and flags every
+        leaf whose complete path is not itself a leaf declared in the
+        schema. This deliberately looks past mappings.json's whole-segment
+        wildcard rules (see `_resolve_whole_segment_wildcard_path`): a rule
+        collapsing a vendor-specific subtree into a generic object-typed
+        container (e.g. CustomProperties) makes conversion succeed, but the
+        individual fields inside that subtree are still not modelled by the
+        schema, so they must still count as unmatched here.
+        """
+        converted = self.convert_metadata(metadata)
+        schema_leaf_paths = set(self._schema_leaf_paths(self.schema))
+
+        unmatched = []
+
+        def walk(node, path=''):
+            for key, value in node.items():
+                current = f'{path}.{key}' if path else str(key)
+                if isinstance(value, dict):
+                    walk(value, current)
+                elif current not in schema_leaf_paths:
+                    unmatched.append(current)
+
+        walk(converted)
+        return unmatched
+
 
 def resolve_exact_path(source_path, mappings):
     """Resolve a dotted source path via an exact mapping entry, or None."""
