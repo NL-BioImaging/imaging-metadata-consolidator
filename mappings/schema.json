@@ -2,8 +2,7 @@
 	"Instrument": {
 		"Name": "string",
 		"ID": "string",
-		"Description": "string",
-		"Tier": "integer"
+		"Description": "string"
 	},
 	"Image": {
 		"Name": "string",
@@ -15,7 +14,6 @@
 		"FocusStabilizationDevice": "array",
 		"AcquisitionSoftware": "array",
 		"Description": "string",
-		"Tier": "integer",
 		"Pixels": {
 			"ID": "string",
 			"DimensionOrder": "string",
@@ -35,8 +33,7 @@
 			"PixelType": "string",
 			"Interleaved": "boolean",
 			"SignificantBits": "integer",
-			"BigEndian": "boolean",
-			"Tier": "integer"
+			"BigEndian": "boolean"
 		},
 		"Plane": {
 			"ID": "string",
@@ -58,8 +55,7 @@
 			"PlaneXOffset": "number",
 			"PlaneYOffset": "number",
 			"PlaneZOffset": "number",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Channel": {
 			"Name": "string",
@@ -69,8 +65,7 @@
 			"ContrastMethod": "string",
 			"Color": "integer",
 			"SamplesPerPixel": "integer",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Settings": {
@@ -89,27 +84,23 @@
 			"AnalogGain": "number",
 			"AmplificationGain": "number",
 			"Offset": "number",
-			"OffsetMode": "string",
-			"Tier": "integer"
+			"OffsetMode": "string"
 		},
 		"MicroscopeTableSettings": {
 			"ID": "string",
-			"Floating": "boolean",
-			"Tier": "integer"
+			"Floating": "boolean"
 		},
 		"PrismSettings": {
 			"ID": "string",
 			"PositionSetting": "string",
 			"TransmissionWavelengthRangeSettings": "array",
-			"ReflectionWavelengthRangeSettings": "array",
-			"Tier": "integer"
+			"ReflectionWavelengthRangeSettings": "array"
 		},
 		"MicroscopeStandSettings": {
 			"ID": "string",
 			"TotalEffectiveMagnification": "number",
 			"FieldOfView": "number",
-			"FieldOfViewUnit": "string",
-			"Tier": "integer"
+			"FieldOfViewUnit": "string"
 		},
 		"LightSourceSettings": {
 			"ID": "string",
@@ -117,16 +108,14 @@
 			"lluminationPowerSettingsUnit": "string",
 			"Attenuation": "number",
 			"AttenuationMethod": "string",
-			"UsedAcoustoOpticalDevice": "boolean",
-			"Tier": "integer"
+			"UsedAcoustoOpticalDevice": "boolean"
 		},
 		"ShutterSettings": {
 			"ID": "string",
 			"OpenDuringZMovement": "boolean",
 			"ApertureDiameter": "number",
 			"ApertureDiameterUnit": "string",
-			"Mode": "string",
-			"Tier": "integer"
+			"Mode": "string"
 		},
 		"GenericDetectorSettings": {
 			"ID": "string",
@@ -134,14 +123,12 @@
 			"AnalogGain": "number",
 			"AmplificationGain": "number",
 			"Offset": "number",
-			"OffsetMode": "string",
-			"Tier": "integer"
+			"OffsetMode": "string"
 		},
 		"GenericOpticalApertureSettings": {
 			"ID": "string",
 			"TransmissionWavelengthRangeSettings": "array",
-			"ReflectionWavelengthRangeSettings": "array",
-			"Tier": "integer"
+			"ReflectionWavelengthRangeSettings": "array"
 		},
 		"SamplePositioningSettings": {
 			"ID": "string",
@@ -152,18 +139,15 @@
 			"XYReproducibilitySettings": "number",
 			"XYReproducibilitySettingsUnit": "string",
 			"ZReproducibilitySettings": "number",
-			"ZReproducibilitySettingsUnit": "string",
-			"Tier": "integer"
+			"ZReproducibilitySettingsUnit": "string"
 		},
 		"MirroringDeviceSettings": {
 			"ID": "string",
-			"ActualMountedAngle": "number",
-			"Tier": "integer"
+			"ActualMountedAngle": "number"
 		},
 		"LensSettings": {
 			"ID": "string",
-			"Function": "string",
-			"Tier": "integer"
+			"Function": "string"
 		},
 		"ObjectiveSettings": {
 			"ID": "string",
@@ -172,8 +156,7 @@
 			"MeasuredRefractiveIndex": "number",
 			"Temperature": "number",
 			"TemperatureUnit": "string",
-			"IrisAperture": "number",
-			"Tier": "integer"
+			"IrisAperture": "number"
 		},
 		"StageLabel": {
 			"Name": "string",
@@ -182,8 +165,7 @@
 			"Y": "number",
 			"YUnits": "string",
 			"Z": "number",
-			"ZUnits": "string",
-			"Tier": "integer"
+			"ZUnits": "string"
 		},
 		"PointDetectorSettings": {
 			"Voltage": "number",
@@ -194,8 +176,7 @@
 			"AnalogGain": "number",
 			"AmplificationGain": "number",
 			"Offset": "number",
-			"OffsetMode": "string",
-			"Tier": "integer"
+			"OffsetMode": "string"
 		}
 	},
 	"OpticsHolder": {
@@ -212,8 +193,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"EmissionFilter": "array",
-			"Tier": "integer"
+			"EmissionFilter": "array"
 		},
 		"FilterCubeTurret": {
 			"Name": "string",
@@ -228,8 +208,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"FilterCube": "array",
-			"Tier": "integer"
+			"FilterCube": "array"
 		},
 		"OpticsTurret": {
 			"Name": "string",
@@ -249,8 +228,7 @@
 			"Aperture": "array",
 			"Filter": "array",
 			"Prism": "array",
-			"PolarizationOptics": "array",
-			"Tier": "integer"
+			"PolarizationOptics": "array"
 		},
 		"ExcitationFilterSlider": {
 			"Name": "string",
@@ -265,8 +243,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"ExcitationFilter": "array",
-			"Tier": "integer"
+			"ExcitationFilter": "array"
 		},
 		"ExcitationFilterWheel": {
 			"Name": "string",
@@ -281,8 +258,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"ExcitationFilter": "array",
-			"Tier": "integer"
+			"ExcitationFilter": "array"
 		},
 		"DichroicFilterSlider": {
 			"Name": "string",
@@ -297,8 +273,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"StandardDichroic": "array",
-			"Tier": "integer"
+			"StandardDichroic": "array"
 		},
 		"EmissionFilterSlider": {
 			"Name": "string",
@@ -313,8 +288,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"EmissionFilter": "array",
-			"Tier": "integer"
+			"EmissionFilter": "array"
 		},
 		"DichroicFilterWheel": {
 			"Name": "string",
@@ -329,8 +303,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"StandardDichroic": "array",
-			"Tier": "integer"
+			"StandardDichroic": "array"
 		}
 	},
 	"ChildElement": {
@@ -422,8 +395,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"InvertedMicroscopeStand": {
 			"Name": "string",
@@ -436,8 +408,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Transmitted_LightSource": {
@@ -454,8 +425,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		},
 		"LightEmittingDiode": {
 			"Type": "string",
@@ -470,8 +440,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"LEDModule": "array",
-			"Tier": "integer"
+			"LEDModule": "array"
 		},
 		"GenericExcitationSource": {
 			"Name": "string",
@@ -485,8 +454,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		}
 	},
 	"Fluorescence_LightSource": {
@@ -503,8 +471,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		},
 		"Arc": {
 			"Type": "string",
@@ -519,8 +486,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		},
 		"MultiLaserEngine": {
 			"SingleMode": "boolean",
@@ -539,8 +505,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"Laser": "array",
-			"Tier": "integer"
+			"Laser": "array"
 		},
 		"Laser": {
 			"Type": "string",
@@ -570,8 +535,7 @@
 			"SpecsFile": "string",
 			"Description": "string",
 			"IlluminationWavelengthRange": "array",
-			"Pump": "string",
-			"Tier": "integer"
+			"Pump": "string"
 		},
 		"LightEmittingDiode": {
 			"Type": "string",
@@ -586,8 +550,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"LEDModule": "array",
-			"Tier": "integer"
+			"LEDModule": "array"
 		},
 		"GenericExcitationSource": {
 			"Name": "string",
@@ -601,8 +564,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"Description": "string",
-			"IlluminationWavelengthRange": "array",
-			"Tier": "integer"
+			"IlluminationWavelengthRange": "array"
 		}
 	},
 	"OpticalAssembly": {
@@ -620,8 +582,7 @@
 			"Aperture": "array",
 			"PolarizationOptics": "array",
 			"Prism": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"BeamExpander": {
 			"Configuration": "string",
@@ -638,8 +599,7 @@
 			"Aperture": "array",
 			"PolarizationOptics": "array",
 			"Prism": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"MicroscopeTube": {
 			"Type": "string",
@@ -661,8 +621,7 @@
 			"Aperture": "array",
 			"PolarizationOptics": "array",
 			"Prism": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Condenser": {
 			"Correction": "string",
@@ -680,8 +639,7 @@
 			"Aperture": "array",
 			"PolarizationOptics": "array",
 			"Prism": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Software": {
@@ -699,8 +657,7 @@
 			"ReleaseDate": "string",
 			"Language": "string",
 			"SoftwareModule": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"SoftwareModule": {
 			"Name": "string",
@@ -716,8 +673,7 @@
 			"ReleaseDate": "string",
 			"Language": "string",
 			"SoftwareModule": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"SamplePreparation": {
@@ -735,8 +691,7 @@
 			"SamplePreparationMethodTermAccession": "string",
 			"MetrologySample": "boolean",
 			"FacingTheObjective": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Fluorophore": {
 			"Name": "string",
@@ -754,8 +709,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		},
 		"MountingMedium": {
 			"ID": "string",
@@ -765,8 +719,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		},
 		"ImmersionLiquid": {
 			"ID": "string",
@@ -777,8 +730,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		},
 		"Experiment": {
 			"Name": "string",
@@ -790,8 +742,7 @@
 			"TagTermAccession": "string",
 			"HystochemistryType": "string",
 			"Experimenter": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"CoverGlass": {
 			"ID": "string",
@@ -802,8 +753,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		},
 		"SampleHolder": {
 			"ID": "string",
@@ -812,8 +762,7 @@
 			"Model": "string",
 			"CatalogNumber": "string",
 			"LotNumber": "string",
-			"SpecsFile": "string",
-			"Tier": "integer"
+			"SpecsFile": "string"
 		}
 	},
 	"MicroscopyAccessories": {
@@ -840,8 +789,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"MicroscopeTable": {
 			"Name": "string",
@@ -857,8 +805,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Magnification": {
@@ -895,8 +842,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Aperture": {
@@ -912,8 +858,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"VarelRing": {
 			"Name": "string",
@@ -926,8 +871,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"IrisDiaphragm": {
 			"MaxApertureDiameter": "number",
@@ -943,8 +887,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"DarkFieldStop": {
 			"CenterStopDiameter": "number",
@@ -959,8 +902,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"PhaseRing": {
 			"PhaseNumber": "string",
@@ -978,8 +920,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Shutter": {
 			"ResponseTime": "number",
@@ -1001,8 +942,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Detector": {
@@ -1039,8 +979,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"PhotoDiode": {
 				"Avalanche": "boolean",
@@ -1076,8 +1015,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"PhotoMultiplierTube": {
 				"CollectionEfficiency": "number",
@@ -1116,8 +1054,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			}
 		},
 		"Camera": {
@@ -1163,8 +1100,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"CCD": {
 				"Type": "string",
@@ -1211,8 +1147,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"IntensifiedCamera": {
 				"SensorType": "string",
@@ -1259,8 +1194,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			},
 			"AnalogVideo": {
 				"ArrayWidth": "integer",
@@ -1303,8 +1237,7 @@
 				"SpecsFile": "string",
 				"RelayLens": "string",
 				"Description": "string",
-				"WavelengthRange": "array",
-				"Tier": "integer"
+				"WavelengthRange": "array"
 			}
 		},
 		"GenericDetector": {
@@ -1331,8 +1264,7 @@
 			"SpecsFile": "string",
 			"RelayLens": "string",
 			"Description": "string",
-			"WavelengthRange": "array",
-			"Tier": "integer"
+			"WavelengthRange": "array"
 		}
 	},
 	"SamplePositioning": {
@@ -1348,8 +1280,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"MechanicalStage": {
 				"XYMaxVelocity": "number",
@@ -1394,8 +1325,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"PiezoElectricStage": {
 				"XYMaxVelocity": "number",
@@ -1440,8 +1370,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			}
 		},
 		"Focusing": {
@@ -1473,8 +1402,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"TurretObjectiveFocusing": {
 				"Name": "string",
@@ -1504,8 +1432,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"FocusStabilizationDevice": {
 				"Name": "string",
@@ -1519,8 +1446,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			},
 			"IndividualObjectiveFocusing": {
 				"PiezoElectric": "boolean",
@@ -1551,8 +1477,7 @@
 				"CatalogNumber": "string",
 				"LotNumber": "string",
 				"SpecsFile": "string",
-				"Description": "string",
-				"Tier": "integer"
+				"Description": "string"
 			}
 		}
 	},
@@ -1591,8 +1516,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"BeamCollimatorLens": {
 			"Name": "string",
@@ -1628,8 +1552,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"MagnificationChanger": {
 			"Name": "string",
@@ -1665,8 +1588,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"CouplingLens": {
 			"Name": "string",
@@ -1702,8 +1624,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"BeamExpanderLens": {
 			"Name": "string",
@@ -1739,8 +1660,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"CondenserLens": {
 			"Name": "string",
@@ -1776,8 +1696,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"RelayLens": {
 			"Name": "string",
@@ -1813,8 +1732,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"TubeLens": {
 			"Name": "string",
@@ -1850,8 +1768,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"AdditionalOptics": {
@@ -1874,8 +1791,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"WavelengthRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"Prism": {
 			"Name": "string",
@@ -1905,8 +1821,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"WavelengthRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"LightSourceCoupling": {
@@ -1933,8 +1848,7 @@
 			"SpecsFile": "string",
 			"CouplingLens": "string",
 			"Description": "string",
-			"WavelengthRange": "array",
-			"Tier": "integer"
+			"WavelengthRange": "array"
 		},
 		"FreeBeam": {
 			"DirectMount": "boolean",
@@ -1949,8 +1863,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"CouplingLens": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"FluorescenceLightPath": {
@@ -1970,8 +1883,7 @@
 			"Description": "string",
 			"ExcitationFilter": "string",
 			"StandardDichroic": "string",
-			"EmissionFilter": "string",
-			"Tier": "integer"
+			"EmissionFilter": "string"
 		},
 		"StandardDichroic": {
 			"Type": "string",
@@ -2004,8 +1916,7 @@
 			"SpecsFile": "string",
 			"Description": "string",
 			"TransmittanceRange": "array",
-			"ReflectanceRange": "array",
-			"Tier": "integer"
+			"ReflectanceRange": "array"
 		},
 		"ExcitationFilter": {
 			"Name": "string",
@@ -2030,8 +1941,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"TransmittanceRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"EmissionFilter": {
 			"Name": "string",
@@ -2056,8 +1966,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"TransmittanceRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"SampleConditions": {
@@ -2069,8 +1978,7 @@
 			"Humidity": "string",
 			"AirPressure": "number",
 			"AirPressureUnit": "string",
-			"O2Percent": "number",
-			"Tier": "integer"
+			"O2Percent": "number"
 		}
 	},
 	"MirroringDevice": {
@@ -2105,8 +2013,7 @@
 			"SpecsFile": "string",
 			"Description": "string",
 			"TransmittanceRange": "array",
-			"ReflectanceRange": "array",
-			"Tier": "integer"
+			"ReflectanceRange": "array"
 		},
 		"BeamSplitter": {
 			"Transmittance": "number",
@@ -2133,8 +2040,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"ReflectingMirror": {
 			"Reflectance": "number",
@@ -2157,8 +2063,7 @@
 			"CatalogNumber": "string",
 			"LotNumber": "string",
 			"SpecsFile": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"Filter": {
@@ -2185,8 +2090,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"TransmittanceRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		},
 		"NeutralDensityFilter": {
 			"NDType": "string",
@@ -2213,23 +2117,20 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"TransmittanceRange": "array",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"LightPath": {
 		"Name": "string",
 		"ID": "string",
 		"Description": "string",
-		"Tier": "integer",
 		"FilterSet": {
 			"Name": "string",
 			"ID": "string",
 			"ExcitationFilter": "string",
 			"StandardDichroic": "string",
 			"EmissionFilter": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	},
 	"CalibrationTools": {
@@ -2245,8 +2146,7 @@
 			"LotNumber": "string",
 			"SpecsFile": "string",
 			"LightSensor": "string",
-			"Description": "string",
-			"Tier": "integer"
+			"Description": "string"
 		}
 	}
 }

@@ -79,7 +79,7 @@ class AcquisitionMetadataMapper:
         components = tuple(part.lower() for part in source_path.split('.'))
         return self._schema_index.get(components)
 
-    def _resolve_wildcard_path(self, source_path):
+    def _resolve_wildcard_path(self, source_path, min_rule_segments=0):
         """Resolve a dotted source path via a "*"-containing mapping entry, or None.
 
         A pattern ending in ".*" remaps a whole subtree: the matched prefix
@@ -93,22 +93,57 @@ class AcquisitionMetadataMapper:
         as a whole-path match instead: on a match the target is the bare
         namespace with no remainder appended, since the varying segment
         (an index, a generated ID, ...) carries no information worth
-        preserving in the consolidated schema.
+        preserving in the consolidated schema. A "Target[]" namespace is
+        never valid here - it only has meaning for a dict, never a plain
+        leaf value (see `_resolve_whole_segment_wildcard_path`).
+
+        `min_rule_segments` (see `_apply_mappings`) excludes any pattern
+        shorter than it: once a "Target[]" match has claimed a dict as its
+        own list item, a *shallower* pre-existing subtree rule must not
+        keep reaching into that item's own fields just because their full
+        absolute path still happens to start with the shallower rule's
+        prefix. A whole-path match additionally requires exactly as many
+        segments as `source_path` itself - `fnmatchcase` alone would also
+        match any *deeper* descendant path, since "*" is unanchored and
+        happily eats further dots too.
         """
+        source_segments = source_path.split('.')
         for pattern, namespace in self.mappings.items():
-            if '*' not in pattern or not fnmatchcase(source_path, pattern):
-                continue
-            if pattern.endswith('.*'):
+            has_wildcard = '*' in pattern
+            pattern_segments = pattern.split('.') if has_wildcard else None
+            is_remainder_style = has_wildcard and pattern.endswith('.*')
+            if (
+                is_remainder_style
+                and not namespace.endswith('[]')
+                and len(pattern_segments) >= min_rule_segments
+                and fnmatchcase(source_path, pattern)
+            ):
                 prefix = pattern[:-2]
                 remainder = source_path[len(prefix) + 1:]
                 return f'{namespace}.{remainder}' if remainder else namespace
-            return namespace
+            if (
+                has_wildcard
+                and not is_remainder_style
+                and len(pattern_segments) == len(source_segments)
+                and len(pattern_segments) >= min_rule_segments
+                and fnmatchcase(source_path, pattern)
+            ):
+                return namespace
         return None
 
-    def _resolve_whole_segment_wildcard_path(self, source_path):
-        """Resolve a dict's own path via a whole-segment wildcard entry, or None.
+    def _resolve_whole_segment_wildcard_path(self, source_path, min_rule_segments=0):
+        """Resolve a dict's own path via a whole-segment wildcard entry, or (None, False).
 
-        Only patterns that do *not* end in ".*" are considered here. A
+        Returns a `(namespace, is_child_collapse)` pair: `is_child_collapse`
+        is True only for a "Prefix.*" + "Target[]" match, where `source_path`
+        is one *child* of the dict the pattern names, and its own key (e.g.
+        "QBSD" in a raw "Detectors.QBSD" reading) is meaningful sibling-
+        distinguishing information the caller should preserve - unlike a
+        plain "Prefix" whole-path match, where `source_path` *is* the
+        pattern's own match and its key is exactly the noise the pattern
+        was written to discard (see `_apply_mappings`).
+
+        A pattern that does *not* end in ".*" is a whole-path match: a
         ".*" pattern describes a subtree to expand field-by-field during
         recursion, so it must never collapse an intermediate dict early
         just because a *shallower* "Prefix.*" rule also happens to match
@@ -117,16 +152,45 @@ class AcquisitionMetadataMapper:
         `_apply_mappings`). A pattern wildcarding a whole, variable path
         segment instead (e.g. an index or generated ID) has no such
         subtree semantics, so a match here collapses the entire dict as
-        one opaque unit under the target namespace.
-        """
-        for pattern, namespace in self.mappings.items():
-            if '*' not in pattern or pattern.endswith('.*'):
-                continue
-            if fnmatchcase(source_path, pattern):
-                return namespace
-        return None
+        one opaque unit under the target namespace (or, with a "Target[]"
+        target, as one item in a list there - see `_apply_mappings`).
 
-    def _resolve_target_path(self, source_path):
+        The one exception is a ".*" pattern whose target *does* end in
+        "[]": "Prefix.*" + "Target[]" means every immediate child of the
+        dict at "Prefix" - regardless of its own key name (e.g. numbered
+        "Detector-0"/"Detector-1" instances) - collapses into its own item
+        in a list at "Target", rather than the vendor's per-instance key
+        naming leaking into the output. This is the one place a ".*"
+        pattern is allowed to collapse rather than expand, since "[]"
+        semantics (independently mapping each match as its own list item)
+        replace the remainder-preserving subtree-rename semantics that
+        make plain ".*" unsafe to collapse with here.
+
+        `min_rule_segments` (see `_apply_mappings`) excludes any pattern
+        shorter than it, for the same reason `_resolve_wildcard_path`
+        does. Either way, a match also requires equal segment count, not
+        just `fnmatchcase` - otherwise the unanchored "*" would also match
+        a *deeper* descendant dict's path, not just the dict (or dict
+        child) this pattern was written for.
+        """
+        source_segment_count = len(source_path.split('.'))
+        for pattern, namespace in self.mappings.items():
+            has_wildcard = '*' in pattern
+            pattern_segments = pattern.split('.') if has_wildcard else None
+            is_child_collapse_style = (
+                has_wildcard and pattern.endswith('.*') and namespace.endswith('[]')
+            )
+            is_whole_path_style = has_wildcard and not pattern.endswith('.*')
+            if (
+                (is_child_collapse_style or is_whole_path_style)
+                and len(pattern_segments) == source_segment_count
+                and len(pattern_segments) >= min_rule_segments
+                and fnmatchcase(source_path, pattern)
+            ):
+                return namespace, is_child_collapse_style
+        return None, False
+
+    def _resolve_target_path(self, source_path, min_rule_segments=0):
         """Resolve a dotted source path to a dotted target path, or None.
 
         Tries mappings.json first: exact entries rename a single field, and
@@ -139,13 +203,13 @@ class AcquisitionMetadataMapper:
         if target is not None:
             return target
 
-        target = self._resolve_wildcard_path(source_path)
+        target = self._resolve_wildcard_path(source_path, min_rule_segments)
         if target is not None:
             return target
 
         return self._resolve_schema_path(source_path)
 
-    def _apply_mappings(self, metadata, result=None, path=''):
+    def _apply_mappings(self, metadata, result=None, path='', rule_path=None, min_rule_segments=0):
         """Map metadata onto the consolidated schema.
 
         Recurses into nested dictionaries, extending the dotted path as it
@@ -155,25 +219,92 @@ class AcquisitionMetadataMapper:
         mapping entry, so that a more specific "Prefix.Sub.*" rule for one
         of its children still gets the chance to apply, and so a shallower
         "Prefix.*" subtree rule never fires early on an intermediate node.
-        Scalars and lists are always resolved (and placed) as a unit, using
-        exact, embedded-metadata, wildcard or schema-fallback rules. Fields
-        with no matching rule are kept at their original path so no data is
-        silently dropped.
+        A "Target[]" mapping entry (trailing "[]") treats the dict as one
+        item of a list rather than moving it as an opaque unit: it is
+        recursively mapped through this same method - using its own rule
+        path, so every one of its fields still resolves via the normal
+        rules - and the *mapped* result is appended to a plain list at
+        "Target". Use this for a source key whose own name embeds an
+        instance index (e.g. "Image:0", "Image:1"): the index becomes list
+        position rather than part of an output key, and a second sibling
+        instance appends a second list item rather than silently clobbering
+        the first (which a plain "Target" collapse - no trailing "[]" -
+        would do, since it always overwrites).
+
+        A genuine list of dicts (e.g. a per-channel or per-detector record
+        list already shaped as a JSON array) is treated the same way as a
+        "[]" match: an exact/whole-segment match on the list's own path
+        still moves it wholesale, unit, opaque; otherwise every dict item is
+        independently mapped and the results collected into a list at the
+        list's own resolved target. A list with no dict items (a plain
+        value list) is always resolved and placed as a unit, like a scalar.
+
+        `path` tracks where a field lands within the *current* result dict
+        (it resets to '' for each list item / "[]" match, since each gets
+        its own independent dict); `rule_path` tracks the true absolute
+        path from the original root, which is what mapping rules and the
+        schema fallback are always matched against, list nesting included.
+        The two are identical outside of list items, which is the only
+        place they diverge.
+
+        `min_rule_segments` is the floor `rule_path` recursion has already
+        crossed via a "[]" match: it only ever rises, at a "[]" boundary,
+        to that boundary's own segment count, and is otherwise inherited
+        unchanged - plain (non-"[]") recursion never resets it. This stops
+        a *shallower* pre-existing rule (written before this "[]" entry
+        existed, for the wider subtree the "[]" match now claims one item
+        of) from reaching into that item's own fields, since their full
+        absolute path still starts with the shallower rule's prefix (see
+        `_resolve_wildcard_path`).
+
+        Fields with no matching rule are kept at their original path so no
+        data is silently dropped.
         """
         if result is None:
             result = {}
+        if rule_path is None:
+            rule_path = path
         for key, value in metadata.items():
             source_path = f'{path}.{key}' if path else str(key)
+            rule_source_path = f'{rule_path}.{key}' if rule_path else str(key)
             if isinstance(value, dict):
-                target_path = resolve_exact_path(source_path, self.mappings)
+                target_path = resolve_exact_path(rule_source_path, self.mappings)
+                is_child_collapse = False
                 if target_path is None:
-                    target_path = self._resolve_whole_segment_wildcard_path(source_path)
+                    target_path, is_child_collapse = self._resolve_whole_segment_wildcard_path(
+                        rule_source_path, min_rule_segments)
+                if target_path is not None and target_path.endswith('[]'):
+                    item_min_segments = max(min_rule_segments, len(rule_source_path.split('.')))
+                    mapped_item = self._apply_mappings(
+                        value, rule_path=rule_source_path, min_rule_segments=item_min_segments)
+                    if is_child_collapse and not str(key).isdigit():
+                        label_key = 'id' if 'id' not in mapped_item and 'ID' not in mapped_item else None
+                        if label_key is not None:
+                            mapped_item[label_key] = key
+                    append_nested_list_value(result, target_path[:-2], mapped_item)
+                elif target_path is not None:
+                    set_nested_value(result, target_path, value)
+                else:
+                    self._apply_mappings(value, result, source_path, rule_source_path, min_rule_segments)
+            elif isinstance(value, list) and any(isinstance(item, dict) for item in value):
+                target_path = resolve_exact_path(rule_source_path, self.mappings)
+                if target_path is None:
+                    target_path, _ = self._resolve_whole_segment_wildcard_path(
+                        rule_source_path, min_rule_segments)
                 if target_path is not None:
                     set_nested_value(result, target_path, value)
                 else:
-                    self._apply_mappings(value, result, source_path)
+                    item_min_segments = max(min_rule_segments, len(rule_source_path.split('.')))
+                    mapped_items = [
+                        self._apply_mappings(
+                            item, rule_path=rule_source_path, min_rule_segments=item_min_segments)
+                        if isinstance(item, dict) else item
+                        for item in value
+                    ]
+                    leaf_target = self._resolve_target_path(rule_source_path, min_rule_segments)
+                    set_nested_value(result, leaf_target or source_path, mapped_items)
             else:
-                target_path = self._resolve_target_path(source_path)
+                target_path = self._resolve_target_path(rule_source_path, min_rule_segments)
                 set_nested_value(result, target_path or source_path, value)
         return result
 
@@ -209,6 +340,10 @@ class AcquisitionMetadataMapper:
                 current = f'{path}.{key}' if path else str(key)
                 if isinstance(value, dict):
                     walk(value, current)
+                elif isinstance(value, list) and any(isinstance(item, dict) for item in value):
+                    for item in value:
+                        if isinstance(item, dict):
+                            walk(item, current)
                 elif current not in schema_leaf_paths:
                     unmatched.append(current)
 
@@ -242,3 +377,27 @@ def set_nested_value(target, dotted_path, value):
             node[key] = child
         node = child
     node[keys[-1]] = value
+
+
+def append_nested_list_value(target, dotted_path, value):
+    """Append `value` to the list at `dotted_path`, creating it if absent.
+
+    Used for a "Target[]" mapping entry: a source key whose *name* embeds an
+    instance index (e.g. "Image:0", "Detector-3") collapses into a plain
+    list at "Target" instead of baking that index into an output key, so a
+    second instance (e.g. "Image:1") appends a second list item rather than
+    colliding with (and silently overwriting) the first.
+    """
+    keys = dotted_path.split('.')
+    node = target
+    for key in keys[:-1]:
+        child = node.get(key)
+        if not isinstance(child, dict):
+            child = {}
+            node[key] = child
+        node = child
+    existing = node.get(keys[-1])
+    if not isinstance(existing, list):
+        existing = []
+        node[keys[-1]] = existing
+    existing.append(value)
