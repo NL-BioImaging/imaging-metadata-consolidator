@@ -9,7 +9,7 @@ SRC_DIR = os.path.join(REPO_ROOT, 'src')
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
-from convert import convert, read_metadata, write_metadata
+from convert import convert_file, read_metadata, write_metadata
 
 
 SOURCES_DIR = os.path.join(REPO_ROOT, 'sources')
@@ -36,7 +36,7 @@ class ConvertTest(unittest.TestCase):
             write_metadata(sample, input_file)
 
             output_file = os.path.join(work_dir, 'converted.yaml')
-            converted = convert(input_file, output_file)
+            converted = convert_file(input_file, output_file)
 
             self.assertEqual(converted, {
                 'Instrument': {'Manufacturer': 'Acme', 'Model': 'Widget-1000'},

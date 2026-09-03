@@ -14,7 +14,7 @@ import os.path
 
 from AcquisitionMetadataMapper import DEFAULT_MAPPINGS_FILE, DEFAULT_SCHEMA_FILE
 from Consolidator import Consolidator
-from convert import convert, DEFAULT_OUTPUT_FORMAT
+from convert import convert_files
 
 
 def consolidation(schema_filename, input_filenames):
@@ -45,14 +45,7 @@ def run_consolidate(args):
 
 
 def run_convert(args):
-    input_files = sorted(
-        file for extension in ('.json', '.yaml', '.yml')
-        for file in glob.glob(os.path.join(args.input, f'*{extension}'))
-    )
-    for input_file in input_files:
-        name = os.path.splitext(os.path.basename(input_file))[0]
-        output_file = os.path.join(args.output, name + DEFAULT_OUTPUT_FORMAT)
-        convert(input_file, output_file, args.schema, args.mappings)
+    for output_file in convert_files(args.input, args.output, args.schema, args.mappings):
         print(f'Wrote {output_file}')
 
 
