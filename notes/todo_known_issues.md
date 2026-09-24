@@ -91,8 +91,18 @@ Progress (not committed yet):
 - Missing required fields are LiMi's own requirements the sources don't state (Image.Name/ID,
   Pixels.DimensionOrder/SizeZ/C/T/PixelType, Objective.Manufacturer/Model/CatalogNumber,
   AcquisitionSoftware.Developer/WebsiteURL, Experiment.Purpose, Sample.Organism, ...).
-- Next: validate on the Hub (validate_dataset) once the Hub draft is re-imported; decide how to
-  treat required fields no vendor file states (tier mapping TODO).
+- Next: validate on the Hub (validate_dataset) once the Hub draft is re-imported. Required fields
+  in the destination model are ignored for now (user).
+- ome-tiff reached few typed fields because `sources/ome-tiff.json` is mostly one Huygens SVI
+  annotation (124 of 128 Properties) with Huygens names, which no name match can place. (Name
+  matching compares the whole source path to schema path ends; no `Metadata.`-style wrapper
+  exists in real files, so no tail matching needed.) Added 5 Huygens rules, validated against
+  `napari-meta-tiff/output/DNAcropSmall.ome.json` (same image, its own OME Pixels + the same
+  annotation): DeltaX/Y/Z = PhysicalSizeX/Y/Z (µm), DeltaT = TimeIncrement (s),
+  RefrIndexLensMedium = OME ObjectiveSettings.RefractiveIndex (immersion, 1.518) ->
+  LiMi ObjectiveSettings.ImmersionLiquid.RefractiveIndex. ome-tiff typed values 6 -> 11.
+  Not added: LambdaEx/LambdaEm (per channel; OME stores 424/461 where Huygens has
+  424.119995/461.0).
 
 Decided (user): values placed in typed fields keep their source key through `SourceMapping`
 records (ID, Field = dataset path, Source = source path), listed as `Mapping` on each
@@ -120,5 +130,11 @@ Design choices made while building (tell the user; open to change):
       `schema.extended.json` additions), with an explicit `parent` per new entity.
 - [ ] Unit normalisation (e.g. vendor "um" -> OME "µm") so unit fields can be typed; the
       original spelling must stay recoverable.
+- [ ] Per-channel mapping (e.g. Huygens ChannelData[i] LambdaEx/LambdaEm -> each Channel's
+      Fluorophore wavelengths): rules resolve from the root, so each channel's value collides.
+- [ ] `medium`/`refractive_index` map to `Settings.ObjectiveSettings.Medium/RefractiveIndex`,
+      which exist only in schema.extended.json, not LiMi (LiMi: ObjectiveSettings.ImmersionLiquid).
+- [ ] Consider adding `DNAcropSmall.ome.json` (full OME + Huygens) as a source: a real test
+      that mapped annotation values agree with the image's own OME values.
 - [ ] Decide whether to delete the 9 unreachable entities (see Known issues).
 - [ ] Open a PR for `metaseed-profile` (pushed).

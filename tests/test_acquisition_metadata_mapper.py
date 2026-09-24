@@ -34,6 +34,18 @@ class AcquisitionMetadataMapperTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.mapper.convert_metadata(['not', 'a', 'dict'])
 
+    def test_huygens_sampling_sizes_map_to_pixels(self):
+        # Checked against DNAcropSmall.ome.json, which carries both this annotation and the image's own OME Pixels
+        annotation = {'Geometry': {'SamplingSizes': {'DeltaX': 0.064967, 'DeltaY': 0.064967, 'DeltaZ': 0.2128,
+                                                     'DeltaT': 1.0}},
+                      'ChannelData': [{'RefrIndexLensMedium': 1.518}]}
+
+        converted = self.mapper.convert_metadata({'Annotation:CustomAttributes:SVI:Image:0': annotation})
+
+        self.assertEqual(converted['Image']['Pixels'], {'PhysicalSizeX': 0.064967, 'PhysicalSizeY': 0.064967,
+                                                        'PhysicalSizeZ': 0.2128, 'TimeIncrement': 1.0})
+        self.assertEqual(converted['Settings']['ObjectiveSettings']['ImmersionLiquid'], {'RefractiveIndex': 1.518})
+
 
 class LosslessMappingTest(unittest.TestCase):
     """Collisions, empty values and collapsed keys must never drop metadata."""

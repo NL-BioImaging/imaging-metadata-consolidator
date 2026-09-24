@@ -9,6 +9,14 @@ Settings:
   ObjectiveSettings:
     Medium: Oil
     RefractiveIndex: 1.518
+    ImmersionLiquid:
+      RefractiveIndex: 1.518
+Image:
+  Pixels:
+    PhysicalSizeX: 0.064967
+    PhysicalSizeY: 0.064967
+    PhysicalSizeZ: 0.2128
+    TimeIncrement: 1.0
 SamplePreparation:
   MountingMedium:
     RefractiveIndex: 1.458
@@ -20,13 +28,9 @@ Software:
 Annotation:
 - Geometry:
     SamplingSizes:
-      DeltaX: 0.064967
       DeltaXState: Reported
-      DeltaY: 0.064967
       DeltaYState: Reported
-      DeltaZ: 0.2128
       DeltaZState: Reported
-      DeltaT: 1.0
       DeltaTState: Reported
     Offsets:
       OffsetX: 61.523749
@@ -80,7 +84,6 @@ Annotation:
     ExPhotonCnt: 1
     ExPhotonCntState: Default
     RefrIndexMediumState: Estimated
-    RefrIndexLensMedium: 1.518
     RefrIndexLensMediumState: Reported
     PinholeSpacing: 2.53
     PinholeSpacingState: Default
@@ -164,16 +167,17 @@ SourceMap:
   id: id
   Settings.ObjectiveSettings.Medium: medium
   Settings.ObjectiveSettings.RefractiveIndex: refractive_index
+  Image.Pixels.PhysicalSizeX: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaX
+  Image.Pixels.PhysicalSizeY: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaY
+  Image.Pixels.PhysicalSizeZ: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaZ
+  Image.Pixels.TimeIncrement: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaT
   SamplePreparation.MountingMedium.RefractiveIndex: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexMedium
+  Settings.ObjectiveSettings.ImmersionLiquid.RefractiveIndex: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexLensMedium
   Software.SoftwareModule.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.HuygensVersion
   Software.AcquisitionSoftware.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.OmeWriterVersion
-  Annotation[0].Geometry.SamplingSizes.DeltaX: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaX
   Annotation[0].Geometry.SamplingSizes.DeltaXState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaXState
-  Annotation[0].Geometry.SamplingSizes.DeltaY: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaY
   Annotation[0].Geometry.SamplingSizes.DeltaYState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaYState
-  Annotation[0].Geometry.SamplingSizes.DeltaZ: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaZ
   Annotation[0].Geometry.SamplingSizes.DeltaZState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaZState
-  Annotation[0].Geometry.SamplingSizes.DeltaT: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaT
   Annotation[0].Geometry.SamplingSizes.DeltaTState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaTState
   Annotation[0].Geometry.Offsets.OffsetX: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetX
   Annotation[0].Geometry.Offsets.OffsetXState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetXState
@@ -221,7 +225,6 @@ SourceMap:
   Annotation[0].ChannelData[0].ExPhotonCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExPhotonCnt
   Annotation[0].ChannelData[0].ExPhotonCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExPhotonCntState
   Annotation[0].ChannelData[0].RefrIndexMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexMediumState
-  Annotation[0].ChannelData[0].RefrIndexLensMedium: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexLensMedium
   Annotation[0].ChannelData[0].RefrIndexLensMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexLensMediumState
   Annotation[0].ChannelData[0].PinholeSpacing: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].PinholeSpacing
   Annotation[0].ChannelData[0].PinholeSpacingState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].PinholeSpacingState
