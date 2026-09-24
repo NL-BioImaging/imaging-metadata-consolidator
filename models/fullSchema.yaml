@@ -505,6 +505,12 @@ entities:
         used to perform an intensity calibration procedure.
       items: IntensityCalibrationTool
       owns: true
+    - name: CustomProperties
+      type: list
+      required: false
+      description: Source metadata values the profile does not model.
+      items: Property
+      owns: true
     - name: Tier
       type: integer
       required: true
@@ -605,6 +611,18 @@ entities:
       required: false
       description: The Pixels element is going to be removed in the future, but it is still required
       items: Pixels
+      owns: true
+    - name: CustomProperties
+      type: list
+      required: false
+      description: Source metadata values the profile does not model.
+      items: Property
+      owns: true
+    - name: SourceFile
+      type: list
+      required: false
+      description: The files this Image's metadata was read from.
+      items: SourceFile
       owns: true
     - name: Tier
       type: integer
@@ -24015,3 +24033,55 @@ entities:
       description: This element describes the actual Image that was acquired and its meta-data
       items: Image
       owns: true
+    - name: CustomProperties
+      type: list
+      required: false
+      description: Source metadata values the profile does not model.
+      items: Property
+      owns: true
+  Property:
+    description: A source metadata value the profile does not model, kept so no metadata is lost.
+    fields:
+    - name: ID
+      type: string
+      required: true
+      description: A unique identifier for this property.
+      is_identifier: true
+    - name: Name
+      type: string
+      required: true
+      description: The full path of this value in its source file, e.g. "Beam.SpotIndex".
+    - name: Value
+      type: string
+      required: true
+      description: The value, JSON-encoded so its type is kept (e.g. 1, "1", true, null).
+    - name: Unit
+      type: string
+      required: false
+      description: The unit of the value, where the source states one.
+    - name: Source
+      type: string
+      required: false
+      description: The ID of the SourceFile this value came from.
+  SourceFile:
+    description: A file this metadata was read from, identified by its checksum.
+    fields:
+    - name: ID
+      type: string
+      required: true
+      description: A unique identifier for this source file.
+      is_identifier: true
+    - name: Name
+      type: string
+      required: true
+      description: The file name.
+    - name: Checksum
+      type: string
+      required: true
+      description: The SHA-256 checksum of the file, as lowercase hex.
+      constraints:
+        pattern: ^[0-9a-f]{64}$
+    - name: Format
+      type: string
+      required: false
+      description: The file format, e.g. json or ome-tiff.

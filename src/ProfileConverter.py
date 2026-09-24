@@ -16,6 +16,9 @@ DEFAULT_XSD_FILE = 'models/LiMi_XMLSchema.xsd'
 DEFAULT_PROFILE_FILE = 'models/fullSchema.yaml'
 
 ROOT_ENTITY = 'OME'
+PROPERTY_ENTITY = 'Property'
+SOURCE_FILE_ENTITY = 'SourceFile'
+CUSTOM_PROPERTIES_ANCHORS = ('OME', 'Image', 'Instrument')
 TYPE_MAP = {'number': 'float'}
 
 XS = '{http://www.w3.org/2001/XMLSchema}'
@@ -95,6 +98,7 @@ class ProfileConverter:
                              schema.get('required', []))
         self._add_root_entity()
         self._add_containment()
+        self._add_provenance_entities()
         return {
             'name': name,
             # metaseed wants version as a string; unquoted 2.1 in YAML would be read as a number
@@ -169,6 +173,52 @@ class ProfileConverter:
             ],
         }
 
+    def _add_provenance_entities(self):
+        # Source metadata the profile does not model is kept rather than dropped: as Property records under
+        # the nearest anchor, each naming its original source path, and every Image records the files it came from.
+        self.entities[PROPERTY_ENTITY] = {
+            'description': 'A source metadata value the profile does not model, kept so no metadata is lost.',
+            'fields': [
+                {'name': 'ID', 'type': 'string', 'required': True,
+                 'description': 'A unique identifier for this property.', 'is_identifier': True},
+                {'name': 'Name', 'type': 'string', 'required': True,
+                 'description': 'The full path of this value in its source file, e.g. "Beam.SpotIndex".'},
+                {'name': 'Value', 'type': 'string', 'required': True,
+                 'description': 'The value, JSON-encoded so its type is kept (e.g. 1, "1", true, null).'},
+                {'name': 'Unit', 'type': 'string', 'required': False,
+                 'description': 'The unit of the value, where the source states one.'},
+                {'name': 'Source', 'type': 'string', 'required': False,
+                 'description': 'The ID of the SourceFile this value came from.'},
+            ],
+        }
+        self.entities[SOURCE_FILE_ENTITY] = {
+            'description': 'A file this metadata was read from, identified by its checksum.',
+            'fields': [
+                {'name': 'ID', 'type': 'string', 'required': True,
+                 'description': 'A unique identifier for this source file.', 'is_identifier': True},
+                {'name': 'Name', 'type': 'string', 'required': True, 'description': 'The file name.'},
+                {'name': 'Checksum', 'type': 'string', 'required': True,
+                 'description': 'The SHA-256 checksum of the file, as lowercase hex.',
+                 'constraints': {'pattern': '^[0-9a-f]{64}$'}},
+                {'name': 'Format', 'type': 'string', 'required': False,
+                 'description': 'The file format, e.g. json or ome-tiff.'},
+            ],
+        }
+        for anchor in CUSTOM_PROPERTIES_ANCHORS:
+            self._insert_before_tier(anchor, {
+                'name': 'CustomProperties', 'type': 'list', 'required': False,
+                'description': 'Source metadata values the profile does not model.', 'items': PROPERTY_ENTITY,
+                'owns': True})
+        self._insert_before_tier('Image', {
+            'name': 'SourceFile', 'type': 'list', 'required': False,
+            'description': "The files this Image's metadata was read from.", 'items': SOURCE_FILE_ENTITY,
+            'owns': True})
+
+    def _insert_before_tier(self, entity, field):
+        fields = self.entities[entity]['fields']
+        assert all(f['name'] != field['name'] for f in fields), (entity, field['name'])
+        fields.insert(next((i for i, f in enumerate(fields) if f['name'] == 'Tier'), len(fields)), field)
+
     def _add_containment(self):
         # A title shared by several schemas (e.g. Filament as Fluorescence_ and Transmitted_ light source) stands
         # for all of them in the XSD.
@@ -192,8 +242,7 @@ class ProfileConverter:
             field = {'name': child, 'type': 'list' if max_occurs != '1' else 'entity', 'required': False,
                      'description': self.entities[child].get('description', '').split('. ')[0], 'items': child,
                      'owns': True}
-            tier_index = next((i for i, f in enumerate(fields) if f['name'] == 'Tier'), len(fields))
-            fields.insert(tier_index, field)
+            self._insert_before_tier(parent, field)
             self.containment_fields_added += 1
         elif existing.get('items') == child:
             existing['owns'] = True

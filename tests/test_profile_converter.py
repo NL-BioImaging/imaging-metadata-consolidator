@@ -103,7 +103,7 @@ class ProfileConverterTest(unittest.TestCase):
 
     def test_xsd_containment_is_added(self):
         entities = self.profile['entities']
-        self.assertEqual(nested_children(entities, ROOT_ENTITY), ['Experiment', 'Instrument', 'Image'])
+        self.assertEqual(nested_children(entities, ROOT_ENTITY), ['Experiment', 'Instrument', 'Image', 'Property'])
         self.assertIn('Pixels', nested_children(entities, 'Image'))
         self.assertLessEqual({'Channel', 'Plane'}, set(nested_children(entities, 'Pixels')))
         self.assertLessEqual({'Fluorescence_LightSource_Filament', 'Transmitted_LightSource_Filament', 'Objective'},
@@ -114,6 +114,19 @@ class ProfileConverterTest(unittest.TestCase):
                   if f['name'] == 'TransmittanceProfileFile']
         self.assertEqual(len(fields), 1)
         self.assertEqual(fields[0]['type'], 'string')
+
+    def test_unmodelled_metadata_has_a_home_at_each_anchor(self):
+        entities = self.profile['entities']
+        for anchor in ('OME', 'Image', 'Instrument'):
+            self.assertIn('Property', nested_children(entities, anchor), anchor)
+        self.assertIn('SourceFile', nested_children(entities, 'Image'))
+        self.assertEqual([f['name'] for f in entities['Property']['fields']],
+                         ['ID', 'Name', 'Value', 'Unit', 'Source'])
+
+    def test_source_file_checksum_must_be_sha256_hex(self):
+        checksum = next(f for f in self.profile['entities']['SourceFile']['fields'] if f['name'] == 'Checksum')
+        self.assertTrue(checksum['required'])
+        self.assertEqual(checksum['constraints'], {'pattern': '^[0-9a-f]{64}$'})
 
     def test_version_is_written_as_a_string(self):
         with tempfile.TemporaryDirectory() as directory:
