@@ -177,10 +177,12 @@ def missing_from_dataset(source, dataset):
 class DatasetNoDataLossTest(unittest.TestCase):
     """Every source value and key must be recoverable from the exported metaseed dataset alone."""
 
+    profile_file = None
+
     @classmethod
     def setUpClass(cls):
         cls.mapper = AcquisitionMetadataMapper()
-        cls.exporter = DatasetExporter()
+        cls.exporter = DatasetExporter(cls.profile_file) if cls.profile_file else DatasetExporter()
         cls.source_files = sorted(glob.glob(os.path.join(SOURCES_DIR, '*.json')))
 
     def test_missing_from_dataset_catches_a_lost_value(self):
@@ -205,6 +207,12 @@ class DatasetNoDataLossTest(unittest.TestCase):
                     export_file(source_file, output_file, self.mapper, self.exporter)
                     problems = missing_from_dataset(source, read_metadata(output_file))
                     self.assertEqual(problems, [], '\n'.join(problems))
+
+
+class ExtendedProfileNoDataLossTest(DatasetNoDataLossTest):
+    """The same, exporting against the profile extended with the mapper's extended schema."""
+
+    profile_file = os.path.join(REPO_ROOT, 'models', 'schema.extended.yaml')
 
 
 if __name__ == '__main__':

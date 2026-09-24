@@ -11,11 +11,15 @@ SRC_DIR = os.path.join(REPO_ROOT, 'src')
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
-from ProfileConverter import ROOT_ENTITY, ProfileConverter, XsdContainment, write_profile
+from ProfileConverter import ROOT_ENTITY, ProfileConverter, ProfileExtender, XsdContainment, write_profile
 
 
 JSON_SCHEMA_FILE = os.path.join(REPO_ROOT, 'models', 'fullSchema.json')
 XSD_FILE = os.path.join(REPO_ROOT, 'models', 'LiMi_XMLSchema.xsd')
+PROFILE_FILE = os.path.join(REPO_ROOT, 'models', 'fullSchema.yaml')
+EXTENDED_PROFILE_FILE = os.path.join(REPO_ROOT, 'models', 'schema.extended.yaml')
+SCHEMA_TREE_FILE = os.path.join(REPO_ROOT, 'mappings', 'schema.json')
+EXTENDED_SCHEMA_TREE_FILE = os.path.join(REPO_ROOT, 'mappings', 'schema.extended.json')
 
 # Shared definitions the JSON never nests: each parent has its own inline copy instead (e.g.
 # Arc_IlluminationWavelengthRange), and Laser.Pump links to Laser rather than to Pump.
@@ -144,6 +148,75 @@ class ProfileConverterTest(unittest.TestCase):
             write_profile(self.profile, filename)
             with open(filename, encoding='utf-8') as file:
                 self.assertEqual(yaml.safe_load(file)['version'], '2.1')
+
+
+def read_json(filename):
+    with open(filename, encoding='utf-8') as file:
+        return json.load(file)
+
+
+def read_yaml(filename):
+    with open(filename, encoding='utf-8') as file:
+        return yaml.safe_load(file)
+
+
+def fields_of(entity):
+    return {f['name']: f for f in entity['fields']}
+
+
+class ProfileExtenderTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.base = read_yaml(PROFILE_FILE)
+        cls.extender = ProfileExtender(cls.base, read_json(EXTENDED_SCHEMA_TREE_FILE), read_json(SCHEMA_TREE_FILE))
+        cls.profile = cls.extender.extend('LiMi-extended', 'test')
+        cls.entities = cls.profile['entities']
+
+    def test_committed_extended_profile_is_up_to_date(self):
+        committed = read_yaml(EXTENDED_PROFILE_FILE)
+        self.assertEqual(committed['entities'], self.entities, 'rerun: python src/main.py profile')
+
+    def test_base_profile_is_not_modified(self):
+        self.assertEqual(read_yaml(PROFILE_FILE), self.base)
+
+    def test_no_base_field_is_replaced(self):
+        for name, entity in self.base['entities'].items():
+            extended = fields_of(self.entities[name])
+            for field_name, field in fields_of(entity).items():
+                self.assertEqual(extended[field_name], field, f'{name}.{field_name}')
+
+    def test_additions_go_on_the_profile_entity(self):
+        self.assertLessEqual({'Manufacturer', 'Model', 'Vacuum'}, set(fields_of(self.entities['Instrument'])))
+        self.assertLessEqual({'CropHint', 'Corrections'}, set(fields_of(self.entities['Image'])))
+        self.assertLessEqual({'Medium', 'RefractiveIndex'}, set(fields_of(self.entities['ObjectiveSettings'])))
+
+    def test_groups_without_an_entity_go_under_the_root(self):
+        root = fields_of(self.entities[ROOT_ENTITY])
+        for group in ('ElectronBeam', 'Scan', 'Detector', 'Software', 'SamplePositioning'):
+            self.assertEqual(root[group]['items'], group)
+        stage = fields_of(self.entities['SamplePositioning'])['Stage']
+        self.assertEqual(stage['items'], 'SamplePositioning_Stage')
+        self.assertEqual(fields_of(self.entities['ElectronBeam'])['WorkingDistance']['items'],
+                         'ElectronBeam_WorkingDistance')
+
+    def test_added_entities_are_identified_by_an_optional_id(self):
+        for name in self.extender.added_entities:
+            identifiers = [f for f in self.entities[name]['fields'] if f.get('is_identifier')]
+            self.assertEqual([(f['name'], f['required']) for f in identifiers], [('ID', False)], name)
+
+    def test_existing_fields_are_skipped_not_replaced(self):
+        self.assertEqual(len(self.extender.skipped), 2)
+        self.assertEqual(fields_of(self.entities[ROOT_ENTITY])['CustomProperties']['items'], 'Property')
+
+    def test_added_entities_are_reachable_from_root(self):
+        reachable = set()
+        pending = [ROOT_ENTITY]
+        while pending:
+            name = pending.pop()
+            if name not in reachable:
+                reachable.add(name)
+                pending += nested_children(self.entities, name)
+        self.assertEqual(set(self.entities) - reachable, UNREACHABLE)
 
 
 if __name__ == '__main__':

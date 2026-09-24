@@ -3,9 +3,14 @@
 The JSON schemas (models/fullSchema.json) define each entity's fields but not
 which entity contains which; that containment comes from the XSD
 (models/LiMi_XMLSchema.xsd), whose element names are the JSON titles.
+
+ProfileExtender derives a second profile, the LiMi one plus what the mapper's
+extended schema tree (mappings/schema.extended.json) adds beyond its LiMi tree
+(mappings/schema.json), so mapped values outside LiMi get typed fields too.
 """
 
 import collections
+import copy
 import json
 import xml.etree.ElementTree as ET
 
@@ -14,6 +19,9 @@ import yaml
 DEFAULT_JSON_SCHEMA_FILE = 'models/fullSchema.json'
 DEFAULT_XSD_FILE = 'models/LiMi_XMLSchema.xsd'
 DEFAULT_PROFILE_FILE = 'models/fullSchema.yaml'
+DEFAULT_EXTENDED_PROFILE_FILE = 'models/schema.extended.yaml'
+DEFAULT_SCHEMA_TREE_FILE = 'mappings/schema.json'
+DEFAULT_EXTENDED_SCHEMA_TREE_FILE = 'mappings/schema.extended.json'
 
 ROOT_ENTITY = 'OME'
 PROPERTY_ENTITY = 'Property'
@@ -21,6 +29,9 @@ SOURCE_FILE_ENTITY = 'SourceFile'
 SOURCE_MAPPING_ENTITY = 'SourceMapping'
 CUSTOM_PROPERTIES_ANCHORS = ('OME', 'Image', 'Instrument')
 TYPE_MAP = {'number': 'float'}
+# metaseed has no free-form object type; such values do not fit a string field, so they stay Property records
+EXTENDED_TREE_TYPES = {'string': 'string', 'number': 'float', 'integer': 'integer', 'boolean': 'boolean',
+                       'object': 'string'}
 
 XS = '{http://www.w3.org/2001/XMLSchema}'
 
@@ -270,6 +281,90 @@ class ProfileConverter:
             self.containment_fields_added += 1
         elif existing.get('items') == child:
             existing['owns'] = True
+
+
+class ProfileExtender:
+    """Extends a profile with what the mapper's extended schema tree adds beyond its LiMi schema tree.
+
+    Additions to a profile entity go on that entity (Instrument.Manufacturer);
+    a category that is no profile entity (Detector) becomes a group entity,
+    and a group schema.json lacks altogether (ElectronBeam) one under the
+    root, where it is top level in the tree. Nested groups become entities
+    named by their path (ElectronBeam_WorkingDistance), since names like "X"
+    and "Value" recur. A field the profile already has is never replaced.
+    """
+
+    def __init__(self, profile, extended_tree, base_tree):
+        self.profile = copy.deepcopy(profile)
+        self.base_entities = set(profile['entities'])
+        self.entities = self.profile['entities']
+        self.extended_tree = extended_tree
+        self.base_tree = base_tree
+        self.added_entities = []
+        self.added_fields = []
+        self.skipped = []
+
+    def extend(self, name, description):
+        self._extend(self.extended_tree, self.base_tree, '', ROOT_ENTITY)
+        self.profile['name'] = name
+        self.profile['description'] = description
+        return self.profile
+
+    def _extend(self, extended_node, base_node, path, owner):
+        for key, value in extended_node.items():
+            sub_path = f'{path}.{key}' if path else key
+            base_value = base_node.get(key) if isinstance(base_node, dict) else None
+            if isinstance(value, dict) and key in self.base_entities:
+                self._extend(value, base_value or {}, sub_path, key)
+            elif isinstance(value, dict) and base_value is not None:
+                self._extend(value, base_value, sub_path, _Group(owner, key, sub_path))
+            elif base_value is None:
+                self._add_field(self._resolve(owner), key, value, sub_path)
+
+    def _resolve(self, owner):
+        """The entity name of `owner`, creating a group's entity (and its parent's) on first use."""
+        if not isinstance(owner, _Group):
+            return owner
+        name = owner.path.replace('.', '_')
+        if name not in self.entities:
+            self._add_field(self._resolve(owner.parent), owner.key, {}, owner.path)
+        return name
+
+    def _add_field(self, entity, name, value, path):
+        fields = self.entities[entity]['fields']
+        if any(f['name'] == name for f in fields):
+            self.skipped.append(f'{entity}.{name} (already a profile field) <- {path}')
+            return
+        tier = next((i for i, f in enumerate(fields) if f['name'] == 'Tier'), len(fields))
+        description = f'From the extended schema ({path}).'
+        if isinstance(value, dict):
+            child = path.replace('.', '_')
+            assert child not in self.entities, child
+            # every LiMi entity has an ID as identifier; optional here, since no source states one for these groups
+            self.entities[child] = {'description': description, 'fields': [
+                {'name': 'ID', 'type': 'string', 'required': False,
+                 'description': 'A unique identifier for this component.', 'is_identifier': True}]}
+            self.added_entities.append(child)
+            fields.insert(tier, {'name': name, 'type': 'entity', 'required': False, 'description': description,
+                                 'items': child, 'owns': True})
+            for key, sub in value.items():
+                self._add_field(child, key, sub, f'{path}.{key}')
+        elif value == 'array':
+            fields.insert(tier, {'name': name, 'type': 'list', 'required': False, 'description': description,
+                                 'items': 'string'})
+        else:
+            fields.insert(tier, {'name': name, 'type': EXTENDED_TREE_TYPES[value], 'required': False,
+                                 'description': description})
+        self.added_fields.append(f'{entity}.{name}')
+
+
+class _Group:
+    """A category of the schema tree that is no profile entity, made an entity once something lands in it."""
+
+    def __init__(self, parent, key, path):
+        self.parent = parent
+        self.key = key
+        self.path = path
 
 
 def write_profile(profile, filename):

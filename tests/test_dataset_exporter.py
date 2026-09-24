@@ -125,6 +125,15 @@ class DatasetExporterTest(unittest.TestCase):
                 dataset = self.export(mapper.convert_metadata(read_metadata(source_file)))
                 self.assertEqual(unknown_keys(self.exporter, dataset, 'OME'), [])
 
+    def test_sources_export_only_declared_fields_of_the_extended_profile(self):
+        exporter = DatasetExporter(os.path.join(REPO_ROOT, 'models', 'schema.extended.yaml'))
+        mapper = AcquisitionMetadataMapper()
+        for source_file in sorted(glob.glob(os.path.join(SOURCES_DIR, '*.json'))):
+            with self.subTest(source=os.path.basename(source_file)):
+                converted = mapper.convert_metadata(read_metadata(source_file))
+                dataset = exporter.export(converted, 'source.json', CHECKSUM)
+                self.assertEqual(unknown_keys(exporter, dataset, 'OME'), [])
+
     def test_provenance_entities_are_not_placement_targets(self):
         for entity in PROVENANCE_ENTITIES:
             self.assertNotIn(entity, self.exporter.paths)
