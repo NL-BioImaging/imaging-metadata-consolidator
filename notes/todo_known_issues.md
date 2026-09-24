@@ -71,9 +71,36 @@ Plan:
 3. Extend the no-data-loss test to the export: every source leaf recoverable from the dataset.
 4. Validate the exported sources with the local CLI, then on the Hub.
 
-Open decision (ask the user): values placed in typed fields have no record of their source key,
-and metaseed forbids extra keys. Options: provenance records in the dataset (a SourceMap-like
-entity), or a `Property` copy of every source value beside the typed fields.
+Progress (not committed yet):
+- 1-3 done: `src/DatasetExporter.py`, `python src/main.py export --input sources --output <dir>`;
+  profile gains `SourceMapping` and `Property.SchemaPath` (146 entities, valid in metaseed).
+- `tests/test_dataset_exporter.py` (placement, fits, anchors, collisions, only declared keys on all
+  sources) and `DatasetNoDataLossTest` in `tests/test_no_data_loss.py` (every source path's value
+  or key recovered from the dataset's SourceMappings + Properties, in memory and from the written
+  YAML). Mutation-checked: a dropped Property, a dropped mapping and a changed value are each
+  reported. 48 tests pass.
+- Most values are Properties for now, e.g. TFS TALOSF: 6 typed mappings, 1950 Properties (EM
+  metadata has no profile fields yet - see the extension TODO). Vendor units like "um" don't fit
+  OME's unit enums ("µm") and stay Properties.
+- 4 in progress: local `metaseed validate` of the 8 datasets (slow on the TALOS files).
+
+Decided (user): values placed in typed fields keep their source key through `SourceMapping`
+records (ID, Field = dataset path, Source = source path), listed as `Mapping` on each
+`SourceFile` - the metaseed form of the SourceMap. Each value is stored once.
+
+Design choices made while building (tell the user; open to change):
+- `Property` also gets `SchemaPath`: the mapper's consolidated path (e.g.
+  `ElectronBeam.WorkingDistance.Value`), so the export doesn't lose the mapping work for
+  unmodelled values.
+- An int fits a float field (same JSON number). null, a type mismatch, a value outside an enum
+  or a taken slot -> Property.
+- One source file = one dataset: shared singletons (`Image[0]`, `Instrument[0]`, ...) along each
+  entity's shortest path from `OME`; an entity found as a dict merges into the first instance, a
+  list's i-th item into the i-th.
+- `Fluorescence_LightSource.Filament` in the mapper output -> profile entity
+  `Fluorescence_LightSource_Filament` (category + title, when that is an entity name).
+- `Tier` is required on every entity but no source states it; left empty (reported), not filled
+  in from the schema.
 
 ## TODO
 
@@ -81,5 +108,9 @@ entity), or a `Property` copy of every source value beside the typed fields.
       recommended / optional), so real vendor files are not failed on tier-3 fields.
 - [ ] Extension file for metadata beyond LiMi (EM groups first, seeded from the
       `schema.extended.json` additions), with an explicit `parent` per new entity.
+- [ ] Unit normalisation (e.g. vendor "um" -> OME "µm") so unit fields can be typed; the
+      original spelling must stay recoverable.
+- [ ] `Tier` is a required field on every entity but is a schema constant, not data: drop it from
+      the profile fields, or make it optional.
 - [ ] Decide whether to delete the 9 unreachable entities (see Known issues).
 - [ ] Push `metaseed-profile` and open a PR.

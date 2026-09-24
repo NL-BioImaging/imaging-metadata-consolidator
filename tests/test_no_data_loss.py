@@ -9,6 +9,7 @@ as leaves.
 """
 
 import glob
+import json
 import os
 import sys
 import tempfile
@@ -20,6 +21,7 @@ if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
 from AcquisitionMetadataMapper import SOURCE_MAP_KEY, AcquisitionMetadataMapper
+from DatasetExporter import DatasetExporter, export_file
 from convert import read_metadata, write_metadata
 
 
@@ -140,6 +142,68 @@ class NoDataLossTest(unittest.TestCase):
                     output_file = os.path.join(directory, os.path.basename(source_file) + '.yaml')
                     write_metadata(self.mapper.convert_metadata(source), output_file)
                     problems = missing_metadata(source, read_metadata(output_file))
+                    self.assertEqual(problems, [], '\n'.join(problems))
+
+
+def recovered_from_dataset(dataset):
+    """{source path: [values]} as the dataset records them, from its SourceMappings and Properties."""
+    values = {path: value for path, _, value in nodes(dataset)}
+    recovered = {}
+    for path, _, value in nodes(dataset):
+        if path.endswith('.Mapping') and isinstance(value, list):
+            for mapping in value:
+                recovered.setdefault(mapping['Source'], []).append(values[mapping['Field']])
+        elif path.endswith('.CustomProperties') or path == 'CustomProperties':
+            for record in value:
+                recovered.setdefault(record['Name'], []).append(json.loads(record['Value']))
+    return recovered
+
+
+def missing_from_dataset(source, dataset):
+    """Describe every source value or key the dataset fails to keep; empty when nothing is lost."""
+    recovered = recovered_from_dataset(dataset)
+    source_nodes = {path: (key, value) for path, key, value in nodes(source)}
+    problems = [f'{path} is recorded {len(values)} times' for path, values in recovered.items() if len(values) > 1]
+    for path, (key, value) in source_nodes.items():
+        expected = value if is_leaf(value) else key
+        if path in recovered and typed(recovered[path][0]) != typed(expected):
+            problems.append(f'{path} holds {typed(recovered[path][0])}, but the source holds {typed(expected)}')
+        elif path not in recovered and is_leaf(value):
+            problems.append(f'{path} = {typed(value)} is missing from the dataset')
+    problems += [f'dataset records unknown source path {path}' for path in recovered if path not in source_nodes]
+    return problems
+
+
+class DatasetNoDataLossTest(unittest.TestCase):
+    """Every source value and key must be recoverable from the exported metaseed dataset alone."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.mapper = AcquisitionMetadataMapper()
+        cls.exporter = DatasetExporter()
+        cls.source_files = sorted(glob.glob(os.path.join(SOURCES_DIR, '*.json')))
+
+    def test_missing_from_dataset_catches_a_lost_value(self):
+        dataset = {'CustomProperties': [{'Name': 'a', 'Value': '1'}]}
+        self.assertEqual(missing_from_dataset({'a': 1, 'b': 2}, dataset), ["b = ('int', '2') is missing from the dataset"])
+        self.assertEqual(missing_from_dataset({'a': '1'}, dataset), ["a holds ('int', '1'), but the source holds ('str', \"'1'\")"])
+
+    def test_export_keeps_every_value_and_key(self):
+        for source_file in self.source_files:
+            with self.subTest(source=os.path.basename(source_file)):
+                source = read_metadata(source_file)
+                dataset = self.exporter.export(self.mapper.convert_metadata(source), 'source.json', '0' * 64)
+                problems = missing_from_dataset(source, dataset)
+                self.assertEqual(problems, [], '\n'.join(problems))
+
+    def test_written_dataset_keeps_every_value_and_key(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for source_file in self.source_files:
+                with self.subTest(source=os.path.basename(source_file)):
+                    source = read_metadata(source_file)
+                    output_file = os.path.join(directory, os.path.basename(source_file) + '.yaml')
+                    export_file(source_file, output_file, self.mapper, self.exporter)
+                    problems = missing_from_dataset(source, read_metadata(output_file))
                     self.assertEqual(problems, [], '\n'.join(problems))
 
 

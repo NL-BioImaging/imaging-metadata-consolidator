@@ -7,6 +7,8 @@ Subcommands:
                schema (see AcquisitionMetadataMapper).
   profile      Convert the LiMi JSON schemas into a metaseed profile YAML
                (see ProfileConverter).
+  export       Convert source metadata into metaseed datasets of that
+               profile (see DatasetExporter).
 """
 
 import argparse
@@ -14,9 +16,10 @@ from file.json_serialisation import serialise_json
 import glob
 import os.path
 
-from AcquisitionMetadataMapper import DEFAULT_MAPPINGS_FILE, DEFAULT_SCHEMA_FILE
+from AcquisitionMetadataMapper import DEFAULT_MAPPINGS_FILE, DEFAULT_SCHEMA_FILE, AcquisitionMetadataMapper
 from Consolidator import Consolidator
 from convert import convert_files
+from DatasetExporter import DatasetExporter, export_file
 from ProfileConverter import (DEFAULT_JSON_SCHEMA_FILE, DEFAULT_PROFILE_FILE, DEFAULT_XSD_FILE, ProfileConverter,
                               write_profile)
 
@@ -62,6 +65,19 @@ def run_profile(args):
         print(f'Links to undefined entities, kept as strings: {dict(converter.unresolved_links)}')
 
 
+def run_export(args):
+    mapper = AcquisitionMetadataMapper(args.schema, args.mappings)
+    exporter = DatasetExporter(args.profile)
+    input_files = sorted(glob.glob(os.path.join(args.input, '*.json')))
+    if not input_files:
+        raise FileNotFoundError(f'No input files found in {args.input}')
+    for input_file in input_files:
+        name = os.path.splitext(os.path.basename(input_file))[0]
+        output_file = os.path.join(args.output, name + '.yaml')
+        export_file(input_file, output_file, mapper, exporter)
+        print(f'Wrote {output_file}')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -100,6 +116,20 @@ def main():
     profile_parser.add_argument('--version', default='2.1',
                         help='Profile version, in x.y format')
     profile_parser.set_defaults(func=run_profile)
+
+    export_parser = subparsers.add_parser(
+        'export', help='Convert source metadata into metaseed datasets of the profile')
+    export_parser.add_argument('--input', required=True,
+                        help='Folder of source metadata files')
+    export_parser.add_argument('--output', required=True,
+                        help='Folder to write the datasets to')
+    export_parser.add_argument('--profile', default=DEFAULT_PROFILE_FILE,
+                        help='Path to the profile YAML')
+    export_parser.add_argument('--schema', default=DEFAULT_SCHEMA_FILE,
+                        help='Path to schema.extended.json')
+    export_parser.add_argument('--mappings', default=DEFAULT_MAPPINGS_FILE,
+                        help='Path to mappings.json')
+    export_parser.set_defaults(func=run_export)
 
     args = parser.parse_args()
     args.func(args)

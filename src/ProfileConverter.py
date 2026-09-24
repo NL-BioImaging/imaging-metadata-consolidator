@@ -18,6 +18,7 @@ DEFAULT_PROFILE_FILE = 'models/fullSchema.yaml'
 ROOT_ENTITY = 'OME'
 PROPERTY_ENTITY = 'Property'
 SOURCE_FILE_ENTITY = 'SourceFile'
+SOURCE_MAPPING_ENTITY = 'SourceMapping'
 CUSTOM_PROPERTIES_ANCHORS = ('OME', 'Image', 'Instrument')
 TYPE_MAP = {'number': 'float'}
 
@@ -185,6 +186,9 @@ class ProfileConverter:
                  'description': 'The full path of this value in its source file, e.g. "Beam.SpotIndex".'},
                 {'name': 'Value', 'type': 'string', 'required': True,
                  'description': 'The value, JSON-encoded so its type is kept (e.g. 1, "1", true, null).'},
+                {'name': 'SchemaPath', 'type': 'string', 'required': False,
+                 'description': 'Where the value was mapped in the consolidated schema, '
+                                'e.g. "ElectronBeam.WorkingDistance.Value".'},
                 {'name': 'Unit', 'type': 'string', 'required': False,
                  'description': 'The unit of the value, where the source states one.'},
                 {'name': 'Source', 'type': 'string', 'required': False,
@@ -202,6 +206,20 @@ class ProfileConverter:
                  'constraints': {'pattern': '^[0-9a-f]{64}$'}},
                 {'name': 'Format', 'type': 'string', 'required': False,
                  'description': 'The file format, e.g. json or ome-tiff.'},
+                {'name': 'Mapping', 'type': 'list', 'required': False,
+                 'description': 'Where each value from this file that fits a profile field was placed.',
+                 'items': SOURCE_MAPPING_ENTITY, 'owns': True},
+            ],
+        }
+        self.entities[SOURCE_MAPPING_ENTITY] = {
+            'description': 'The source key of a value placed in a profile field, so key names are never lost.',
+            'fields': [
+                {'name': 'ID', 'type': 'string', 'required': True,
+                 'description': 'A unique identifier for this mapping.', 'is_identifier': True},
+                {'name': 'Field', 'type': 'string', 'required': True,
+                 'description': 'The path of the value in this dataset, e.g. "Image[0].Pixels.PhysicalSizeX".'},
+                {'name': 'Source', 'type': 'string', 'required': True,
+                 'description': 'The full path of the value in its source file.'},
             ],
         }
         for anchor in CUSTOM_PROPERTIES_ANCHORS:

@@ -121,7 +121,8 @@ class ProfileConverterTest(unittest.TestCase):
             self.assertIn('Property', nested_children(entities, anchor), anchor)
         self.assertIn('SourceFile', nested_children(entities, 'Image'))
         self.assertEqual([f['name'] for f in entities['Property']['fields']],
-                         ['ID', 'Name', 'Value', 'Unit', 'Source'])
+                         ['ID', 'Name', 'Value', 'SchemaPath', 'Unit', 'Source'])
+        self.assertIn('SourceMapping', nested_children(entities, 'SourceFile'))
 
     def test_source_file_checksum_must_be_sha256_hex(self):
         checksum = next(f for f in self.profile['entities']['SourceFile']['fields'] if f['name'] == 'Checksum')

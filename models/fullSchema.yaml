@@ -24055,6 +24055,10 @@ entities:
       type: string
       required: true
       description: The value, JSON-encoded so its type is kept (e.g. 1, "1", true, null).
+    - name: SchemaPath
+      type: string
+      required: false
+      description: Where the value was mapped in the consolidated schema, e.g. "ElectronBeam.WorkingDistance.Value".
     - name: Unit
       type: string
       required: false
@@ -24085,3 +24089,25 @@ entities:
       type: string
       required: false
       description: The file format, e.g. json or ome-tiff.
+    - name: Mapping
+      type: list
+      required: false
+      description: Where each value from this file that fits a profile field was placed.
+      items: SourceMapping
+      owns: true
+  SourceMapping:
+    description: The source key of a value placed in a profile field, so key names are never lost.
+    fields:
+    - name: ID
+      type: string
+      required: true
+      description: A unique identifier for this mapping.
+      is_identifier: true
+    - name: Field
+      type: string
+      required: true
+      description: The path of the value in this dataset, e.g. "Image[0].Pixels.PhysicalSizeX".
+    - name: Source
+      type: string
+      required: true
+      description: The full path of the value in its source file.
