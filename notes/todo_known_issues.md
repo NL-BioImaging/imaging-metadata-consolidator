@@ -38,7 +38,7 @@ Export: mapper output -> a metaseed dataset of the LiMi profile (`OME` root), so
 can be validated with `validate_dataset` / `metaseed validate`, without losing any source value or
 key name.
 
-Done so far (branch `metaseed-profile`, pushed to origin up to c04ce0c; no PR yet):
+Done so far (branch `metaseed-profile`, pushed; PR #2 open):
 - 5385662 profile converter (`python src/main.py profile`): `fullSchema.json` + containment from
   `LiMi_XMLSchema.xsd` -> `models/fullSchema.yaml`, `OME` root; valid in metaseed (local and Hub).
 - a914b1f every converted file carries a `SourceMap` {output path: source path}; collapsed keys
@@ -204,4 +204,4 @@ What follows from a new source or new metadata:
 - [ ] Consider adding `DNAcropSmall.ome.json` (full OME + Huygens) as a source: a real test
       that mapped annotation values agree with the image's own OME values.
 - [ ] Decide whether to delete the 9 unreachable entities (see Known issues).
-- [ ] Open a PR for `metaseed-profile` (pushed).
+- [x] PR for `metaseed-profile`: https://github.com/NL-BioImaging/imaging-metadata-consolidator/pull/2
