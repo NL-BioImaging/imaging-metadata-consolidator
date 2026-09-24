@@ -184,7 +184,10 @@
 			"MeasuredRefractiveIndex": "number",
 			"Temperature": "number",
 			"TemperatureUnit": "string",
-			"IrisAperture": "number"
+			"IrisAperture": "number",
+			"ImmersionLiquid": {
+				"RefractiveIndex": "number"
+			}
 		},
 		"StageLabel": {
 			"Name": "string",
@@ -2370,5 +2373,6 @@
 	},
 	"CustomProperties": "object",
 	"Operations": "object",
-	"Features": "object"
+	"Features": "object",
+	"Annotation": "array"
 }
