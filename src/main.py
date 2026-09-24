@@ -5,6 +5,8 @@ Subcommands:
                (see Consolidator).
   convert      Map per-source acquisition metadata onto the consolidated
                schema (see AcquisitionMetadataMapper).
+  profile      Convert the LiMi JSON schemas into a metaseed profile YAML
+               (see ProfileConverter).
 """
 
 import argparse
@@ -15,6 +17,8 @@ import os.path
 from AcquisitionMetadataMapper import DEFAULT_MAPPINGS_FILE, DEFAULT_SCHEMA_FILE
 from Consolidator import Consolidator
 from convert import convert_files
+from ProfileConverter import (DEFAULT_JSON_SCHEMA_FILE, DEFAULT_PROFILE_FILE, DEFAULT_XSD_FILE, ProfileConverter,
+                              write_profile)
 
 
 def consolidation(schema_filename, input_filenames):
@@ -49,6 +53,15 @@ def run_convert(args):
         print(f'Wrote {output_file}')
 
 
+def run_profile(args):
+    converter = ProfileConverter(args.schema, args.xsd)
+    write_profile(converter.convert(version=args.version), args.output)
+    print(f'Wrote {args.output}: {len(converter.entities)} entities, '
+          f'{converter.containment_fields_added} containment fields added from the XSD')
+    if converter.unresolved_links:
+        print(f'Links to undefined entities, kept as strings: {dict(converter.unresolved_links)}')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -75,6 +88,18 @@ def main():
     convert_parser.add_argument('--mappings', default=DEFAULT_MAPPINGS_FILE,
                         help='Path to mappings.json')
     convert_parser.set_defaults(func=run_convert)
+
+    profile_parser = subparsers.add_parser(
+        'profile', help='Convert the LiMi JSON schemas into a metaseed profile YAML')
+    profile_parser.add_argument('--schema', default=DEFAULT_JSON_SCHEMA_FILE,
+                        help='Path to the LiMi JSON schemas (fullSchema.json)')
+    profile_parser.add_argument('--xsd', default=DEFAULT_XSD_FILE,
+                        help='Path to the LiMi XSD, which defines the entity containment')
+    profile_parser.add_argument('--output', default=DEFAULT_PROFILE_FILE,
+                        help='Path to write the profile YAML to')
+    profile_parser.add_argument('--version', default='2.1',
+                        help='Profile version, in x.y format')
+    profile_parser.set_defaults(func=run_profile)
 
     args = parser.parse_args()
     args.func(args)
