@@ -83,8 +83,16 @@ Progress (not committed yet):
   metadata has no profile fields yet - see the extension TODO). Vendor units like "um" don't fit
   OME's unit enums ("µm") and stay Properties.
 - eea2c52 export committed. Tier made optional (profile regenerated, valid; not committed yet).
-- 4 in progress: local `metaseed validate` of the 8 datasets. An earlier run seemed to hang, but
-  the laptop was offline/asleep; small cases validate in 6-13s each.
+- 4 local `metaseed validate` of the 8 datasets (profile at c04ce0c): 6 finished, 155 errors, all
+  "Field 'X' is required" - no unknown keys, no type or constraint errors. The two TALOS datasets
+  (1950 / 3008 Properties) did not finish within 10 min; validation takes ~2-3s a record locally
+  (Delmic 2 records 17s, Cikteq 81 records 209s, ome-tiff 134 records 333s). An earlier run only
+  seemed to hang because the laptop was offline/asleep.
+- Missing required fields are LiMi's own requirements the sources don't state (Image.Name/ID,
+  Pixels.DimensionOrder/SizeZ/C/T/PixelType, Objective.Manufacturer/Model/CatalogNumber,
+  AcquisitionSoftware.Developer/WebsiteURL, Experiment.Purpose, Sample.Organism, ...).
+- Next: validate on the Hub (validate_dataset) once the Hub draft is re-imported; decide how to
+  treat required fields no vendor file states (tier mapping TODO).
 
 Decided (user): values placed in typed fields keep their source key through `SourceMapping`
 records (ID, Field = dataset path, Source = source path), listed as `Mapping` on each
