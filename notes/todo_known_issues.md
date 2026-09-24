@@ -37,7 +37,7 @@ Export: mapper output -> a metaseed dataset of the LiMi profile (`OME` root), so
 can be validated with `validate_dataset` / `metaseed validate`, without losing any source value or
 key name.
 
-Done so far (branch `metaseed-profile`, not pushed):
+Done so far (branch `metaseed-profile`, pushed to origin up to c04ce0c; no PR yet):
 - 5385662 profile converter (`python src/main.py profile`): `fullSchema.json` + containment from
   `LiMi_XMLSchema.xsd` -> `models/fullSchema.yaml`, `OME` root; valid in metaseed (local and Hub).
 - a914b1f every converted file carries a `SourceMap` {output path: source path}; collapsed keys
@@ -113,4 +113,4 @@ Design choices made while building (tell the user; open to change):
 - [ ] Unit normalisation (e.g. vendor "um" -> OME "µm") so unit fields can be typed; the
       original spelling must stay recoverable.
 - [ ] Decide whether to delete the 9 unreachable entities (see Known issues).
-- [ ] Push `metaseed-profile` and open a PR.
+- [ ] Open a PR for `metaseed-profile` (pushed).
