@@ -80,6 +80,11 @@ class ProfileConverterTest(unittest.TestCase):
         with open(JSON_SCHEMA_FILE, encoding='utf-8') as file:
             cls.schemas = json.load(file)
 
+    def test_committed_profile_is_up_to_date(self):
+        with open(PROFILE_FILE, encoding='utf-8') as file:
+            committed = yaml.safe_load(file)
+        self.assertEqual(committed, self.profile, 'rerun: python src/main.py profile')
+
     def test_every_json_property_becomes_a_field(self):
         entities = self.profile['entities']
         for schema in self.schemas:
