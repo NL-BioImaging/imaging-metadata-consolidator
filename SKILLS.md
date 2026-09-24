@@ -63,3 +63,11 @@ project.
 - **Never silently drop data.** When consolidating or renaming fields into
   a schema, anything that doesn't have an established target should stay
   reachable at its original location, not disappear.
+
+## Carrying work across sessions
+
+- Record the current task, its plan and how far it got under "In progress"
+  in `notes/todo_known_issues.md` before editing code, and keep it updated.
+  Clear it once the task is done.
+- On "continue" with no other context, read that section first and resume
+  from it.
