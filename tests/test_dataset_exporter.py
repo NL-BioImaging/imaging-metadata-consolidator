@@ -1,6 +1,7 @@
 import glob
 import os
 import sys
+import tempfile
 import unittest
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -9,12 +10,14 @@ if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
 from AcquisitionMetadataMapper import AcquisitionMetadataMapper
-from DatasetExporter import PROVENANCE_ENTITIES, DatasetExporter, fits
+from DatasetExporter import PROVENANCE_ENTITIES, DatasetExporter, export_file, fits
 from convert import read_metadata
 
 
 PROFILE_FILE = os.path.join(REPO_ROOT, 'models', 'fullSchema.yaml')
 SOURCES_DIR = os.path.join(REPO_ROOT, 'sources')
+EXTENDED_PROFILE_FILE = os.path.join(REPO_ROOT, 'models', 'schema.extended.yaml')
+EXPORT_DIR = os.path.join(REPO_ROOT, 'export')
 CHECKSUM = '0' * 64
 
 
@@ -137,6 +140,30 @@ class DatasetExporterTest(unittest.TestCase):
     def test_provenance_entities_are_not_placement_targets(self):
         for entity in PROVENANCE_ENTITIES:
             self.assertNotIn(entity, self.exporter.paths)
+
+
+class ExportFolderTest(unittest.TestCase):
+    """export/ must hold what exporting sources/ against the extended profile gives today."""
+
+    REGENERATE = ('rerun: python src/main.py export --input sources --output export '
+                  '--profile models/schema.extended.yaml')
+
+    def test_export_holds_one_dataset_per_source(self):
+        sources = {os.path.splitext(os.path.basename(f))[0] for f in glob.glob(os.path.join(SOURCES_DIR, '*.json'))}
+        exported = {os.path.splitext(os.path.basename(f))[0] for f in glob.glob(os.path.join(EXPORT_DIR, '*.yaml'))}
+        self.assertEqual(exported, sources, self.REGENERATE)
+
+    def test_export_is_up_to_date(self):
+        mapper = AcquisitionMetadataMapper()
+        exporter = DatasetExporter(EXTENDED_PROFILE_FILE)
+        with tempfile.TemporaryDirectory() as directory:
+            for source_file in sorted(glob.glob(os.path.join(SOURCES_DIR, '*.json'))):
+                name = os.path.splitext(os.path.basename(source_file))[0] + '.yaml'
+                with self.subTest(source=name):
+                    fresh = os.path.join(directory, name)
+                    export_file(source_file, fresh, mapper, exporter)
+                    self.assertEqual(read_metadata(os.path.join(EXPORT_DIR, name)), read_metadata(fresh),
+                                     self.REGENERATE)
 
 
 if __name__ == '__main__':
