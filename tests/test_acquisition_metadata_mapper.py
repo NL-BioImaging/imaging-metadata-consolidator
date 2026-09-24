@@ -1,5 +1,8 @@
+import json
 import os
+import shutil
 import sys
+import tempfile
 import unittest
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,11 +27,76 @@ class AcquisitionMetadataMapperTest(unittest.TestCase):
 
         self.assertEqual(converted, {
             'Instrument': {'Manufacturer': 'Acme', 'Model': 'Widget-1000'},
+            'SourceMap': {'Instrument.Manufacturer': 'Make', 'Instrument.Model': 'Model'},
         })
 
     def test_convert_metadata_rejects_non_dict(self):
         with self.assertRaises(TypeError):
             self.mapper.convert_metadata(['not', 'a', 'dict'])
+
+
+class LosslessMappingTest(unittest.TestCase):
+    """Collisions, empty values and collapsed keys must never drop metadata."""
+
+    def mapper_for(self, mappings):
+        directory = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, directory)
+        schema_file = os.path.join(directory, 'schema.json')
+        mappings_file = os.path.join(directory, 'mappings.json')
+        with open(schema_file, 'w', encoding='utf-8') as file:
+            json.dump({}, file)
+        with open(mappings_file, 'w', encoding='utf-8') as file:
+            json.dump(mappings, file)
+        return AcquisitionMetadataMapper(schema_file, mappings_file)
+
+    def test_colliding_value_falls_back_to_its_source_path(self):
+        mapper = self.mapper_for({'a': 'T', 'b': 'T'})
+
+        converted = mapper.convert_metadata({'a': 1, 'b': 2})
+
+        self.assertEqual(converted, {'T': 1, 'b': 2, 'SourceMap': {'T': 'a', 'b': 'b'}})
+
+    def test_value_below_a_scalar_falls_back_to_its_source_path(self):
+        mapper = self.mapper_for({'a': 'T', 'b': 'T.X'})
+
+        converted = mapper.convert_metadata({'a': 1, 'b': 2})
+
+        self.assertEqual(converted, {'T': 1, 'b': 2, 'SourceMap': {'T': 'a', 'b': 'b'}})
+
+    def test_refuses_to_overwrite_when_fallback_is_taken_too(self):
+        mapper = self.mapper_for({'a': 'b'})
+
+        with self.assertRaises(ValueError):
+            mapper.convert_metadata({'a': 1, 'b': 2})
+
+    def test_empty_containers_are_kept(self):
+        converted = self.mapper_for({}).convert_metadata({'a': {}, 'b': [], 'c': None})
+
+        self.assertEqual(converted, {'a': {}, 'b': [], 'c': None,
+                                     'SourceMap': {'a': 'a', 'b': 'b', 'c': 'c'}})
+
+    def test_numeric_collapsed_key_is_kept(self):
+        mapper = self.mapper_for({'Detectors.*': 'D[]'})
+
+        converted = mapper.convert_metadata({'Detectors': {'3': {'gain': 1}}})
+
+        self.assertEqual(converted['D'], [{'gain': 1, 'id': '3'}])
+        self.assertEqual(converted['SourceMap']['D[0].id'], 'Detectors.3')
+
+    def test_collapsed_key_is_kept_beside_an_existing_id(self):
+        mapper = self.mapper_for({'Detectors.*': 'D[]'})
+
+        converted = mapper.convert_metadata({'Detectors': {'QBSD': {'id': 7, 'ID': 8}}})
+
+        self.assertEqual(converted['D'], [{'id': 7, 'ID': 8, 'SourceKey': 'QBSD'}])
+
+    def test_whole_path_wildcard_key_is_kept(self):
+        mapper = self.mapper_for({'Image:*': 'Images[]'})
+
+        converted = mapper.convert_metadata({'Image:0': {'x': 1}})
+
+        self.assertEqual(converted['Images'], [{'x': 1, 'SourceKey': 'Image:0'}])
+        self.assertEqual(converted['SourceMap'], {'Images[0].x': 'Image:0.x', 'Images[0].SourceKey': 'Image:0'})
 
 
 if __name__ == '__main__':

@@ -40,6 +40,7 @@ class ConvertTest(unittest.TestCase):
 
             self.assertEqual(converted, {
                 'Instrument': {'Manufacturer': 'Acme', 'Model': 'Widget-1000'},
+                'SourceMap': {'Instrument.Manufacturer': 'Make', 'Instrument.Model': 'Model'},
             })
             self.assertTrue(os.path.isfile(output_file))
             self.assertEqual(read_metadata(output_file), converted)

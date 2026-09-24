@@ -10,3 +10,11 @@ Magnification:
     CalibratedMagnification: 6000.0
 Detector:
   Name: ''
+SourceMap:
+  Image.Name: name
+  Image.AcquisitionDate: datetime
+  Image.Pixels.PhysicalSizeX: pixelsizex
+  Image.Pixels.PhysicalSizeY: pixelsizey
+  Magnification.Objective.CalibratedMagnification: magnification
+  Detector.Name: cameraname
+  Image.Type: picturetype
