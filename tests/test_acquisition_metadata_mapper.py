@@ -129,6 +129,37 @@ class LosslessMappingTest(unittest.TestCase):
         self.assertEqual(converted['SourceMap'], {'Medium.RefractiveIndex': 'Channels[0].Refr',
                                                   'Channels[1].Refr': 'Channels[1].Refr'})
 
+    def test_vendor_wrapper_is_left_out_of_rule_paths_only(self):
+        mapper = self.mapper_for({'Make': 'Instrument.Manufacturer'})
+
+        converted = mapper.convert_metadata({'FEI_TITAN': {'Make': 'Acme', 'databarHeight': 0}})
+
+        self.assertEqual(converted, {'Instrument': {'Manufacturer': 'Acme'}, 'FEI_TITAN': {'databarHeight': 0},
+                                     'SourceMap': {'Instrument.Manufacturer': 'FEI_TITAN.Make',
+                                                   'FEI_TITAN.databarHeight': 'FEI_TITAN.databarHeight'}})
+
+    def test_wrapped_value_colliding_with_a_top_level_one_is_kept(self):
+        mapper = self.mapper_for({'DateTime': 'Image.AcquisitionDate', 'datetime': 'Image.AcquisitionDate'})
+
+        converted = mapper.convert_metadata({'DateTime': '10:54:29', 'OlympusSIS': {'datetime': '10:54:00'}})
+
+        self.assertEqual(converted['Image'], {'AcquisitionDate': '10:54:29'})
+        self.assertEqual(converted['OlympusSIS'], {'datetime': '10:54:00'})
+
+    def test_key_named_by_a_rule_is_not_a_wrapper(self):
+        mapper = self.mapper_for({'Make': 'Instrument.Manufacturer', 'Tag.Make': 'Other.Make'})
+
+        converted = mapper.convert_metadata({'Tag': {'Make': 'Acme'}})
+
+        self.assertEqual(converted['Other'], {'Make': 'Acme'})
+
+    def test_key_whose_contents_resolve_no_better_is_not_a_wrapper(self):
+        mapper = self.mapper_for({'Make': 'Instrument.Manufacturer'})
+
+        converted = mapper.convert_metadata({'Blob': {'odd': 1}})
+
+        self.assertEqual(converted, {'Blob': {'odd': 1}, 'SourceMap': {'Blob.odd': 'Blob.odd'}})
+
     def test_list_target_taken_by_a_value_falls_back_to_the_source_path(self):
         mapper = self.mapper_for({'Name': 'D', 'Detectors.*': 'D[]'})
 

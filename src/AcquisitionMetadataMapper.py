@@ -36,6 +36,7 @@ class AcquisitionMetadataMapper:
         self.schema = self._load_json(schema_file)
         self.mappings = self._load_json(mappings_file)
         self._schema_index = self._build_schema_index(self.schema)
+        self._known_keys, self._known_key_patterns = self._build_known_key_index(self.mappings, self.schema)
 
     @staticmethod
     def _load_json(file_path):
@@ -74,6 +75,52 @@ class AcquisitionMetadataMapper:
         for suffix in ambiguous:
             del index[suffix]
         return index
+
+    @classmethod
+    def _build_known_key_index(cls, mappings, schema):
+        """The literal first path segment of every mapping rule plus every schema field name, and separately
+        the first segments that contain a wildcard (the OME annotation rules), which must be matched."""
+        known = set()
+        patterns = set()
+        for pattern in mappings:
+            first_segment = pattern.split('.')[0]
+            if '*' in first_segment:
+                patterns.add(first_segment)
+            else:
+                known.add(first_segment)
+        for leaf_path in cls._schema_leaf_paths(schema):
+            known.update(leaf_path.split('.'))
+        return known, patterns
+
+    def _is_known_key(self, key):
+        """Whether any rule or the model itself names `key`."""
+        return key in self._known_keys or any(fnmatchcase(key, pattern) for pattern in self._known_key_patterns)
+
+    def _resolvable_leaf_count(self, metadata, prefix=''):
+        """Count the leaves of `metadata` whose path (list items unindexed, as rules see them) resolves."""
+        count = 0
+        for key, value in metadata.items():
+            path = f'{prefix}.{key}' if prefix else str(key)
+            items = value if isinstance(value, list) and any(isinstance(v, dict) for v in value) else [value]
+            for item in items:
+                if isinstance(item, dict) and item:
+                    count += self._resolvable_leaf_count(item, path)
+                elif self._resolve_rule_path(path) is not None or self._resolve_schema_path(path) is not None:
+                    count += 1
+        return count
+
+    def _is_vendor_wrapper(self, key, value):
+        """Whether top-level `key` only wraps `value`, contributing no meaning to the mapping.
+
+        A source that reads its metadata straight from a file's tags keys
+        each vendor's blob by the tag it came from ("FEI_TITAN",
+        "FibicsXML", ...), a level the rules know nothing about and which
+        stops every rule below it from matching. A key is taken to be such a
+        wrapper only when no rule and no model field names it, and leaving
+        it out of the rule paths lets strictly more of its contents resolve.
+        """
+        return (isinstance(value, dict) and not self._is_known_key(str(key))
+                and self._resolvable_leaf_count(value) > self._resolvable_leaf_count(value, str(key)))
 
     def _resolve_schema_path(self, source_path):
         """Resolve a dotted source path via the schema fallback, or None."""
@@ -385,12 +432,23 @@ class AcquisitionMetadataMapper:
         Returns the converted dict, with a top-level SOURCE_MAP_KEY section
         mapping every output leaf path to the source path it came from, so
         renamed and collapsed keys stay recoverable from the output alone.
+        A top-level vendor tag wrapper (see `_is_vendor_wrapper`) is left out
+        of the paths rules are matched against, but nothing else about it
+        is: its unmapped fields stay under it, and every source path keeps it.
         """
         if not isinstance(metadata, dict):
             raise TypeError('metadata must be a dict')
 
         provenance = {}
-        result = self._apply_mappings(metadata, provenance=provenance)
+        result = {}
+        for key, value in metadata.items():
+            if self._is_vendor_wrapper(key, value):
+                # Rules see the wrapper's contents as top-level fields, while unmapped ones stay under the
+                # wrapper and the SourceMap keeps the full source path.
+                self._apply_mappings(value, result, path=str(key), rule_path='', provenance=provenance,
+                                     origin=str(key))
+            else:
+                self._apply_mappings({key: value}, result, provenance=provenance)
         if SOURCE_MAP_KEY in result:
             raise ValueError(f'Source metadata already has a top-level {SOURCE_MAP_KEY}')
         result[SOURCE_MAP_KEY] = provenance

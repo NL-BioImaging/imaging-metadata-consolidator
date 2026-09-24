@@ -122,6 +122,25 @@ Design choices made while building (tell the user; open to change):
 - `Tier` is a schema constant no source states: the converter makes it optional on every entity
   (was required on 100), rather than filling it in.
 
+Current task (user): take refinements from imaging-metadata-converter without losing anything.
+- Step 1: merge its mappings.json (18 new rules: TIFF/EXIF tags, full OME-shaped source, Stage.M,
+  Microscope.SystemVacuum) into ours, keeping our rules it dropped (flat ome-tiff shape `objective.*`,
+  `medium`, `refractive_index`) and the 5 Huygens rules - our sources/ keep the old shape (step 2,
+  replacing sources/ with its examples, not requested). schema.extended.json: its 2 additions.
+- Step 3: vendor tag wrappers (`FEI_TITAN`, `FibicsXML`, ...): rules match as if the wrapper were
+  absent, the SourceMap keeps the full path, unmapped fields stay under the wrapper, collisions use
+  the no-overwrite fallback. The converter's version lifts fields with setdefault (drops a value on
+  a key collision, order dependent) and drops the wrapper key; on its own examples it silently loses
+  EMSIS Xarosa's EXIF DateTimeDigitized (overwritten by OlympusSIS.datetime). Converter not changed.
+- Progress (not committed): mappings merged (202 converter + 194 ours -> 212, insertions only, no
+  general wildcard ahead of a more specific one); schema.extended.json = converter's (superset: the
+  2 additions). Wrapper handling in `convert_metadata` + 4 synthetic tests; 55 tests pass. Only our
+  Zeiss output changed (the new Stage.M and SystemVacuum rules). On the converter's 9 wrapped
+  examples our mapper has 0 loss problems (exact SourceMap check); differences from the converter's
+  output are all by design: unmapped fields stay under the wrapper, and EMSIS keeps both timestamps
+  (EXIF DateTimeDigitized in Image.AcquisitionDate - first written wins - and OlympusSIS.datetime at
+  its source path).
+
 ## TODO
 
 - [ ] Map LiMi's per-property tier (1/2/3) to metaseed's advisory `tier` (required /

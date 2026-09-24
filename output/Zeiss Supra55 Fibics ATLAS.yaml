@@ -64,15 +64,15 @@ SamplePositioning:
       Z:
         Unit: um
         Value: 0
+      M:
+        Unit: mm
+        Value: 0
     Tilt:
       Unit: deg
       Value: 0
     Rotation:
       Unit: deg
       Value: 0
-    M:
-      units: mm
-      value: 0
     RawPosition:
       X:
         Unit: um
@@ -92,8 +92,9 @@ SamplePositioning:
       M:
         Unit: mm
         Value: 0
-Microscope:
-  SystemVacuum: 0
+Instrument:
+  Vacuum:
+    SystemVacuum: 0
 SourceMap:
   Software.AcquisitionSoftware.Version: Application.Version
   Software.Date: Application.Date
@@ -138,8 +139,8 @@ SourceMap:
   SamplePositioning.Stage.Tilt.Value: Stage.Tilt.value
   SamplePositioning.Stage.Rotation.Unit: Stage.Rot.units
   SamplePositioning.Stage.Rotation.Value: Stage.Rot.value
-  SamplePositioning.Stage.M.units: Stage.M.units
-  SamplePositioning.Stage.M.value: Stage.M.value
+  SamplePositioning.Stage.Position.M.Unit: Stage.M.units
+  SamplePositioning.Stage.Position.M.Value: Stage.M.value
   SamplePositioning.Stage.RawPosition.X.Unit: RawStage.X.units
   SamplePositioning.Stage.RawPosition.X.Value: RawStage.X.value
   SamplePositioning.Stage.RawPosition.Y.Unit: RawStage.Y.units
@@ -158,5 +159,5 @@ SourceMap:
   Image.Corrections.XBrightSlope: ImageCorrections.XBrightSlope
   Image.Corrections.YBrightSlope: ImageCorrections.YBrightSlope
   Image.Corrections.RBrightSlope: ImageCorrections.RBrightSlope
-  Microscope.SystemVacuum: Microscope.SystemVacuum
+  Instrument.Vacuum.SystemVacuum: Microscope.SystemVacuum
   Software.Version: version
