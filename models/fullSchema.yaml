@@ -513,7 +513,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of the microscope.
   Image:
     description: This element describes the actual Image that was acquired and its meta-data. The elements that are references
@@ -626,7 +626,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of the microscope.
   CameraSettings:
     description: This element refers to the Camera used to acquire this Channel and it holds the Settings that were applied
@@ -812,7 +812,7 @@ entities:
         - Other
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   EmissionFilterWheel:
     description: This element represents a circular holder for multiple individual Emission Filters.
@@ -902,7 +902,7 @@ entities:
       items: EmissionFilter
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   LEDModule:
     description: A Light Emitting Diode (LED) Light Source is often composed of multiple modules each with its own wavelength
@@ -1174,7 +1174,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   MicroscopeTableSettings:
     description: This element refers to the MicroscopeTable used to support the Microscope used to acquire this Image and
@@ -1192,7 +1192,7 @@ entities:
         of this Image.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   IlluminationWavelengthRange:
     description: This element records a range of Wavelengths at which this Light Source emits, according to the Manufacturer.
@@ -1545,7 +1545,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Transmitted_LightSource_Filament_IlluminationWavelengthRange:
     description: This element records a range of Wavelengths at which this Light Source emits, according to the Manufacturer.
@@ -1808,7 +1808,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Fluorescence_LightSource_Filament_IlluminationWavelengthRange:
     description: This element records a range of Wavelengths at which this Light Source emits, according to the Manufacturer.
@@ -2057,7 +2057,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   AcquisitionSoftware:
     description: This element represents a commercial, or open-source Software, script, macro, plugin or module utilized for
@@ -2131,7 +2131,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Sample:
     description: This field captures a description of the sample that was imaged in this experiment.
@@ -2245,7 +2245,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   EnvironmentalControlDevice:
     description: This element describes an Environmental Control Device available for this Instrument to maintain a controlled
@@ -2402,7 +2402,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Fluorophore:
     description: This element describes the Fluorophore whose Emission is used to produce this Channel. [plain text string].
@@ -2580,7 +2580,7 @@ entities:
         by the Manufacturer.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   WavelengthRange:
     description: This element records a range of Wavelengths this component is designed for, according to the Manufacturer.
@@ -3182,7 +3182,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   HoffmanPlate:
     description: This element represents a Plate that contains an off-axis slit aperture positioned in the front focal plane
@@ -3288,7 +3288,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   HybridPhotoDetector:
     description: This element represents a hybrid Photomultiplier and Avalanche Photodiode (APD).
@@ -3579,7 +3579,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   HybridPhotoDetector_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -3782,7 +3782,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   VarelRing:
     description: This element represents a stop (i.e., opaque structure) shaped like a ring sector, which is used on the illumination
@@ -3876,7 +3876,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   TransmittanceProfileFile:
     description: This element represents a file in .csv or other suitable formats containing the Transmittance profile of
@@ -4363,7 +4363,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PolarizationOptics:
     description: This element describes a Polarization device positioned in the Ligth Path for this Instrument. A Polarization
@@ -4537,7 +4537,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PolarizationOptics_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -5088,7 +5088,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   CMOS_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -5578,7 +5578,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   BeamCollimatorLens:
     description: A Beam Collimator Lens is a Lens designed to work in combination with other optical components to form a
@@ -6043,7 +6043,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   BeamExpander:
     description: Beam Expanders are Lens Systems whose role is to increase the diameter of a collimated input beam to a larger
@@ -6130,7 +6130,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   LightGuide:
     description: A Light Guide coupling between the Light Source and the Microscope Stand generally consists of a casing enclosing
@@ -6318,7 +6318,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   LightGuide_WavelengthRange:
     description: This element records a range of Wavelengths this component is designed for, according to the Manufacturer.
@@ -6922,7 +6922,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   FilterCube:
     description: A Filter Cube is a removable cube-shaped unit that containing the filters and mirror used in epi-fluorescence
@@ -7030,7 +7030,7 @@ entities:
       items: EmissionFilter
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   TransmittanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component.
@@ -7143,7 +7143,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PrismSettings_TransmissionWavelengthRangeSettings:
     description: This element records the range of Transmission Wavelengths that were set for this optical component during
@@ -7895,7 +7895,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   IrisDiaphragm:
     description: This element represents a Diaphragm, positioned trasversally to the optical axis bounded by multiple leaves,
@@ -8043,7 +8043,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Pixels:
     description: The Pixels element is going to be removed in the future, but it is still required. This is just notice that
@@ -8322,7 +8322,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   FilterCubeTurret:
     description: This element represents a circular holder for multiple Filter Cubes.
@@ -8412,7 +8412,7 @@ entities:
       items: FilterCube
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   OpticsTurret:
     description: This element represents a circular holder for multiple optical elements.
@@ -8527,7 +8527,7 @@ entities:
       items: PolarizationOptics
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   MicroscopeStandSettings:
     description: This element refers to the Microscope Stand used to acquire this Image and it holds the Settings that were
@@ -8590,7 +8590,7 @@ entities:
         - reference frame
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Plane:
     description: Each Image has to have at least one Plane and one Channel. The Plane element holds the Microscope stage and
@@ -8871,7 +8871,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   TransmissionWavelengthRangeSettings:
     description: This element records the range of Transmission Wavelengths that were set for this optical component during
@@ -9025,7 +9025,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Arc_IlluminationWavelengthRange:
     description: This element records a range of Wavelengths at which this Light Source emits, according to the Manufacturer.
@@ -9258,7 +9258,7 @@ entities:
         AcoustoOptical Device was employed for intensity modulation.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PhotoDiode:
     description: This element represents a Photovoltaic Detector. Most photodiodes used in confocal microscopes are Avalanche
@@ -9559,7 +9559,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PhotoDiode_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -9821,7 +9821,7 @@ entities:
       items: Laser
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   ImagingEnvironment:
     description: This element describes the environment in which the biological sample was maintained during the Acquisition
@@ -9906,7 +9906,7 @@ entities:
         Image. Expressed as a percentage fraction as a value from 0.0 to 1.0.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   MountingMedium:
     description: This element refers to the Mounting Medium that was used during the acquisition of this Image. According
@@ -9961,7 +9961,7 @@ entities:
         by the Manufacturer.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   CCD:
     description: This element represents a Charged Coupled Device Camera.
@@ -10397,7 +10397,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   CCD_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -11000,7 +11000,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   MicroscopeTube:
     description: Illumination Tubes are Lens systems, which might be embedded within the Microscope Stand and therefore not
@@ -11181,7 +11181,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   StandardDichroic:
     description: A Dichroic Mirror (also often referred to as Dichroic Beamsplitter or simply as Dichroic) is a Mirror that
@@ -11567,7 +11567,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   StandardDichroic_TransmittanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component.
@@ -12160,7 +12160,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Condenser:
     description: Condensers are Lens Systems located above the Light Source and under the sample in an Upright Microscope,
@@ -12277,7 +12277,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   ShutterSettings:
     description: This element holds the Setting applied to a Shutter used in the Light Path during the acquisition of this
@@ -12351,7 +12351,7 @@ entities:
         - Other
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Channel:
     description: Each Image has to have at least one Plane and one Channel. The Channel element stores information about how
@@ -12467,7 +12467,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Pump:
     description: In case the primary Laser is Pumped, this element describe a secondary Laser, positioned upstream of the
@@ -12721,7 +12721,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   ExcitationFilter_TransmittanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component.
@@ -12953,7 +12953,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   GenericDetector_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -13230,7 +13230,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   GenericDetectorSettings:
     description: This element refers to the Generic Detector that was used to Acquire this Channel and it holds the Settings
@@ -13299,7 +13299,7 @@ entities:
         - Other
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PhaseRing:
     description: This element (also called Phase Annulus) refers to an annular (ring-like) slit used to produce contrast modulation
@@ -13495,7 +13495,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   FilterSet:
     description: This element represents a FilterSet that was used for the acquisition of this Channel. A Filter Set is typically
@@ -13533,7 +13533,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   GenericDichroic:
     description: A Dichroic Mirror (also often referred to as Dichroic Beamsplitter or simply as Dichroic) is a Mirror that
@@ -13919,7 +13919,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   GenericDichroic_TransmittanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component.
@@ -14316,7 +14316,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   ImmersionLiquid:
     description: 'This element refers to the Immersion Liquid that was used with this Objective during the Acquisition of
@@ -14381,7 +14381,7 @@ entities:
         by the Manufacturer.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   CondenserLens:
     description: A Condenser Lens renders a divergent beam from a point source into a parallel or converging beam to illuminate
@@ -14848,7 +14848,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Experiment:
     description: This element describes the experiment during which this Image was acquired. The optional Description element
@@ -14953,7 +14953,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   WavelengthProfileFile:
     description: This element consists of a file containing the Wavelength profile of this hardware component.
@@ -15019,7 +15019,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   GenericOpticalApertureSettings_TransmissionWavelengthRangeSettings:
     description: This element records the range of Transmission Wavelengths that were set for this optical component during
@@ -15410,7 +15410,7 @@ entities:
       items: Laser
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Laser_IlluminationWavelengthRange:
     description: This element records a range of Wavelengths at which this Light Source emits, according to the Manufacturer.
@@ -15826,7 +15826,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   EmissionFilter_TransmittanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component.
@@ -15983,7 +15983,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Transmitted_LightSource_LightEmittingDiode_LEDModule:
     description: A Light Emitting Diode (LED) Light Source is often composed of multiple modules each with its own wavelength
@@ -16260,7 +16260,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Fluorescence_LightSource_LightEmittingDiode_LEDModule:
     description: A Light Emitting Diode (LED) Light Source is often composed of multiple modules each with its own wavelength
@@ -16582,7 +16582,7 @@ entities:
         - reference frame
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   MirroringDeviceSettings:
     description: This element holds the Setting applied to a Mirror used in the Light Path during the acquisition of this
@@ -16600,7 +16600,7 @@ entities:
         respect to the optical axis.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   LensSettings:
     description: This element holds the Setting applied to a Lens used in the Light Path during the acquisition of this Channel
@@ -16617,7 +16617,7 @@ entities:
       description: This field records the purpose for which this Additinal Lens was used during the Acquisition of this Channel.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   ReflectanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are reflected by this optical componewnt.
@@ -17032,7 +17032,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PhotoMultiplierTube:
     description: A Photomultiplier Tube (PMT) is a photoemissive device in which the absorption of a photon results in the
@@ -17360,7 +17360,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PhotoMultiplierTube_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -17935,7 +17935,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   IntensifiedCamera_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -18133,7 +18133,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   GenericFilter:
     description: An optical Filter is a device designed to selectively control the Wavelengths, color temperature, vibration
@@ -18377,7 +18377,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   GenericFilter_TransmittanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component.
@@ -18669,7 +18669,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   StageLabel:
     description: The StageLabel is used to specify the Name and Position for a Stage position in the Microscope's reference
@@ -18810,7 +18810,7 @@ entities:
         - reference frame
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   RelayLens:
     description: A Relay Lens is often used in combination with other Lenses for transferring an Image into a different optical
@@ -19275,7 +19275,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PointDetectorSettings:
     description: This element refers to the Point Detector used to acquire this Channel and it holds the Settings that were
@@ -19382,7 +19382,7 @@ entities:
         - Other
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   FreeBeam:
     description: A Free Beam coupling between the Light Source and the Microscope Stand consists of either a direct mount
@@ -19452,7 +19452,7 @@ entities:
       description: This is a simple multi-line comment or annotation describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   MicroscopeTable:
     description: This element describes the Table used to support this Instrument during Image Acquisition.
@@ -19601,7 +19601,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Prism:
     description: This element describes a Prism positioned in the Light Path for one or more Channels available for this Instrument.
@@ -19862,7 +19862,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Prism_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -20076,7 +20076,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   PiezoElectricStage:
     description: This describes an optional piezoelectric-driven sample nano-positioning device associated with this Instrument.
@@ -20704,7 +20704,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   ExcitationFilterSlider:
     description: This element represents a linear holder for multiple individual Excitation Filters.
@@ -20794,7 +20794,7 @@ entities:
       items: ExcitationFilter
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   AnalogVideo:
     description: This element represents a device used to capture Analog Videos.
@@ -21197,7 +21197,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   AnalogVideo_WavelengthRange:
     description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer.
@@ -21596,7 +21596,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   NeutralDensityFilter_TransmittanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component.
@@ -21719,7 +21719,7 @@ entities:
         by the Manufacturer.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   SampleHolder:
     description: This element describes the device (often referred to as Sample Carrier, Container or Vessel) on which the
@@ -21761,7 +21761,7 @@ entities:
         by the Manufacturer.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   ReflectingMirror:
     description: This element describes a total reflection Mirror.
@@ -22006,7 +22006,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   ExcitationFilterWheel:
     description: This element represents a circular holder for multiple individual Excitation Filters.
@@ -22096,7 +22096,7 @@ entities:
       items: ExcitationFilter
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   IndividualObjectiveFocusing:
     description: A Focusing mechanism is used to obtain maximum sharpness in an Image by changing the distance between a Sample
@@ -22453,7 +22453,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   DichroicFilterSlider:
     description: This element represents a linear holder for multiple individual Dichroics.
@@ -22543,7 +22543,7 @@ entities:
       items: StandardDichroic
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Transmitted_LightSource_GenericExcitationSource:
     description: The GenericExcitationSource element is used to represent a light source as a collection of key/value pairs,
@@ -22622,7 +22622,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Transmitted_LightSource_GenericExcitationSource_IlluminationWavelengthRange:
     description: This element records a range of Wavelengths at which this Light Source emits, according to the Manufacturer.
@@ -22872,7 +22872,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   Fluorescence_LightSource_GenericExcitationSource_IlluminationWavelengthRange:
     description: This element records a range of Wavelengths at which this Light Source emits, according to the Manufacturer.
@@ -23117,7 +23117,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   TubeLens:
     description: A Tube Lens is an intermediate Lens, located within the Microscope's Illumination Tube, which is designed
@@ -23583,7 +23583,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   EmissionFilterSlider:
     description: This element represents a linear holder for multiple individual Emission Filters.
@@ -23673,7 +23673,7 @@ entities:
       items: EmissionFilter
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   DichroicFilterWheel:
     description: This element represents a circular holder for multiple individual Dichroics.
@@ -23763,7 +23763,7 @@ entities:
       items: StandardDichroic
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   InvertedMicroscopeStand:
     description: This is a Microscope in which the object is observed from beneath the stage.
@@ -23844,7 +23844,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   LightPath:
     description: This element holds a description of the Light Path associated with the Acquisition of this Channel.
@@ -23934,7 +23934,7 @@ entities:
       owns: true
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   IntensityCalibrationTool:
     description: A tool, such as the Meta-Max calibration toold developed by the 4D Nucleome Imaging Standards Working Group,
@@ -24001,7 +24001,7 @@ entities:
         a simple multi-line comment) describing this component.
     - name: Tier
       type: integer
-      required: true
+      required: false
       description: The tier level of this component.
   OME:
     description: Top-level container, mirroring the OME root element of models/LiMi_XMLSchema.xsd.

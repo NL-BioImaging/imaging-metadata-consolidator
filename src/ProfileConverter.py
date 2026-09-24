@@ -123,7 +123,8 @@ class ProfileConverter:
             entity['description'] = description.strip()
         self.entities[name] = entity
         self.entity_names.add(name)
-        entity['fields'] = [self._make_field(n, p, n in required, name) for n, p in properties.items()]
+        # Tier is a constant of the schema, not something a source file states, so a dataset can't be faulted for it
+        entity['fields'] = [self._make_field(n, p, n in required and n != 'Tier', name) for n, p in properties.items()]
 
     def _make_field(self, name, prop, required, owner):
         field = {'name': name}

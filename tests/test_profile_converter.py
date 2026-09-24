@@ -129,6 +129,12 @@ class ProfileConverterTest(unittest.TestCase):
         self.assertTrue(checksum['required'])
         self.assertEqual(checksum['constraints'], {'pattern': '^[0-9a-f]{64}$'})
 
+    def test_tier_is_never_required(self):
+        for name, entity in self.profile['entities'].items():
+            for field in entity['fields']:
+                if field['name'] == 'Tier':
+                    self.assertFalse(field['required'], name)
+
     def test_version_is_written_as_a_string(self):
         with tempfile.TemporaryDirectory() as directory:
             filename = os.path.join(directory, 'profile.yaml')

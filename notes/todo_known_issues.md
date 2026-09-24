@@ -82,7 +82,9 @@ Progress (not committed yet):
 - Most values are Properties for now, e.g. TFS TALOSF: 6 typed mappings, 1950 Properties (EM
   metadata has no profile fields yet - see the extension TODO). Vendor units like "um" don't fit
   OME's unit enums ("µm") and stay Properties.
-- 4 in progress: local `metaseed validate` of the 8 datasets (slow on the TALOS files).
+- eea2c52 export committed. Tier made optional (profile regenerated, valid; not committed yet).
+- 4 in progress: local `metaseed validate` of the 8 datasets. An earlier run seemed to hang, but
+  the laptop was offline/asleep; small cases validate in 6-13s each.
 
 Decided (user): values placed in typed fields keep their source key through `SourceMapping`
 records (ID, Field = dataset path, Source = source path), listed as `Mapping` on each
@@ -99,8 +101,8 @@ Design choices made while building (tell the user; open to change):
   list's i-th item into the i-th.
 - `Fluorescence_LightSource.Filament` in the mapper output -> profile entity
   `Fluorescence_LightSource_Filament` (category + title, when that is an entity name).
-- `Tier` is required on every entity but no source states it; left empty (reported), not filled
-  in from the schema.
+- `Tier` is a schema constant no source states: the converter makes it optional on every entity
+  (was required on 100), rather than filling it in.
 
 ## TODO
 
@@ -110,7 +112,5 @@ Design choices made while building (tell the user; open to change):
       `schema.extended.json` additions), with an explicit `parent` per new entity.
 - [ ] Unit normalisation (e.g. vendor "um" -> OME "µm") so unit fields can be typed; the
       original spelling must stay recoverable.
-- [ ] `Tier` is a required field on every entity but is a schema constant, not data: drop it from
-      the profile fields, or make it optional.
 - [ ] Decide whether to delete the 9 unreachable entities (see Known issues).
 - [ ] Push `metaseed-profile` and open a PR.
