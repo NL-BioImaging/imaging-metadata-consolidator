@@ -98,6 +98,34 @@ class LosslessMappingTest(unittest.TestCase):
         self.assertEqual(converted['Images'], [{'x': 1, 'SourceKey': 'Image:0'}])
         self.assertEqual(converted['SourceMap'], {'Images[0].x': 'Image:0.x', 'Images[0].SourceKey': 'Image:0'})
 
+    def test_rule_inside_a_list_item_writes_from_the_root(self):
+        mapper = self.mapper_for({'Image:*': 'Images[]', 'Image:*.History.Version': 'Software.Version'})
+
+        converted = mapper.convert_metadata({'Image:0': {'History': {'Version': '1.0', 'Count': 5}}})
+
+        self.assertEqual(converted['Software'], {'Version': '1.0'})
+        self.assertEqual(converted['Images'], [{'History': {'Count': 5}, 'SourceKey': 'Image:0'}])
+        self.assertEqual(converted['SourceMap']['Software.Version'], 'Image:0.History.Version')
+
+    def test_rule_in_each_list_item_falls_back_into_the_item_on_collision(self):
+        mapper = self.mapper_for({'Channels.Refr': 'Medium.RefractiveIndex'})
+
+        converted = mapper.convert_metadata({'Channels': [{'Refr': 1.4}, {'Refr': 1.5}]})
+
+        self.assertEqual(converted['Medium'], {'RefractiveIndex': 1.4})
+        self.assertEqual(converted['Channels'], [{}, {'Refr': 1.5}])
+        self.assertEqual(converted['SourceMap'], {'Medium.RefractiveIndex': 'Channels[0].Refr',
+                                                  'Channels[1].Refr': 'Channels[1].Refr'})
+
+    def test_list_target_taken_by_a_value_falls_back_to_the_source_path(self):
+        mapper = self.mapper_for({'Name': 'D', 'Detectors.*': 'D[]'})
+
+        converted = mapper.convert_metadata({'Name': 'x', 'Detectors': {'QBSD': {'gain': 1}}})
+
+        self.assertEqual(converted['D'], 'x')
+        self.assertEqual(converted['Detectors'], {'QBSD': {'gain': 1, 'id': 'QBSD'}})
+        self.assertEqual(converted['SourceMap']['Detectors.QBSD.gain'], 'Detectors.QBSD.gain')
+
 
 if __name__ == '__main__':
     unittest.main()

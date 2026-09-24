@@ -9,6 +9,14 @@ Settings:
   ObjectiveSettings:
     Medium: Oil
     RefractiveIndex: 1.518
+SamplePreparation:
+  MountingMedium:
+    RefractiveIndex: 1.458
+Software:
+  SoftwareModule:
+    Version: 24.10.0p6
+  AcquisitionSoftware:
+    Version: 1.3p0
 Annotation:
 - Geometry:
     SamplingSizes:
@@ -71,9 +79,6 @@ Annotation:
     MicroscopeSpecState: Reported
     ExPhotonCnt: 1
     ExPhotonCntState: Default
-    SamplePreparation:
-      MountingMedium:
-        RefractiveIndex: 1.458
     RefrIndexMediumState: Estimated
     RefrIndexLensMedium: 1.518
     RefrIndexLensMediumState: Reported
@@ -124,9 +129,7 @@ Annotation:
     MicroscopeSpecState: Reported
     ExPhotonCnt: 1
     ExPhotonCntState: Default
-    SamplePreparation:
-      MountingMedium:
-        RefractiveIndex: 1.458
+    RefrIndexMedium: 1.458
     RefrIndexMediumState: Estimated
     RefrIndexLensMedium: 1.518
     RefrIndexLensMediumState: Reported
@@ -152,11 +155,6 @@ Annotation:
     - String: Scaling factors;
     - String: Array detector STED;
     FeatureCnt: 5
-  Software:
-    SoftwareModule:
-      Version: 24.10.0p6
-    AcquisitionSoftware:
-      Version: 1.3p0
   SourceKey: Annotation:CustomAttributes:SVI:Image:0
 SourceMap:
   Magnification.Objective.ID: objective.id
@@ -166,6 +164,9 @@ SourceMap:
   id: id
   Settings.ObjectiveSettings.Medium: medium
   Settings.ObjectiveSettings.RefractiveIndex: refractive_index
+  SamplePreparation.MountingMedium.RefractiveIndex: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexMedium
+  Software.SoftwareModule.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.HuygensVersion
+  Software.AcquisitionSoftware.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.OmeWriterVersion
   Annotation[0].Geometry.SamplingSizes.DeltaX: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaX
   Annotation[0].Geometry.SamplingSizes.DeltaXState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaXState
   Annotation[0].Geometry.SamplingSizes.DeltaY: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaY
@@ -219,7 +220,6 @@ SourceMap:
   Annotation[0].ChannelData[0].MicroscopeSpecState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicroscopeSpecState
   Annotation[0].ChannelData[0].ExPhotonCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExPhotonCnt
   Annotation[0].ChannelData[0].ExPhotonCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExPhotonCntState
-  Annotation[0].ChannelData[0].SamplePreparation.MountingMedium.RefractiveIndex: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexMedium
   Annotation[0].ChannelData[0].RefrIndexMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexMediumState
   Annotation[0].ChannelData[0].RefrIndexLensMedium: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexLensMedium
   Annotation[0].ChannelData[0].RefrIndexLensMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexLensMediumState
@@ -267,7 +267,7 @@ SourceMap:
   Annotation[0].ChannelData[1].MicroscopeSpecState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicroscopeSpecState
   Annotation[0].ChannelData[1].ExPhotonCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExPhotonCnt
   Annotation[0].ChannelData[1].ExPhotonCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExPhotonCntState
-  Annotation[0].ChannelData[1].SamplePreparation.MountingMedium.RefractiveIndex: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexMedium
+  Annotation[0].ChannelData[1].RefrIndexMedium: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexMedium
   Annotation[0].ChannelData[1].RefrIndexMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexMediumState
   Annotation[0].ChannelData[1].RefrIndexLensMedium: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexLensMedium
   Annotation[0].ChannelData[1].RefrIndexLensMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexLensMediumState
@@ -289,7 +289,5 @@ SourceMap:
   Annotation[0].FeatureHistory.FeatureDescription[2].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[2].String
   Annotation[0].FeatureHistory.FeatureDescription[3].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[3].String
   Annotation[0].FeatureHistory.FeatureDescription[4].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[4].String
-  Annotation[0].Software.SoftwareModule.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.HuygensVersion
-  Annotation[0].Software.AcquisitionSoftware.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.OmeWriterVersion
   Annotation[0].FeatureHistory.FeatureCnt: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureCnt
   Annotation[0].SourceKey: Annotation:CustomAttributes:SVI:Image:0
