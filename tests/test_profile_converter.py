@@ -135,6 +135,9 @@ class ProfileConverterTest(unittest.TestCase):
                 if field['name'] == 'Tier':
                     self.assertFalse(field['required'], name)
 
+    def test_description_names_the_limi_model_version(self):
+        self.assertIn('LiMi model version 2.01.1', self.profile['description'])
+
     def test_version_is_written_as_a_string(self):
         with tempfile.TemporaryDirectory() as directory:
             filename = os.path.join(directory, 'profile.yaml')

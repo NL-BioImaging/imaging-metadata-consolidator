@@ -104,10 +104,15 @@ class ProfileConverter:
             'name': name,
             # metaseed wants version as a string; unquoted 2.1 in YAML would be read as a number
             'version': str(version),
-            'description': 'Microscopy metadata profile converted from models/fullSchema.json',
+            'description': f'Microscopy metadata profile converted from models/fullSchema.json '
+                           f'(LiMi model version {", ".join(self._model_versions())})',
             'root_entity': ROOT_ENTITY,
             'entities': self.entities,
         }
+
+    def _model_versions(self):
+        # LiMi versions are x.yy.z, which metaseed's MAJOR.MINOR profile version can't hold
+        return sorted({schema['modelVersion'] for schema in self.schemas if 'modelVersion' in schema})
 
     @staticmethod
     def _id_stem(schema):

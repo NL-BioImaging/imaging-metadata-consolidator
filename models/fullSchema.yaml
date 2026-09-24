@@ -1,6 +1,6 @@
 name: LiMi
 version: '2.1'
-description: Microscopy metadata profile converted from models/fullSchema.json
+description: Microscopy metadata profile converted from models/fullSchema.json (LiMi model version 2.01.1)
 root_entity: OME
 entities:
   Instrument:
