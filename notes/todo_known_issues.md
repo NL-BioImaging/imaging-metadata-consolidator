@@ -2,10 +2,11 @@
 
 ## Known issues
 
-### Hub draft behind the repo profile
+### Hub state
 
-The Hub draft `LiMi-596b481a` was imported before the Property/SourceFile entities (a59807f).
-Re-import `models/fullSchema.yaml` on the Hub's Import page to bring it up to date.
+The Hub account the metaseed token acts as (j.j.m.defolter@amsterdamumc.nl) holds one draft,
+`LiMi-extended` 2.1, matching `models/schema.extended.yaml` (valid, no warnings). Datasets can only be
+created against a published profile, so exports are not validated on the Hub until it is published.
 
 ### Unused shared entities in the profile
 
@@ -132,7 +133,7 @@ Current task (user): take refinements from imaging-metadata-converter without lo
   the no-overwrite fallback. The converter's version lifts fields with setdefault (drops a value on
   a key collision, order dependent) and drops the wrapper key; on its own examples it silently loses
   EMSIS Xarosa's EXIF DateTimeDigitized (overwritten by OlympusSIS.datetime). Converter not changed.
-- Progress (not committed): mappings merged (202 converter + 194 ours -> 212, insertions only, no
+- Committed 77472a8 (and f0d9f62: every mapping target declared in schema.extended.json). Mappings merged (202 converter + 194 ours -> 212, insertions only, no
   general wildcard ahead of a more specific one); schema.extended.json = converter's (superset: the
   2 additions). Wrapper handling in `convert_metadata` + 4 synthetic tests; 55 tests pass. Only our
   Zeiss output changed (the new Stage.M and SystemVacuum rules). On the converter's 9 wrapped
@@ -146,7 +147,8 @@ fullSchema.yaml + what mappings/schema.extended.json adds beyond schema.json, ge
 `ProfileExtender` in src/ProfileConverter.py: `python src/main.py profile` writes it next to
 fullSchema.yaml. Tests: ProfileExtenderTest (placement, nothing replaced, reachability, committed
 file up to date - fails until the profile is regenerated after a schema.extended.json change) and
-ExtendedProfileNoDataLossTest + declared-fields check on all sources. Not committed yet. Additions to a profile entity go on it
+ExtendedProfileNoDataLossTest + declared-fields check on all sources. Committed 10ab52a; the
+sources exported with it are in export/ (7b33745). Additions to a profile entity go on it
 (Instrument, Image, ObjectiveSettings); non-entity categories become group entities under OME
 (Detector, Software, SamplePositioning -> _Stage -> _Position ...); new top-level groups
 (ElectronBeam, ElectronOptics, ElectronSource, Scan, Acquisition) under OME; nested names qualified
@@ -156,12 +158,43 @@ entities have; metaseed: valid, no problems, no warnings (Hub draft LiMi-extende
 identifier warnings before this). Export with `--profile models/schema.extended.yaml`: no loss on all 8 sources; typed values
 e.g. Cikteq 5 -> 43, Phenom 8 -> 41, Zeiss 3 -> 44; TALOS 6 -> 18 (most TALOS metadata has no rule).
 
+## How new, unmapped metadata is kept
+
+Nothing a source holds is dropped; unmapped metadata stays reachable at its source path.
+
+In `output/` (mapper, `convert`), for example with a source
+`{Make: Acme, NewVendorKey: 42, Beam: {WD: 0.005, NewBeamSetting: 'on'}, Odd: {Deep: {Value: 1.5}},
+ACME_TAG: {Model: X1-rev2, Serial: S123}}`:
+- `NewVendorKey` (no rule, no schema name match) stays at `NewVendorKey`.
+- `Beam.NewBeamSetting` lands at `ElectronBeam.NewBeamSetting`: a subtree rule (`Beam.*` ->
+  `ElectronBeam`) carries new fields of that group along.
+- `Odd.Deep.Value` (unknown group) stays as it is.
+- `ACME_TAG` is a vendor wrapper: its unmapped `Serial` stays at `ACME_TAG.Serial`; its `Model` has a
+  rule, but `Instrument.Model` is already taken by the top-level `Model`, so it stays at
+  `ACME_TAG.Model` instead of overwriting.
+- Every leaf gets a SourceMap entry (output path -> source path), e.g.
+  `ElectronBeam.NewBeamSetting: Beam.NewBeamSetting`.
+
+In `export/` (metaseed dataset, `export`): metaseed rejects undeclared keys, so each such value is a
+`Property` record under `CustomProperties` of the nearest anchor (Image, Instrument, else OME): `Name` =
+source path, `Value` = JSON-encoded value, `SchemaPath` = where a rule moved it (e.g. `Name:
+Beam.NewBeamSetting, Value: '"on"', SchemaPath: ElectronBeam.NewBeamSetting`). Values that fit a
+declared field are typed, with a `SourceMapping` record (e.g. `Make` -> `Instrument[0].Manufacturer`).
+
+What follows from a new source or new metadata:
+- The output/ and export/ freshness tests fail until `convert` and `export` are rerun; the no-data-loss
+  tests confirm every new value is kept.
+- `AcquisitionMetadataMapper.unmatched_fields()` lists output paths the schema does not model - the
+  candidates for new rules.
+- To make a value typed: add a rule to mappings.json (and the target to schema.extended.json if
+  missing), rerun `profile`, `convert` and `export`; the value moves from a Property to a typed field.
+
 ## TODO
 
 - [ ] Map LiMi's per-property tier (1/2/3) to metaseed's advisory `tier` (required /
       recommended / optional), so real vendor files are not failed on tier-3 fields.
-- [ ] Extension file for metadata beyond LiMi (EM groups first, seeded from the
-      `schema.extended.json` additions), with an explicit `parent` per new entity.
+- [x] Metadata beyond LiMi in the profile: done as `models/schema.extended.yaml` (LiMi-extended),
+      generated from `schema.extended.json` (10ab52a).
 - [ ] Unit normalisation (e.g. vendor "um" -> OME "µm") so unit fields can be typed; the
       original spelling must stay recoverable.
 - [ ] Per-channel mapping (e.g. Huygens ChannelData[i] LambdaEx/LambdaEm -> each Channel's
