@@ -1,0 +1,219 @@
+"""Every source metadata value and key must survive conversion.
+
+The converted output carries a SourceMap of {output path: source path} for
+every leaf. The check is exact: each source leaf must sit, with the same
+value and type (so 1, 1.0, True and "1" stay distinct), at the output path
+the SourceMap records for it, so both the value and its original key path
+are recoverable from the output alone. Nulls and empty dicts and lists count
+as leaves.
+"""
+
+import glob
+import json
+import os
+import sys
+import tempfile
+import unittest
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC_DIR = os.path.join(REPO_ROOT, 'src')
+if SRC_DIR not in sys.path:
+    sys.path.insert(0, SRC_DIR)
+
+from AcquisitionMetadataMapper import SOURCE_MAP_KEY, AcquisitionMetadataMapper
+from DatasetExporter import DatasetExporter, export_file
+from convert import read_metadata, write_metadata
+
+
+SOURCES_DIR = os.path.join(REPO_ROOT, 'sources')
+
+
+def nodes(node, path=''):
+    """Yield (path, key, value) for every dict entry and list item below `node`."""
+    if isinstance(node, dict):
+        for key, value in node.items():
+            child = f'{path}.{key}' if path else str(key)
+            yield child, key, value
+            yield from nodes(value, child)
+    elif isinstance(node, list):
+        for index, value in enumerate(node):
+            child = f'{path}[{index}]'
+            yield child, index, value
+            yield from nodes(value, child)
+
+
+def is_leaf(value):
+    return not isinstance(value, (dict, list)) or not value
+
+
+def typed(value):
+    return type(value).__name__, repr(value)
+
+
+def missing_metadata(source, converted):
+    """Describe every way `converted` fails to preserve `source`; empty when nothing is lost."""
+    source_map = converted.get(SOURCE_MAP_KEY, {})
+    output = {path: value for path, _, value in nodes(converted)
+              if not path.startswith(SOURCE_MAP_KEY) and is_leaf(value)}
+    source_nodes = {path: (key, value) for path, key, value in nodes(source)}
+    problems = []
+
+    placed = {}
+    for output_path, source_path in source_map.items():
+        placed.setdefault(source_path, []).append(output_path)
+        if output_path not in output:
+            problems.append(f'SourceMap names {output_path}, which holds no value')
+        elif source_path not in source_nodes:
+            problems.append(f'SourceMap names source {source_path}, which does not exist')
+        elif not is_leaf(source_nodes[source_path][1]):
+            if output[output_path] != source_nodes[source_path][0]:
+                problems.append(f'{output_path} should hold the key of {source_path}')
+        elif typed(output[output_path]) != typed(source_nodes[source_path][1]):
+            problems.append(f'{output_path} holds {typed(output[output_path])}, '
+                            f'but its source {source_path} holds {typed(source_nodes[source_path][1])}')
+
+    for source_path, (_, value) in source_nodes.items():
+        if is_leaf(value) and source_path not in placed:
+            problems.append(f'{source_path} = {typed(value)} is missing from the output')
+    for output_path in output:
+        if output_path not in source_map:
+            problems.append(f'{output_path} has no SourceMap entry')
+    return problems
+
+
+class MissingMetadataTest(unittest.TestCase):
+    """The check itself must catch each way metadata can go missing."""
+
+    def test_renamed_values_with_source_map_are_complete(self):
+        converted = {'X': {'Y': 'x'}, 'Z': 1, SOURCE_MAP_KEY: {'X.Y': 'c', 'Z': 'a.b'}}
+        self.assertEqual(missing_metadata({'a': {'b': 1}, 'c': 'x'}, converted), [])
+
+    def test_value_without_source_map_entry_is_missing(self):
+        problems = missing_metadata({'a': 1}, {'t': 1, SOURCE_MAP_KEY: {}})
+        self.assertIn("a = ('int', '1') is missing from the output", problems)
+        self.assertIn('t has no SourceMap entry', problems)
+
+    def test_overwritten_value_is_missing(self):
+        problems = missing_metadata({'a': 1, 'b': 2}, {'t': 2, SOURCE_MAP_KEY: {'t': 'b'}})
+        self.assertEqual(problems, ["a = ('int', '1') is missing from the output"])
+
+    def test_changed_type_is_caught(self):
+        problems = missing_metadata({'a': True}, {'t': 1, SOURCE_MAP_KEY: {'t': 'a'}})
+        self.assertEqual(problems, ["t holds ('int', '1'), but its source a holds ('bool', 'True')"])
+
+    def test_null_and_empty_containers_count(self):
+        problems = missing_metadata({'a': None, 'b': {}, 'c': []}, {SOURCE_MAP_KEY: {}})
+        self.assertEqual(len(problems), 3)
+
+    def test_list_items_are_checked_by_index(self):
+        converted = {'t': [2, 1], SOURCE_MAP_KEY: {'t[0]': 'a[0]', 't[1]': 'a[1]'}}
+        self.assertEqual(len(missing_metadata({'a': [1, 2]}, converted)), 2)
+
+    def test_key_label_must_match_its_key(self):
+        source = {'Detectors': {'QBSD': {'gain': 1}}}
+        converted = {'D': [{'gain': 1, 'id': 'QBSD'}],
+                     SOURCE_MAP_KEY: {'D[0].gain': 'Detectors.QBSD.gain', 'D[0].id': 'Detectors.QBSD'}}
+        self.assertEqual(missing_metadata(source, converted), [])
+        converted['D'][0]['id'] = 'SED'
+        self.assertEqual(missing_metadata(source, converted), ['D[0].id should hold the key of Detectors.QBSD'])
+
+
+class NoDataLossTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.mapper = AcquisitionMetadataMapper()
+        cls.source_files = sorted(glob.glob(os.path.join(SOURCES_DIR, '*.json')))
+
+    def test_sources_exist(self):
+        self.assertTrue(self.source_files, 'expected at least one sources/*.json file')
+
+    def test_conversion_keeps_every_value_and_key(self):
+        for source_file in self.source_files:
+            with self.subTest(source=os.path.basename(source_file)):
+                source = read_metadata(source_file)
+                problems = missing_metadata(source, self.mapper.convert_metadata(source))
+                self.assertEqual(problems, [], '\n'.join(problems))
+
+    def test_written_output_keeps_every_value_and_key(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for source_file in self.source_files:
+                with self.subTest(source=os.path.basename(source_file)):
+                    source = read_metadata(source_file)
+                    output_file = os.path.join(directory, os.path.basename(source_file) + '.yaml')
+                    write_metadata(self.mapper.convert_metadata(source), output_file)
+                    problems = missing_metadata(source, read_metadata(output_file))
+                    self.assertEqual(problems, [], '\n'.join(problems))
+
+
+def recovered_from_dataset(dataset):
+    """{source path: [values]} as the dataset records them, from its SourceMappings and Properties."""
+    values = {path: value for path, _, value in nodes(dataset)}
+    recovered = {}
+    for path, _, value in nodes(dataset):
+        if path.endswith('.Mapping') and isinstance(value, list):
+            for mapping in value:
+                recovered.setdefault(mapping['Source'], []).append(values[mapping['Field']])
+        elif path.endswith('.CustomProperties') or path == 'CustomProperties':
+            for record in value:
+                recovered.setdefault(record['Name'], []).append(json.loads(record['Value']))
+    return recovered
+
+
+def missing_from_dataset(source, dataset):
+    """Describe every source value or key the dataset fails to keep; empty when nothing is lost."""
+    recovered = recovered_from_dataset(dataset)
+    source_nodes = {path: (key, value) for path, key, value in nodes(source)}
+    problems = [f'{path} is recorded {len(values)} times' for path, values in recovered.items() if len(values) > 1]
+    for path, (key, value) in source_nodes.items():
+        expected = value if is_leaf(value) else key
+        if path in recovered and typed(recovered[path][0]) != typed(expected):
+            problems.append(f'{path} holds {typed(recovered[path][0])}, but the source holds {typed(expected)}')
+        elif path not in recovered and is_leaf(value):
+            problems.append(f'{path} = {typed(value)} is missing from the dataset')
+    problems += [f'dataset records unknown source path {path}' for path in recovered if path not in source_nodes]
+    return problems
+
+
+class DatasetNoDataLossTest(unittest.TestCase):
+    """Every source value and key must be recoverable from the exported metaseed dataset alone."""
+
+    profile_file = None
+
+    @classmethod
+    def setUpClass(cls):
+        cls.mapper = AcquisitionMetadataMapper()
+        cls.exporter = DatasetExporter(cls.profile_file) if cls.profile_file else DatasetExporter()
+        cls.source_files = sorted(glob.glob(os.path.join(SOURCES_DIR, '*.json')))
+
+    def test_missing_from_dataset_catches_a_lost_value(self):
+        dataset = {'CustomProperties': [{'Name': 'a', 'Value': '1'}]}
+        self.assertEqual(missing_from_dataset({'a': 1, 'b': 2}, dataset), ["b = ('int', '2') is missing from the dataset"])
+        self.assertEqual(missing_from_dataset({'a': '1'}, dataset), ["a holds ('int', '1'), but the source holds ('str', \"'1'\")"])
+
+    def test_export_keeps_every_value_and_key(self):
+        for source_file in self.source_files:
+            with self.subTest(source=os.path.basename(source_file)):
+                source = read_metadata(source_file)
+                dataset = self.exporter.export(self.mapper.convert_metadata(source), 'source.json', '0' * 64)
+                problems = missing_from_dataset(source, dataset)
+                self.assertEqual(problems, [], '\n'.join(problems))
+
+    def test_written_dataset_keeps_every_value_and_key(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for source_file in self.source_files:
+                with self.subTest(source=os.path.basename(source_file)):
+                    source = read_metadata(source_file)
+                    output_file = os.path.join(directory, os.path.basename(source_file) + '.yaml')
+                    export_file(source_file, output_file, self.mapper, self.exporter)
+                    problems = missing_from_dataset(source, read_metadata(output_file))
+                    self.assertEqual(problems, [], '\n'.join(problems))
+
+
+class ExtendedProfileNoDataLossTest(DatasetNoDataLossTest):
+    """The same, exporting against the profile extended with the mapper's extended schema."""
+
+    profile_file = os.path.join(REPO_ROOT, 'models', 'schema.extended.yaml')
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,311 @@
+ID: OME:0
+Image:
+- SourceFile:
+  - ID: SourceFile:0
+    Name: Zeiss Supra55 Fibics ATLAS.json
+    Checksum: 6866a108b9649c5917c24702f4efad47b1d8729656c4247d3733fc4c983755ff
+    Format: json
+    Mapping:
+    - ID: SourceMapping:0
+      Field: Instrument[0].AcquisitionSoftware[0].Version
+      Source: Application.Version
+    - ID: SourceMapping:1
+      Field: Image[0].Pixels.SizeX
+      Source: Image.Width
+    - ID: SourceMapping:2
+      Field: Image[0].Pixels.SizeY
+      Source: Image.Height
+    - ID: SourceMapping:3
+      Field: Image[0].CropHint.Left
+      Source: Image.BoundingBox.Left
+    - ID: SourceMapping:4
+      Field: Image[0].CropHint.Right
+      Source: Image.BoundingBox.Right
+    - ID: SourceMapping:5
+      Field: Image[0].CropHint.Top
+      Source: Image.BoundingBox.Top
+    - ID: SourceMapping:6
+      Field: Image[0].CropHint.Bottom
+      Source: Image.BoundingBox.Bottom
+    - ID: SourceMapping:7
+      Field: Image[0].Corrections.Brightness
+      Source: ImageCorrections.Brightness
+    - ID: SourceMapping:8
+      Field: Image[0].Corrections.Contrast
+      Source: ImageCorrections.Contrast
+    - ID: SourceMapping:9
+      Field: Scan.FieldOfView.X.Unit
+      Source: Scan.FOV_X.units
+    - ID: SourceMapping:10
+      Field: Scan.FieldOfView.X.Value
+      Source: Scan.FOV_X.value
+    - ID: SourceMapping:11
+      Field: Scan.FieldOfView.Y.Unit
+      Source: Scan.FOV_Y.units
+    - ID: SourceMapping:12
+      Field: Scan.FieldOfView.Y.Value
+      Source: Scan.FOV_Y.value
+    - ID: SourceMapping:13
+      Field: Scan.Rotation.Unit
+      Source: Scan.ScanRot.units
+    - ID: SourceMapping:14
+      Field: Scan.Rotation.Value
+      Source: Scan.ScanRot.value
+    - ID: SourceMapping:15
+      Field: ElectronBeam.Focus
+      Source: Scan.Focus
+    - ID: SourceMapping:16
+      Field: ElectronBeam.Stigmator.X
+      Source: Scan.StigX
+    - ID: SourceMapping:17
+      Field: ElectronBeam.Stigmator.Y
+      Source: Scan.StigY
+    - ID: SourceMapping:18
+      Field: SamplePositioning.Stage.Bias.Volts
+      Source: StageBias.Volts
+    - ID: SourceMapping:19
+      Field: SamplePositioning.Stage.Position.X.Unit
+      Source: Stage.X.units
+    - ID: SourceMapping:20
+      Field: SamplePositioning.Stage.Position.X.Value
+      Source: Stage.X.value
+    - ID: SourceMapping:21
+      Field: SamplePositioning.Stage.Position.Y.Unit
+      Source: Stage.Y.units
+    - ID: SourceMapping:22
+      Field: SamplePositioning.Stage.Position.Y.Value
+      Source: Stage.Y.value
+    - ID: SourceMapping:23
+      Field: SamplePositioning.Stage.Position.Z.Unit
+      Source: Stage.Z.units
+    - ID: SourceMapping:24
+      Field: SamplePositioning.Stage.Position.Z.Value
+      Source: Stage.Z.value
+    - ID: SourceMapping:25
+      Field: SamplePositioning.Stage.Position.M.Unit
+      Source: Stage.M.units
+    - ID: SourceMapping:26
+      Field: SamplePositioning.Stage.Position.M.Value
+      Source: Stage.M.value
+    - ID: SourceMapping:27
+      Field: SamplePositioning.Stage.Tilt.Unit
+      Source: Stage.Tilt.units
+    - ID: SourceMapping:28
+      Field: SamplePositioning.Stage.Tilt.Value
+      Source: Stage.Tilt.value
+    - ID: SourceMapping:29
+      Field: SamplePositioning.Stage.Rotation.Unit
+      Source: Stage.Rot.units
+    - ID: SourceMapping:30
+      Field: SamplePositioning.Stage.Rotation.Value
+      Source: Stage.Rot.value
+    - ID: SourceMapping:31
+      Field: SamplePositioning.Stage.RawPosition.X.Unit
+      Source: RawStage.X.units
+    - ID: SourceMapping:32
+      Field: SamplePositioning.Stage.RawPosition.X.Value
+      Source: RawStage.X.value
+    - ID: SourceMapping:33
+      Field: SamplePositioning.Stage.RawPosition.Y.Unit
+      Source: RawStage.Y.units
+    - ID: SourceMapping:34
+      Field: SamplePositioning.Stage.RawPosition.Y.Value
+      Source: RawStage.Y.value
+    - ID: SourceMapping:35
+      Field: SamplePositioning.Stage.RawPosition.Z.Unit
+      Source: RawStage.Z.units
+    - ID: SourceMapping:36
+      Field: SamplePositioning.Stage.RawPosition.Z.Value
+      Source: RawStage.Z.value
+    - ID: SourceMapping:37
+      Field: SamplePositioning.Stage.RawPosition.Tilt.Unit
+      Source: RawStage.Tilt.units
+    - ID: SourceMapping:38
+      Field: SamplePositioning.Stage.RawPosition.Tilt.Value
+      Source: RawStage.Tilt.value
+    - ID: SourceMapping:39
+      Field: SamplePositioning.Stage.RawPosition.Rot.Unit
+      Source: RawStage.Rot.units
+    - ID: SourceMapping:40
+      Field: SamplePositioning.Stage.RawPosition.Rot.Value
+      Source: RawStage.Rot.value
+    - ID: SourceMapping:41
+      Field: SamplePositioning.Stage.RawPosition.M.Unit
+      Source: RawStage.M.units
+    - ID: SourceMapping:42
+      Field: SamplePositioning.Stage.RawPosition.M.Value
+      Source: RawStage.M.value
+    - ID: SourceMapping:43
+      Field: Instrument[0].Vacuum.SystemVacuum
+      Source: Microscope.SystemVacuum
+  Pixels:
+    SizeX: 50595
+    SizeY: 49533
+  CropHint:
+    Left: 0
+    Right: 50595
+    Top: 0
+    Bottom: 49533
+  CustomProperties:
+  - ID: Property:4
+    Name: Image.Contrast
+    Value: '0'
+    Source: SourceFile:0
+  - ID: Property:5
+    Name: Image.Brightness
+    Value: '0'
+    Source: SourceFile:0
+  - ID: Property:6
+    Name: Image.InvertedSignal
+    Value: 'false'
+    Source: SourceFile:0
+  - ID: Property:7
+    Name: ImageCorrections.Invert
+    Value: 'false'
+    SchemaPath: Image.Corrections.Invert
+    Source: SourceFile:0
+  - ID: Property:8
+    Name: ImageCorrections.XBrightSlope
+    Value: '0'
+    SchemaPath: Image.Corrections.XBrightSlope
+    Source: SourceFile:0
+  - ID: Property:9
+    Name: ImageCorrections.YBrightSlope
+    Value: '0'
+    SchemaPath: Image.Corrections.YBrightSlope
+    Source: SourceFile:0
+  - ID: Property:10
+    Name: ImageCorrections.RBrightSlope
+    Value: '0'
+    SchemaPath: Image.Corrections.RBrightSlope
+    Source: SourceFile:0
+  Corrections:
+    Brightness: 0
+    Contrast: 1
+Software: {}
+Instrument:
+- AcquisitionSoftware:
+  - Version: ZEISS Atlas 5 Client v5.3.2
+  Vacuum:
+    SystemVacuum: 0
+CustomProperties:
+- ID: Property:0
+  Name: Application.Date
+  Value: '"1899-12-30T00:00:00.000+01:00"'
+  SchemaPath: Software.Date
+  Source: SourceFile:0
+- ID: Property:1
+  Name: Application.SupportsTransparency
+  Value: 'true'
+  SchemaPath: Software.SupportsTransparency
+  Source: SourceFile:0
+- ID: Property:2
+  Name: Application.TransparentPixelValue
+  Value: '0'
+  SchemaPath: Software.TransparentPixelValue
+  Source: SourceFile:0
+- ID: Property:3
+  Name: version
+  Value: '1.2'
+  SchemaPath: Software.Version
+  Source: SourceFile:0
+- ID: Property:11
+  Name: Scan.LineAvg
+  Value: '1'
+  Source: SourceFile:0
+- ID: Property:12
+  Name: Scan.Ux
+  Value: '0.00255054620872196'
+  Source: SourceFile:0
+- ID: Property:13
+  Name: Scan.Uy
+  Value: '0'
+  Source: SourceFile:0
+- ID: Property:14
+  Name: Scan.Vx
+  Value: '0'
+  Source: SourceFile:0
+- ID: Property:15
+  Name: Scan.Vy
+  Value: '-0.00255054620872196'
+  Source: SourceFile:0
+- ID: Property:16
+  Name: Scan.AppliedScaleCorrection
+  Value: '1'
+  Source: SourceFile:0
+- ID: Property:17
+  Name: Scan.ShiftX
+  Value: '0'
+  Source: SourceFile:0
+- ID: Property:18
+  Name: Scan.ShiftY
+  Value: '0'
+  Source: SourceFile:0
+- ID: Property:19
+  Name: StageBias.BiasType
+  Value: 'null'
+  SchemaPath: SamplePositioning.Stage.Bias.BiasType
+  Source: SourceFile:0
+- ID: Property:20
+  Name: StageBias.Mode
+  Value: 'null'
+  SchemaPath: SamplePositioning.Stage.Bias.Mode
+  Source: SourceFile:0
+Scan:
+  FieldOfView:
+    X:
+      Unit: um
+      Value: 129.044885430288
+    Y:
+      Unit: um
+      Value: 126.336205356625
+  Rotation:
+    Unit: deg
+    Value: 0
+ElectronBeam:
+  Focus: 0
+  Stigmator:
+    X: 0
+    Y: 0
+SamplePositioning:
+  Stage:
+    Bias:
+      Volts: 0
+    Position:
+      X:
+        Unit: um
+        Value: 0
+      Y:
+        Unit: um
+        Value: 0
+      Z:
+        Unit: um
+        Value: 0
+      M:
+        Unit: mm
+        Value: 0
+    Tilt:
+      Unit: deg
+      Value: 0
+    Rotation:
+      Unit: deg
+      Value: 0
+    RawPosition:
+      X:
+        Unit: um
+        Value: 0
+      Y:
+        Unit: um
+        Value: 0
+      Z:
+        Unit: um
+        Value: 0
+      Tilt:
+        Unit: deg
+        Value: 0
+      Rot:
+        Unit: deg
+        Value: 0
+      M:
+        Unit: mm
+        Value: 0

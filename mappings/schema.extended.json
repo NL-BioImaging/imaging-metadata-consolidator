@@ -10,6 +10,7 @@
 			"BufferVacuum": "number",
 			"GunVacuum": "number",
 			"SampleVacuum": "number",
+			"SystemVacuum": "number",
 			"VacuumMode": "string"
 		},
 		"Description": "string"
@@ -183,7 +184,10 @@
 			"MeasuredRefractiveIndex": "number",
 			"Temperature": "number",
 			"TemperatureUnit": "string",
-			"IrisAperture": "number"
+			"IrisAperture": "number",
+			"ImmersionLiquid": {
+				"RefractiveIndex": "number"
+			}
 		},
 		"StageLabel": {
 			"Name": "string",
@@ -1319,6 +1323,10 @@
 				"Z": {
 					"Value": "number",
 					"Unit": "string"
+				},
+				"M": {
+					"Value": "number",
+					"Unit": "string"
 				}
 			},
 			"Tilt": {
@@ -2365,5 +2373,6 @@
 	},
 	"CustomProperties": "object",
 	"Operations": "object",
-	"Features": "object"
+	"Features": "object",
+	"Annotation": "array"
 }

@@ -1,0 +1,481 @@
+ID: OME:0
+Image:
+- SourceFile:
+  - ID: SourceFile:0
+    Name: TFS Phenom Pharos.json
+    Checksum: 9bf5a17404c4a94402e9ccae37e48b36952b571af753737a621b620c256190e0
+    Format: json
+    Mapping:
+    - ID: SourceMapping:0
+      Field: Image[0].Pixels.PhysicalSizeX
+      Source: pixelWidth.value
+    - ID: SourceMapping:1
+      Field: Image[0].Pixels.PhysicalSizeY
+      Source: pixelHeight.value
+    - ID: SourceMapping:2
+      Field: Image[0].AcquisitionDate
+      Source: time
+    - ID: SourceMapping:3
+      Field: Image[0].CropHint.Left
+      Source: cropHint.left
+    - ID: SourceMapping:4
+      Field: Image[0].CropHint.Top
+      Source: cropHint.top
+    - ID: SourceMapping:5
+      Field: Image[0].CropHint.Right
+      Source: cropHint.right
+    - ID: SourceMapping:6
+      Field: Image[0].CropHint.Bottom
+      Source: cropHint.bottom
+    - ID: SourceMapping:7
+      Field: Image[0].Corrections.Contrast
+      Source: appliedContrast
+    - ID: SourceMapping:8
+      Field: Image[0].Corrections.Brightness
+      Source: appliedBrightness
+    - ID: SourceMapping:9
+      Field: Image[0].Corrections.Gamma
+      Source: appliedGamma
+    - ID: SourceMapping:10
+      Field: Image[0].Corrections.BlackLevel
+      Source: displayBlackLevel
+    - ID: SourceMapping:11
+      Field: Image[0].Corrections.WhiteLevel
+      Source: displayWhiteLevel
+    - ID: SourceMapping:12
+      Field: Image[0].Pixels.Plane[0].PixelDwellTimeUnit
+      Source: acquisition.scan.dwellTime.unit
+    - ID: SourceMapping:13
+      Field: Image[0].Pixels.Plane[0].PixelDwellTime
+      Source: acquisition.scan.dwellTime.value
+    - ID: SourceMapping:14
+      Field: Scan.LineIntegrationCount
+      Source: integrations
+    - ID: SourceMapping:15
+      Field: Scan.Rotation.Value
+      Source: acquisition.scan.rotation
+    - ID: SourceMapping:16
+      Field: Scan.Detector
+      Source: acquisition.scan.detector
+    - ID: SourceMapping:17
+      Field: SamplePositioning.Stage.Position.X.Value
+      Source: samplePosition.x
+    - ID: SourceMapping:18
+      Field: SamplePositioning.Stage.Position.Y.Value
+      Source: samplePosition.y
+    - ID: SourceMapping:19
+      Field: SamplePositioning.Stage.MultiStage.SampleRadius.Unit
+      Source: multiStage.sampleRadius.unit
+    - ID: SourceMapping:20
+      Field: SamplePositioning.Stage.MultiStage.SampleRadius.Value
+      Source: multiStage.sampleRadius.value
+    - ID: SourceMapping:21
+      Field: SamplePositioning.Stage.MultiStage.SampleHeight.Unit
+      Source: multiStage.sampleHeight.unit
+    - ID: SourceMapping:22
+      Field: SamplePositioning.Stage.MultiStage.SampleHeight.Value
+      Source: multiStage.sampleHeight.value
+    - ID: SourceMapping:23
+      Field: Instrument[0].Type
+      Source: instrument.type
+    - ID: SourceMapping:24
+      Field: Instrument[0].ID
+      Source: instrument.uniqueID
+    - ID: SourceMapping:25
+      Field: Instrument[0].Model
+      Source: instrument.edition
+    - ID: SourceMapping:26
+      Field: ElectronBeam.SpotSize
+      Source: acquisition.scan.spotSize
+    - ID: SourceMapping:27
+      Field: ElectronBeam.Shift.X
+      Source: acquisition.scan.beamShift.x
+    - ID: SourceMapping:28
+      Field: ElectronBeam.Shift.Y
+      Source: acquisition.scan.beamShift.y
+    - ID: SourceMapping:29
+      Field: ElectronBeam.SourceTilt.X
+      Source: acquisition.scan.sourceTilt.x
+    - ID: SourceMapping:30
+      Field: ElectronBeam.SourceTilt.Y
+      Source: acquisition.scan.sourceTilt.y
+    - ID: SourceMapping:31
+      Field: ElectronBeam.Stigmator.X
+      Source: acquisition.scan.stigmator.x
+    - ID: SourceMapping:32
+      Field: ElectronBeam.Stigmator.Y
+      Source: acquisition.scan.stigmator.y
+    - ID: SourceMapping:33
+      Field: ElectronBeam.AccelerationVoltage.Unit
+      Source: acquisition.scan.highVoltage.unit
+    - ID: SourceMapping:34
+      Field: ElectronBeam.AccelerationVoltage.Value
+      Source: acquisition.scan.highVoltage.value
+    - ID: SourceMapping:35
+      Field: ElectronBeam.EmissionCurrent.Unit
+      Source: acquisition.scan.emissionCurrent.unit
+    - ID: SourceMapping:36
+      Field: ElectronBeam.EmissionCurrent.Value
+      Source: acquisition.scan.emissionCurrent.value
+    - ID: SourceMapping:37
+      Field: ElectronBeam.WorkingDistance.Unit
+      Source: workingDistance.unit
+    - ID: SourceMapping:38
+      Field: ElectronBeam.WorkingDistance.Value
+      Source: workingDistance.value
+    - ID: SourceMapping:39
+      Field: Instrument[0].AcquisitionSoftware[0].Version
+      Source: instrument.softwareVersion
+    - ID: SourceMapping:40
+      Field: Experiment[0].Sample[0].SampleHolder[0].ID
+      Source: instrument.sampleHolder.id
+  Pixels:
+    PhysicalSizeX: 1.143158459049694
+    PhysicalSizeY: 1.143158459049694
+    Plane:
+    - PixelDwellTimeUnit: ns
+      PixelDwellTime: 499.9999999999999
+  CustomProperties:
+  - ID: Property:4
+    Name: pixelWidth.unit
+    Value: '"um"'
+    SchemaPath: Image.Pixels.PhysicalSizeXUnit
+    Source: SourceFile:0
+  - ID: Property:5
+    Name: pixelHeight.unit
+    Value: '"um"'
+    SchemaPath: Image.Pixels.PhysicalSizeYUnit
+    Source: SourceFile:0
+  AcquisitionDate: '2024-02-06T13:21:05'
+  CropHint:
+    Left: 0
+    Top: 0
+    Right: 1920
+    Bottom: 1200
+  Corrections:
+    Contrast: 5.337209302325581
+    Brightness: 0.4808117799649042
+    Gamma: 1
+    BlackLevel: 0
+    WhiteLevel: 1
+CustomProperties:
+- ID: Property:0
+  Name: databarHeight
+  Value: '0'
+  Source: SourceFile:0
+- ID: Property:1
+  Name: databarFields
+  Value: '699'
+  Source: SourceFile:0
+- ID: Property:2
+  Name: databarLabel
+  Value: 'null'
+  Source: SourceFile:0
+- ID: Property:3
+  Name: displayWidth
+  Value: '0'
+  Source: SourceFile:0
+- ID: Property:6
+  Name: currentUser
+  Value: 'null'
+  SchemaPath: Acquisition.Operator.Name
+  Source: SourceFile:0
+- ID: Property:7
+  Name: acquisition.scan.scanHW
+  Value: '"ZYNQ"'
+  SchemaPath: Scan.scanHW
+  Source: SourceFile:0
+- ID: Property:8
+  Name: acquisition.scan.acqHW
+  Value: '"ZYNQ"'
+  SchemaPath: Scan.acqHW
+  Source: SourceFile:0
+- ID: Property:9
+  Name: acquisition.scan.spotPresetName
+  Value: '"Image"'
+  SchemaPath: Scan.spotPresetName
+  Source: SourceFile:0
+- ID: Property:10
+  Name: acquisition.scan.interlace
+  Value: '1'
+  SchemaPath: Scan.interlace
+  Source: SourceFile:0
+- ID: Property:11
+  Name: acquisition.scan.detectorMixFactors.bsdA
+  Value: '0'
+  SchemaPath: Scan.detectorMixFactors.bsdA
+  Source: SourceFile:0
+- ID: Property:12
+  Name: acquisition.scan.detectorMixFactors.bsdB
+  Value: '0'
+  SchemaPath: Scan.detectorMixFactors.bsdB
+  Source: SourceFile:0
+- ID: Property:13
+  Name: acquisition.scan.detectorMixFactors.bsdC
+  Value: '0'
+  SchemaPath: Scan.detectorMixFactors.bsdC
+  Source: SourceFile:0
+- ID: Property:14
+  Name: acquisition.scan.detectorMixFactors.bsdD
+  Value: '0'
+  SchemaPath: Scan.detectorMixFactors.bsdD
+  Source: SourceFile:0
+- ID: Property:15
+  Name: acquisition.scan.detectorMixFactors.sed
+  Value: '0'
+  SchemaPath: Scan.detectorMixFactors.sed
+  Source: SourceFile:0
+- ID: Property:16
+  Name: acquisition.scan.detectorMixFactors.stem
+  Value: '0'
+  SchemaPath: Scan.detectorMixFactors.stem
+  Source: SourceFile:0
+- ID: Property:17
+  Name: acquisition.scan.sourceTime.unit
+  Value: '"h"'
+  SchemaPath: Scan.sourceTime.unit
+  Source: SourceFile:0
+- ID: Property:18
+  Name: acquisition.scan.sourceTime.value
+  Value: '7634'
+  SchemaPath: Scan.sourceTime.value
+  Source: SourceFile:0
+- ID: Property:19
+  Name: acquisition.scan.sourceId
+  Value: '25'
+  SchemaPath: Scan.sourceId
+  Source: SourceFile:0
+- ID: Property:20
+  Name: acquisition.scan.emissionCurrentPresetName
+  Value: 'null'
+  SchemaPath: Scan.emissionCurrentPresetName
+  Source: SourceFile:0
+- ID: Property:21
+  Name: acquisition.scan.filamentPower.unit
+  Value: '"W"'
+  SchemaPath: Scan.filamentPower.unit
+  Source: SourceFile:0
+- ID: Property:22
+  Name: acquisition.scan.filamentPower.value
+  Value: '0'
+  SchemaPath: Scan.filamentPower.value
+  Source: SourceFile:0
+- ID: Property:23
+  Name: acquisition.scan.scanCenter.x
+  Value: '0'
+  SchemaPath: Scan.scanCenter.x
+  Source: SourceFile:0
+- ID: Property:24
+  Name: acquisition.scan.scanCenter.y
+  Value: '0'
+  SchemaPath: Scan.scanCenter.y
+  Source: SourceFile:0
+- ID: Property:25
+  Name: acquisition.scan.scanScale
+  Value: '1'
+  SchemaPath: Scan.scanScale
+  Source: SourceFile:0
+- ID: Property:27
+  Name: acquisition.scan.detectors.QBSD.gain
+  Value: '45'
+  SchemaPath: Detector.Configuration[0].gain
+  Source: SourceFile:0
+- ID: Property:28
+  Name: acquisition.scan.detectors.QBSD.offset
+  Value: '-1.444569852509731'
+  SchemaPath: Detector.Configuration[0].offset
+  Source: SourceFile:0
+- ID: Property:29
+  Name: acquisition.scan.detectors.QBSD.mixFactor
+  Value: '1'
+  SchemaPath: Detector.Configuration[0].mixFactor
+  Source: SourceFile:0
+- ID: Property:30
+  Name: acquisition.scan.detectors.QBSD.A
+  Value: '"+"'
+  SchemaPath: Detector.Configuration[0].A
+  Source: SourceFile:0
+- ID: Property:31
+  Name: acquisition.scan.detectors.QBSD.B
+  Value: '"+"'
+  SchemaPath: Detector.Configuration[0].B
+  Source: SourceFile:0
+- ID: Property:32
+  Name: acquisition.scan.detectors.QBSD.C
+  Value: '"+"'
+  SchemaPath: Detector.Configuration[0].C
+  Source: SourceFile:0
+- ID: Property:33
+  Name: acquisition.scan.detectors.QBSD.D
+  Value: '"+"'
+  SchemaPath: Detector.Configuration[0].D
+  Source: SourceFile:0
+- ID: Property:34
+  Name: acquisition.scan.detectors.QBSD
+  Value: '"QBSD"'
+  SchemaPath: Detector.Configuration[0].id
+  Source: SourceFile:0
+- ID: Property:35
+  Name: acquisition.scan.detectors.SED.gain
+  Value: '0'
+  SchemaPath: Detector.Configuration[1].gain
+  Source: SourceFile:0
+- ID: Property:36
+  Name: acquisition.scan.detectors.SED.offset
+  Value: '0'
+  SchemaPath: Detector.Configuration[1].offset
+  Source: SourceFile:0
+- ID: Property:37
+  Name: acquisition.scan.detectors.SED.scintillatorVoltage
+  Value: '0'
+  SchemaPath: Detector.Configuration[1].scintillatorVoltage
+  Source: SourceFile:0
+- ID: Property:38
+  Name: acquisition.scan.detectors.SED.mixFactor
+  Value: '0'
+  SchemaPath: Detector.Configuration[1].mixFactor
+  Source: SourceFile:0
+- ID: Property:39
+  Name: acquisition.scan.detectors.SED
+  Value: '"SED"'
+  SchemaPath: Detector.Configuration[1].id
+  Source: SourceFile:0
+- ID: Property:40
+  Name: acquisition.scan.detectors.STEM.mixFactor
+  Value: '0'
+  SchemaPath: Detector.Configuration[2].mixFactor
+  Source: SourceFile:0
+- ID: Property:41
+  Name: acquisition.scan.detectors.STEM.segmentSelection.bf1
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.bf1
+  Source: SourceFile:0
+- ID: Property:42
+  Name: acquisition.scan.detectors.STEM.segmentSelection.bf2
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.bf2
+  Source: SourceFile:0
+- ID: Property:43
+  Name: acquisition.scan.detectors.STEM.segmentSelection.bf3
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.bf3
+  Source: SourceFile:0
+- ID: Property:44
+  Name: acquisition.scan.detectors.STEM.segmentSelection.bf4
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.bf4
+  Source: SourceFile:0
+- ID: Property:45
+  Name: acquisition.scan.detectors.STEM.segmentSelection.df1
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.df1
+  Source: SourceFile:0
+- ID: Property:46
+  Name: acquisition.scan.detectors.STEM.segmentSelection.ha1
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.ha1
+  Source: SourceFile:0
+- ID: Property:47
+  Name: acquisition.scan.detectors.STEM.segmentSelection.ha2
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.ha2
+  Source: SourceFile:0
+- ID: Property:48
+  Name: acquisition.scan.detectors.STEM.segmentSelection.ha3
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.ha3
+  Source: SourceFile:0
+- ID: Property:49
+  Name: acquisition.scan.detectors.STEM.segmentSelection.ha4
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.ha4
+  Source: SourceFile:0
+- ID: Property:50
+  Name: acquisition.scan.detectors.STEM.segmentSelection.ha5
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.ha5
+  Source: SourceFile:0
+- ID: Property:51
+  Name: acquisition.scan.detectors.STEM.segmentSelection.ha6
+  Value: 'true'
+  SchemaPath: Detector.Configuration[2].segmentSelection.ha6
+  Source: SourceFile:0
+- ID: Property:52
+  Name: acquisition.scan.detectors.STEM
+  Value: '"STEM"'
+  SchemaPath: Detector.Configuration[2].id
+  Source: SourceFile:0
+- ID: Property:53
+  Name: applicationID
+  Value: 'null'
+  SchemaPath: Software.ApplicationID
+  Source: SourceFile:0
+- ID: Property:54
+  Name: PPI.version
+  Value: '"2.1.0_release"'
+  SchemaPath: Software.version
+  Source: SourceFile:0
+- ID: Property:55
+  Name: instrument.sampleHolder.type
+  Value: '1'
+  SchemaPath: SamplePreparation.SampleHolder.Type
+  Source: SourceFile:0
+Acquisition:
+  Operator: {}
+Scan:
+  LineIntegrationCount: 1
+  Rotation:
+    Value: 0
+  Detector: bsd-all
+SamplePositioning:
+  Stage:
+    Position:
+      X:
+        Value: 0
+      Y:
+        Value: 0
+    MultiStage:
+      SampleRadius:
+        Unit: m
+        Value: 0
+      SampleHeight:
+        Unit: m
+        Value: 0
+Instrument:
+- CustomProperties:
+  - ID: Property:26
+    Name: samplePressureEstimate
+    Value: '21.03543261569751'
+    SchemaPath: Instrument.Vacuum
+    Source: SourceFile:0
+  Type: Phenom
+  ID: MVE084613-20046-F
+  Model: Phenom Pharos G2
+  AcquisitionSoftware:
+  - Version: 6.6.0.rel.d7a92301af.27465
+ElectronBeam:
+  SpotSize: 1.3
+  Shift:
+    X: 0
+    Y: 0
+  SourceTilt:
+    X: -0.01264028954658525
+    Y: 0.04815130014055247
+  Stigmator:
+    X: -0.002342132828530364
+    Y: -0.00855233682146137
+  AccelerationVoltage:
+    Unit: kV
+    Value: -5
+  EmissionCurrent:
+    Unit: uA
+    Value: 135.9021671305527
+  WorkingDistance:
+    Unit: mm
+    Value: 3.334999999999997
+Detector: {}
+Software: {}
+Experiment:
+- Sample:
+  - SampleHolder:
+    - ID: 0147e8ac1a0000b2
