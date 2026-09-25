@@ -34,6 +34,20 @@ class AcquisitionMetadataMapperTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.mapper.convert_metadata(['not', 'a', 'dict'])
 
+    def test_aperio_svs_fields_map_to_image_and_instrument(self):
+        # OriginalWidth/Height match the description's "28448x21839" header; Left/Top are mm on the slide,
+        # the scan area's position, not crop edges
+        svs = {'AppMag': 20, 'MPP': 0.4936, 'OriginalWidth': 28448, 'OriginalHeight': 21839,
+               'ScanScope ID': 'SS1735', 'ImageID': 18489, 'Left': 29.282969, 'Top': 13.628824}
+
+        converted = self.mapper.convert_metadata(svs)
+
+        self.assertEqual(converted['Image'], {'Pixels': {'PhysicalSizeX': 0.4936, 'SizeX': 28448, 'SizeY': 21839},
+                                              'ID': 18489,
+                                              'Plane': {'PositionX': 29.282969, 'PositionY': 13.628824}})
+        self.assertEqual(converted['Magnification'], {'Objective': {'Magnification': 20}})
+        self.assertEqual(converted['Instrument'], {'ID': 'SS1735'})
+
     def test_huygens_sampling_sizes_map_to_pixels(self):
         # Checked against DNAcropSmall.ome.json, which carries both this annotation and the image's own OME Pixels
         annotation = {'Geometry': {'SamplingSizes': {'DeltaX': 0.064967, 'DeltaY': 0.064967, 'DeltaZ': 0.2128,

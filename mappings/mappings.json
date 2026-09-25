@@ -210,5 +210,13 @@
     "Application.*": "Software",
     "Image.BoundingBox.*": "Image.CropHint",
     "ImageCorrections.*": "Image.Corrections",
-    "Image.*": "Image"
+    "Image.*": "Image",
+    "AppMag": "Magnification.Objective.Magnification",
+    "MPP": "Image.Pixels.PhysicalSizeX",
+    "OriginalWidth": "Image.Pixels.SizeX",
+    "OriginalHeight": "Image.Pixels.SizeY",
+    "ScanScope ID": "Instrument.ID",
+    "ImageID": "Image.ID",
+    "Left": "Image.Plane.PositionX",
+    "Top": "Image.Plane.PositionY"
 }

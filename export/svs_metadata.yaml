@@ -5,17 +5,40 @@ Image:
     Name: svs_metadata.json
     Checksum: 7a4804a50b72af228721e3393737f0aa7430bdf6256bbc51158eba55c5764bb1
     Format: json
-  CropHint: {}
+    Mapping:
+    - ID: SourceMapping:0
+      Field: Instrument[0].Objective[0].Magnification
+      Source: AppMag
+    - ID: SourceMapping:1
+      Field: Instrument[0].ID
+      Source: ScanScope ID
+    - ID: SourceMapping:2
+      Field: Image[0].Pixels.PhysicalSizeX
+      Source: MPP
+    - ID: SourceMapping:3
+      Field: Image[0].Pixels.SizeX
+      Source: OriginalWidth
+    - ID: SourceMapping:4
+      Field: Image[0].Pixels.SizeY
+      Source: OriginalHeight
+    - ID: SourceMapping:5
+      Field: Image[0].Pixels.Plane[0].PositionX
+      Source: Left
+    - ID: SourceMapping:6
+      Field: Image[0].Pixels.Plane[0].PositionY
+      Source: Top
+  Pixels:
+    PhysicalSizeX: 0.4936
+    SizeX: 28448
+    SizeY: 21839
+    Plane:
+    - PositionX: 29.282969
+      PositionY: 13.628824
   CustomProperties:
-  - ID: Property:12
-    Name: Left
-    Value: '29.282969'
-    SchemaPath: Image.CropHint.Left
-    Source: SourceFile:0
-  - ID: Property:13
-    Name: Top
-    Value: '13.628824'
-    SchemaPath: Image.CropHint.Top
+  - ID: Property:9
+    Name: ImageID
+    Value: '18489'
+    SchemaPath: Image.ID
     Source: SourceFile:0
 CustomProperties:
 - ID: Property:0
@@ -31,86 +54,66 @@ CustomProperties:
   Value: '70'
   Source: SourceFile:0
 - ID: Property:3
-  Name: AppMag
-  Value: '20'
-  Source: SourceFile:0
-- ID: Property:4
   Name: StripeWidth
   Value: '2032'
   Source: SourceFile:0
-- ID: Property:5
-  Name: ScanScope ID
-  Value: '"SS1735"'
-  Source: SourceFile:0
-- ID: Property:6
+- ID: Property:4
   Name: Filename
   Value: '18489'
   Source: SourceFile:0
-- ID: Property:7
+- ID: Property:5
   Name: Date
   Value: '"10/19/15"'
   Source: SourceFile:0
-- ID: Property:8
+- ID: Property:6
   Name: Time
   Value: '"17:18:12"'
   Source: SourceFile:0
-- ID: Property:9
+- ID: Property:7
   Name: Time Zone
   Value: '"GMT-05:00"'
   Source: SourceFile:0
-- ID: Property:10
+- ID: Property:8
   Name: User
   Value: '"08e1f1aa-01fa-41e5-aa13-9af07029387e"'
   Source: SourceFile:0
-- ID: Property:11
-  Name: MPP
-  Value: '0.4936'
-  Source: SourceFile:0
-- ID: Property:14
+- ID: Property:10
   Name: LineCameraSkew
   Value: '0.001055'
   Source: SourceFile:0
-- ID: Property:15
+- ID: Property:11
   Name: LineAreaXOffset
   Value: '0.01646'
   Source: SourceFile:0
-- ID: Property:16
+- ID: Property:12
   Name: LineAreaYOffset
   Value: '-0.009263'
   Source: SourceFile:0
-- ID: Property:17
+- ID: Property:13
   Name: Focus Offset
   Value: '-0.0005'
   Source: SourceFile:0
-- ID: Property:18
+- ID: Property:14
   Name: DSR ID
   Value: '"129.112.7.45"'
   Source: SourceFile:0
-- ID: Property:19
-  Name: ImageID
-  Value: '18489'
-  Source: SourceFile:0
-- ID: Property:20
+- ID: Property:15
   Name: Exposure Time
   Value: '109'
   Source: SourceFile:0
-- ID: Property:21
+- ID: Property:16
   Name: Exposure Scale
   Value: 1e-06
   Source: SourceFile:0
-- ID: Property:22
+- ID: Property:17
   Name: DisplayColor
   Value: '0'
   Source: SourceFile:0
-- ID: Property:23
-  Name: OriginalWidth
-  Value: '28448'
-  Source: SourceFile:0
-- ID: Property:24
-  Name: OriginalHeight
-  Value: '21839'
-  Source: SourceFile:0
-- ID: Property:25
+- ID: Property:18
   Name: ICC Profile
   Value: '"ScanScope v1"'
   Source: SourceFile:0
+Instrument:
+- Objective:
+  - Magnification: 20
+  ID: SS1735
