@@ -27,6 +27,13 @@ its own inline copy instead (e.g. `Arc_IlluminationWavelengthRange`), and `Laser
 `SamplePreparation.MountingMedium.RefractiveIndex`, channel 1's collides and stays in its channel
 item (recorded in the SourceMap). Accepted asymmetry.
 
+### DICOM source holds dummy patient details
+
+`sources/dicom.json` has patient fields (PatientName, PatientID, PatientBirthDate, InstitutionName,
+...), which reach `output/` and, as Property records, `export/`. They are dummy values, not real
+identifiers (user, 2026-09-25), so they can be committed and shared. A real DICOM source would need
+de-identifying before it is added.
+
 ### Local metaseed CLI writes to AppData
 
 `metaseed spec save` writes to `%LOCALAPPDATA%/metaseed/specs`, whatever `HOME` is set to. Point
