@@ -12,11 +12,14 @@ field names that match the schema, just without a vendor-specific prefix.
 """
 
 import json
+import os.path
+from datetime import datetime
 from fnmatch import fnmatchcase
 
 
 DEFAULT_SCHEMA_FILE = 'mappings/schema.extended.json'
 DEFAULT_MAPPINGS_FILE = 'mappings/mappings.json'
+DEFAULT_COMBINATIONS_FILE = 'mappings/combinations.json'
 SOURCE_MAP_KEY = 'SourceMap'
 
 
@@ -32,9 +35,11 @@ class AcquisitionMetadataMapper:
     match neither step are kept at their original path so no data is lost.
     """
 
-    def __init__(self, schema_file=DEFAULT_SCHEMA_FILE, mappings_file=DEFAULT_MAPPINGS_FILE):
+    def __init__(self, schema_file=DEFAULT_SCHEMA_FILE, mappings_file=DEFAULT_MAPPINGS_FILE,
+                 combinations_file=DEFAULT_COMBINATIONS_FILE):
         self.schema = self._load_json(schema_file)
         self.mappings = self._load_json(mappings_file)
+        self.combinations = self._load_json(combinations_file) if os.path.exists(combinations_file) else []
         self._schema_index = self._build_schema_index(self.schema)
         self._known_keys, self._known_key_patterns = self._build_known_key_index(self.mappings, self.schema)
 
@@ -101,7 +106,7 @@ class AcquisitionMetadataMapper:
         count = 0
         for key, value in metadata.items():
             path = f'{prefix}.{key}' if prefix else str(key)
-            items = value if isinstance(value, list) and any(isinstance(v, dict) for v in value) else [value]
+            items = value if isinstance(value, list) and any(isinstance(item, dict) for item in value) else [value]
             for item in items:
                 if isinstance(item, dict) and item:
                     count += self._resolvable_leaf_count(item, path)
@@ -163,13 +168,14 @@ class AcquisitionMetadataMapper:
             is_remainder_style = has_wildcard and pattern.endswith('.*')
             if (
                 is_remainder_style
-                and not namespace.endswith('[]')
+                and not (isinstance(namespace, str) and namespace.endswith('[]'))
                 and len(pattern_segments) >= min_rule_segments
                 and fnmatchcase(source_path, pattern)
             ):
                 prefix = pattern[:-2]
                 remainder = source_path[len(prefix) + 1:]
-                return f'{namespace}.{remainder}' if remainder else namespace
+                targets = [f'{target}.{remainder}' if remainder else target for target in rule_targets(namespace)]
+                return targets if isinstance(namespace, list) else targets[0]
             if (
                 has_wildcard
                 and not is_remainder_style
@@ -227,7 +233,7 @@ class AcquisitionMetadataMapper:
             has_wildcard = '*' in pattern
             pattern_segments = pattern.split('.') if has_wildcard else None
             is_child_collapse_style = (
-                has_wildcard and pattern.endswith('.*') and namespace.endswith('[]')
+                has_wildcard and pattern.endswith('.*') and isinstance(namespace, str) and namespace.endswith('[]')
             )
             is_whole_path_style = has_wildcard and not pattern.endswith('.*')
             if (
@@ -339,6 +345,7 @@ class AcquisitionMetadataMapper:
                 if target_path is None:
                     target_path, is_child_collapse = self._resolve_whole_segment_wildcard_path(
                         rule_source_path, min_rule_segments)
+                single_target(target_path, rule_source_path)
                 if target_path is not None and target_path.endswith('[]'):
                     item_min_segments = max(min_rule_segments, len(rule_source_path.split('.')))
                     item_provenance = {}
@@ -346,7 +353,7 @@ class AcquisitionMetadataMapper:
                         value, rule_path=rule_source_path, min_rule_segments=item_min_segments,
                         provenance=item_provenance, origin=origin_path, root=root)
                     label_keys = ('id', 'ID', 'SourceKey') if is_child_collapse else ('SourceKey',)
-                    label_key = next((k for k in label_keys if k not in mapped_item), None)
+                    label_key = next((label for label in label_keys if label not in mapped_item), None)
                     if label_key is None:
                         raise ValueError(f'No free key to keep the source key of {origin_path}')
                     mapped_item[label_key] = key
@@ -371,6 +378,7 @@ class AcquisitionMetadataMapper:
                 if target_path is None:
                     target_path, _ = self._resolve_whole_segment_wildcard_path(
                         rule_source_path, min_rule_segments)
+                single_target(target_path, rule_source_path)
                 if target_path is not None:
                     self._place(value, origin_path, (root_result, target_path, root_provenance),
                                 (result, source_path, provenance))
@@ -391,23 +399,30 @@ class AcquisitionMetadataMapper:
                             mapped_items.append(item)
                             for suffix in leaf_suffixes(item):
                                 items_provenance[f'[{index}]{suffix}'] = f'{item_origin}{suffix}'
-                    placed_at, placed_provenance = self._place(
-                        mapped_items, None,
-                        *self._candidates(rule_source_path, source_path, min_rule_segments, result, provenance, root))
+                    single_target(self._resolve_rule_path(rule_source_path, min_rule_segments), rule_source_path)
+                    candidates, _ = self._candidates(rule_source_path, source_path, min_rule_segments, result,
+                                                     provenance, root)
+                    placed_at, placed_provenance = self._place(mapped_items, None, *candidates)
                     for item_path, item_source in items_provenance.items():
                         placed_provenance[f'{placed_at}{item_path}'] = item_source
             else:
-                self._place(value, origin_path,
-                            *self._candidates(rule_source_path, source_path, min_rule_segments, result, provenance, root))
+                candidates, copies = self._candidates(rule_source_path, source_path, min_rule_segments, result,
+                                                      provenance, root)
+                self._place(value, origin_path, *candidates)
+                for copy_target in copies:
+                    if is_free_path(root_result, copy_target):
+                        self._place(value, origin_path, (root_result, copy_target, root_provenance))
         return result
 
     def _candidates(self, rule_source_path, source_path, min_rule_segments, result, provenance, root):
-        """Where a value may go, in order: a rule's target from the root, else a schema match or its own path."""
+        """Where a value may go, in order - a rule's target from the root, else a schema match or its own
+        path - and the further targets of a rule naming several, which get a copy where free."""
         rule_target = self._resolve_rule_path(rule_source_path, min_rule_segments)
         if rule_target is not None:
-            return (root[0], rule_target, root[1]), (result, source_path, provenance)
+            first, *copies = rule_targets(rule_target)
+            return ((root[0], first, root[1]), (result, source_path, provenance)), copies
         schema_target = self._resolve_schema_path(rule_source_path)
-        return (result, schema_target or source_path, provenance), (result, source_path, provenance)
+        return ((result, schema_target or source_path, provenance), (result, source_path, provenance)), []
 
     @staticmethod
     def _place(value, origin, *candidates):
@@ -449,10 +464,28 @@ class AcquisitionMetadataMapper:
                                      origin=str(key))
             else:
                 self._apply_mappings({key: value}, result, provenance=provenance)
+        self._apply_combinations(metadata, result, provenance)
         if SOURCE_MAP_KEY in result:
             raise ValueError(f'Source metadata already has a top-level {SOURCE_MAP_KEY}')
         result[SOURCE_MAP_KEY] = provenance
         return result
+
+    def _apply_combinations(self, metadata, result, provenance):
+        """Add each combinations.json value whose parts the source holds, e.g. Date + Time + Time Zone.
+
+        The parts, looked up by source path, are joined with spaces, parsed
+        with the entry's strptime format and written as ISO 8601 at its
+        target - only where that is free, and only when every part is there
+        and parses. The parts themselves stay where the mapping put them;
+        the combined value's SourceMap entry is the list of its parts.
+        """
+        for combination in self.combinations:
+            parts = [value_at_path(metadata, path) for path in combination['sources']]
+            has_all_parts = all(part is not None for part in parts)
+            combined = parse_combination(' '.join(map(str, parts)), combination['format']) if has_all_parts else None
+            if combined is not None and is_free_path(result, combination['target']):
+                set_nested_value(result, combination['target'], combined)
+                provenance[combination['target']] = list(combination['sources'])
 
     def unmatched_fields(self, metadata):
         """List the output paths of leaf fields not represented in schema.extended.json.
@@ -485,6 +518,35 @@ class AcquisitionMetadataMapper:
 
         walk({key: value for key, value in converted.items() if key != SOURCE_MAP_KEY})
         return unmatched
+
+
+def rule_targets(target):
+    """A rule's target paths: mappings.json names one, or a list of several for a single value."""
+    return target if isinstance(target, list) else [target]
+
+
+def single_target(target, source_path):
+    if isinstance(target, list):
+        raise ValueError(f'{source_path}: a list of targets is only supported for a single value, '
+                         f'not for a group or list moved as a whole')
+
+
+def value_at_path(metadata, dotted_path):
+    """The value at a dotted source path of `metadata`, or None."""
+    node = metadata
+    for key in dotted_path.split('.'):
+        if not isinstance(node, dict) or key not in node:
+            return None
+        node = node[key]
+    return node
+
+
+def parse_combination(text, date_format):
+    """`text` parsed with the strptime `date_format`, as ISO 8601, or None if it does not parse."""
+    try:
+        return datetime.strptime(text, date_format).isoformat()
+    except ValueError:
+        return None
 
 
 def resolve_exact_path(source_path, mappings):

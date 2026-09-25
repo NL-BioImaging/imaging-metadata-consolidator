@@ -105,8 +105,8 @@ class DatasetExporterTest(unittest.TestCase):
                                'SourceMap': {'Instrument.Manufacturer': 'Make',
                                              'Scan.FrameTime.Value': 'Scan.FrameTime'}})
 
-        self.assertEqual([p['Name'] for p in dataset['Instrument'][0]['CustomProperties']], ['Make'])
-        self.assertEqual([p['Name'] for p in dataset['CustomProperties']], ['Scan.FrameTime'])
+        self.assertEqual([record['Name'] for record in dataset['Instrument'][0]['CustomProperties']], ['Make'])
+        self.assertEqual([record['Name'] for record in dataset['CustomProperties']], ['Scan.FrameTime'])
 
     def test_taken_field_keeps_the_second_value_as_a_property(self):
         dataset = self.export({'Image': {'Name': 'a'}, 'Other': {'Image': {'Name': 'b'}},
@@ -114,12 +114,12 @@ class DatasetExporterTest(unittest.TestCase):
 
         image = dataset['Image'][0]
         self.assertEqual(image['Name'], 'a')
-        self.assertEqual([(p['Name'], p['Value']) for p in image['CustomProperties']], [('n2', '"b"')])
+        self.assertEqual([(record['Name'], record['Value']) for record in image['CustomProperties']], [('n2', '"b"')])
 
     def test_null_and_empty_values_become_properties(self):
         dataset = self.export({'a': None, 'b': {}, 'SourceMap': {'a': 'a', 'b': 'b'}})
 
-        self.assertEqual([p['Value'] for p in dataset['CustomProperties']], ['null', '{}'])
+        self.assertEqual([record['Value'] for record in dataset['CustomProperties']], ['null', '{}'])
 
     def test_sources_export_only_declared_fields(self):
         mapper = AcquisitionMetadataMapper()
@@ -149,8 +149,8 @@ class ExportFolderTest(unittest.TestCase):
                   '--profile models/schema.extended.yaml')
 
     def test_export_holds_one_dataset_per_source(self):
-        sources = {os.path.splitext(os.path.basename(f))[0] for f in glob.glob(os.path.join(SOURCES_DIR, '*.json'))}
-        exported = {os.path.splitext(os.path.basename(f))[0] for f in glob.glob(os.path.join(EXPORT_DIR, '*.yaml'))}
+        sources = {os.path.splitext(os.path.basename(path))[0] for path in glob.glob(os.path.join(SOURCES_DIR, '*.json'))}
+        exported = {os.path.splitext(os.path.basename(path))[0] for path in glob.glob(os.path.join(EXPORT_DIR, '*.yaml'))}
         self.assertEqual(exported, sources, self.REGENERATE)
 
     def test_export_is_up_to_date(self):

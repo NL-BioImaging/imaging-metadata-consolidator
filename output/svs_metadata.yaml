@@ -18,12 +18,14 @@ User: 08e1f1aa-01fa-41e5-aa13-9af07029387e
 Image:
   Pixels:
     PhysicalSizeX: 0.4936
+    PhysicalSizeY: 0.4936
     SizeX: 28448
     SizeY: 21839
   Plane:
     PositionX: 29.282969
     PositionY: 13.628824
   ID: 18489
+  AcquisitionDate: '2015-10-19T17:18:12-05:00'
 LineCameraSkew: 0.001055
 LineAreaXOffset: 0.01646
 LineAreaYOffset: -0.009263
@@ -48,6 +50,7 @@ SourceMap:
   Time Zone: Time Zone
   User: User
   Image.Pixels.PhysicalSizeX: MPP
+  Image.Pixels.PhysicalSizeY: MPP
   Image.Plane.PositionX: Left
   Image.Plane.PositionY: Top
   LineCameraSkew: LineCameraSkew
@@ -62,3 +65,7 @@ SourceMap:
   Image.Pixels.SizeX: OriginalWidth
   Image.Pixels.SizeY: OriginalHeight
   ICC Profile: ICC Profile
+  Image.AcquisitionDate:
+  - Date
+  - Time
+  - Time Zone

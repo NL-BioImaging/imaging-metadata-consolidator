@@ -16,6 +16,8 @@ project.
   condition is fully self-contained (combine the guard into the `if` that
   does the work) and let the loop fall through naturally when nothing
   matches, instead of an early `continue` to skip to the next iteration.
+- **No single-letter variable names**, comprehension variables included:
+  `field for field in fields`, not `f for f in fields`.
 - **No comments unless the WHY is genuinely non-obvious.** A hidden
   constraint, a workaround for a specific bug, something that would
   surprise a careful reader - yes. Restating what the code already says

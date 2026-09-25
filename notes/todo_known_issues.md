@@ -165,6 +165,19 @@ entities have; metaseed: valid, no problems, no warnings (Hub draft LiMi-extende
 identifier warnings before this). Export with `--profile models/schema.extended.yaml`: no loss on all 8 sources; typed values
 e.g. Cikteq 5 -> 43, Phenom 8 -> 41, Zeiss 3 -> 44; TALOS 6 -> 18 (most TALOS metadata has no rule).
 
+Done (not committed yet): one source key -> several targets, and several keys combined into one
+target. Design: (1) a mappings.json target may be a list; the value goes to the first (usual fallback), copies to
+the others where free; each gets a SourceMap entry. (2) mappings/combinations.json: {target, sources,
+format} - parts joined with spaces, parsed with the strptime format, written as ISO 8601; added only
+when all parts are present and parse and the target is free; originals stay; SourceMap entry is the list
+of parts. (3) export: SourceMapping gains optional DerivedFrom (list); data-loss tests accept several
+records of one source when equal, and a derived value does not count as recovering its parts.
+First use: SVS MPP -> PhysicalSizeX + PhysicalSizeY; Date + Time + Time Zone -> Image.AcquisitionDate.
+A list of targets is refused (ValueError) for a group or list moved as a whole - only single values.
+Result: SVS export 7 -> 9 typed (PhysicalSizeY; AcquisitionDate 2015-10-19T17:18:12-05:00 with
+DerivedFrom); only the SVS output/export changed; both profiles valid, no warnings; 86 tests.
+Still not expressible: value transformations such as SVS Exposure Time x Exposure Scale.
+
 ## How new, unmapped metadata is kept
 
 Nothing a source holds is dropped; unmapped metadata stays reachable at its source path.

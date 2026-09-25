@@ -212,7 +212,10 @@
     "ImageCorrections.*": "Image.Corrections",
     "Image.*": "Image",
     "AppMag": "Magnification.Objective.Magnification",
-    "MPP": "Image.Pixels.PhysicalSizeX",
+    "MPP": [
+        "Image.Pixels.PhysicalSizeX",
+        "Image.Pixels.PhysicalSizeY"
+    ],
     "OriginalWidth": "Image.Pixels.SizeX",
     "OriginalHeight": "Image.Pixels.SizeY",
     "ScanScope ID": "Instrument.ID",

@@ -33,7 +33,7 @@ class DatasetExporter:
     def __init__(self, profile_filename=DEFAULT_PROFILE_FILE):
         with open(profile_filename, encoding='utf-8') as file:
             profile = yaml.safe_load(file)
-        self.entities = {name: {f['name']: f for f in entity['fields']}
+        self.entities = {name: {field['name']: field for field in entity['fields']}
                          for name, entity in profile['entities'].items()}
         self.paths = self._shortest_paths()
 
@@ -121,7 +121,7 @@ class _Export:
             field = self.exporter.entities[instance.entity].get(key) if instance is not None else None
             entity = self.entity_named(key, parent_key)
             is_record = isinstance(value, dict) and value
-            is_record_list = isinstance(value, list) and value and all(isinstance(v, dict) and v for v in value)
+            is_record_list = isinstance(value, list) and value and all(isinstance(item, dict) and item for item in value)
             nested = self.exporter._nested_entity(field) if field is not None else None
             if nested is not None and (is_record or (is_record_list and field['type'] == 'list')):
                 records = value if is_record_list else [value]
@@ -147,21 +147,31 @@ class _Export:
                 self.add_properties(anchor_only, converted_path, value)
 
     def add_mapping(self, dataset_path, converted_path):
-        self.mappings.append({'ID': f'SourceMapping:{len(self.mappings)}', 'Field': dataset_path,
-                              'Source': self.source_map[converted_path]})
+        mapping = {'ID': f'SourceMapping:{len(self.mappings)}', 'Field': dataset_path}
+        mapping.update(_source_fields(self.source_map[converted_path], 'Source'))
+        self.mappings.append(mapping)
 
     def add_properties(self, anchor, converted_path, value):
         properties = anchor.node.setdefault('CustomProperties', [])
         for suffix in leaf_suffixes(value):
             leaf_path = f'{converted_path}{suffix}'
             leaf = _value_at(value, suffix)
-            record = {'ID': f'Property:{self.property_count}', 'Name': self.source_map[leaf_path],
-                      'Value': json.dumps(leaf, ensure_ascii=False)}
+            record = {'ID': f'Property:{self.property_count}'}
+            record.update(_source_fields(self.source_map[leaf_path], 'Name'))
+            record['Value'] = json.dumps(leaf, ensure_ascii=False)
             if leaf_path != record['Name']:
                 record['SchemaPath'] = leaf_path
             record['Source'] = self.source_file['ID']
             properties.append(record)
             self.property_count += 1
+
+
+def _source_fields(source, field):
+    """The provenance of a value: its source path in `field`, or for a value the mapper combined from
+    several source values, those paths joined in `field` and listed in DerivedFrom."""
+    if isinstance(source, list):
+        return {field: ' + '.join(source), 'DerivedFrom': list(source)}
+    return {field: source}
 
 
 def _value_at(value, suffix):

@@ -24179,6 +24179,11 @@ entities:
       type: string
       required: false
       description: The ID of the SourceFile this value came from.
+    - name: DerivedFrom
+      type: list
+      items: string
+      required: false
+      description: For a value combined from several source values (e.g. a date and a time), their source paths.
   SourceFile:
     description: A file this metadata was read from, identified by its checksum.
     fields:
@@ -24223,6 +24228,11 @@ entities:
       type: string
       required: true
       description: The full path of the value in its source file.
+    - name: DerivedFrom
+      type: list
+      items: string
+      required: false
+      description: For a value combined from several source values (e.g. a date and a time), their source paths.
   Instrument_Vacuum:
     description: From the extended schema (Instrument.Vacuum).
     fields:

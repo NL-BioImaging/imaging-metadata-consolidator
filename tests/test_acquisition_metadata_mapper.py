@@ -42,7 +42,8 @@ class AcquisitionMetadataMapperTest(unittest.TestCase):
 
         converted = self.mapper.convert_metadata(svs)
 
-        self.assertEqual(converted['Image'], {'Pixels': {'PhysicalSizeX': 0.4936, 'SizeX': 28448, 'SizeY': 21839},
+        self.assertEqual(converted['Image'], {'Pixels': {'PhysicalSizeX': 0.4936, 'PhysicalSizeY': 0.4936,
+                                                         'SizeX': 28448, 'SizeY': 21839},
                                               'ID': 18489,
                                               'Plane': {'PositionX': 29.282969, 'PositionY': 13.628824}})
         self.assertEqual(converted['Magnification'], {'Objective': {'Magnification': 20}})
@@ -64,16 +65,60 @@ class AcquisitionMetadataMapperTest(unittest.TestCase):
 class LosslessMappingTest(unittest.TestCase):
     """Collisions, empty values and collapsed keys must never drop metadata."""
 
-    def mapper_for(self, mappings):
+    def mapper_for(self, mappings, combinations=()):
         directory = tempfile.mkdtemp()
         self.addCleanup(shutil.rmtree, directory)
-        schema_file = os.path.join(directory, 'schema.json')
-        mappings_file = os.path.join(directory, 'mappings.json')
-        with open(schema_file, 'w', encoding='utf-8') as file:
-            json.dump({}, file)
-        with open(mappings_file, 'w', encoding='utf-8') as file:
-            json.dump(mappings, file)
-        return AcquisitionMetadataMapper(schema_file, mappings_file)
+        files = {}
+        for name, content in (('schema', {}), ('mappings', mappings), ('combinations', list(combinations))):
+            files[name] = os.path.join(directory, f'{name}.json')
+            with open(files[name], 'w', encoding='utf-8') as file:
+                json.dump(content, file)
+        return AcquisitionMetadataMapper(files['schema'], files['mappings'], files['combinations'])
+
+    def test_rule_naming_several_targets_copies_the_value_to_each(self):
+        mapper = self.mapper_for({'MPP': ['Pixels.PhysicalSizeX', 'Pixels.PhysicalSizeY']})
+
+        converted = mapper.convert_metadata({'MPP': 0.5})
+
+        self.assertEqual(converted, {'Pixels': {'PhysicalSizeX': 0.5, 'PhysicalSizeY': 0.5},
+                                     'SourceMap': {'Pixels.PhysicalSizeX': 'MPP', 'Pixels.PhysicalSizeY': 'MPP'}})
+
+    def test_copy_to_a_further_target_never_overwrites(self):
+        mapper = self.mapper_for({'MPP': ['X', 'Y'], 'Height': 'Y'})
+
+        converted = mapper.convert_metadata({'Height': 7, 'MPP': 0.5})
+
+        self.assertEqual(converted, {'Y': 7, 'X': 0.5, 'SourceMap': {'Y': 'Height', 'X': 'MPP'}})
+
+    def test_several_targets_for_a_group_are_refused(self):
+        mapper = self.mapper_for({'Beam': ['A', 'B']})
+
+        with self.assertRaises(ValueError):
+            mapper.convert_metadata({'Beam': {'WD': 1}})
+
+    def test_combination_adds_an_iso_timestamp_and_keeps_its_parts(self):
+        mapper = self.mapper_for({}, [{'target': 'Image.AcquisitionDate', 'sources': ['Date', 'Time', 'Time Zone'],
+                                       'format': '%m/%d/%y %H:%M:%S GMT%z'}])
+
+        converted = mapper.convert_metadata({'Date': '10/19/15', 'Time': '17:18:12', 'Time Zone': 'GMT-05:00'})
+
+        self.assertEqual(converted['Image'], {'AcquisitionDate': '2015-10-19T17:18:12-05:00'})
+        self.assertEqual([converted[key] for key in ('Date', 'Time', 'Time Zone')], ['10/19/15', '17:18:12', 'GMT-05:00'])
+        self.assertEqual(converted['SourceMap']['Image.AcquisitionDate'], ['Date', 'Time', 'Time Zone'])
+
+    def test_combination_is_left_out_when_a_part_is_missing_or_does_not_parse(self):
+        mapper = self.mapper_for({}, [{'target': 'D', 'sources': ['Date', 'Time'], 'format': '%m/%d/%y %H:%M:%S'}])
+
+        self.assertNotIn('D', mapper.convert_metadata({'Date': '10/19/15'}))
+        self.assertNotIn('D', mapper.convert_metadata({'Date': '10/19/15', 'Time': 'noon'}))
+
+    def test_combination_never_overwrites(self):
+        mapper = self.mapper_for({'Stamp': 'D'}, [{'target': 'D', 'sources': ['Date', 'Time'],
+                                                   'format': '%m/%d/%y %H:%M:%S'}])
+
+        converted = mapper.convert_metadata({'Stamp': 'kept', 'Date': '10/19/15', 'Time': '17:18:12'})
+
+        self.assertEqual(converted['D'], 'kept')
 
     def test_colliding_value_falls_back_to_its_source_path(self):
         mapper = self.mapper_for({'a': 'T', 'b': 'T'})

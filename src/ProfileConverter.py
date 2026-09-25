@@ -41,8 +41,8 @@ class XsdContainment:
 
     def __init__(self, filename):
         root = ET.parse(filename).getroot()
-        self.elements = {e.get('name'): e for e in root.findall(XS + 'element')}
-        self.types = {t.get('name'): t for t in root.findall(XS + 'complexType')}
+        self.elements = {element.get('name'): element for element in root.findall(XS + 'element')}
+        self.types = {type_node.get('name'): type_node for type_node in root.findall(XS + 'complexType')}
         self.substitutes = collections.defaultdict(list)
         for element in root.findall(XS + 'element'):
             if element.get('substitutionGroup'):
@@ -93,8 +93,8 @@ class ProfileConverter:
         with open(json_schema_filename, encoding='utf-8') as file:
             self.schemas = json.load(file)
         self.containment = XsdContainment(xsd_filename)
-        self.title_counts = collections.Counter(s['title'] for s in self.schemas)
-        self.entity_names = {self._entity_name(s) for s in self.schemas}
+        self.title_counts = collections.Counter(schema['title'] for schema in self.schemas)
+        self.entity_names = {self._entity_name(schema) for schema in self.schemas}
         self.link_targets = {}
         for schema in self.schemas:
             self.link_targets[self._id_stem(schema)] = self._entity_name(schema)
@@ -140,7 +140,8 @@ class ProfileConverter:
         self.entities[name] = entity
         self.entity_names.add(name)
         # Tier is a constant of the schema, not something a source file states, so a dataset can't be faulted for it
-        entity['fields'] = [self._make_field(n, p, n in required and n != 'Tier', name) for n, p in properties.items()]
+        entity['fields'] = [self._make_field(field_name, prop, field_name in required and field_name != 'Tier', name)
+                            for field_name, prop in properties.items()]
 
     def _make_field(self, name, prop, required, owner):
         field = {'name': name}
@@ -174,7 +175,7 @@ class ProfileConverter:
         if name == 'ID':
             field['is_identifier'] = True
         if 'enum' in target:
-            field['constraints'] = {'enum': [str(v) for v in target['enum']]}
+            field['constraints'] = {'enum': [str(option) for option in target['enum']]}
         if 'default' in target:
             # metaseed has no default; keep the value as an example rather than drop it
             field['example'] = target['default']
@@ -210,6 +211,9 @@ class ProfileConverter:
                  'description': 'The unit of the value, where the source states one.'},
                 {'name': 'Source', 'type': 'string', 'required': False,
                  'description': 'The ID of the SourceFile this value came from.'},
+                {'name': 'DerivedFrom', 'type': 'list', 'items': 'string', 'required': False,
+                 'description': 'For a value combined from several source values (e.g. a date and a time), '
+                                'their source paths.'},
             ],
         }
         self.entities[SOURCE_FILE_ENTITY] = {
@@ -237,6 +241,9 @@ class ProfileConverter:
                  'description': 'The path of the value in this dataset, e.g. "Image[0].Pixels.PhysicalSizeX".'},
                 {'name': 'Source', 'type': 'string', 'required': True,
                  'description': 'The full path of the value in its source file.'},
+                {'name': 'DerivedFrom', 'type': 'list', 'items': 'string', 'required': False,
+                 'description': 'For a value combined from several source values (e.g. a date and a time), '
+                                'their source paths.'},
             ],
         }
         for anchor in CUSTOM_PROPERTIES_ANCHORS:
@@ -251,8 +258,8 @@ class ProfileConverter:
 
     def _insert_before_tier(self, entity, field):
         fields = self.entities[entity]['fields']
-        assert all(f['name'] != field['name'] for f in fields), (entity, field['name'])
-        fields.insert(next((i for i, f in enumerate(fields) if f['name'] == 'Tier'), len(fields)), field)
+        assert all(other['name'] != field['name'] for other in fields), (entity, field['name'])
+        fields.insert(next((index for index, other in enumerate(fields) if other['name'] == 'Tier'), len(fields)), field)
 
     def _add_containment(self):
         # A title shared by several schemas (e.g. Filament as Fluorescence_ and Transmitted_ light source) stands
@@ -272,7 +279,7 @@ class ProfileConverter:
         fields = self.entities[parent]['fields']
         # A same-named field is the JSON's own rendering of this XSD child (a nested entity, or e.g. a profile
         # file flattened to its location string) and takes precedence.
-        existing = next((f for f in fields if f['name'] in (xsd_child, child)), None)
+        existing = next((field for field in fields if field['name'] in (xsd_child, child)), None)
         if existing is None:
             field = {'name': child, 'type': 'list' if max_occurs != '1' else 'entity', 'required': False,
                      'description': self.entities[child].get('description', '').split('. ')[0], 'items': child,
@@ -332,10 +339,10 @@ class ProfileExtender:
 
     def _add_field(self, entity, name, value, path):
         fields = self.entities[entity]['fields']
-        if any(f['name'] == name for f in fields):
+        if any(field['name'] == name for field in fields):
             self.skipped.append(f'{entity}.{name} (already a profile field) <- {path}')
             return
-        tier = next((i for i, f in enumerate(fields) if f['name'] == 'Tier'), len(fields))
+        tier = next((index for index, field in enumerate(fields) if field['name'] == 'Tier'), len(fields))
         description = f'From the extended schema ({path}).'
         if isinstance(value, dict):
             child = path.replace('.', '_')

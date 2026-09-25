@@ -58,8 +58,16 @@ def missing_metadata(source, converted):
     source_nodes = {path: (key, value) for path, key, value in nodes(source)}
     problems = []
 
+    # a value combined from several parts (combinations.json) is extra: it recovers none of its parts
+    derived = {output_path: parts for output_path, parts in source_map.items() if isinstance(parts, list)}
+    for output_path, parts in derived.items():
+        if output_path not in output:
+            problems.append(f'SourceMap names {output_path}, which holds no value')
+        problems += [f'{output_path} is derived from {part}, which does not exist'
+                     for part in parts if part not in source_nodes]
+
     placed = {}
-    for output_path, source_path in source_map.items():
+    for output_path, source_path in (entry for entry in source_map.items() if entry[0] not in derived):
         placed.setdefault(source_path, []).append(output_path)
         if output_path not in output:
             problems.append(f'SourceMap names {output_path}, which holds no value')
@@ -83,6 +91,20 @@ def missing_metadata(source, converted):
 
 class MissingMetadataTest(unittest.TestCase):
     """The check itself must catch each way metadata can go missing."""
+
+    def test_derived_value_does_not_count_as_keeping_its_parts(self):
+        source = {'Date': '10/19/15', 'Time': '17:18:12'}
+        converted = {'Date': '10/19/15', 'D': '2015-10-19T17:18:12',
+                     SOURCE_MAP_KEY: {'Date': 'Date', 'D': ['Date', 'Time']}}
+        self.assertEqual(missing_metadata(source, converted), ["Time = ('str', \"'17:18:12'\") is missing from the output"])
+
+    def test_derived_value_from_an_unknown_part_is_caught(self):
+        converted = {'A': 1, 'D': 'x', SOURCE_MAP_KEY: {'A': 'A', 'D': ['A', 'Nope']}}
+        self.assertEqual(missing_metadata({'A': 1}, converted), ['D is derived from Nope, which does not exist'])
+
+    def test_value_copied_to_several_targets_is_complete(self):
+        converted = {'X': 0.5, 'Y': 0.5, SOURCE_MAP_KEY: {'X': 'MPP', 'Y': 'MPP'}}
+        self.assertEqual(missing_metadata({'MPP': 0.5}, converted), [])
 
     def test_renamed_values_with_source_map_are_complete(self):
         converted = {'X': {'Y': 'x'}, 'Z': 1, SOURCE_MAP_KEY: {'X.Y': 'c', 'Z': 'a.b'}}
@@ -146,24 +168,33 @@ class NoDataLossTest(unittest.TestCase):
 
 
 def recovered_from_dataset(dataset):
-    """{source path: [values]} as the dataset records them, from its SourceMappings and Properties."""
+    """({source path: [values]}, [derived-from part lists]) as the dataset records them, from its
+    SourceMappings and Properties; a combined value is derived and recovers none of its parts."""
     values = {path: value for path, _, value in nodes(dataset)}
     recovered = {}
+    derived = []
     for path, _, value in nodes(dataset):
-        if path.endswith('.Mapping') and isinstance(value, list):
-            for mapping in value:
-                recovered.setdefault(mapping['Source'], []).append(values[mapping['Field']])
-        elif path.endswith('.CustomProperties') or path == 'CustomProperties':
-            for record in value:
+        records = value if (path.endswith('.Mapping') or path.endswith('.CustomProperties')
+                            or path == 'CustomProperties') and isinstance(value, list) else []
+        for record in records:
+            if 'DerivedFrom' in record:
+                derived.append(record['DerivedFrom'])
+            elif 'Field' in record:
+                recovered.setdefault(record['Source'], []).append(values[record['Field']])
+            else:
                 recovered.setdefault(record['Name'], []).append(json.loads(record['Value']))
-    return recovered
+    return recovered, derived
 
 
 def missing_from_dataset(source, dataset):
     """Describe every source value or key the dataset fails to keep; empty when nothing is lost."""
-    recovered = recovered_from_dataset(dataset)
+    recovered, derived = recovered_from_dataset(dataset)
     source_nodes = {path: (key, value) for path, key, value in nodes(source)}
-    problems = [f'{path} is recorded {len(values)} times' for path, values in recovered.items() if len(values) > 1]
+    # one value may fill several fields (a rule naming several targets), but every copy must agree
+    problems = [f'{path} is recorded with different values' for path, values in recovered.items()
+                if len({typed(value) for value in values}) > 1]
+    problems += [f'a derived value names part {part}, which does not exist'
+                 for parts in derived for part in parts if part not in source_nodes]
     for path, (key, value) in source_nodes.items():
         expected = value if is_leaf(value) else key
         if path in recovered and typed(recovered[path][0]) != typed(expected):
@@ -184,6 +215,17 @@ class DatasetNoDataLossTest(unittest.TestCase):
         cls.mapper = AcquisitionMetadataMapper()
         cls.exporter = DatasetExporter(cls.profile_file) if cls.profile_file else DatasetExporter()
         cls.source_files = sorted(glob.glob(os.path.join(SOURCES_DIR, '*.json')))
+
+    def test_missing_from_dataset_accepts_equal_copies_only(self):
+        mappings = [{'Field': 'X', 'Source': 'MPP'}, {'Field': 'Y', 'Source': 'MPP'}]
+        self.assertEqual(missing_from_dataset({'MPP': 0.5}, {'X': 0.5, 'Y': 0.5, 'S': {'Mapping': mappings}}), [])
+        self.assertEqual(missing_from_dataset({'MPP': 0.5}, {'X': 0.5, 'Y': 0.6, 'S': {'Mapping': mappings}}),
+                         ['MPP is recorded with different values'])
+
+    def test_missing_from_dataset_does_not_recover_parts_from_a_derived_value(self):
+        mapping = {'Field': 'D', 'Source': 'Date + Time', 'DerivedFrom': ['Date', 'Time']}
+        problems = missing_from_dataset({'Date': 'd', 'Time': 't'}, {'D': 'x', 'S': {'Mapping': [mapping]}})
+        self.assertEqual(len(problems), 2)
 
     def test_missing_from_dataset_catches_a_lost_value(self):
         dataset = {'CustomProperties': [{'Name': 'a', 'Value': '1'}]}

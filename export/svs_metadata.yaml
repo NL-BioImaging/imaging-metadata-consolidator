@@ -16,19 +16,30 @@ Image:
       Field: Image[0].Pixels.PhysicalSizeX
       Source: MPP
     - ID: SourceMapping:3
+      Field: Image[0].Pixels.PhysicalSizeY
+      Source: MPP
+    - ID: SourceMapping:4
       Field: Image[0].Pixels.SizeX
       Source: OriginalWidth
-    - ID: SourceMapping:4
+    - ID: SourceMapping:5
       Field: Image[0].Pixels.SizeY
       Source: OriginalHeight
-    - ID: SourceMapping:5
+    - ID: SourceMapping:6
       Field: Image[0].Pixels.Plane[0].PositionX
       Source: Left
-    - ID: SourceMapping:6
+    - ID: SourceMapping:7
       Field: Image[0].Pixels.Plane[0].PositionY
       Source: Top
+    - ID: SourceMapping:8
+      Field: Image[0].AcquisitionDate
+      Source: Date + Time + Time Zone
+      DerivedFrom:
+      - Date
+      - Time
+      - Time Zone
   Pixels:
     PhysicalSizeX: 0.4936
+    PhysicalSizeY: 0.4936
     SizeX: 28448
     SizeY: 21839
     Plane:
@@ -40,6 +51,7 @@ Image:
     Value: '18489'
     SchemaPath: Image.ID
     Source: SourceFile:0
+  AcquisitionDate: '2015-10-19T17:18:12-05:00'
 CustomProperties:
 - ID: Property:0
   Name: Aperio Image Library v12.0.11

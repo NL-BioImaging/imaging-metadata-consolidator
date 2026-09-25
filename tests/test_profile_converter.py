@@ -52,8 +52,8 @@ SYNTHETIC_XSD = """<?xml version="1.0"?>
 
 
 def nested_children(entities, name):
-    return [f['items'] for f in entities[name]['fields']
-            if f['type'] in ('entity', 'list') and f['items'] in entities]
+    return [field['items'] for field in entities[name]['fields']
+            if field['type'] in ('entity', 'list') and field['items'] in entities]
 
 
 class XsdContainmentTest(unittest.TestCase):
@@ -88,7 +88,7 @@ class ProfileConverterTest(unittest.TestCase):
     def test_every_json_property_becomes_a_field(self):
         entities = self.profile['entities']
         for schema in self.schemas:
-            field_names = {f['name'] for f in entities[self.entity_name(schema)]['fields']}
+            field_names = {field['name'] for field in entities[self.entity_name(schema)]['fields']}
             self.assertLessEqual(set(schema['properties']), field_names, schema['title'])
 
     def test_single_entity_fields_name_an_existing_entity(self):
@@ -119,8 +119,8 @@ class ProfileConverterTest(unittest.TestCase):
                              set(nested_children(entities, 'Instrument')))
 
     def test_existing_json_field_takes_precedence_over_xsd_child(self):
-        fields = [f for f in self.profile['entities']['BeamSplitter']['fields']
-                  if f['name'] == 'TransmittanceProfileFile']
+        fields = [field for field in self.profile['entities']['BeamSplitter']['fields']
+                  if field['name'] == 'TransmittanceProfileFile']
         self.assertEqual(len(fields), 1)
         self.assertEqual(fields[0]['type'], 'string')
 
@@ -129,12 +129,12 @@ class ProfileConverterTest(unittest.TestCase):
         for anchor in ('OME', 'Image', 'Instrument'):
             self.assertIn('Property', nested_children(entities, anchor), anchor)
         self.assertIn('SourceFile', nested_children(entities, 'Image'))
-        self.assertEqual([f['name'] for f in entities['Property']['fields']],
-                         ['ID', 'Name', 'Value', 'SchemaPath', 'Unit', 'Source'])
+        self.assertEqual([field['name'] for field in entities['Property']['fields']],
+                         ['ID', 'Name', 'Value', 'SchemaPath', 'Unit', 'Source', 'DerivedFrom'])
         self.assertIn('SourceMapping', nested_children(entities, 'SourceFile'))
 
     def test_source_file_checksum_must_be_sha256_hex(self):
-        checksum = next(f for f in self.profile['entities']['SourceFile']['fields'] if f['name'] == 'Checksum')
+        checksum = next(field for field in self.profile['entities']['SourceFile']['fields'] if field['name'] == 'Checksum')
         self.assertTrue(checksum['required'])
         self.assertEqual(checksum['constraints'], {'pattern': '^[0-9a-f]{64}$'})
 
@@ -166,7 +166,7 @@ def read_yaml(filename):
 
 
 def fields_of(entity):
-    return {f['name']: f for f in entity['fields']}
+    return {field['name']: field for field in entity['fields']}
 
 
 class ProfileExtenderTest(unittest.TestCase):
@@ -206,8 +206,8 @@ class ProfileExtenderTest(unittest.TestCase):
 
     def test_added_entities_are_identified_by_an_optional_id(self):
         for name in self.extender.added_entities:
-            identifiers = [f for f in self.entities[name]['fields'] if f.get('is_identifier')]
-            self.assertEqual([(f['name'], f['required']) for f in identifiers], [('ID', False)], name)
+            identifiers = [field for field in self.entities[name]['fields'] if field.get('is_identifier')]
+            self.assertEqual([(field['name'], field['required']) for field in identifiers], [('ID', False)], name)
 
     def test_existing_fields_are_skipped_not_replaced(self):
         self.assertEqual(len(self.extender.skipped), 2)

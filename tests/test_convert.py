@@ -55,8 +55,8 @@ class OutputFolderTest(unittest.TestCase):
     REGENERATE = 'rerun: python src/main.py convert --input sources --output output'
 
     def test_output_holds_one_file_per_source(self):
-        sources = {os.path.splitext(os.path.basename(f))[0] for f in glob.glob(os.path.join(SOURCES_DIR, '*.json'))}
-        converted = {os.path.splitext(os.path.basename(f))[0] for f in glob.glob(os.path.join(OUTPUT_DIR, '*.yaml'))}
+        sources = {os.path.splitext(os.path.basename(path))[0] for path in glob.glob(os.path.join(SOURCES_DIR, '*.json'))}
+        converted = {os.path.splitext(os.path.basename(path))[0] for path in glob.glob(os.path.join(OUTPUT_DIR, '*.yaml'))}
         self.assertEqual(converted, sources, self.REGENERATE)
 
     def test_output_is_up_to_date(self):
