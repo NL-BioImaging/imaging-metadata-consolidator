@@ -9,6 +9,17 @@ Image:
   ObjectiveSettings:
     ID: Objective:0
   Pixels:
+    Channel:
+    - ID: Channel:0
+      AcquisitionMode: WideField
+      PinholeSize: 56.0
+      PinholeSizeUnit: µm
+      SamplesPerPixel: 1
+    - ID: Channel:1
+      AcquisitionMode: WideField
+      PinholeSize: 56.0
+      PinholeSizeUnit: µm
+      SamplesPerPixel: 1
     TiffData:
       FirstC: 0
       FirstT: 0
@@ -37,26 +48,18 @@ Image:
 ImmersionLiquid:
   Type: Oil
   RefractiveIndex: 1.518
-Channel:
-- ID: Channel:0
-  AcquisitionMode: WideField
-  ExcitationWavelength: 424
-  ExcitationWavelengthUnit: nm
-  EmissionWavelength: 461
-  EmissionWavelengthUnit: nm
-  PinholeSize: 56.0
-  PinholeSizeUnit: µm
-  SamplesPerPixel: 1
-- ID: Channel:1
-  AcquisitionMode: WideField
-  ExcitationWavelength: 488
-  ExcitationWavelengthUnit: nm
-  EmissionWavelength: 610
-  EmissionWavelengthUnit: nm
-  PinholeSize: 56.0
-  PinholeSizeUnit: µm
-  SamplesPerPixel: 1
 Pixels:
+  Channel:
+  - Fluorophore:
+      ExcitationWavelength: 424
+      ExcitationWavelengthUnit: nm
+      EmissionWavelength: 461
+      EmissionWavelengthUnit: nm
+  - Fluorophore:
+      ExcitationWavelength: 488
+      ExcitationWavelengthUnit: nm
+      EmissionWavelength: 610
+      EmissionWavelengthUnit: nm
   PixelType: uint16
   PhysicalSizeX: 0.064967
   PhysicalSizeY: 0.064967
@@ -217,24 +220,24 @@ SourceMap:
   Image.ObjectiveSettings.ID: OME.Image.ObjectiveSettings.ID
   ImmersionLiquid.Type: OME.Image.ObjectiveSettings.Medium
   ImmersionLiquid.RefractiveIndex: OME.Image.ObjectiveSettings.RefractiveIndex
-  Channel[0].ID: OME.Image.Pixels.Channel[0].ID
-  Channel[0].AcquisitionMode: OME.Image.Pixels.Channel[0].AcquisitionMode
-  Channel[0].ExcitationWavelength: OME.Image.Pixels.Channel[0].ExcitationWavelength
-  Channel[0].ExcitationWavelengthUnit: OME.Image.Pixels.Channel[0].ExcitationWavelengthUnit
-  Channel[0].EmissionWavelength: OME.Image.Pixels.Channel[0].EmissionWavelength
-  Channel[0].EmissionWavelengthUnit: OME.Image.Pixels.Channel[0].EmissionWavelengthUnit
-  Channel[0].PinholeSize: OME.Image.Pixels.Channel[0].PinholeSize
-  Channel[0].PinholeSizeUnit: OME.Image.Pixels.Channel[0].PinholeSizeUnit
-  Channel[0].SamplesPerPixel: OME.Image.Pixels.Channel[0].SamplesPerPixel
-  Channel[1].ID: OME.Image.Pixels.Channel[1].ID
-  Channel[1].AcquisitionMode: OME.Image.Pixels.Channel[1].AcquisitionMode
-  Channel[1].ExcitationWavelength: OME.Image.Pixels.Channel[1].ExcitationWavelength
-  Channel[1].ExcitationWavelengthUnit: OME.Image.Pixels.Channel[1].ExcitationWavelengthUnit
-  Channel[1].EmissionWavelength: OME.Image.Pixels.Channel[1].EmissionWavelength
-  Channel[1].EmissionWavelengthUnit: OME.Image.Pixels.Channel[1].EmissionWavelengthUnit
-  Channel[1].PinholeSize: OME.Image.Pixels.Channel[1].PinholeSize
-  Channel[1].PinholeSizeUnit: OME.Image.Pixels.Channel[1].PinholeSizeUnit
-  Channel[1].SamplesPerPixel: OME.Image.Pixels.Channel[1].SamplesPerPixel
+  Pixels.Channel[0].Fluorophore.ExcitationWavelength: OME.Image.Pixels.Channel[0].ExcitationWavelength
+  Pixels.Channel[0].Fluorophore.ExcitationWavelengthUnit: OME.Image.Pixels.Channel[0].ExcitationWavelengthUnit
+  Pixels.Channel[0].Fluorophore.EmissionWavelength: OME.Image.Pixels.Channel[0].EmissionWavelength
+  Pixels.Channel[0].Fluorophore.EmissionWavelengthUnit: OME.Image.Pixels.Channel[0].EmissionWavelengthUnit
+  Pixels.Channel[1].Fluorophore.ExcitationWavelength: OME.Image.Pixels.Channel[1].ExcitationWavelength
+  Pixels.Channel[1].Fluorophore.ExcitationWavelengthUnit: OME.Image.Pixels.Channel[1].ExcitationWavelengthUnit
+  Pixels.Channel[1].Fluorophore.EmissionWavelength: OME.Image.Pixels.Channel[1].EmissionWavelength
+  Pixels.Channel[1].Fluorophore.EmissionWavelengthUnit: OME.Image.Pixels.Channel[1].EmissionWavelengthUnit
+  Image.Pixels.Channel[0].ID: OME.Image.Pixels.Channel[0].ID
+  Image.Pixels.Channel[0].AcquisitionMode: OME.Image.Pixels.Channel[0].AcquisitionMode
+  Image.Pixels.Channel[0].PinholeSize: OME.Image.Pixels.Channel[0].PinholeSize
+  Image.Pixels.Channel[0].PinholeSizeUnit: OME.Image.Pixels.Channel[0].PinholeSizeUnit
+  Image.Pixels.Channel[0].SamplesPerPixel: OME.Image.Pixels.Channel[0].SamplesPerPixel
+  Image.Pixels.Channel[1].ID: OME.Image.Pixels.Channel[1].ID
+  Image.Pixels.Channel[1].AcquisitionMode: OME.Image.Pixels.Channel[1].AcquisitionMode
+  Image.Pixels.Channel[1].PinholeSize: OME.Image.Pixels.Channel[1].PinholeSize
+  Image.Pixels.Channel[1].PinholeSizeUnit: OME.Image.Pixels.Channel[1].PinholeSizeUnit
+  Image.Pixels.Channel[1].SamplesPerPixel: OME.Image.Pixels.Channel[1].SamplesPerPixel
   Image.Pixels.TiffData.FirstC: OME.Image.Pixels.TiffData.FirstC
   Image.Pixels.TiffData.FirstT: OME.Image.Pixels.TiffData.FirstT
   Image.Pixels.TiffData.FirstZ: OME.Image.Pixels.TiffData.FirstZ

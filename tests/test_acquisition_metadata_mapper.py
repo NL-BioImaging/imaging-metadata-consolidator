@@ -97,19 +97,28 @@ class HuygensRulesAgreeWithOmeTest(unittest.TestCase):
         'Geometry.SamplingSizes.DeltaT': 'Image.Pixels.TimeIncrement',
         'ChannelData.RefrIndexLensMedium': 'Image.ObjectiveSettings.RefractiveIndex',
     }
+    # per channel, and to the nanometre only: Huygens has 424.119995 where OME has 424
+    OME_ROUNDED_COUNTERPARTS = {
+        'ChannelData.LambdaEx': 'Image.Pixels.Channel.ExcitationWavelength',
+        'ChannelData.LambdaEm': 'Image.Pixels.Channel.EmissionWavelength',
+    }
 
     def test_huygens_values_are_the_images_own(self):
         with open(os.path.join(REPO_ROOT, 'sources', 'ome-tiff.json'), encoding='utf-8') as file:
             ome = json.load(file)['OME']
         with open(os.path.join(REPO_ROOT, DEFAULT_MAPPINGS_FILE), encoding='utf-8') as file:
             rules = [rule.removeprefix(self.ANNOTATION) for rule in json.load(file) if rule.startswith(self.ANNOTATION)]
-        checked = [rule for rule in rules if rule in self.OME_COUNTERPARTS]
-        self.assertEqual(sorted(checked), sorted(self.OME_COUNTERPARTS))
+        counterparts = {**self.OME_COUNTERPARTS, **self.OME_ROUNDED_COUNTERPARTS}
+        checked = [rule for rule in rules if rule in counterparts]
+        self.assertEqual(sorted(checked), sorted(counterparts))
         for rule in checked:
             with self.subTest(rule=rule):
                 huygens = _values(ome['StructuredAnnotations']['XMLAnnotation']['Value'], rule.split('.'))
-                own = _values(ome, self.OME_COUNTERPARTS[rule].split('.'))
-                self.assertEqual(set(huygens), set(own))
+                own = _values(ome, counterparts[rule].split('.'))
+                if rule in self.OME_ROUNDED_COUNTERPARTS:
+                    self.assertEqual([round(value) for value in huygens], [round(value) for value in own])
+                else:
+                    self.assertEqual(set(huygens), set(own))
 
 
 def _values(node, parts):
@@ -142,7 +151,24 @@ class RuleTargetsTest(unittest.TestCase):
             combinations = json.load(file)
         targets = [target for rule in mappings.values() for target in rule_targets(rule)]
         targets += [combination['target'] for combination in combinations]
-        self.assertEqual([target for target in targets if target.removesuffix('[]') not in paths], [])
+        model = ModelPaths()
+        # a per-item target (Pixels.Channel[*].Fluorophore...) runs through nested classes the tree lists apart
+        missing = [target for target in targets if '[*]' not in target and target.removesuffix('[]') not in paths]
+        missing += [target for target in targets if '[*]' in target and not _nested_path(model, target)]
+        self.assertEqual(missing, [])
+
+
+def _nested_path(model, target):
+    """Whether `target` (Class.slot[*].slot...) runs through nested slots of the model to a field."""
+    first, *rest = target.replace('[*]', '').split('.')
+    current = first if first in model.classes else None
+    for position, name in enumerate(rest):
+        slot = model.slots(current).get(name) if current else None
+        is_last = position == len(rest) - 1
+        current = slot.range if slot is not None and not is_last else None
+        if slot is None or (not is_last and not (slot.inlined or slot.inlined_as_list)):
+            return False
+    return current is None and bool(rest)
 
 
 class LosslessMappingTest(unittest.TestCase):
@@ -300,6 +326,25 @@ class LosslessMappingTest(unittest.TestCase):
         self.assertEqual(converted['OME'], {'ElectronBeam': {'Focus': 2.5}})
         self.assertEqual(converted['FibicsXML'], {'Fibics': {'version': 1}})
         self.assertEqual(converted['SourceMap']['OME.ElectronBeam.Focus'], 'FibicsXML.Fibics.Scan.Focus')
+
+    def test_list_item_value_goes_to_its_own_item_with_star_index(self):
+        mapper = self.mapper_for({'Data.Lambda': 'Pixels.Channel[*].Fluorophore.ExcitationWavelength'})
+
+        converted = mapper.convert_metadata({'Data': [{'Lambda': 400, 'Other': 1}, {'Lambda': 500}]})
+
+        self.assertEqual(converted['Pixels'], {'Channel': [{'Fluorophore': {'ExcitationWavelength': 400}},
+                                                           {'Fluorophore': {'ExcitationWavelength': 500}}]})
+        self.assertEqual(converted['SourceMap']['Pixels.Channel[1].Fluorophore.ExcitationWavelength'], 'Data[1].Lambda')
+        self.assertEqual(converted['Data'][0], {'Other': 1})
+
+    def test_star_index_target_taken_keeps_the_value_in_its_item(self):
+        mapper = self.mapper_for({'Data.Lambda': 'Pixels.Channel[*].Wavelength', 'Own': 'Pixels.Channel[*].Wavelength'})
+
+        converted = mapper.convert_metadata({'Pixels': {'Channel': [{'Wavelength': 424}]},
+                                             'Data': [{'Lambda': 424.12}, {'Lambda': 488}]})
+
+        self.assertEqual(converted['Pixels']['Channel'], [{'Wavelength': 424}, {'Wavelength': 488}])
+        self.assertEqual(converted['Data'][0], {'Lambda': 424.12})
 
     def test_wrapped_value_colliding_with_a_top_level_one_is_kept(self):
         mapper = self.mapper_for({'DateTime': 'Image.AcquisitionDate', 'datetime': 'Image.AcquisitionDate'})

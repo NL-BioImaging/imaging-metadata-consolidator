@@ -13,6 +13,7 @@ field names that match the schema, just without a vendor-specific prefix.
 
 import json
 import os.path
+import re
 from datetime import datetime
 from fnmatch import fnmatchcase
 
@@ -419,25 +420,33 @@ class AcquisitionMetadataMapper:
                                 items_provenance[f'[{index}]{suffix}'] = f'{item_origin}{suffix}'
                     single_target(self._resolve_rule_path(rule_source_path, min_rule_segments), rule_source_path)
                     candidates, _ = self._candidates(rule_source_path, source_path, min_rule_segments, result,
-                                                     provenance, root)
+                                                     provenance, root, origin_path)
                     placed_at, placed_provenance = self._place(mapped_items, None, *candidates)
                     for item_path, item_source in items_provenance.items():
                         placed_provenance[f'{placed_at}{item_path}'] = item_source
             else:
                 candidates, copies = self._candidates(rule_source_path, source_path, min_rule_segments, result,
-                                                      provenance, root)
+                                                      provenance, root, origin_path)
                 self._place(value, origin_path, *candidates)
                 for copy_target in copies:
                     if is_free_path(root_result, copy_target):
                         self._place(value, origin_path, (root_result, copy_target, root_provenance))
         return result
 
-    def _candidates(self, rule_source_path, source_path, min_rule_segments, result, provenance, root):
+    def _candidates(self, rule_source_path, source_path, min_rule_segments, result, provenance, root, origin=''):
         """Where a value may go, in order - a rule's target from the root, else a schema match or its own
-        path - and the further targets of a rule naming several, which get a copy where free."""
+        path - and the further targets of a rule naming several, which get a copy where free.
+
+        A target's "[*]" is the index of the list item the value comes from (its last index in `origin`),
+        so a per-channel value goes to its own channel: ChannelData[1].LambdaEx -> Channel[1]....
+        """
         rule_target = self._resolve_rule_path(rule_source_path, min_rule_segments)
         if rule_target is not None:
-            first, *copies = rule_targets(rule_target)
+            indices = re.findall(r'\[(\d+)\]', origin)
+            if any('[*]' in target for target in rule_targets(rule_target)) and not indices:
+                raise ValueError(f'{rule_source_path} targets a list item ([*]) but is in no list')
+            first, *copies = [target.replace('[*]', f'[{indices[-1]}]') if indices else target
+                              for target in rule_targets(rule_target)]
             return ((root[0], first, root[1]), (result, source_path, provenance)), copies
         schema_target = self._resolve_schema_path(rule_source_path)
         return ((result, schema_target or source_path, provenance), (result, source_path, provenance)), []
@@ -585,14 +594,31 @@ def resolve_exact_path(source_path, mappings):
     return None
 
 
+def _list_segment(key):
+    """('Channel', 1) for a path segment 'Channel[1]', else None."""
+    match = re.fullmatch(r'(.+)\[(\d+)\]', key)
+    return (match.group(1), int(match.group(2))) if match else None
+
+
 def set_nested_value(target, dotted_path, value):
     keys = dotted_path.split('.')
     node = target
     for key in keys[:-1]:
-        child = node.get(key)
-        if not isinstance(child, dict):
-            child = {}
-            node[key] = child
+        segment = _list_segment(key)
+        if segment is not None:
+            name, index = segment
+            items = node.get(name)
+            if not isinstance(items, list):
+                items = []
+                node[name] = items
+            while len(items) <= index:
+                items.append({})
+            child = items[index]
+        else:
+            child = node.get(key)
+            if not isinstance(child, dict):
+                child = {}
+                node[key] = child
         node = child
     node[keys[-1]] = value
 
@@ -640,11 +666,19 @@ def is_free_path(target, dotted_path):
     """Whether writing at `dotted_path` would leave every existing value in `target` intact."""
     node = target
     for key in dotted_path.split('.'):
+        segment = _list_segment(key)
+        name, index = segment if segment is not None else (key, None)
         if not isinstance(node, dict):
             return False
-        if key not in node:
+        if name not in node:
             return True
-        node = node[key]
+        node = node[name]
+        if index is not None and not isinstance(node, list):
+            return False
+        if index is not None and len(node) <= index:
+            return True
+        if index is not None:
+            node = node[index]
     return False
 
 
