@@ -238,7 +238,9 @@ class MasterModelTest(unittest.TestCase):
                 missing.append(class_name)
             for slot_name, slot in cls.get('attributes', {}).items():
                 kept_slot = (kept or {}).get('attributes', {}).get(slot_name)
-                if kept_slot is None or kept_slot.get('range') != slot.get('range'):
+                # a range changed by hand keeps the XSD's as xsd_range (Image.AcquisitionDate: date -> datetime)
+                kept_range = kept_slot and kept_slot.get('annotations', {}).get('xsd_range', kept_slot.get('range'))
+                if kept_slot is None or kept_range != slot.get('range'):
                     missing.append(f'{class_name}.{slot_name}')
         for enum_name, enum in {**schema['enums'], **units['enums']}.items():
             kept = self.view.get_enum(enum_name)

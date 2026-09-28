@@ -25,31 +25,49 @@ types:
     typeof: string
   AnnotationID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ROIID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+)|(\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+)|(\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ShapeID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   PlateID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Plate:\S+)|(Plate:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Plate:\S+)|(Plate:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ReagentID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Reagent:\S+)|(Reagent:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Reagent:\S+)|(Reagent:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ScreenID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Screen:\S+)|(Screen:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Screen:\S+)|(Screen:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   PlateAcquisitionID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:PlateAcquisition:\S+)|(PlateAcquisition:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:PlateAcquisition:\S+)|(PlateAcquisition:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   WellID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Well:\S+)|(Well:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Well:\S+)|(Well:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   WellSampleID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:WellSample:\S+)|(WellSample:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:WellSample:\S+)|(WellSample:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   Denomination:
     typeof: string
     description: A user-defined designation [i.e. name] for this element.
@@ -103,65 +121,103 @@ types:
   LSID:
     typeof: string
     description: 'Either LSID or internal consistent IDs for the file See: http://www.openmicroscopy.org/site/support/file-formats/working-with-ome-xml/id-and-lsid'
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ProjectID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Project:\S+)|(Project:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Project:\S+)|(Project:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   DatasetID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Dataset:\S+)|(Dataset:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Dataset:\S+)|(Dataset:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ImageID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Image:\S+)|(Image:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Image:\S+)|(Image:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   PixelsID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Pixels:\S+)|(Pixels:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Pixels:\S+)|(Pixels:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   PlaneID:
     typeof: LSID
   ChannelID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Channel:\S+)|(Channel:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Channel:\S+)|(Channel:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ModuleID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Module:\S+)|(Module:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Module:\S+)|(Module:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   FolderID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Folder:\S+)|(Folder:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Folder:\S+)|(Folder:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ExperimenterID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ExperimenterGroupID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:ExperimenterGroup:\S+)|(ExperimenterGroup:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:ExperimenterGroup:\S+)|(ExperimenterGroup:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   ExperimentID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experiment:\S+)|(Experiment:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experiment:\S+)|(Experiment:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   MicrobeamManipulationID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:MicrobeamManipulation:\S+)|(MicrobeamManipulation:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:MicrobeamManipulation:\S+)|(MicrobeamManipulation:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   InstrumentID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Instrument:\S+)|(Instrument:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Instrument:\S+)|(Instrument:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   MicroscopeID:
     typeof: LSID
   ObjectiveID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Objective:\S+)|(Objective:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Objective:\S+)|(Objective:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   LightSourceID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:LightSource:\S+)|(LightSource:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:LightSource:\S+)|(LightSource:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   FilterSetID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:FilterSet:\S+)|(FilterSet:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:FilterSet:\S+)|(FilterSet:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   DichroicID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Dichroic:\S+)|(Dichroic:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Dichroic:\S+)|(Dichroic:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   FilterID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Filter:\S+)|(Filter:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Filter:\S+)|(Filter:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   DetectorID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
   DetectorDarkMapID:
     typeof: LSID
   DetectorReadMapID:
@@ -222,7 +278,9 @@ types:
     typeof: LSID
   LightSensorID:
     typeof: LSID
-    pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Image:\S+)|(Image:\S+)
+    annotations:
+      xsd_pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Image:\S+)|(Image:\S+)
+      xsd_pattern_use: 'advisory: IDs and references accept any string (user)'
 slots:
   ObjectType:
     description: The class of this object, where a slot can hold several.
@@ -4433,10 +4491,12 @@ classes:
         annotations:
           Tier: '1'
       AcquisitionDate:
-        range: date
+        range: datetime
         description: The Date in which this Image was Acquired.
         annotations:
           Tier: '1'
+          range_source: 'OME 2016-06 ome.xsd (xsd:dateTime): the sources give date and time (user)'
+          xsd_range: date
       CustomProperties:
         description: Source metadata values the model does not model, kept so no metadata is lost.
         range: Property

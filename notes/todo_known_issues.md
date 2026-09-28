@@ -24,12 +24,15 @@ against a published profile, so exports are not validated on the Hub until one i
   profile cannot reach; its references stay plain strings.
 - LightPath has no Tier in the XSD; Tier 1 taken from fullSchema.json (hand edit, `Tier_source`).
 
-### Stricter than the old profile
+### Dates and IDs are taken gracefully (user, 2026-09-28)
 
-The model keeps the XSD's types, so some values the old JSON-based profile typed as strings are now
-Property records: instrument/sample-holder IDs that do not match the LSID patterns (`SS1735`, Phenom's and
-TALOS's instrument IDs), and acquisition datetimes, since LiMi types Image.AcquisitionDate as `xsd:date`
-(OME: dateTime). See "In progress".
+- Image.AcquisitionDate is a datetime (OME's xsd:dateTime; LiMi's xsd:date kept as `xsd_range`). ISO 8601
+  variations are taken as they come, without conversion (T or space, with or without a zone, `Z`); a value
+  that is no datetime (TALOS's "0") stays a Property. Other formats could be converted by a rule, as
+  combinations.json does. metaseed accepts "2025-05-28 10:54:00" (EMSIS dataset validated locally).
+- IDs and references accept any string: the 29 LSID-based ID types keep the XSD's pattern as an advisory
+  `xsd_pattern` annotation only, so vendor IDs (`SS1735`, `9953543`) fit Instrument.ID. The UUID type keeps
+  its pattern (a file link, no object ID).
 
 ### Generated metaseed profile
 
@@ -65,12 +68,7 @@ linkml 1.11.1 in biomero-converter-env; chardet kept at 5.2.0 (linkml's ShEx gen
 ## In progress
 
 Master model and pipeline done (branch `metaseed-profile`, 2026-09-28).
-Open questions for the user:
-- Image.AcquisitionDate: keep LiMi's `xsd:date` (sources' datetimes stay Properties) or use OME's dateTime
-  (a hand edit in models/imaging.yaml; 5 sources' dates become typed again)?
-- IDs that do not match the XSD's LSID patterns (e.g. Instrument.ID `SS1735`): keep the patterns, or relax
-  them in the model?
-- Push the `imaging` profile to the Hub as a new draft?
+Open: push the `imaging` profile to the Hub as a new draft?
 
 ## The model and the pipeline
 
@@ -89,7 +87,8 @@ Open questions for the user:
   attributed) or derived, each with `description_source`. The converter stays for comparing a future
   LiMi XSD; a test checks everything it yields is still in the master.
 - Hand edits so far: the three imports and their mixins/CustomProperties/SourceFile slots; OME.ID/Name
-  (metaseed datasets identify their root); LightPath Tier; MaskingPlate.ApertureNr; `default_subtype`
+  (metaseed datasets identify their root); LightPath Tier; MaskingPlate.ApertureNr; Image.AcquisitionDate
+  as datetime; ID patterns advisory (see Known issues); `default_subtype`
   annotations on abstract classes (LiMi's Generic* subtypes; Stage -> MechanicalStage and Software ->
   AcquisitionSoftware chosen by the user) - where values for an abstract class go.
 - Model paths (src/ModelPaths.py): start at a class with an identifier (OME, Image, Pixels, Laser, ...) and

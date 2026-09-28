@@ -251,8 +251,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Project:\S+)|(Project:\S+)
   Dataset:
     description: An element specifying a collection of images that are always processed together. Images can belong to more
       than one Dataset, and a Dataset may contain more than one Image. Images contain one or more DatasetRef elements to specify
@@ -295,8 +293,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Dataset:\S+)|(Dataset:\S+)
   Folder:
     description: An element specifying a possibly heterogeneous collection of data. Folders may contain Folders so that data
       may be organized within a tree of Folders. Data may be in multiple Folders but a Folder may not be in more than one
@@ -336,8 +332,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Folder:\S+)|(Folder:\S+)
     - name: Name
       type: string
       required: false
@@ -380,8 +374,6 @@ entities:
       required: true
       description: A unique identifier for this Experiment.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experiment:\S+)|(Experiment:\S+)
     - name: Name
       type: string
       required: false
@@ -495,8 +487,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Plate:\S+)|(Plate:\S+)
     - name: Name
       type: string
       required: false
@@ -677,8 +667,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Screen:\S+)|(Screen:\S+)
     - name: Name
       type: string
       required: false
@@ -720,8 +708,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
     - name: FirstName
       type: string
       required: false
@@ -783,8 +769,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:ExperimenterGroup:\S+)|(ExperimenterGroup:\S+)
   Instrument:
     description: This element describes the Instrument used to capture the Image. It is primarily a container referring to
       the list of hardware components included in a given Microscope. The list consists of the Microscope Stand, Microscope
@@ -1535,8 +1519,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Instrument:\S+)|(Instrument:\S+)
     - name: Name
       type: string
       required: true
@@ -1709,14 +1691,12 @@ entities:
       required: true
       description: A unique identifier for this Image.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Image:\S+)|(Image:\S+)
     - name: Name
       type: string
       required: true
       description: A user assigned name for this Image.
     - name: AcquisitionDate
-      type: date
+      type: datetime
       required: false
       description: The Date in which this Image was Acquired.
     - name: CustomProperties
@@ -1841,8 +1821,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+)|(\S+)
     - name: Name
       type: string
       required: false
@@ -2087,8 +2065,6 @@ entities:
       required: true
       description: A unique identifier for this Sample.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: true
@@ -2206,8 +2182,6 @@ entities:
       required: true
       description: A Unique Identifier for this MicrobeamManipulation hardware component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:MicrobeamManipulation:\S+)|(MicrobeamManipulation:\S+)
     - name: Type
       type: string
       required: true
@@ -2249,8 +2223,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Well:\S+)|(Well:\S+)
     - name: Column
       type: integer
       required: true
@@ -2311,8 +2283,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:PlateAcquisition:\S+)|(PlateAcquisition:\S+)
     - name: Name
       type: string
       required: false
@@ -2348,8 +2318,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Reagent:\S+)|(Reagent:\S+)
     - name: Name
       type: string
       required: false
@@ -2371,8 +2339,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -2468,8 +2434,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -2565,8 +2529,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -2741,8 +2703,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: true
@@ -2818,8 +2778,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: true
@@ -2899,8 +2857,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: true
@@ -2968,8 +2924,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -3165,8 +3119,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:LightSource:\S+)|(LightSource:\S+)
     - name: Name
       type: string
       required: false
@@ -3275,8 +3227,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:LightSource:\S+)|(LightSource:\S+)
     - name: Name
       type: string
       required: false
@@ -3393,8 +3343,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:LightSource:\S+)|(LightSource:\S+)
     - name: Name
       type: string
       required: false
@@ -3700,8 +3648,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:LightSource:\S+)|(LightSource:\S+)
     - name: Name
       type: string
       required: false
@@ -3817,8 +3763,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:LightSource:\S+)|(LightSource:\S+)
     - name: Name
       type: string
       required: false
@@ -3968,8 +3912,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:LightSource:\S+)|(LightSource:\S+)
     - name: Name
       type: string
       required: false
@@ -4080,8 +4022,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -4286,8 +4226,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -4358,8 +4296,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Objective:\S+)|(Objective:\S+)
     - name: Name
       type: string
       required: false
@@ -4872,8 +4808,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -4978,8 +4912,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -5114,8 +5046,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -5316,8 +5246,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -5424,8 +5352,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -5642,8 +5568,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -5766,8 +5690,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -5933,8 +5855,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -6045,8 +5965,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -6293,8 +6211,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -6474,8 +6390,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -6655,8 +6569,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -6823,8 +6735,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -6933,8 +6843,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -7018,8 +6926,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -7710,8 +7616,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -8398,8 +8302,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -8774,8 +8676,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -9155,8 +9055,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -9529,8 +9427,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -9639,8 +9535,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -9750,8 +9644,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -9886,8 +9778,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -9994,8 +9884,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -10102,8 +9990,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -10210,8 +10096,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -10318,8 +10202,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -10426,8 +10308,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -10534,8 +10414,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -10653,8 +10531,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Filter:\S+)|(Filter:\S+)
     - name: Name
       type: string
       required: false
@@ -10919,8 +10795,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Filter:\S+)|(Filter:\S+)
     - name: Name
       type: string
       required: false
@@ -11200,8 +11074,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Filter:\S+)|(Filter:\S+)
     - name: Name
       type: string
       required: false
@@ -11465,8 +11337,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Filter:\S+)|(Filter:\S+)
     - name: Name
       type: string
       required: false
@@ -11759,8 +11629,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -12024,8 +11892,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -12431,8 +12297,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -12838,8 +12702,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -13094,8 +12956,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -13579,8 +13439,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -14066,8 +13924,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -14553,8 +14409,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -15042,8 +14896,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -15528,8 +15380,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -16015,8 +15865,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -16503,8 +16351,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -17004,8 +16850,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -17278,8 +17122,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -17480,8 +17322,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
     - name: Name
       type: string
       required: false
@@ -17861,8 +17701,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
     - name: Name
       type: string
       required: false
@@ -18212,8 +18050,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
     - name: Name
       type: string
       required: false
@@ -18553,8 +18389,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
     - name: Name
       type: string
       required: false
@@ -19043,8 +18877,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
     - name: Name
       type: string
       required: false
@@ -19495,8 +19327,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
     - name: Name
       type: string
       required: false
@@ -19960,8 +19790,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
     - name: Name
       type: string
       required: false
@@ -20446,8 +20274,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
     - name: Name
       type: string
       required: false
@@ -20927,8 +20753,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Detector:\S+)|(Detector:\S+)
     - name: Name
       type: string
       required: false
@@ -21132,8 +20956,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Method
       type: string
       required: true
@@ -21258,8 +21080,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -21340,8 +21160,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -21404,8 +21222,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -21727,8 +21543,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -22060,8 +21874,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -22384,8 +22196,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -22819,8 +22629,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -23148,8 +22956,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -23505,8 +23311,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -23885,8 +23689,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -24211,8 +24013,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -24462,8 +24262,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -24565,8 +24363,6 @@ entities:
       required: true
       description: This is the Unique Identifier of the Environmental Control Device used in this case.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Temperature
       type: string
       required: true
@@ -25238,8 +25034,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Date
       type: date
       required: true
@@ -25639,8 +25433,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Date
       type: date
       required: true
@@ -25721,8 +25513,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Pixels:\S+)|(Pixels:\S+)
     - name: DimensionOrder
       type: string
       required: true
@@ -26077,8 +25867,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26089,8 +25877,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   FileAnnotation:
     description: A file object annotation
     fields:
@@ -26115,8 +25901,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26127,8 +25911,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   ListAnnotation:
     description: This annotation is a grouping object. It uses the sequence of annotation refs from the base Annotation to
       form the list.
@@ -26148,8 +25930,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26160,8 +25940,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   LongAnnotation:
     description: A simple numerical annotation of type xsd:long.
     fields:
@@ -26183,8 +25961,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26195,8 +25971,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   DoubleAnnotation:
     description: A simple numerical annotation of type xsd:double.
     fields:
@@ -26218,8 +25992,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26230,8 +26002,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   CommentAnnotation:
     description: An annotation that consists of a simple multi-line comment.
     fields:
@@ -26254,8 +26024,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26266,8 +26034,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   BooleanAnnotation:
     description: A simple boolean annotation of type xsd:boolean.
     fields:
@@ -26289,8 +26055,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26301,8 +26065,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   TimestampAnnotation:
     description: A date/time annotation of type xsd:dateTime.
     fields:
@@ -26324,8 +26086,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26336,8 +26096,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   TagAnnotation:
     description: A tag annotation (represents a tag or a tagset)
     fields:
@@ -26359,8 +26117,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26371,8 +26127,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   TermAnnotation:
     description: An annotation that consists of an ontology term.
     fields:
@@ -26394,8 +26148,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26406,8 +26158,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   MapAnnotation:
     description: A Map Annotation. The contents of this is a list of Key/Value pairs.
     fields:
@@ -26432,8 +26182,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -26444,8 +26192,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   ROIUnion:
     fields:
     - name: Rectangle
@@ -26595,8 +26341,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Type
       type: string
       required: true
@@ -26662,8 +26406,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Coating
       type: string
       required: true
@@ -26739,8 +26481,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Type
       type: string
       required: true
@@ -26877,8 +26617,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:WellSample:\S+)|(WellSample:\S+)
     - name: PositionX
       type: float
       required: false
@@ -27008,8 +26746,6 @@ entities:
       required: true
       description: A Unique Identifier for this model element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: VendorName
       type: string
       required: true
@@ -27741,8 +27477,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -27753,8 +27487,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   ReflectanceProfileFile:
     description: This element represents a file in .csv or other suitable formats containing the Reflectance profile of this
       optical component.
@@ -27780,8 +27512,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -27792,8 +27522,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   ReflectanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are reflected by this optical componewnt.
       It also records the maximum amount of light reflected. Multiple of these elements can be used.
@@ -28082,8 +27810,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Type
       type: string
       required: false
@@ -28162,8 +27888,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: ReferenceWavelength
       type: float
       required: true
@@ -28559,8 +28283,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: MaxIntensityPixelXCoordinate
       type: float
       required: false
@@ -28606,8 +28328,6 @@ entities:
       required: true
       description: A User-defined Name for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: true
@@ -28713,8 +28433,6 @@ entities:
       required: true
       description: A User-defined Name for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: true
@@ -28830,8 +28548,6 @@ entities:
       required: true
       description: A User-defined Name for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: true
@@ -28963,8 +28679,6 @@ entities:
       required: true
       description: A User-defined Name for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: true
@@ -29096,8 +28810,6 @@ entities:
       required: true
       description: A unique identifier for this Plane.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: TheZ
       type: integer
       required: true
@@ -29404,8 +29116,6 @@ entities:
       required: true
       description: A unique identifier for this Channel.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Channel:\S+)|(Channel:\S+)
     - name: Name
       type: string
       required: true
@@ -29518,8 +29228,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -29903,8 +29611,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
     - name: TheZ
       type: integer
       required: false
@@ -30117,8 +29823,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
     - name: TheZ
       type: integer
       required: false
@@ -30314,8 +30018,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
     - name: TheZ
       type: integer
       required: false
@@ -30520,8 +30222,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
     - name: TheZ
       type: integer
       required: false
@@ -30738,8 +30438,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
     - name: TheZ
       type: integer
       required: false
@@ -30946,8 +30644,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
     - name: TheZ
       type: integer
       required: false
@@ -31142,8 +30838,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
     - name: TheZ
       type: integer
       required: false
@@ -31342,8 +31036,6 @@ entities:
       type: string
       required: true
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Shape:\S+)|(Shape:\S+)
     - name: TheZ
       type: integer
       required: false
@@ -31423,8 +31115,6 @@ entities:
       required: true
       description: A Unique Identifier for this element.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Annotation:\S+)|(Annotation:\S+)
     - name: Namespace
       type: uri
       required: true
@@ -31435,8 +31125,6 @@ entities:
       required: false
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:Experimenter:\S+)|(Experimenter:\S+)
   MapEntry:
     description: This is a Key/Value pair used to build up a Mapping. The Element and Attribute Name are kept to single letters
       to minimize the length at the expense of readability as they are likely to occur many times.
@@ -31471,8 +31159,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Diameter
       type: float
       required: true
@@ -31627,8 +31313,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Date
       type: date
       required: true
@@ -32097,8 +31781,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
   Fluorophore:
     description: This element describes the Fluorophore whose Emission is used to produce this Channel. [plain text string].
     fields:
@@ -32107,8 +31789,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -32535,8 +32215,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -32794,8 +32472,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Date
       type: date
       required: true
@@ -32820,8 +32496,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: TheAdditionalDimensionIndex
       type: integer
       required: true
@@ -32936,8 +32610,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:FilterSet:\S+)|(FilterSet:\S+)
     - name: Name
       type: string
       required: false
@@ -33801,8 +33473,6 @@ entities:
       type: string
       required: true
       description: This is the Unique Identifier of the device used in this case.
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: PresetPinholeSize
       type: float
       required: true
@@ -34837,8 +34507,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: HILO
       type: boolean
       required: false
@@ -34881,8 +34549,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
   TransmissionWavelengthRangeSettings:
     description: This element records the range of Transmission Wavelengths that were set for this optical component during
       the Acquisition of this Image. It also records the maximum amount of light transmitted. Multiple of this elements can
@@ -35251,8 +34917,6 @@ entities:
       required: true
       description: A Unique Identifier for this component.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Name
       type: string
       required: false
@@ -35265,8 +34929,6 @@ entities:
       required: true
       description: This is the ID of an existing Optical Component that is present in this Light Path.
       is_identifier: true
-      constraints:
-        pattern: (urn:lsid:([\w\-\.]+\.[\w\-\.]+)+:\S+:\S+)|(\S+:\S+)
     - name: Order
       type: integer
       required: true

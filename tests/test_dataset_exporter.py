@@ -59,7 +59,11 @@ class FitsTest(unittest.TestCase):
         self.assertTrue(fits('2015-10-19', {'type': 'date'}))
         self.assertFalse(fits('19/10/2015', {'type': 'date'}))
         self.assertTrue(fits('2015-10-19T17:18:12-05:00', {'type': 'datetime'}))
+        # ISO 8601 variations are taken as they come, without converting them
+        self.assertTrue(fits('2025-05-28 10:54:00', {'type': 'datetime'}))
+        self.assertTrue(fits('2024-02-06T13:21:05Z', {'type': 'datetime'}))
         self.assertFalse(fits('yesterday', {'type': 'datetime'}))
+        self.assertFalse(fits('0', {'type': 'datetime'}))
         self.assertTrue(fits('https://example.org/spec.pdf', {'type': 'uri'}))
         self.assertFalse(fits(3, {'type': 'uri'}))
 
