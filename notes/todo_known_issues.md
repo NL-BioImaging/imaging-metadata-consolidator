@@ -98,7 +98,7 @@ errors - all "Field 'X' is required", no other error, no crash. Now a test (test
 against a temporary copy of the profile (LOCALAPPDATA/XDG_DATA_HOME pointed at it), with the shared cache.
 The generator also writes the entities in metaseed's containment order (every entity after all that nest it),
 which silences metaseed's "out of containment order" warning; no change to the profile's content (compared
-with the published 1.0: none). Issues for metaseed (this and the uri+pattern failure) are drafted in notes/metaseed-issue-profile-reload.md and notes/metaseed-issue-uri-pattern.md, not filed; the workarounds stay (user, 2026-09-28).
+with the published 1.0: none). Reported to metaseed, with the uri+pattern failure (https://github.com/sorenwacker/metaseed/issues, user, 2026-09-28); the workarounds stay until they are fixed.
 
 ### Local metaseed CLI
 
