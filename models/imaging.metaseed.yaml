@@ -141,7 +141,7 @@ entities:
       items: OMEBinaryOnly
       owns: true
     - name: UUID
-      type: uri
+      type: string
       required: false
       description: This unique identifier is used to keep track of multi part files. It allows the links between files to
         survive renaming. While OPTIONAL in the general case this is REQUIRED in a MetadataOnly Companion to a collection
@@ -1985,7 +1985,7 @@ entities:
       description: Filename of the OME-XML metadata file for this binary data. If the file cannot be found, a search can be
         performed based on the UUID.
     - name: UUID
-      type: uri
+      type: string
       required: true
       description: The unique identifier of another OME-XML block whose metadata describes the binary data in this file. This
         UUID is considered authoritative regardless of mismatches in the filename.
@@ -35476,7 +35476,7 @@ entities:
       referential.'
     fields:
     - name: Value
-      type: uri
+      type: string
       required: false
       constraints:
         pattern: (urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})

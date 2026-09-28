@@ -95,21 +95,25 @@ linkml 1.11.1 in biomero-converter-env; chardet kept at 5.2.0 (linkml's ShEx gen
 
 ## In progress
 
-Current task (user, 2026-09-28): the sources keep their metadata top levels now (d5314b3): Phenom is
-`FEI_TITAN.FeiImage.{...}`, Zeiss `FibicsXML.Fibics.{...}` (+ top-level `Software`), ome-tiff the full OME
-document `OME.{Instrument, Image, StructuredAnnotations, Creator, UUID}` (DNAcropSmall.ome.json).
-Done (not committed yet): the mapper's vendor wrapper may span several levels (it descends through
-single-key dicts of unknown keys and takes the deepest level below which strictly more leaves resolve),
-and the model's root `OME` counts as one, so rules see a model document's contents as top-level fields;
-unmapped fields stay under the wrapper, the SourceMap keeps full paths. 6 Huygens rules added in their
-`StructuredAnnotations.XMLAnnotation.Value.*` form (the `Annotation:CustomAttributes:SVI:Image:*` ones stay).
-Typed values vs the exports before d5314b3: Phenom 41 -> 41, Zeiss 44 -> 45 (+AcquisitionSoftware.Name from
-`Software`), ome-tiff 13 -> 41 (Pixels, channels, TiffData, IDs, UUID); no field typed before is lost.
-Test: the Huygens values agree with the image's own OME values (DeltaX/Y/Z/T = Pixels.PhysicalSizeX/Y/Z,
-TimeIncrement; RefrIndexLensMedium = ObjectiveSettings.RefractiveIndex 1.518). metaseed validation of the
-three changed exports against 0.2 running.
-Decided (user): rule `Creator` -> `OME.Creator` (was SoftwareModule.Name, from the converter merge); only
-ome-tiff has the key.
+Current task (user, 2026-09-28): work through all TODOs, one commit each. Previous task (sources keeping
+their top levels) committed 35475fb; its metaseed validation against 0.2: Zeiss 31 and Phenom 53 errors,
+all required fields; ome-tiff crashed metaseed - OME.UUID is `uri` with a pattern, and metaseed applies the
+pattern to the parsed URL (pydantic "Input should be a valid string").
+Decided (user): immersion values go to ImmersionLiquid, the extension's ObjectiveSettings.Medium/
+RefractiveIndex are removed; Role deferred until a source has light sources; EM groups option B - LiMi's
+hardware/settings split: ElectronSource under Instrument, ElectronBeamSettings (referring to the
+ElectronSource), ElectronOpticsSettings, ScanSettings under Image, Acquisition.Operator -> Experimenter,
+Acquisition.StartDate -> Image.AcquisitionDate. Removing/moving fields is breaking: next version 1.0.0.
+Plan, one commit each:
+1. generator: a `uri` field with a pattern -> `string` with the pattern
+2. immersion -> ImmersionLiquid, extension fields removed
+3. EM groups option B
+4. per-channel mapping (Huygens ChannelData[i] -> Channel[i])
+5. unit normalisation (vendor "um" -> "µm", original kept)
+6. exact_mappings/close_mappings to the OME LinkML schema
+7. Role TODO reworded (deferred)
+8. release 1.0.0: regenerate, compatibility check (breaking expected), validate, write-up
+Progress: 1 done.
 
 ## The model and the pipeline
 

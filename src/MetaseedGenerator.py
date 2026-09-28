@@ -177,7 +177,12 @@ class MetaseedGenerator:
                            ('maximum', slot.maximum_value)):
             if value is not None:
                 constraints[key] = value
-        return RANGES.get(range_name, 'string'), constraints
+        base = RANGES.get(range_name, 'string')
+        if base == 'uri' and 'pattern' in constraints:
+            # metaseed applies a pattern to a uri field's parsed URL rather than its text, and fails on any
+            # value (OME.UUID); as a string the pattern is checked as intended
+            base = 'string'
+        return base, constraints
 
     @staticmethod
     def _add_cardinality(field, slot):

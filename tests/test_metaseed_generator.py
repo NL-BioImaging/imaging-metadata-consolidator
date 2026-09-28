@@ -30,6 +30,7 @@ default_range: string
 types:
   LSID: {typeof: string, pattern: '\\S+:\\S+'}
   LightSourceID: {typeof: LSID}
+  UUID: {typeof: uri, pattern: 'urn:uuid:\S+'}
 enums:
   Medium: {permissible_values: {Cu: {}, Ar: {}}}
   Role: {permissible_values: {Transmitted: {}, Fluorescence: {}}}
@@ -40,6 +41,8 @@ classes:
     tree_root: true
     attributes:
       ID: {identifier: true, range: LSID}
+      UUID: {range: UUID}
+      Website: {range: uri}
       LightSource: {range: LightSource, multivalued: true, inlined_as_list: true, required: true}
       Range: {range: WavelengthRange, multivalued: true, inlined_as_list: true}
       Sensor: {range: Sensor, inlined: false}
@@ -122,6 +125,11 @@ class MetaseedGeneratorTest(unittest.TestCase):
     def test_concrete_range_is_not_expanded(self):
         self.assertEqual(self.fields['Instrument']['Range']['items'], 'WavelengthRange')
         self.assertNotIn('IlluminationWavelengthRange', self.entities)
+
+    def test_uri_with_a_pattern_is_a_string(self):
+        uuid = self.fields['Instrument']['UUID']
+        self.assertEqual((uuid['type'], uuid['constraints']), ('string', {'pattern': 'urn:uuid:\S+'}))
+        self.assertEqual(self.fields['Instrument']['Website']['type'], 'uri')
 
     def test_reference_is_an_id_string(self):
         pump = self.fields['Laser']['Pump']
