@@ -52,6 +52,20 @@ class DatasetExporter:
             default = model.default_subtype(name) if cls.abstract else None
             if default in self.placeable:
                 self.placeable[name] = default
+        # the model's spellings of a unit enumeration's values ({"um": "µm", ...}), by the values it allows
+        self.aliases = {frozenset(enum.permissible_values): {alias: value for value, spec in
+                                                              enum.permissible_values.items() for alias in spec.aliases}
+                        for enum in model.view.all_enums().values()
+                        if any(spec.aliases for spec in enum.permissible_values.values())}
+
+    def fitting(self, value, field):
+        """(True, what `field` stores for `value`) when it fits as is, or as a value its unit enumeration
+        spells differently ("um" as "µm"), else (False, None)."""
+        if fits(value, field):
+            return True, value
+        allowed = field.get('constraints', {}).get('enum')
+        spelled = self.aliases.get(frozenset(allowed or ()), {}).get(value) if isinstance(value, str) else None
+        return (True, spelled) if spelled is not None and fits(spelled, field) else (False, None)
 
     def _nested_entity(self, field):
         if field['type'] in ('entity', 'list') and field.get('items') in self.entities:
@@ -143,9 +157,10 @@ class _Export:
                     child = self.child(instance, key, nested, field['type'] == 'list', index)
                     item_path = f'{converted_path}[{index}]' if is_record_list else converted_path
                     self.walk(record, item_path, child.anchor, child)
-            elif field is not None and nested is None and key not in instance.node and fits(value, field):
-                instance.node[key] = value
-                self.add_mapping(instance.child_path(key), converted_path)
+            elif field is not None and nested is None and key not in instance.node                     and self.exporter.fitting(value, field)[0]:
+                stored = self.exporter.fitting(value, field)[1]
+                instance.node[key] = stored
+                self.add_mapping(instance.child_path(key), converted_path, value if stored != value else None)
             elif field is None and entity is not None and (is_record or is_record_list):
                 records = value if is_record_list else [value]
                 for index, record in enumerate(records):
@@ -162,9 +177,11 @@ class _Export:
             else:
                 self.add_properties(anchor_only, converted_path, value)
 
-    def add_mapping(self, dataset_path, converted_path):
+    def add_mapping(self, dataset_path, converted_path, source_value=None):
         mapping = {'ID': f'SourceMapping:{len(self.mappings)}', 'Field': dataset_path}
         mapping.update(_source_fields(self.source_map[converted_path], 'Source'))
+        if source_value is not None:
+            mapping['SourceValue'] = json.dumps(source_value, ensure_ascii=False)
         self.mappings.append(mapping)
 
     def add_properties(self, anchor, converted_path, value):

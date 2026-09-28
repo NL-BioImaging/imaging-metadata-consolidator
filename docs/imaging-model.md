@@ -149,7 +149,9 @@ inheritance, so:
 - `python src/main.py export` (`src/DatasetExporter.py`) builds one metaseed dataset per source file. A
   value goes into a field only if it fits exactly (type, enumeration, format, free slot), with a
   `SourceMapping` naming its source key; anything else becomes a `Property` with its source path and
-  value. Nothing is dropped.
+  value. Nothing is dropped. A unit spelled otherwise than the model spells it (`um`, `micrometre`) is
+  stored as the model's unit (`µm`) when the units schema lists the spelling as an alias; the mapping
+  keeps the source's spelling as `SourceValue`.
 
 ## 5. Validation
 

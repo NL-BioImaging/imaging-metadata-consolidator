@@ -32106,6 +32106,11 @@ entities:
       type: string
       required: true
       description: The full path of the value in its source file.
+    - name: SourceValue
+      type: string
+      required: false
+      description: The value as the source wrote it, JSON-encoded, where the field holds it in the model's own spelling (a
+        unit "um" stored as "µm").
     - name: DerivedFrom
       type: list
       items: string

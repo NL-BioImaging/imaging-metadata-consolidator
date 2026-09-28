@@ -85,14 +85,24 @@ class DatasetExporterTest(unittest.TestCase):
                          [{'ID': 'SourceMapping:0', 'Field': 'Image[0].Name', 'Source': 'title'}])
         self.assertNotIn('CustomProperties', image)
 
+    def test_unit_spelled_otherwise_is_stored_as_the_models_unit(self):
+        dataset = self.export({'Pixels': {'PhysicalSizeXUnit': 'um', 'PhysicalSizeYUnit': 'micrometre'},
+                               'SourceMap': {'Pixels.PhysicalSizeXUnit': 'pixelWidth.unit',
+                                             'Pixels.PhysicalSizeYUnit': 'pixelHeight.unit'}})
+
+        image = dataset['Image'][0]
+        self.assertEqual(image['Pixels'], {'PhysicalSizeXUnit': 'µm', 'PhysicalSizeYUnit': 'µm'})
+        self.assertEqual([(mapping['Source'], mapping['SourceValue']) for mapping in image['SourceFile'][0]['Mapping']],
+                         [('pixelWidth.unit', '"um"'), ('pixelHeight.unit', '"micrometre"')])
+
     def test_value_that_does_not_fit_becomes_a_property(self):
-        dataset = self.export({'Pixels': {'PhysicalSizeXUnit': 'um', 'SizeX': 1.5},
+        dataset = self.export({'Pixels': {'PhysicalSizeXUnit': 'micro', 'SizeX': 1.5},
                                'SourceMap': {'Pixels.PhysicalSizeXUnit': 'unit', 'Pixels.SizeX': 'Pixels.SizeX'}})
 
         image = dataset['Image'][0]
         self.assertEqual(image['Pixels'], {})
         self.assertEqual(image['CustomProperties'], [
-            {'ID': 'Property:0', 'Name': 'unit', 'Value': '"um"', 'SchemaPath': 'Pixels.PhysicalSizeXUnit',
+            {'ID': 'Property:0', 'Name': 'unit', 'Value': '"micro"', 'SchemaPath': 'Pixels.PhysicalSizeXUnit',
              'Source': 'SourceFile:0'},
             {'ID': 'Property:1', 'Name': 'Pixels.SizeX', 'Value': '1.5', 'Source': 'SourceFile:0'},
         ])

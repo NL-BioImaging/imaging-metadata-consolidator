@@ -68,6 +68,9 @@ classes:
       Source:
         description: The full path of the value in its source file.
         required: true
+      SourceValue:
+        description: The value as the source wrote it, JSON-encoded, where the field holds it in the model's own
+          spelling (a unit "um" stored as "µm").
       DerivedFrom:
         description: For a value combined from several source values (e.g. a date and a time), their source paths.
         multivalued: true

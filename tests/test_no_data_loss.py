@@ -179,6 +179,9 @@ def recovered_from_dataset(dataset):
         for record in records:
             if 'DerivedFrom' in record:
                 derived.append(record['DerivedFrom'])
+            elif 'SourceValue' in record:
+                # the field holds the model's spelling (a unit "µm"); the record keeps the source's ("um")
+                recovered.setdefault(record['Source'], []).append(json.loads(record['SourceValue']))
             elif 'Field' in record:
                 recovered.setdefault(record['Source'], []).append(values[record['Field']])
             else:
@@ -226,6 +229,12 @@ class DatasetNoDataLossTest(unittest.TestCase):
         mapping = {'Field': 'D', 'Source': 'Date + Time', 'DerivedFrom': ['Date', 'Time']}
         problems = missing_from_dataset({'Date': 'd', 'Time': 't'}, {'D': 'x', 'S': {'Mapping': [mapping]}})
         self.assertEqual(len(problems), 2)
+
+    def test_missing_from_dataset_recovers_a_respelled_value_from_its_source_value(self):
+        mapping = {'Field': 'U', 'Source': 'unit', 'SourceValue': '"um"'}
+        self.assertEqual(missing_from_dataset({'unit': 'um'}, {'U': 'µm', 'S': {'Mapping': [mapping]}}), [])
+        wrong = {**mapping, 'SourceValue': '"nm"'}
+        self.assertEqual(len(missing_from_dataset({'unit': 'um'}, {'U': 'µm', 'S': {'Mapping': [wrong]}})), 1)
 
     def test_missing_from_dataset_catches_a_lost_value(self):
         dataset = {'CustomProperties': [{'Name': 'a', 'Value': '1'}]}
