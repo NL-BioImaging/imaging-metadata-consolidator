@@ -4,11 +4,11 @@
 
 ### Hub state
 
-The Hub account the metaseed token acts as (j.j.m.defolter@amsterdamumc.nl) holds one draft, `imaging`
-0.1, pushed by the user from `models/imaging.metaseed.yaml` (2026-09-28; valid, no problems, no
-warnings); the old `LiMi-extended` draft is gone. Datasets can only be created against a published
-profile, so exports are not validated on the Hub until it is published. After a change to the master
-model, regenerate (`python src/main.py metaseed`) and push the profile again.
+Published on the Hub (account j.j.m.defolter@amsterdamumc.nl): profile `imaging` 0.1 and 0.2 (0.2 =
+`models/imaging.metaseed.yaml` with the LiMi tiers, 2026-09-28; valid, no problems, no warnings); the
+account holds no datasets. After a change to the master model: regenerate (`python src/main.py
+metaseed`), run metaseed's compatibility check against the last published version (see "Profile
+versions"), bump the version, and push and publish again (the user does this).
 
 ### LiMi XSD slips (worked around in the converter, original names kept)
 
@@ -50,8 +50,7 @@ chose local validation only). Hub datasets need metaseed's tree serialization, n
 
 ### Profile versions (2026-09-28)
 
-`imaging` 0.1 is published on the Hub; the model is now 0.2.0 (profile 0.2, tiers), to be pushed and
-published by the user. metaseed's compatibility check (`metaseed.specs.compare.compare_specs(old, new)`,
+`imaging` 0.1 and 0.2 are published on the Hub. metaseed's compatibility check (`metaseed.specs.compare.compare_specs(old, new)`,
 the check behind the Hub's "Breaking changes"): 0.1 -> 0.2 has no breaking change (required bump minor).
 A first 0.2 re-keyed StageLabel (an added ID) and MicroscopeTableSettings (a reference declared as
 identifier); the generator now keeps metaseed's inferred identifier - the first field that is no
