@@ -293,6 +293,19 @@ class MasterModelTest(unittest.TestCase):
         self.assertEqual(self._problems({**filament, 'LaserMedium': 'Cu'}, 'Filament'),
                          ["Additional properties are not allowed ('LaserMedium' was unexpected) in /"])
 
+    def test_mappings_use_declared_prefixes(self):
+        # exact_mappings/close_mappings to the OME LinkML schema (ome:)
+        prefixes = set(self.view.schema.prefixes)
+        undeclared = []
+        for class_name, cls in self.view.all_classes().items():
+            elements = [(class_name, cls)] + [(f'{class_name}.{name}', slot) for name, slot in (cls.attributes or {}).items()]
+            for where, element in elements:
+                for curie in list(element.exact_mappings) + list(element.close_mappings):
+                    if curie.split(':')[0] not in prefixes:
+                        undeclared.append(f'{where}: {curie}')
+        self.assertEqual(undeclared, [])
+        self.assertEqual(self.view.get_class('Laser').exact_mappings, ['ome:LaserLightSource'])
+
     def test_no_copies_of_shared_submodels(self):
         # fullSchema.json made a copy per parent (Arc_IlluminationWavelengthRange, StandardDichroic_Transmittance...)
         self.assertEqual({self.view.induced_slot('IlluminationWavelengthRange', name).range

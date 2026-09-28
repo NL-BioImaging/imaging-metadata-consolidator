@@ -10,6 +10,7 @@ version: 0.2.0
 prefixes:
   linkml: https://w3id.org/linkml/
   imaging: https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging/
+  ome: https://schemas.incenp.org/ome/v1/core/
 default_prefix: imaging
 default_range: string
 imports:
@@ -145,12 +146,15 @@ classes:
     attributes:
       Type:
         description: The type of detector as the source names it; CCD, CMOS and WaveFrontSensor have their own.
+        close_mappings: ['ome:type']
         annotations: {schema_extended_path: Detector.Type}
       Gain:
         range: float
+        close_mappings: ['ome:gain']
         annotations: {schema_extended_path: Detector.Gain}
       Offset:
         range: float
+        close_mappings: ['ome:offset']
         annotations: {schema_extended_path: Detector.Offset}
       Brightness:
         range: float

@@ -77,6 +77,11 @@ the same name (`BeamSplitter.TransmittanceProfileFile`), an attribute named `Ape
 
 The converter is kept for comparing a future LiMi XSD; it does not overwrite the master.
 
+Classes and fields that correspond to the OME LinkML schema carry `exact_mappings` or `close_mappings` to it
+(prefix `ome:`): 21 classes (`Laser` is `ome:LaserLightSource`, ...) and 55 fields. A field named alike but
+meaning something else is only close: OME's detector gain is a specification, the model's `Detector.Gain` a
+vendor's per-image value. This keeps open making the model a formal extension of the OME LinkML schema.
+
 ## 2. Extensions beyond LiMi
 
 The model was then extended by hand (every change is marked in the model with its source or reason).

@@ -7,12 +7,14 @@ version: 0.2.0
 comments:
 - 'Descriptions annotated with description_source "OME 2016-06 ome.xsd" are from the OME Data Model (Copyright (C) 2002 -
   2016 Open Microscopy Environment), licensed under CC BY 3.0: http://www.openmicroscopy.org/info/attribution'
+- 'exact_mappings/close_mappings with the ome: prefix name the corresponding classes and fields of the OME LinkML schema (https://github.com/gouttegd/yamf-playground/blob/main/linkml/ome/ome.yaml).'
 see_also:
 - https://www.openmicroscopy.org/Schemas/Documentation/Generated/OME-2016-06/ome.html
 - https://github.com/gouttegd/yamf-playground/blob/main/linkml/ome/ome.yaml
 prefixes:
   linkml: https://w3id.org/linkml/
   imaging: https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging/
+  ome: https://schemas.incenp.org/ome/v1/core/
 default_prefix: imaging
 default_range: string
 imports:
@@ -290,6 +292,8 @@ classes:
   MicroscopeStand:
     description: This element refers to the core structure of this Microscope, which might also be referred to as Body, Frame,
       or Platform.
+    close_mappings:
+    - ome:Microscope
     is_a: ManufacturerSpec
     abstract: true
     attributes:
@@ -348,6 +352,8 @@ classes:
     description: This element describes one or more Light Source(s) available for this Instrument. An Instrument may have
       several Light Sources of different types (Laser, Light Emitting Diode, Filament, Arc etc.). A typical fluorescence Microscope
       has two Light Sources, one for Transmitted light and one for Fluorescence light.
+    exact_mappings:
+    - ome:LightSource
     is_a: ManufacturerSpec
     abstract: true
     attributes:
@@ -362,6 +368,8 @@ classes:
       ID:
         range: LightSourceID
         description: A Unique Identifier for this component.
+        exact_mappings:
+        - ome:id
         required: true
         identifier: true
         annotations:
@@ -407,6 +415,8 @@ classes:
       in the Light Path for different purposes. For each fluorescence Image there should be at least one Filter element specified
       per Channel. This element can be associated with an optional Optics Holder, such as a Filter Cube, Filter Turret, Filtr
       Wheel, or Filter Slider.
+    exact_mappings:
+    - ome:Filter
     is_a: ManufacturerSpec
     abstract: true
     attributes:
@@ -418,6 +428,8 @@ classes:
         required: true
         description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical
           component. It also records the maximum amount of light transmitted. Multiple of these elements can be used.
+        exact_mappings:
+        - ome:transmittance_range
       TransmittanceProfileFile:
         range: TransmittanceProfileFile
         inlined: true
@@ -436,6 +448,8 @@ classes:
       ID:
         range: FilterID
         description: A Unique Identifier for this component.
+        exact_mappings:
+        - ome:id
         required: true
         identifier: true
         annotations:
@@ -448,6 +462,8 @@ classes:
       Type:
         range: FilterType
         description: This field captures the Type of Filter used in this case.
+        exact_mappings:
+        - ome:type
         required: true
         annotations:
           Tier: '1'
@@ -659,6 +675,8 @@ classes:
       microscopy, they are typically used to reflect the excitation light, but transmit the emitted fluorescence. Dichroic
       Mirrors can be categorized in different manners. However, the most important criteria for choosing a Dichoric Mirror
       are the Transmittance and the Reflectance Wavelength ranges.
+    exact_mappings:
+    - ome:Dichroic
     is_a: MirroringDevice
     abstract: true
     attributes:
@@ -760,6 +778,8 @@ classes:
       of different types, such as a Photomultiplier, or a Camera. The Detector ID can be used as a reference within the Channel
       element. The values stored in Detector represent the fixed values, variable values modified during the Acquisition go
       in DetectorSettings.
+    exact_mappings:
+    - ome:Detector
     is_a: ManufacturerSpec
     mixins:
     - DetectorExtension
@@ -795,6 +815,8 @@ classes:
       ID:
         range: DetectorID
         description: A Unique Identifier for this component.
+        exact_mappings:
+        - ome:id
         required: true
         identifier: true
         annotations:
@@ -986,6 +1008,8 @@ classes:
           xsdfu_manytomany: 'true'
         multivalued: true
         description: This empty element refers to an ExcitationFilter component used in this light path.
+        exact_mappings:
+        - ome:excitation_filters
         range: Filter
       StandardDichroic:
         inlined: false
@@ -994,6 +1018,8 @@ classes:
           Tier: '1'
         multivalued: true
         description: This empty element refers to a StandardDichroic component used in this light path.
+        close_mappings:
+        - ome:dichroic
         range: MirroringDevice
       EmissionFilter:
         inlined: false
@@ -1002,6 +1028,8 @@ classes:
           Tier: '1'
         multivalued: true
         description: This empty element refers to an EmissionFilter component used in this light path.
+        exact_mappings:
+        - ome:emission_filters
         range: Filter
       FilterSet:
         range: FilterSet
@@ -1155,6 +1183,8 @@ classes:
     slots:
     - ObjectType
     description: A description of the light path
+    exact_mappings:
+    - ome:LightPath
     annotations:
       description_source: OME 2016-06 ome.xsd (CC BY 3.0, Open Microscopy Environment)
       Tier: '1'
@@ -1210,6 +1240,8 @@ classes:
     description: Settings is an empty complex type that is contained and extended by all the *Settings elements. Each *Settings
       element defines an attribute named ID of simple type *ID and the other information that is needed. Each simple type
       *ID is restricted to the base type LSID with an appropriate pattern.
+    exact_mappings:
+    - ome:Settings
     abstract: true
     attributes:
       MapAnnotation:
@@ -1232,11 +1264,15 @@ classes:
   DetectorSettings:
     description: This element holds the Setting applied to the Detector used for the Acquisition of this Channel as well as
       a reference to the Detector (the ID attribute) in question.
+    exact_mappings:
+    - ome:DetectorSettings
     is_a: Settings
     abstract: true
     attributes:
       ID:
         description: A Unique Identifier for this component.
+        exact_mappings:
+        - ome:id
         required: true
         inlined: false
         annotations:
@@ -1261,6 +1297,8 @@ classes:
           values upon Acquisition. Finally, several Cameras might have so-called Automatic Gain Control (AGC or AutoGain)
           that will automatically adjusts so the full range of the Analog-to-Digital Converter (ADC) is used. Unless you can
           turn off the AGC, the use of these Cameras are highly discouraged for quantitative work.'
+        close_mappings:
+        - ome:gain
         required: true
         annotations:
           Tier: '1'
@@ -1284,6 +1322,8 @@ classes:
           the resulting signal level always correspond to a positive number of counts. Offset defines the black level setting
           of the image and it should be adjusted so that the lowest signals are near the detection threshold. NOTE: Please
           note that most modern Cameras do not have the possibility of setting the Offset.'
+        exact_mappings:
+        - ome:offset
         annotations:
           Tier: '2'
       OffsetMode:
@@ -1488,6 +1528,8 @@ classes:
   ManufacturerSpec:
     description: This describes the Manufacturer specifications for this component (i.e., Manufacturer Name, Model designation
       and Catalog Number).
+    exact_mappings:
+    - ome:ManufacturerSpec
     abstract: true
     attributes:
       MapAnnotation:
@@ -1521,12 +1563,16 @@ classes:
         range: string
         description: This field refers to the company, research group or individual who built or manufactured this hardware
           component.
+        exact_mappings:
+        - ome:manufacturer
         required: true
         annotations:
           Tier: '1'
       Model:
         range: string
         description: This field refers to the Model name or any other designation the Manufacturer uses for this component.
+        exact_mappings:
+        - ome:model
         required: true
         annotations:
           Tier: '1'
@@ -1540,6 +1586,8 @@ classes:
       LotNumber:
         range: string
         description: The Lot Number used by the Manufacturer to refer to a specific production batch or lot for this component.
+        exact_mappings:
+        - ome:lot_number
         annotations:
           Tier: '3'
   Map:
@@ -1561,14 +1609,20 @@ classes:
   MapEntry:
     description: This is a Key/Value pair used to build up a Mapping. The Element and Attribute Name are kept to single letters
       to minimize the length at the expense of readability as they are likely to occur many times.
+    exact_mappings:
+    - ome:MapEntry
     attributes:
       Value:
         range: string
+        exact_mappings:
+        - ome:value
         annotations:
           xsd_text_content: true
       K:
         range: string
         description: This is the key of this Key/Value pair.
+        exact_mappings:
+        - ome:key
         annotations:
           Tier: '3'
     annotations:
@@ -4019,6 +4073,8 @@ classes:
       Plane or more commonly Channel elements associated with a given Image Acquisition session. It is understood that the
       Light Path configuration can be different for each Channel, but cannot be different for each timepoint or each Plane
       of an XYZ stack.
+    exact_mappings:
+    - ome:Instrument
     mixins:
     - InstrumentExtension
     attributes:
@@ -4030,6 +4086,8 @@ classes:
         required: true
         description: This element refers to the core structure of this Microscope, which might also be referred to as Body,
           Frame, or Platform.
+        close_mappings:
+        - ome:microscope
         annotations:
           xsd_element: MicroscopeStandGroup
       MicroscopeTable:
@@ -4062,6 +4120,8 @@ classes:
         inlined_as_list: true
         required: true
         description: This element describes the light source(s) available in this microscope
+        exact_mappings:
+        - ome:light_sources
         annotations:
           Domain: MicroscopeHardwareSpecifications
           Category: LightSource
@@ -4088,6 +4148,8 @@ classes:
         description: The Microscope's Objective lens consists of a lens, its mount, and any associated parts. It is the part
           of the imaging system, which forms a primary image of the object, either alone or in conjunction with a tube lens.
           The Objective typically consists of a compound lens consisting of along a common axis.
+        exact_mappings:
+        - ome:objectives
       OpticalAssembly:
         range: OpticalAssembly
         inlined: true
@@ -4162,6 +4224,8 @@ classes:
           in the Light Path for different purposes. For each fluorescence Image there should be at least one Filter element
           specified per Channel. This element can be associated with an optional Optics Holder, such as a Filter Cube, Filter
           Turret, Filtr Wheel, or Filter Slider. Note: Filter Holder is not the same as a Filter Set.'
+        exact_mappings:
+        - ome:filters
         annotations:
           xsd_element: FilterGroup
       MirroringDevice:
@@ -4171,6 +4235,8 @@ classes:
         inlined_as_list: true
         required: true
         description: This element describes mirror component(s) available in this microscope
+        close_mappings:
+        - ome:dichroics
         annotations:
           Domain: MicroscopeHardwareSpecifications
           Tier: '1'
@@ -4222,6 +4288,8 @@ classes:
           Detector of different types, such as a Photomultiplier, or a Camera. The Detector ID can be used as a reference
           within the Channel element. The values stored in Detector represent the fixed values, variable values modified during
           the Acquisition go in DetectorSettings.
+        exact_mappings:
+        - ome:detectors
         annotations:
           xsd_element: DetectorGroup
       TIRFHardwareModule:
@@ -4292,6 +4360,8 @@ classes:
       ID:
         range: InstrumentID
         description: A Unique Identifier for this component.
+        exact_mappings:
+        - ome:id
         required: true
         identifier: true
         annotations:
@@ -5096,6 +5166,8 @@ classes:
       is typically generated between metal electrodes and travels through an inert gas in a glass bulb. The inert gas can
       be Mercury (He), Xenon (Xe), or a mixture of the two. The choice of the gas is important because its nature determines
       the spectral behavior of the lamp. Refer to Type for more informations about this aspect.
+    exact_mappings:
+    - ome:ArcLightSource
     is_a: LightSource
     attributes:
       IlluminationWavelengthRange:
@@ -5111,6 +5183,8 @@ classes:
           the spectral behavior of the lamp. At low pressure, Hg lamps emit a characteristic line spectrum, which becomes
           more uniform as the lamp heats up. On the other hand, Xe lamps emit light of high luminance, high color temperature,
           and an almost continuous spectrum distributed from the ultraviolet to the infrared.
+        exact_mappings:
+        - ome:type
         required: true
         annotations:
           Tier: '2'
@@ -5128,6 +5202,8 @@ classes:
   GenericExcitationSource:
     description: The GenericExcitationSource element is used to represent a light source as a collection of key/value pairs,
       stored in a Map. One of the other light source elements should always be used in preference to this if possible.
+    exact_mappings:
+    - ome:GenericExcitationSource
     is_a: LightSource
     attributes:
       IlluminationWavelengthRange:
@@ -5141,6 +5217,8 @@ classes:
         range: Map
         inlined: true
         description: This is a Mapping of key/value pairs used to store customized metadata that describes this element.
+        exact_mappings:
+        - ome:map
         annotations:
           Domain: MicroscopeHardwareSpecifications
           Category: ChildElement
@@ -5157,6 +5235,8 @@ classes:
     description: A Filament lamp is an incandescent Light Source with a wire filament (usually tungsten), which is heated
       by the passage of an electric current to such a high temperature that it glows with visible light (incandescence). The
       emitted spectrum is continuous, and it approximates that of a black-body radiator.
+    exact_mappings:
+    - ome:FilamentLightSource
     is_a: LightSource
     attributes:
       IlluminationWavelengthRange:
@@ -5172,6 +5252,8 @@ classes:
           contains halogen vapor, which reduces the loss of tungsten from the filament. This, in turn, allows to reach a high
           filament temperature and consequent higher luminance, higher color temperature, and longer operating life than a
           Standard Filament lamp of the same input power.
+        exact_mappings:
+        - ome:type
         required: true
         annotations:
           Tier: '2'
@@ -5189,6 +5271,8 @@ classes:
       sources that emit light through a process of optical amplification based on the stimulated emission of electromagnetic
       radiation. It also includes Optical Parametric Oscillator (OPO) sources that use a kind of LASER resonator but based
       on optical gain from parametric amplification in a nonlinear crystal rather than from stimulated emission.
+    exact_mappings:
+    - ome:LaserLightSource
     is_a: LightSource
     attributes:
       IlluminationWavelengthRange:
@@ -5211,17 +5295,23 @@ classes:
           xsd_element: Pump
         description: In case the primary Laser is Pumped, this element describe a secondary Laser, positioned upstream of
           the primary Laser and used to pump it.
+        exact_mappings:
+        - ome:pump
         range: Laser
       Type:
         range: LaserType
         description: This field captures the general category of this Laser. Please note that Optical Parametric Oscillators
           (OPO) are listed here even though they are technically not a LASER. They produce optical gain not through stimulated
           emission but via parametric amplification in a non-linear crystal.
+        exact_mappings:
+        - ome:type
         annotations:
           Tier: '1'
       Tuneable:
         range: boolean
         description: This field records whether (True) or not (False) this Laser is Tunable to different Wavelengths
+        exact_mappings:
+        - ome:tuneable
         required: true
         annotations:
           Tier: '1'
@@ -5235,6 +5325,8 @@ classes:
         range: boolean
         description: Whether this Laser emits light in the form of optical Pulses (i.e., light flashes; True) or as a Continuous
           Wave (CW; False).
+        exact_mappings:
+        - ome:pulse
         required: true
         annotations:
           Tier: '1'
@@ -5247,6 +5339,8 @@ classes:
       LaserMedium:
         range: LaserMedium
         description: This field captures the material out of which this Laser is constructed.
+        exact_mappings:
+        - ome:medium
         annotations:
           Tier: '3'
       IsPumped:
@@ -5271,6 +5365,8 @@ classes:
         range: float
         description: In the case this is a pulsed Laser (Pulse is True), this field (also known as Pulse Frequency) describes
           the frequency of laser pulses. The default unit is Hz.
+        exact_mappings:
+        - ome:repetition_rate
         annotations:
           Tier: '3'
       RepetitionRateUnit:
@@ -5280,6 +5376,8 @@ classes:
           Tier: '3'
           description_source: OME 2016-06 ome.xsd (CC BY 3.0, Open Microscopy Environment)
         description: The units of the RepetitionRate - default:hertz[Hz].
+        exact_mappings:
+        - ome:repetition_unit
       PulseDuration:
         range: float
         description: In the case this is a pulsed Laser (Pulse is True), this field describes the duration of each Laser pulse.
@@ -5295,6 +5393,8 @@ classes:
       FrequencyMultiplication:
         range: float
         description: This field captures the optical frequency multiplication factor that may be specified for this Laser.
+        exact_mappings:
+        - ome:frequency_multiplication
         annotations:
           Tier: '3'
       UsedAcoustoOpticalDevice:
@@ -5320,6 +5420,8 @@ classes:
       of the light (corresponding to the energy of the photons) is determined by the energy required for electrons to cross
       the band gap of the semiconductor. White light may be obtained by using multiple semiconductors or a layer of light-emitting
       phosphor on the semiconductor device.
+    exact_mappings:
+    - ome:LightEmittingDiodeLightSource
     is_a: LightSource
     attributes:
       LEDModule:
@@ -5348,6 +5450,8 @@ classes:
     description: The Microscope's Objective lens consists of a lens, its mount, and any associated parts. It is the part of
       the imaging system, which forms a primary image of the object, either alone or in conjunction with a tube lens. The
       Objective typically consists of a compound lens consisting of along a common axis.
+    exact_mappings:
+    - ome:Objective
     is_a: ManufacturerSpec
     attributes:
       Annotation:
@@ -5360,6 +5464,8 @@ classes:
       ID:
         range: ObjectiveID
         description: A Unique Identifier for this component.
+        exact_mappings:
+        - ome:id
         required: true
         identifier: true
         annotations:
@@ -5373,6 +5479,8 @@ classes:
         range: float
         description: This field captures the Magnification of the Objective as specified by the Manufacturer - i.e., 60 represents
           a 60X lens.
+        exact_mappings:
+        - ome:nominal_magnification
         required: true
         annotations:
           Tier: '1'
@@ -5384,6 +5492,8 @@ classes:
           Index of the medium between the Lens and the Sample, and alpha is half the Angular Aperture of the Lens. NA is a
           measure of how much of the illumination that leaves the specimen actually passes through the Lens. The larger the
           NA, the more information the lens can transmit. Expected range 0.02 - 1.5.
+        exact_mappings:
+        - ome:lens_na
         required: true
         annotations:
           Tier: '1'
@@ -5391,6 +5501,8 @@ classes:
         range: ObjectiveCorrection
         description: This field captures the type of optical correction (i.e. chromatic correction, or flatness correction,
           etc.) associated with this Objective.
+        exact_mappings:
+        - ome:correction
         required: true
         annotations:
           Tier: '1'
@@ -5403,6 +5515,8 @@ classes:
           describes the general category of the Immersion Liquid this Objective is designed for, according to the Manufacturer.
           If the general category is not Air, the actual Immersion Liquid that was used during the Acquisition of a specific
           Image must be specified in Objective Settings.
+        close_mappings:
+        - ome:immersion
         required: true
         annotations:
           Tier: '1'
@@ -5450,6 +5564,8 @@ classes:
         description: This field reports the Working Distance of this Objective under normal operating conditions. The Working
           Distance is the distance (in air, or in the specified immersion liquid) between the front of an Objective and the
           surface of the cover glass or of the specimen if uncovered.
+        exact_mappings:
+        - ome:working_distance
         required: true
         annotations:
           Tier: '2'
@@ -5460,6 +5576,8 @@ classes:
           Tier: '2'
           description_source: OME 2016-06 ome.xsd (CC BY 3.0, Open Microscopy Environment)
         description: The units of the working distance - default:microns[µm].
+        exact_mappings:
+        - ome:working_distance_unit
       CorrectionCollar:
         range: boolean
         description: This field records whether (True) or not (False) the Objective was fitted with a Correction Collar. When
@@ -5487,6 +5605,8 @@ classes:
         range: float
         description: This field captures the Magnification of the Objective as measured via a calibration process- i.e., '59.987'
           for a 60x lens.
+        exact_mappings:
+        - ome:calibrated_magnification
         annotations:
           Tier: '2'
       Iris:
@@ -5496,6 +5616,8 @@ classes:
           digital imaging to compensate for image flare artifacts due to light emitted from areas outside the focal plane.
           Opening or closing the Iris Diaphragm determines the size of the Objective rear aperture yielding a variable NA
           range between 0.5 and the Objective's upper limit.
+        exact_mappings:
+        - ome:iris
         annotations:
           Tier: '2'
       ObjectiveViewField:
@@ -5628,6 +5750,8 @@ classes:
   TransmittanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component.
       It also records the maximum amount of light transmitted. Multiple of these elements can be used.
+    exact_mappings:
+    - ome:TransmittanceRange
     attributes:
       Wavelength:
         range: PositiveFloat
@@ -5660,6 +5784,8 @@ classes:
         range: PercentFraction
         description: This field records the maximum amount of light this optical component is capable of transmitting in this
           Wavelength Range, at the peak Wavelength. It is represented as a fractional value from 0.0 to 1.0.
+        exact_mappings:
+        - ome:transmittance
         annotations:
           Tier: '2'
     annotations:
@@ -5672,12 +5798,16 @@ classes:
     description: This element represents a FilterSet that was used for the acquisition of this Channel. A Filter Set is typically
       composed of one Excitation Filter, one Emission Filter and a Dichroic. They might either be pre-assembled by the Manufacturer
       and purchased as a whole or they can be custom assembled on site depending on the needs of the user.
+    exact_mappings:
+    - ome:FilterSet
     attributes:
       ExcitationFilter:
         inlined: false
         annotations:
           xsd_element: ExcitationFilterRef
         description: This field refers to an available Excitation Filter, which is part of this Filter Cube.
+        exact_mappings:
+        - ome:excitation_filters
         range: Filter
       StandardDichroic:
         inlined: false
@@ -5685,12 +5815,16 @@ classes:
           xsd_element: StandardDichroicRef
           Tier: '1'
         description: This refers to an available dichroic mirror, which is part of this filter set.
+        close_mappings:
+        - ome:dichroic
         range: MirroringDevice
       EmissionFilter:
         inlined: false
         annotations:
           xsd_element: EmissionFilterRef
         description: This field refers to an available Emission Filter, which is part of this Filter Cube.
+        exact_mappings:
+        - ome:emission_filters
         range: Filter
       Annotation:
         inlined: false
@@ -5702,6 +5836,8 @@ classes:
       ID:
         range: FilterSetID
         description: A Unique Identifier for this component.
+        exact_mappings:
+        - ome:id
         required: true
         identifier: true
         annotations:
@@ -5720,6 +5856,8 @@ classes:
   ObjectiveSettings:
     description: This element holds the Setting applied to the Objective used during the Acquisition of this Image as well
       as a reference (the ID attribute) to the Objective in question.
+    exact_mappings:
+    - ome:ObjectiveSettings
     is_a: Settings
     attributes:
       ImmersionLiquid:
@@ -5738,6 +5876,8 @@ classes:
           Benzyl Alcohol, Benzyl Benzoate (BABB); dibenzyl ether (DBE); Ethanol].'
       ID:
         description: This is the Unique Identifier of the Objective used in this case.
+        exact_mappings:
+        - ome:id
         required: true
         inlined: false
         annotations:
@@ -5749,6 +5889,8 @@ classes:
           modified. This field records the position of the collar during the Acquisition of this Image. Each correction collar
           has an arbitrary scale or it might be scale-less and instead have fixed positions with qualitative designations
           (i.e., Oil, Water in case in which the Objective might be corrected for Immersion Liquid).
+        exact_mappings:
+        - ome:correction_collar
         annotations:
           Tier: '2'
       NumericalApertureSetting:
@@ -5836,10 +5978,14 @@ classes:
   LightSourceSettings:
     description: This element holds the Setting applied to a Light Source used in the Light Path during the acquisition of
       this Channel as well as a reference to the LightSource (the ID attribute) in question.
+    exact_mappings:
+    - ome:LightSourceSettings
     is_a: Settings
     attributes:
       ID:
         description: A Unique Identifier for this component.
+        exact_mappings:
+        - ome:id
         required: true
         inlined: false
         annotations:
@@ -5862,6 +6008,8 @@ classes:
         range: PercentFraction
         description: This field records the actual Attenuation of the excitation light power that was applied during the Acquisition
           of this Channel, expressed as a fractional value from 0.0 to 1.0.
+        exact_mappings:
+        - ome:attenuation
         annotations:
           Tier: '2'
       AttenuationMethod:
