@@ -127,7 +127,9 @@ In `export/` (metaseed dataset, `export`): metaseed rejects undeclared keys, so 
 source path, `Value` = JSON-encoded value, `SchemaPath` = where a rule moved it. A record that fits no
 declared field (a vendor object where the model has a string) is taken apart into one Property per leaf.
 Values that fit a declared field are typed, with a `SourceMapping` record (e.g. `Make` ->
-`Instrument[0].Manufacturer`).
+`Instrument[0].Manufacturer`). Record IDs follow OME's `Type:N` convention (`Property:2653`,
+`SourceMapping:12`, `SourceFile:0`); what a record is about is in `Name`/`SchemaPath`/`Field` - IDs made
+of paths were considered and not taken (user, 2026-09-28).
 
 What follows from a new source or new metadata:
 - The output/ and export/ freshness tests fail until `convert` and `export` are rerun; the no-data-loss
