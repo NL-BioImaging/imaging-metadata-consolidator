@@ -93,11 +93,16 @@ across loaders (patch `metaseed.specs.loader.SpecLoader.__init__` to set `self._
 then run `metaseed.cli.app.app` as `metaseed validate ...`) gives identical results in seconds: all 13 full
 exports against 1.0 in 36 s. Validation against 1.0 (full, no sampling): Delmic 12, EMSIS 35, SVS 32, platy
 32, DICOM 30, Zeiss 31, Cikteq 40, Phenom 54, ome-tiff 57, Leica 29, Leica tilescan 97, TALOS 56, TALOS 2 56
-errors - all "Field 'X' is required", no other error, no crash. Worth reporting to metaseed.
+errors - all "Field 'X' is required", no other error, no crash. Now a test (tests/test_metaseed_validation.py,
+~15 s; metaseed in environment.yml, installed in biomero-converter-env): metaseed's API validates every export
+against a temporary copy of the profile (LOCALAPPDATA/XDG_DATA_HOME pointed at it), with the shared cache.
+The generator also writes the entities in metaseed's containment order (every entity after all that nest it),
+which silences metaseed's "out of containment order" warning; no change to the profile's content (compared
+with the published 1.0: none). An issue for metaseed is drafted (user to file).
 
 ### Local metaseed CLI
 
-Not installed in biomero-converter-env; a scratch venv (`pip install metaseed`, 0.54.0) works. It writes
+Installed in biomero-converter-env (0.54.0). It writes
 to `%LOCALAPPDATA%/metaseed`, whatever `HOME` is set to: point `LOCALAPPDATA` and `APPDATA` at a scratch
 folder. `metaseed spec import <draft> models/imaging.metaseed.yaml` then `metaseed spec validate <draft>`:
 valid, no problems, no warnings (2026-09-28).

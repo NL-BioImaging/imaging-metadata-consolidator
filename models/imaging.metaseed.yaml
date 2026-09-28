@@ -2930,100 +2930,6 @@ entities:
       type: string
       required: false
       tier: required
-  CalibrationSoftware:
-    description: This element describes a software tool utilized to analyze Calibration metrics obtained from this Calibration
-      Procedure and generate a suitable Calibration Reports. As an example, such a Software tool might analyzes microscopy
-      images of fluorescent Colored Beads in order to quantify the Resolution and Chromatic Registration of a fluorescence
-      microsocope over the full Field of View (FOV). An example of such a tool is PSFj (http://www.knoplab.de/psfj/sample-page/).
-      Alternatively, such a Software tool might be used to extract Intensity Calibration results obtained with a specific
-      Intensity Calibration Tool, such as a Power Meter or MetaMax (https://www.umassmed.edu/grunwaldlab/).
-    fields:
-    - name: SoftwareModule
-      type: list
-      items: string
-      required: false
-      description: This empty element refers to any existing Software Module that was used in association with this Instrument.
-        (The ID of a Software.)
-      tier: recommended
-    - name: Annotation
-      type: list
-      items: string
-      required: false
-      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
-        a simple multi-line comment) describing this component. (The ID of a Annotation.)
-      tier: recommended
-    - name: ID
-      type: string
-      required: false
-      description: A Unique Identifier for this component.
-      tier: recommended
-      is_identifier: true
-    - name: Name
-      type: string
-      required: false
-      description: This field records the Name or any other designation the Author uses for this Software.
-      tier: recommended
-    - name: Version
-      type: string
-      required: false
-      description: This field records the Version of this Software.
-      tier: recommended
-    - name: Developer
-      type: string
-      required: false
-      description: This field records the Developer(s) of this Software. In case this is a non-commercial, open-source Software,
-        this refers to the name of the individual or consortium who developed the Software. In the case of a commercial Software,
-        this might refer to the Commercial entity but it can also be used to refer to the individual developer, if knonw.
-      tier: recommended
-    - name: WebsiteURL
-      type: uri
-      required: false
-      description: This field records the URL address of any Website where the Software can be obtained. In case of open-source
-        Software this field should record the URL for the Git repository from which to obtain the source-code.
-      tier: recommended
-    - name: PrimaryPublicationID
-      type: string
-      required: false
-      description: This field captures the a Unique Identifier for the Primary Publication describing this Software. Examples
-        include, Digital Object Identifier (DOI), PubMed Central Identifier (PMCID), ArXiv.org ID etc.
-      tier: recommended
-    - name: OpenSource
-      type: boolean
-      required: false
-      description: This records whether this Software is OpenSource (True) or proprietary (False).
-      tier: recommended
-    - name: Macro
-      type: boolean
-      required: false
-      description: This field records whether this Software is a Macro or a Scprit (True) or is it a full free-standing program.
-      tier: recommended
-    - name: Build
-      type: string
-      required: false
-      description: The specific build of this Software.
-      tier: recommended
-    - name: Patch
-      type: string
-      required: false
-      description: This recodes the version for an optional Patch, HotFix or Update used for this Sofware to run this Instrument.
-        A Patch (aka HotFix, or Update) is a set of changes to a computer program or its supporting data designed to update,
-        fix, or improve it. This includes fixing security vulnerabilities, and other bugs, with such patches usually being
-        called bugfixes or bug fixes, and improving the functionality, usability or performance.
-      tier: recommended
-    - name: ReleaseDate
-      type: date
-      required: false
-      description: The date in which this Software was resleased.
-      tier: optional
-    - name: Language
-      type: string
-      required: false
-      description: This records the computer Language in which this Software was developed.
-      tier: optional
-    - name: ApplicationID
-      type: string
-      required: false
-      tier: recommended
   EnvironmentalControlDevice:
     description: This element describes an Environmental Control Device available for this Instrument to maintain a controlled
       Imaging Environment during Imaging Environment.
@@ -28383,44 +28289,6 @@ entities:
       description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
         by UserB, UserA is still the Annotator.
       tier: optional
-  FileAnnotation:
-    description: A file object annotation
-    fields:
-    - name: BinaryFile
-      type: entity
-      required: true
-      description: Describes a binary file.
-      items: BinaryFile
-      owns: true
-    - name: Description
-      type: string
-      required: false
-      description: This element contains a description for the annotation.[plain-text multi-line string]
-      tier: optional
-    - name: Annotation
-      type: list
-      items: string
-      required: false
-      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
-        a simple multi-line comment) describing this component. (The ID of a Annotation.)
-    - name: ID
-      type: string
-      required: false
-      description: A Unique Identifier for this element.
-      tier: optional
-      is_identifier: true
-    - name: Namespace
-      type: uri
-      required: false
-      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
-        annotation is to use our (OME's) default interpretation for this type.
-      tier: optional
-    - name: Annotator
-      type: string
-      required: false
-      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
-        by UserB, UserA is still the Annotator.
-      tier: optional
   ListAnnotation:
     description: This annotation is a grouping object. It uses the sequence of annotation refs from the base Annotation to
       form the list.
@@ -28684,46 +28552,6 @@ entities:
       required: false
       description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
         a simple multi-line comment) describing this component. (The ID of a Annotation.)
-    - name: ID
-      type: string
-      required: false
-      description: A Unique Identifier for this element.
-      tier: optional
-      is_identifier: true
-    - name: Namespace
-      type: uri
-      required: false
-      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
-        annotation is to use our (OME's) default interpretation for this type.
-      tier: optional
-    - name: Annotator
-      type: string
-      required: false
-      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
-        by UserB, UserA is still the Annotator.
-      tier: optional
-  MapAnnotation:
-    description: A Map Annotation. The contents of this is a list of Key/Value pairs.
-    fields:
-    - name: Value
-      type: entity
-      required: false
-      description: This is a Mapping of Key/Value pairs.
-      tier: optional
-      items: Map
-      owns: true
-    - name: Description
-      type: string
-      required: false
-      description: This element contains a description for the annotation.[plain-text multi-line string]
-      tier: optional
-    - name: Annotation
-      type: list
-      items: string
-      required: false
-      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
-        a simple multi-line comment) describing this component. (The ID of a Annotation.)
-      tier: optional
     - name: ID
       type: string
       required: false
@@ -29014,91 +28842,6 @@ entities:
       required: false
       description: The Lot Number used by the Manufacturer to refer to a specific production batch or lot for this component.
       tier: optional
-  LightSourceSettings:
-    description: This element holds the Setting applied to a Light Source used in the Light Path during the acquisition of
-      this Channel as well as a reference to the LightSource (the ID attribute) in question.
-    fields:
-    - name: ID
-      type: string
-      required: true
-      description: A Unique Identifier for this component. (The ID of a LightSource.)
-      tier: required
-    - name: IlluminationPowerSettings
-      type: float
-      required: true
-      description: This field records the nominal Illumination Power (also known as Power Output or Illumination Intensity)
-        that was set for the Acquisition of this Image or was reported by the Image Acquisition Software, as advertised by
-        the Manufacturer. Depending on the system this might be reported as a % value.
-      tier: required
-    - name: lluminationPowerSettingsUnit
-      type: string
-      required: false
-      tier: required
-      constraints:
-        enum:
-        - YW
-        - ZW
-        - EW
-        - PW
-        - TW
-        - GW
-        - MW
-        - kW
-        - hW
-        - daW
-        - W
-        - dW
-        - cW
-        - mW
-        - µW
-        - nW
-        - pW
-        - fW
-        - aW
-        - zW
-        - yW
-        - '%'
-      example: mW
-    - name: Attenuation
-      type: float
-      required: false
-      description: This field records the actual Attenuation of the excitation light power that was applied during the Acquisition
-        of this Channel, expressed as a fractional value from 0.0 to 1.0.
-      tier: recommended
-      constraints:
-        minimum: 0.0
-        maximum: 1.0
-    - name: AttenuationMethod
-      type: string
-      required: false
-      description: This field records the Method that was used to Attenuate the Laser beam during the acquisition of this
-        Image.
-      tier: optional
-    - name: UsedAcoustoOpticalDevice
-      type: boolean
-      required: false
-      description: In case a Laser was used for this Image Acquisition, this field records whether (True) or not (False) an
-        AcoustoOptical Device was employed for intensity modulation.
-      tier: recommended
-    - name: MapAnnotation
-      type: list
-      required: false
-      description: A Map Annotation. The contents of this is a list of Key/Value pairs.
-      tier: required
-      items: MapAnnotation
-      owns: true
-    - name: AdditionalVendorInformation
-      type: list
-      required: false
-      description: This element is intendended to be used as a last-resort solution to capture vendor-specific Additional
-        Information about this hardware component, which cannot be described using either available model elements (Classes
-        or Attributes) or the Map Annotation feature of the schema. The use of this feature should not be intended as a way
-        to hide information that the Imaging Community has designated as essential to ensure rigor and reproducibility. In
-        case this feature is used, the Vendor is fully responsible for this information, including but not limited to, making
-        sure this information is appropriately recorded and kept up to date.
-      tier: required
-      items: AdditionalVendorInformation
-      owns: true
   WellSample:
     description: WellSample is an individual Image that has been captured within a Well.
     fields:
@@ -29215,39 +28958,6 @@ entities:
         of the index will be calculated modulo the number of PlateAcquisitions for the plate.
       constraints:
         minimum: 0
-  AdditionalVendorInformation:
-    description: This element is intendended to be used as a last-resort solution to capture vendor-specific Additional Information
-      about this hardware component, which cannot be described using either available model elements (Classes or Attributes)
-      or the Map Annotation feature of the schema. The use of this feature should not be intended as a way to hide information
-      that the Imaging Community has designated as essential to ensure rigor and reproducibility. In case this feature is
-      used, the Vendor is fully responsible for this information, including but not limited to, making sure this information
-      is appropriately recorded and kept up to date.
-    fields:
-    - name: VendorBinData
-      type: list
-      required: false
-      description: The contents of this element are base64-encoded. These are not CDATA sections, just base64 streams.
-      tier: optional
-      items: VendorBinData
-      owns: true
-    - name: Annotation
-      type: list
-      items: string
-      required: false
-      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
-        a simple multi-line comment) describing this component. (The ID of a Annotation.)
-      tier: optional
-    - name: ID
-      type: string
-      required: false
-      description: A Unique Identifier for this model element.
-      tier: optional
-      is_identifier: true
-    - name: VendorName
-      type: string
-      required: false
-      description: The Name of the Vendor responsible for this Information.
-      tier: optional
   IlluminationWavelengthRange:
     description: This element records a range of Wavelengths at which this Light Source emits, according to the Manufacturer.
       Multiple of this element may be used.
@@ -29442,17 +29152,6 @@ entities:
         - Pixel
         - reference frame
       example: nm
-  Map:
-    description: This is a Mapping of Key/Value pairs.
-    fields:
-    - name: M
-      type: list
-      required: false
-      description: This is a Key/Value pair used to build up a Mapping. The Element and Attribute Name are kept to single
-        letters to minimize the length at the expense of readability as they are likely to occur many times.
-      tier: optional
-      items: MapEntry
-      owns: true
   LEDModule:
     description: A Light Emitting Diode (LED) Light Source is often composed of multiple modules each with its own wavelength
       characteristics. This element describes an individual LED module. Multiple of this elements may be used.
@@ -29664,164 +29363,6 @@ entities:
         - Pixel
         - reference frame
       example: nm
-  WavelengthRange:
-    description: This element records a range of Wavelengths this component is designed for, according to the Manufacturer.
-      Multiple of this element may be used.
-    fields:
-    - name: WavelengthProfileFile
-      type: list
-      required: false
-      description: This element consists of a file containing the Wavelength profile of this hardware component.
-      tier: recommended
-      items: WavelengthProfileFile
-      owns: true
-    - name: PeakWavelength
-      type: float
-      required: false
-      description: This field records the nominal Wavelength associated with the peak response rate of this device.
-      tier: recommended
-    - name: PeakWavelengthUnit
-      type: string
-      required: false
-      description: The unit of PeakWavelength.
-      tier: recommended
-      constraints:
-        enum:
-        - Ym
-        - Zm
-        - Em
-        - Pm
-        - Tm
-        - Gm
-        - Mm
-        - km
-        - hm
-        - dam
-        - m
-        - dm
-        - cm
-        - mm
-        - µm
-        - nm
-        - pm
-        - fm
-        - am
-        - zm
-        - ym
-        - Å
-        - thou
-        - li
-        - in
-        - ft
-        - yd
-        - mi
-        - ua
-        - ly
-        - pc
-        - pt
-        - Pixel
-        - reference frame
-      example: nm
-    - name: CutOn
-      type: float
-      required: false
-      description: CutOn is the Wavelength below which the response rate is below 50%. In case a CutOn Wavelength is not available,
-        such as in the case of a ShortPass or Notch configuration, please enter 000.
-      tier: recommended
-      constraints:
-        minimum: 0
-    - name: CutOnUnit
-      type: string
-      required: false
-      description: The unit of CutOn.
-      tier: recommended
-      constraints:
-        enum:
-        - Ym
-        - Zm
-        - Em
-        - Pm
-        - Tm
-        - Gm
-        - Mm
-        - km
-        - hm
-        - dam
-        - m
-        - dm
-        - cm
-        - mm
-        - µm
-        - nm
-        - pm
-        - fm
-        - am
-        - zm
-        - ym
-        - Å
-        - thou
-        - li
-        - in
-        - ft
-        - yd
-        - mi
-        - ua
-        - ly
-        - pc
-        - pt
-        - Pixel
-        - reference frame
-      example: nm
-    - name: CutOff
-      type: float
-      required: false
-      description: CutOff is the Wavelength above which the response rate is below 50%. In case a CutOff Wavelength is not
-        available, such as in the case of a LongPass configuration, please enter 000.
-      tier: recommended
-      constraints:
-        minimum: 0
-    - name: CutOffUnit
-      type: string
-      required: false
-      description: The unit of CutOff.
-      tier: recommended
-      constraints:
-        enum:
-        - Ym
-        - Zm
-        - Em
-        - Pm
-        - Tm
-        - Gm
-        - Mm
-        - km
-        - hm
-        - dam
-        - m
-        - dm
-        - cm
-        - mm
-        - µm
-        - nm
-        - pm
-        - fm
-        - am
-        - zm
-        - ym
-        - Å
-        - thou
-        - li
-        - in
-        - ft
-        - yd
-        - mi
-        - ua
-        - ly
-        - pc
-        - pt
-        - Pixel
-        - reference frame
-      example: nm
   StagePosition:
     description: The stage position along each axis; RawPosition also has Tilt and Rot.
     fields:
@@ -29868,16 +29409,6 @@ entities:
       required: false
       items: Quantity
       owns: true
-    - name: Value
-      type: float
-      required: false
-    - name: Unit
-      type: string
-      required: false
-      description: The unit as the source writes it, e.g. "um" or "mm".
-  Quantity:
-    description: A value with the unit its source states, as free text.
-    fields:
     - name: Value
       type: float
       required: false
@@ -29992,88 +29523,6 @@ entities:
       constraints:
         minimum: 0.0
         maximum: 1.0
-  TransmittanceProfileFile:
-    description: This element represents a file in .csv or other suitable formats containing the Transmittance profile of
-      this optical component.
-    fields:
-    - name: BinaryFile
-      type: entity
-      required: false
-      description: Describes a binary file.
-      tier: optional
-      items: BinaryFile
-      owns: true
-    - name: Description
-      type: string
-      required: false
-      description: This element contains a description for the annotation.[plain-text multi-line string]
-      tier: optional
-    - name: Annotation
-      type: list
-      items: string
-      required: false
-      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
-        a simple multi-line comment) describing this component. (The ID of a Annotation.)
-      tier: optional
-    - name: ID
-      type: string
-      required: false
-      description: A Unique Identifier for this element.
-      tier: optional
-      is_identifier: true
-    - name: Namespace
-      type: uri
-      required: false
-      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
-        annotation is to use our (OME's) default interpretation for this type.
-      tier: optional
-    - name: Annotator
-      type: string
-      required: false
-      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
-        by UserB, UserA is still the Annotator.
-      tier: optional
-  ReflectanceProfileFile:
-    description: This element represents a file in .csv or other suitable formats containing the Reflectance profile of this
-      optical component.
-    fields:
-    - name: BinaryFile
-      type: entity
-      required: false
-      description: Describes a binary file.
-      tier: optional
-      items: BinaryFile
-      owns: true
-    - name: Description
-      type: string
-      required: false
-      description: This element contains a description for the annotation.[plain-text multi-line string]
-      tier: optional
-    - name: Annotation
-      type: list
-      items: string
-      required: false
-      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
-        a simple multi-line comment) describing this component. (The ID of a Annotation.)
-      tier: optional
-    - name: ID
-      type: string
-      required: false
-      description: A Unique Identifier for this element.
-      tier: optional
-      is_identifier: true
-    - name: Namespace
-      type: uri
-      required: false
-      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
-        annotation is to use our (OME's) default interpretation for this type.
-      tier: optional
-    - name: Annotator
-      type: string
-      required: false
-      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
-        by UserB, UserA is still the Annotator.
-      tier: optional
   ReflectanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are reflected by this optical componewnt.
       It also records the maximum amount of light reflected. Multiple of these elements can be used.
@@ -31981,44 +31430,6 @@ entities:
       required: false
       description: This field records the Unit used for the metric recorded along this dimension
       tier: recommended
-  BinData:
-    description: The contents of this element are base64-encoded. These are not CDATA sections, just a base64 stream.
-    fields:
-    - name: ID
-      type: string
-      required: false
-      is_identifier: true
-      description: An identifier for this record; the model defines none.
-    - name: Value
-      type: string
-      required: false
-      tier: required
-    - name: Compression
-      type: string
-      required: false
-      description: Specifies the compression scheme used to encode the data.
-      tier: required
-      constraints:
-        enum:
-        - zlib
-        - bzip2
-        - none
-      example: none
-    - name: BigEndian
-      type: boolean
-      required: true
-      description: This is true if the binary data was written in BigEndian order. This is dependent on the system architecture
-        of the machine that wrote the pixels. True for essentially all modern CPUs other than Intel and Alpha. All Binary
-        data must be written in the same endian order.
-      tier: required
-    - name: Length
-      type: integer
-      required: true
-      description: Character count attribute for the BinData field. This is the length of the base-64 encoded block. It allows
-        easy skipping of the block when parsing the file. [unit:bytes]
-      tier: required
-      constraints:
-        minimum: 0
   MetadataOnly:
     description: This place holder means there is no pixel data in this file.
     fields:
@@ -32189,6 +31600,16 @@ entities:
       required: false
       items: Quantity
       owns: true
+  Quantity:
+    description: A value with the unit its source states, as free text.
+    fields:
+    - name: Value
+      type: float
+      required: false
+    - name: Unit
+      type: string
+      required: false
+      description: The unit as the source writes it, e.g. "um" or "mm".
   XMLAnnotationValue:
     fields:
     - name: ID
@@ -32197,34 +31618,6 @@ entities:
       is_identifier: true
       description: An identifier for this record; the model defines none.
     - name: Value
-      type: string
-      required: false
-  BinaryFile:
-    description: Describes a binary file.
-    fields:
-    - name: External
-      type: entity
-      required: false
-      description: Describes a file location. Can optionally specify a portion of a file using Offset and a ReadLength. If
-        Offset and ReadLength are specified in conjuction with Compression, then they point into the uncompressed file.
-      items: External
-      owns: true
-    - name: BinData
-      type: entity
-      required: false
-      description: The contents of this element are base64-encoded. These are not CDATA sections, just a base64 stream.
-      items: BinData
-      owns: true
-    - name: FileName
-      type: string
-      required: true
-    - name: Size
-      type: integer
-      required: true
-      description: Size of the uncompressed file. [unit:bytes]
-      constraints:
-        minimum: 0
-    - name: MIMEType
       type: string
       required: false
   Rectangle:
@@ -33856,102 +33249,6 @@ entities:
         [units:none] This is numbered from 0.
       constraints:
         minimum: 0
-  VendorBinData:
-    description: The contents of this element are base64-encoded. These are not CDATA sections, just base64 streams.
-    fields:
-    - name: ID
-      type: string
-      required: false
-      is_identifier: true
-      description: An identifier for this record; the model defines none.
-    - name: Value
-      type: string
-      required: false
-      tier: optional
-    - name: Compression
-      type: string
-      required: false
-      description: Specifies the compression scheme used to encode the data.
-      tier: optional
-      constraints:
-        enum:
-        - zlib
-        - bzip2
-        - none
-      example: none
-    - name: BigEndian
-      type: boolean
-      required: false
-      description: This is true if the binary data was written in BigEndian order. This is dependent on the system architecture
-        of the machine that wrote the pixels. True for essentially all modern CPUs other than Intel and Alpha. All Binary
-        data must be written in the same endian order.
-      tier: optional
-    - name: Length
-      type: integer
-      required: false
-      description: Character count attribute for the BinData field. This is the length of the base-64 encoded block. It allows
-        easy skipping of the block when parsing the file. [unit:bytes]
-      tier: optional
-      constraints:
-        minimum: 0
-  WavelengthProfileFile:
-    description: This element consists of a file containing the Wavelength profile of this hardware component.
-    fields:
-    - name: BinaryFile
-      type: entity
-      required: false
-      description: Describes a binary file.
-      tier: optional
-      items: BinaryFile
-      owns: true
-    - name: Description
-      type: string
-      required: false
-      description: This element contains a description for the annotation.[plain-text multi-line string]
-      tier: optional
-    - name: Annotation
-      type: list
-      items: string
-      required: false
-      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
-        a simple multi-line comment) describing this component. (The ID of a Annotation.)
-      tier: optional
-    - name: ID
-      type: string
-      required: false
-      description: A Unique Identifier for this element.
-      tier: optional
-      is_identifier: true
-    - name: Namespace
-      type: uri
-      required: false
-      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
-        annotation is to use our (OME's) default interpretation for this type.
-      tier: optional
-    - name: Annotator
-      type: string
-      required: false
-      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
-        by UserB, UserA is still the Annotator.
-      tier: optional
-  MapEntry:
-    description: This is a Key/Value pair used to build up a Mapping. The Element and Attribute Name are kept to single letters
-      to minimize the length at the expense of readability as they are likely to occur many times.
-    fields:
-    - name: ID
-      type: string
-      required: false
-      is_identifier: true
-      description: An identifier for this record; the model defines none.
-    - name: Value
-      type: string
-      required: false
-      tier: optional
-    - name: K
-      type: string
-      required: false
-      description: This is the key of this Key/Value pair.
-      tier: optional
   ColoredBeads:
     description: This element describes a preparation of multi-Colored Fluorescent Beads (also referred to as  Microspheres)
       used to facilitate the optical calibration of conventional fluorescence microscopes, confocal laser scanning microscopes,
@@ -34103,21 +33400,204 @@ entities:
       required: false
       description: The Lot Number used by the Manufacturer to refer to a specific production batch or lot for this component.
       tier: optional
-  rowType:
+  WavelengthRange:
+    description: This element records a range of Wavelengths this component is designed for, according to the Manufacturer.
+      Multiple of this element may be used.
     fields:
-    - name: Cell
+    - name: WavelengthProfileFile
       type: list
       required: false
-      tier: optional
-      items: cellType
+      description: This element consists of a file containing the Wavelength profile of this hardware component.
+      tier: recommended
+      items: WavelengthProfileFile
       owns: true
-    - name: RowNr
-      type: integer
+    - name: PeakWavelength
+      type: float
       required: false
-      description: The index of this Row.
+      description: This field records the nominal Wavelength associated with the peak response rate of this device.
+      tier: recommended
+    - name: PeakWavelengthUnit
+      type: string
+      required: false
+      description: The unit of PeakWavelength.
       tier: recommended
       constraints:
-        minimum: 1
+        enum:
+        - Ym
+        - Zm
+        - Em
+        - Pm
+        - Tm
+        - Gm
+        - Mm
+        - km
+        - hm
+        - dam
+        - m
+        - dm
+        - cm
+        - mm
+        - µm
+        - nm
+        - pm
+        - fm
+        - am
+        - zm
+        - ym
+        - Å
+        - thou
+        - li
+        - in
+        - ft
+        - yd
+        - mi
+        - ua
+        - ly
+        - pc
+        - pt
+        - Pixel
+        - reference frame
+      example: nm
+    - name: CutOn
+      type: float
+      required: false
+      description: CutOn is the Wavelength below which the response rate is below 50%. In case a CutOn Wavelength is not available,
+        such as in the case of a ShortPass or Notch configuration, please enter 000.
+      tier: recommended
+      constraints:
+        minimum: 0
+    - name: CutOnUnit
+      type: string
+      required: false
+      description: The unit of CutOn.
+      tier: recommended
+      constraints:
+        enum:
+        - Ym
+        - Zm
+        - Em
+        - Pm
+        - Tm
+        - Gm
+        - Mm
+        - km
+        - hm
+        - dam
+        - m
+        - dm
+        - cm
+        - mm
+        - µm
+        - nm
+        - pm
+        - fm
+        - am
+        - zm
+        - ym
+        - Å
+        - thou
+        - li
+        - in
+        - ft
+        - yd
+        - mi
+        - ua
+        - ly
+        - pc
+        - pt
+        - Pixel
+        - reference frame
+      example: nm
+    - name: CutOff
+      type: float
+      required: false
+      description: CutOff is the Wavelength above which the response rate is below 50%. In case a CutOff Wavelength is not
+        available, such as in the case of a LongPass configuration, please enter 000.
+      tier: recommended
+      constraints:
+        minimum: 0
+    - name: CutOffUnit
+      type: string
+      required: false
+      description: The unit of CutOff.
+      tier: recommended
+      constraints:
+        enum:
+        - Ym
+        - Zm
+        - Em
+        - Pm
+        - Tm
+        - Gm
+        - Mm
+        - km
+        - hm
+        - dam
+        - m
+        - dm
+        - cm
+        - mm
+        - µm
+        - nm
+        - pm
+        - fm
+        - am
+        - zm
+        - ym
+        - Å
+        - thou
+        - li
+        - in
+        - ft
+        - yd
+        - mi
+        - ua
+        - ly
+        - pc
+        - pt
+        - Pixel
+        - reference frame
+      example: nm
+  WavelengthProfileFile:
+    description: This element consists of a file containing the Wavelength profile of this hardware component.
+    fields:
+    - name: BinaryFile
+      type: entity
+      required: false
+      description: Describes a binary file.
+      tier: optional
+      items: BinaryFile
+      owns: true
+    - name: Description
+      type: string
+      required: false
+      description: This element contains a description for the annotation.[plain-text multi-line string]
+      tier: optional
+    - name: Annotation
+      type: list
+      items: string
+      required: false
+      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
+        a simple multi-line comment) describing this component. (The ID of a Annotation.)
+      tier: optional
+    - name: ID
+      type: string
+      required: false
+      description: A Unique Identifier for this element.
+      tier: optional
+      is_identifier: true
+    - name: Namespace
+      type: uri
+      required: false
+      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
+        annotation is to use our (OME's) default interpretation for this type.
+      tier: optional
+    - name: Annotator
+      type: string
+      required: false
+      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
+        by UserB, UserA is still the Annotator.
+      tier: optional
   MechanicalCalibration:
     description: This describes the procedures that were used for mechanical calibration and the resulting calibration results.
     fields:
@@ -34643,6 +34123,21 @@ entities:
       description: A Unique Identifier for this component.
       tier: optional
       is_identifier: true
+  rowType:
+    fields:
+    - name: Cell
+      type: list
+      required: false
+      tier: optional
+      items: cellType
+      owns: true
+    - name: RowNr
+      type: integer
+      required: false
+      description: The index of this Row.
+      tier: recommended
+      constraints:
+        minimum: 1
   Fluorophore:
     description: This element describes the Fluorophore whose Emission is used to produce this Channel. [plain text string].
     fields:
@@ -35428,6 +34923,100 @@ entities:
       required: false
       description: This field records a Description of Method used for this calibration procedure.
       tier: recommended
+  CalibrationSoftware:
+    description: This element describes a software tool utilized to analyze Calibration metrics obtained from this Calibration
+      Procedure and generate a suitable Calibration Reports. As an example, such a Software tool might analyzes microscopy
+      images of fluorescent Colored Beads in order to quantify the Resolution and Chromatic Registration of a fluorescence
+      microsocope over the full Field of View (FOV). An example of such a tool is PSFj (http://www.knoplab.de/psfj/sample-page/).
+      Alternatively, such a Software tool might be used to extract Intensity Calibration results obtained with a specific
+      Intensity Calibration Tool, such as a Power Meter or MetaMax (https://www.umassmed.edu/grunwaldlab/).
+    fields:
+    - name: SoftwareModule
+      type: list
+      items: string
+      required: false
+      description: This empty element refers to any existing Software Module that was used in association with this Instrument.
+        (The ID of a Software.)
+      tier: recommended
+    - name: Annotation
+      type: list
+      items: string
+      required: false
+      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
+        a simple multi-line comment) describing this component. (The ID of a Annotation.)
+      tier: recommended
+    - name: ID
+      type: string
+      required: false
+      description: A Unique Identifier for this component.
+      tier: recommended
+      is_identifier: true
+    - name: Name
+      type: string
+      required: false
+      description: This field records the Name or any other designation the Author uses for this Software.
+      tier: recommended
+    - name: Version
+      type: string
+      required: false
+      description: This field records the Version of this Software.
+      tier: recommended
+    - name: Developer
+      type: string
+      required: false
+      description: This field records the Developer(s) of this Software. In case this is a non-commercial, open-source Software,
+        this refers to the name of the individual or consortium who developed the Software. In the case of a commercial Software,
+        this might refer to the Commercial entity but it can also be used to refer to the individual developer, if knonw.
+      tier: recommended
+    - name: WebsiteURL
+      type: uri
+      required: false
+      description: This field records the URL address of any Website where the Software can be obtained. In case of open-source
+        Software this field should record the URL for the Git repository from which to obtain the source-code.
+      tier: recommended
+    - name: PrimaryPublicationID
+      type: string
+      required: false
+      description: This field captures the a Unique Identifier for the Primary Publication describing this Software. Examples
+        include, Digital Object Identifier (DOI), PubMed Central Identifier (PMCID), ArXiv.org ID etc.
+      tier: recommended
+    - name: OpenSource
+      type: boolean
+      required: false
+      description: This records whether this Software is OpenSource (True) or proprietary (False).
+      tier: recommended
+    - name: Macro
+      type: boolean
+      required: false
+      description: This field records whether this Software is a Macro or a Scprit (True) or is it a full free-standing program.
+      tier: recommended
+    - name: Build
+      type: string
+      required: false
+      description: The specific build of this Software.
+      tier: recommended
+    - name: Patch
+      type: string
+      required: false
+      description: This recodes the version for an optional Patch, HotFix or Update used for this Sofware to run this Instrument.
+        A Patch (aka HotFix, or Update) is a set of changes to a computer program or its supporting data designed to update,
+        fix, or improve it. This includes fixing security vulnerabilities, and other bugs, with such patches usually being
+        called bugfixes or bug fixes, and improving the functionality, usability or performance.
+      tier: recommended
+    - name: ReleaseDate
+      type: date
+      required: false
+      description: The date in which this Software was resleased.
+      tier: optional
+    - name: Language
+      type: string
+      required: false
+      description: This records the computer Language in which this Software was developed.
+      tier: optional
+    - name: ApplicationID
+      type: string
+      required: false
+      tier: recommended
   TheAdditionalDimension:
     description: This element refers to each individual Plane of data pertaining to a given Additional Dimension.
     fields:
@@ -35467,28 +35056,6 @@ entities:
         separator. A relative path is recommended. However an absolute path can be specified. Default is to use the file the
         ome-xml data has been pulled from. Note: It is permissible for this to be self referential. The file image1.tiff may
         contain ome-xml data that has FilePath="image1.tiff" or "./image1.tiff"'
-  External:
-    description: Describes a file location. Can optionally specify a portion of a file using Offset and a ReadLength. If Offset
-      and ReadLength are specified in conjuction with Compression, then they point into the uncompressed file.
-    fields:
-    - name: href
-      type: uri
-      required: true
-      description: file location
-    - name: SHA1
-      type: string
-      required: true
-      description: The digest of the file specified in href.
-    - name: Compression
-      type: string
-      required: false
-      description: Specifies the compression scheme used to encode the data.
-      constraints:
-        enum:
-        - zlib
-        - bzip2
-        - none
-      example: none
   AffineTransform:
     description: A matrix used to transform the shape. ⎡ A00, A01, A02 ⎤ ⎢ A10, A11, A12 ⎥ ⎣ 0, 0, 1 ⎦
     fields:
@@ -35529,6 +35096,439 @@ entities:
       required: false
       description: The unit of CellValue.
       tier: recommended
+  FileAnnotation:
+    description: A file object annotation
+    fields:
+    - name: BinaryFile
+      type: entity
+      required: true
+      description: Describes a binary file.
+      items: BinaryFile
+      owns: true
+    - name: Description
+      type: string
+      required: false
+      description: This element contains a description for the annotation.[plain-text multi-line string]
+      tier: optional
+    - name: Annotation
+      type: list
+      items: string
+      required: false
+      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
+        a simple multi-line comment) describing this component. (The ID of a Annotation.)
+    - name: ID
+      type: string
+      required: false
+      description: A Unique Identifier for this element.
+      tier: optional
+      is_identifier: true
+    - name: Namespace
+      type: uri
+      required: false
+      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
+        annotation is to use our (OME's) default interpretation for this type.
+      tier: optional
+    - name: Annotator
+      type: string
+      required: false
+      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
+        by UserB, UserA is still the Annotator.
+      tier: optional
+  MapAnnotation:
+    description: A Map Annotation. The contents of this is a list of Key/Value pairs.
+    fields:
+    - name: Value
+      type: entity
+      required: false
+      description: This is a Mapping of Key/Value pairs.
+      tier: optional
+      items: Map
+      owns: true
+    - name: Description
+      type: string
+      required: false
+      description: This element contains a description for the annotation.[plain-text multi-line string]
+      tier: optional
+    - name: Annotation
+      type: list
+      items: string
+      required: false
+      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
+        a simple multi-line comment) describing this component. (The ID of a Annotation.)
+      tier: optional
+    - name: ID
+      type: string
+      required: false
+      description: A Unique Identifier for this element.
+      tier: optional
+      is_identifier: true
+    - name: Namespace
+      type: uri
+      required: false
+      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
+        annotation is to use our (OME's) default interpretation for this type.
+      tier: optional
+    - name: Annotator
+      type: string
+      required: false
+      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
+        by UserB, UserA is still the Annotator.
+      tier: optional
+  LightSourceSettings:
+    description: This element holds the Setting applied to a Light Source used in the Light Path during the acquisition of
+      this Channel as well as a reference to the LightSource (the ID attribute) in question.
+    fields:
+    - name: ID
+      type: string
+      required: true
+      description: A Unique Identifier for this component. (The ID of a LightSource.)
+      tier: required
+    - name: IlluminationPowerSettings
+      type: float
+      required: true
+      description: This field records the nominal Illumination Power (also known as Power Output or Illumination Intensity)
+        that was set for the Acquisition of this Image or was reported by the Image Acquisition Software, as advertised by
+        the Manufacturer. Depending on the system this might be reported as a % value.
+      tier: required
+    - name: lluminationPowerSettingsUnit
+      type: string
+      required: false
+      tier: required
+      constraints:
+        enum:
+        - YW
+        - ZW
+        - EW
+        - PW
+        - TW
+        - GW
+        - MW
+        - kW
+        - hW
+        - daW
+        - W
+        - dW
+        - cW
+        - mW
+        - µW
+        - nW
+        - pW
+        - fW
+        - aW
+        - zW
+        - yW
+        - '%'
+      example: mW
+    - name: Attenuation
+      type: float
+      required: false
+      description: This field records the actual Attenuation of the excitation light power that was applied during the Acquisition
+        of this Channel, expressed as a fractional value from 0.0 to 1.0.
+      tier: recommended
+      constraints:
+        minimum: 0.0
+        maximum: 1.0
+    - name: AttenuationMethod
+      type: string
+      required: false
+      description: This field records the Method that was used to Attenuate the Laser beam during the acquisition of this
+        Image.
+      tier: optional
+    - name: UsedAcoustoOpticalDevice
+      type: boolean
+      required: false
+      description: In case a Laser was used for this Image Acquisition, this field records whether (True) or not (False) an
+        AcoustoOptical Device was employed for intensity modulation.
+      tier: recommended
+    - name: MapAnnotation
+      type: list
+      required: false
+      description: A Map Annotation. The contents of this is a list of Key/Value pairs.
+      tier: required
+      items: MapAnnotation
+      owns: true
+    - name: AdditionalVendorInformation
+      type: list
+      required: false
+      description: This element is intendended to be used as a last-resort solution to capture vendor-specific Additional
+        Information about this hardware component, which cannot be described using either available model elements (Classes
+        or Attributes) or the Map Annotation feature of the schema. The use of this feature should not be intended as a way
+        to hide information that the Imaging Community has designated as essential to ensure rigor and reproducibility. In
+        case this feature is used, the Vendor is fully responsible for this information, including but not limited to, making
+        sure this information is appropriately recorded and kept up to date.
+      tier: required
+      items: AdditionalVendorInformation
+      owns: true
+  AdditionalVendorInformation:
+    description: This element is intendended to be used as a last-resort solution to capture vendor-specific Additional Information
+      about this hardware component, which cannot be described using either available model elements (Classes or Attributes)
+      or the Map Annotation feature of the schema. The use of this feature should not be intended as a way to hide information
+      that the Imaging Community has designated as essential to ensure rigor and reproducibility. In case this feature is
+      used, the Vendor is fully responsible for this information, including but not limited to, making sure this information
+      is appropriately recorded and kept up to date.
+    fields:
+    - name: VendorBinData
+      type: list
+      required: false
+      description: The contents of this element are base64-encoded. These are not CDATA sections, just base64 streams.
+      tier: optional
+      items: VendorBinData
+      owns: true
+    - name: Annotation
+      type: list
+      items: string
+      required: false
+      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
+        a simple multi-line comment) describing this component. (The ID of a Annotation.)
+      tier: optional
+    - name: ID
+      type: string
+      required: false
+      description: A Unique Identifier for this model element.
+      tier: optional
+      is_identifier: true
+    - name: VendorName
+      type: string
+      required: false
+      description: The Name of the Vendor responsible for this Information.
+      tier: optional
+  Map:
+    description: This is a Mapping of Key/Value pairs.
+    fields:
+    - name: M
+      type: list
+      required: false
+      description: This is a Key/Value pair used to build up a Mapping. The Element and Attribute Name are kept to single
+        letters to minimize the length at the expense of readability as they are likely to occur many times.
+      tier: optional
+      items: MapEntry
+      owns: true
+  TransmittanceProfileFile:
+    description: This element represents a file in .csv or other suitable formats containing the Transmittance profile of
+      this optical component.
+    fields:
+    - name: BinaryFile
+      type: entity
+      required: false
+      description: Describes a binary file.
+      tier: optional
+      items: BinaryFile
+      owns: true
+    - name: Description
+      type: string
+      required: false
+      description: This element contains a description for the annotation.[plain-text multi-line string]
+      tier: optional
+    - name: Annotation
+      type: list
+      items: string
+      required: false
+      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
+        a simple multi-line comment) describing this component. (The ID of a Annotation.)
+      tier: optional
+    - name: ID
+      type: string
+      required: false
+      description: A Unique Identifier for this element.
+      tier: optional
+      is_identifier: true
+    - name: Namespace
+      type: uri
+      required: false
+      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
+        annotation is to use our (OME's) default interpretation for this type.
+      tier: optional
+    - name: Annotator
+      type: string
+      required: false
+      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
+        by UserB, UserA is still the Annotator.
+      tier: optional
+  ReflectanceProfileFile:
+    description: This element represents a file in .csv or other suitable formats containing the Reflectance profile of this
+      optical component.
+    fields:
+    - name: BinaryFile
+      type: entity
+      required: false
+      description: Describes a binary file.
+      tier: optional
+      items: BinaryFile
+      owns: true
+    - name: Description
+      type: string
+      required: false
+      description: This element contains a description for the annotation.[plain-text multi-line string]
+      tier: optional
+    - name: Annotation
+      type: list
+      items: string
+      required: false
+      description: This is an empty element that refers to an Annotation (typically a Comment Annotation that consists of
+        a simple multi-line comment) describing this component. (The ID of a Annotation.)
+      tier: optional
+    - name: ID
+      type: string
+      required: false
+      description: A Unique Identifier for this element.
+      tier: optional
+      is_identifier: true
+    - name: Namespace
+      type: uri
+      required: false
+      description: We recommend the inclusion of a namespace for annotations you define. If it is absent then we assume the
+        annotation is to use our (OME's) default interpretation for this type.
+      tier: optional
+    - name: Annotator
+      type: string
+      required: false
+      description: The Annotator is the person who attached this annotation.e.g. If UserA annotates something with TagB, owned
+        by UserB, UserA is still the Annotator.
+      tier: optional
+  BinData:
+    description: The contents of this element are base64-encoded. These are not CDATA sections, just a base64 stream.
+    fields:
+    - name: ID
+      type: string
+      required: false
+      is_identifier: true
+      description: An identifier for this record; the model defines none.
+    - name: Value
+      type: string
+      required: false
+      tier: required
+    - name: Compression
+      type: string
+      required: false
+      description: Specifies the compression scheme used to encode the data.
+      tier: required
+      constraints:
+        enum:
+        - zlib
+        - bzip2
+        - none
+      example: none
+    - name: BigEndian
+      type: boolean
+      required: true
+      description: This is true if the binary data was written in BigEndian order. This is dependent on the system architecture
+        of the machine that wrote the pixels. True for essentially all modern CPUs other than Intel and Alpha. All Binary
+        data must be written in the same endian order.
+      tier: required
+    - name: Length
+      type: integer
+      required: true
+      description: Character count attribute for the BinData field. This is the length of the base-64 encoded block. It allows
+        easy skipping of the block when parsing the file. [unit:bytes]
+      tier: required
+      constraints:
+        minimum: 0
+  BinaryFile:
+    description: Describes a binary file.
+    fields:
+    - name: External
+      type: entity
+      required: false
+      description: Describes a file location. Can optionally specify a portion of a file using Offset and a ReadLength. If
+        Offset and ReadLength are specified in conjuction with Compression, then they point into the uncompressed file.
+      items: External
+      owns: true
+    - name: BinData
+      type: entity
+      required: false
+      description: The contents of this element are base64-encoded. These are not CDATA sections, just a base64 stream.
+      items: BinData
+      owns: true
+    - name: FileName
+      type: string
+      required: true
+    - name: Size
+      type: integer
+      required: true
+      description: Size of the uncompressed file. [unit:bytes]
+      constraints:
+        minimum: 0
+    - name: MIMEType
+      type: string
+      required: false
+  VendorBinData:
+    description: The contents of this element are base64-encoded. These are not CDATA sections, just base64 streams.
+    fields:
+    - name: ID
+      type: string
+      required: false
+      is_identifier: true
+      description: An identifier for this record; the model defines none.
+    - name: Value
+      type: string
+      required: false
+      tier: optional
+    - name: Compression
+      type: string
+      required: false
+      description: Specifies the compression scheme used to encode the data.
+      tier: optional
+      constraints:
+        enum:
+        - zlib
+        - bzip2
+        - none
+      example: none
+    - name: BigEndian
+      type: boolean
+      required: false
+      description: This is true if the binary data was written in BigEndian order. This is dependent on the system architecture
+        of the machine that wrote the pixels. True for essentially all modern CPUs other than Intel and Alpha. All Binary
+        data must be written in the same endian order.
+      tier: optional
+    - name: Length
+      type: integer
+      required: false
+      description: Character count attribute for the BinData field. This is the length of the base-64 encoded block. It allows
+        easy skipping of the block when parsing the file. [unit:bytes]
+      tier: optional
+      constraints:
+        minimum: 0
+  MapEntry:
+    description: This is a Key/Value pair used to build up a Mapping. The Element and Attribute Name are kept to single letters
+      to minimize the length at the expense of readability as they are likely to occur many times.
+    fields:
+    - name: ID
+      type: string
+      required: false
+      is_identifier: true
+      description: An identifier for this record; the model defines none.
+    - name: Value
+      type: string
+      required: false
+      tier: optional
+    - name: K
+      type: string
+      required: false
+      description: This is the key of this Key/Value pair.
+      tier: optional
+  External:
+    description: Describes a file location. Can optionally specify a portion of a file using Offset and a ReadLength. If Offset
+      and ReadLength are specified in conjuction with Compression, then they point into the uncompressed file.
+    fields:
+    - name: href
+      type: uri
+      required: true
+      description: file location
+    - name: SHA1
+      type: string
+      required: true
+      description: The digest of the file specified in href.
+    - name: Compression
+      type: string
+      required: false
+      description: Specifies the compression scheme used to encode the data.
+      constraints:
+        enum:
+        - zlib
+        - bzip2
+        - none
+      example: none
   FilterSet:
     description: This element represents a FilterSet that was used for the acquisition of this Channel. A Filter Set is typically
       composed of one Excitation Filter, one Emission Filter and a Dichroic. They might either be pre-assembled by the Manufacturer

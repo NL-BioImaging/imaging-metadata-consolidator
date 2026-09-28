@@ -55,7 +55,7 @@ class MetaseedGenerator:
             'version': version or '.'.join(schema.version.split('.')[:2]),
             'description': f'Generated from {schema.name} {schema.version} ({schema.id}). {schema.description}',
             'root_entity': root,
-            'entities': self.entities,
+            'entities': _containment_order(self.entities),
         }
 
     def _entity(self, class_name, queue):
@@ -189,6 +189,31 @@ class MetaseedGenerator:
         for key, value in (('min_items', slot.minimum_cardinality), ('max_items', slot.maximum_cardinality)):
             if value is not None:
                 field.setdefault('constraints', {})[key] = value
+
+
+def _containment_order(entities):
+    """`entities` with every entity after all the entities nesting it, the order otherwise kept: metaseed's
+    own order (metaseed.specs.ordering), so a profile loads without its "out of containment order" warning."""
+    names = list(entities)
+    children = {name: [field['items'] for field in entity['fields']
+                       if field['type'] in ('list', 'entity') and field.get('items') in entities and field['items'] != name]
+                for name, entity in entities.items()}
+    parents_left = {name: 0 for name in names}
+    for kids in children.values():
+        for child in set(kids):
+            parents_left[child] += 1
+    ready = [name for name in names if parents_left[name] == 0]
+    ordered = []
+    while ready:
+        name = ready.pop(0)
+        ordered.append(name)
+        for child in set(children[name]):
+            parents_left[child] -= 1
+            if parents_left[child] == 0:
+                ready.append(child)
+        ready.sort(key=names.index)
+    ordered += [name for name in names if name not in ordered]
+    return {name: entities[name] for name in ordered}
 
 
 def _annotation(element, name):

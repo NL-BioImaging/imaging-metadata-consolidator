@@ -191,9 +191,12 @@ inheritance, so:
 
 - The 13 source files in `sources/` (Cikteq, Delmic, EMSIS, TFS Phenom and two TALOS files, Zeiss,
   DICOM, two Leica LIF, OME-TIFF, a tomography file, Aperio SVS) were converted and exported, and every
-  dataset validated with metaseed against the profile (the two TALOS files with their Property records
-  sampled, since those are ~2,000-3,000 identical records). A Delmic dataset validated on the Hub gave
+  dataset validated with metaseed against the profile, in full. A Delmic dataset validated on the Hub gave
   exactly the local result.
+- This runs in the test suite (`tests/test_metaseed_validation.py`, with metaseed installed): every export
+  validates with metaseed's own validator against the generated profile, and the test fails on any error but
+  a missing required field. metaseed re-parses the whole profile for every nested entity it validates; the
+  test shares one profile cache between them, which takes all exports from hours to seconds.
 - Result: no type, format, constraint or unknown-field error in any dataset. The only errors are required
   fields the source files do not state: 695 with every LiMi requirement enforced, of which 543 are tier 1
   (identifiers, names, pixel dimensions, objective and detector specifications) and remain with the tier
