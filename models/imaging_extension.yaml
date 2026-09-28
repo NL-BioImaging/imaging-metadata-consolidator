@@ -135,15 +135,6 @@ classes:
         range: float
         annotations: {schema_extended_path: Image.Corrections.WhiteLevel}
 
-  ObjectiveSettingsExtension:
-    mixin: true
-    attributes:
-      Medium:
-        annotations: {schema_extended_path: Settings.ObjectiveSettings.Medium}
-      RefractiveIndex:
-        range: float
-        annotations: {schema_extended_path: Settings.ObjectiveSettings.RefractiveIndex}
-
   SoftwareExtension:
     mixin: true
     attributes:

@@ -4,9 +4,8 @@ Objective:
   CalibratedMagnification: 10.0
 lens_na: 0.32
 immersion: Air
-Image:
-  ObjectiveSettings:
-    RefractiveIndex: 1.0
+ImmersionLiquid:
+  RefractiveIndex: 1.0
 HardwareSetting:
   CameraSettingDefinition:
     IndividualCameraGroup:
@@ -456,7 +455,7 @@ SourceMap:
   Objective.CalibratedMagnification: magnification
   lens_na: lens_na
   immersion: immersion
-  Image.ObjectiveSettings.RefractiveIndex: refractive_index
+  ImmersionLiquid.RefractiveIndex: refractive_index
   HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[0].MirrorX: HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[0].MirrorX
   HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[0].MirrorY: HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[0].MirrorY
   HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[1].MirrorX: HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[1].MirrorX

@@ -113,7 +113,7 @@ Plan, one commit each:
 6. exact_mappings/close_mappings to the OME LinkML schema
 7. Role TODO reworded (deferred)
 8. release 1.0.0: regenerate, compatibility check (breaking expected), validate, write-up
-Progress: 1 done.
+Progress: 1-2 done (2: OME's Medium "Oil" fits no ImmersionLiquidType - LiMi has Mineral/Silicone Oil - and stays a Property; Huygens' RefrIndexLensMedium now meets OME's value, equal, and stays a Property).
 
 ## The model and the pipeline
 
@@ -194,8 +194,6 @@ What follows from a new source or new metadata:
       original spelling must stay recoverable.
 - [ ] Per-channel mapping (e.g. Huygens ChannelData[i] LambdaEx/LambdaEm -> each Channel's
       Fluorophore wavelengths): rules resolve from the root, so each channel's value collides.
-- [ ] ObjectiveSettings.Medium/RefractiveIndex (extension) duplicate LiMi's ImmersionLiquid; decide
-      whether the flat ome-tiff `medium`/`refractive_index` rules should target ImmersionLiquid instead.
 - [ ] Light-source role: rules for Transmitted/Fluorescence light sources should set `Role`.
 - [ ] EM groups hang under OME (as schema.extended.json had them); ElectronBeam/Optics/Source are
       instrument components or settings, Scan/Acquisition acquisition settings - move when the mapper

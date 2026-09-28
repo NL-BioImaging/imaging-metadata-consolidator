@@ -27035,14 +27035,6 @@ entities:
       description: This field records the aperture of the Iris diaphragm, which determines the size of the objective rear
         aperture yielding a variable numerical aperture range between 0.5 and the objective's upper limit.
       tier: recommended
-    - name: Medium
-      type: string
-      required: false
-      tier: required
-    - name: RefractiveIndex
-      type: float
-      required: false
-      tier: required
     - name: MapAnnotation
       type: list
       required: false

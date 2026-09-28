@@ -8,8 +8,6 @@ Instrument:
 Image:
   ObjectiveSettings:
     ID: Objective:0
-    Medium: Oil
-    RefractiveIndex: 1.518
   Pixels:
     TiffData:
       FirstC: 0
@@ -36,6 +34,9 @@ Image:
   AnnotationRef:
     ID: Annotation:CustomAttributes:SVI:Image:0
   ID: Image:0
+ImmersionLiquid:
+  Type: Oil
+  RefractiveIndex: 1.518
 Channel:
 - ID: Channel:0
   AcquisitionMode: WideField
@@ -123,6 +124,7 @@ OME:
           ExPhotonCnt: 1
           ExPhotonCntState: Default
           RefrIndexMediumState: Estimated
+          RefrIndexLensMedium: 1.518
           RefrIndexLensMediumState: Reported
           PinholeSpacing: 2.53
           PinholeSpacingState: Default
@@ -202,8 +204,6 @@ OME:
   UUID: urn:uuid:69658110-5216-4e10-95c3-b1bdca2a1e52
 MountingMedium:
   RefractiveIndex: 1.458
-ImmersionLiquid:
-  RefractiveIndex: 1.518
 SoftwareModule:
   Version: 24.10.0p6
 AcquisitionSoftware:
@@ -215,8 +215,8 @@ SourceMap:
   Objective.Magnification: OME.Instrument.Objective.NominalMagnification
   Instrument.ID: OME.Instrument.ID
   Image.ObjectiveSettings.ID: OME.Image.ObjectiveSettings.ID
-  Image.ObjectiveSettings.Medium: OME.Image.ObjectiveSettings.Medium
-  Image.ObjectiveSettings.RefractiveIndex: OME.Image.ObjectiveSettings.RefractiveIndex
+  ImmersionLiquid.Type: OME.Image.ObjectiveSettings.Medium
+  ImmersionLiquid.RefractiveIndex: OME.Image.ObjectiveSettings.RefractiveIndex
   Channel[0].ID: OME.Image.Pixels.Channel[0].ID
   Channel[0].AcquisitionMode: OME.Image.Pixels.Channel[0].AcquisitionMode
   Channel[0].ExcitationWavelength: OME.Image.Pixels.Channel[0].ExcitationWavelength
@@ -280,7 +280,6 @@ SourceMap:
   OME.StructuredAnnotations.XMLAnnotation.Value.Geometry.Interface.InterFaceSecondary: OME.StructuredAnnotations.XMLAnnotation.Value.Geometry.Interface.InterFaceSecondary
   OME.StructuredAnnotations.XMLAnnotation.Value.Geometry.Interface.InterFaceSecondaryState: OME.StructuredAnnotations.XMLAnnotation.Value.Geometry.Interface.InterFaceSecondaryState
   MountingMedium.RefractiveIndex: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].RefrIndexMedium
-  ImmersionLiquid.RefractiveIndex: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].RefrIndexLensMedium
   OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].MicrParamData.Mode: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].MicrParamData.Mode
   OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].MicrParamData.ModeState: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].MicrParamData.ModeState
   OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].MicrParamData.ImagingDirection: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].MicrParamData.ImagingDirection
@@ -315,6 +314,7 @@ SourceMap:
   OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].ExPhotonCnt: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].ExPhotonCnt
   OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].ExPhotonCntState: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].ExPhotonCntState
   OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].RefrIndexMediumState: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].RefrIndexMediumState
+  OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].RefrIndexLensMedium: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].RefrIndexLensMedium
   OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].RefrIndexLensMediumState: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].RefrIndexLensMediumState
   OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].PinholeSpacing: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].PinholeSpacing
   OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].PinholeSpacingState: OME.StructuredAnnotations.XMLAnnotation.Value.ChannelData[0].PinholeSpacingState

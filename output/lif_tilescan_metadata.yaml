@@ -4,9 +4,8 @@ Objective:
   CalibratedMagnification: 40.0
 lens_na: 1.3
 immersion: Oil
-Image:
-  ObjectiveSettings:
-    RefractiveIndex: 1.518
+ImmersionLiquid:
+  RefractiveIndex: 1.518
 HardwareSetting:
   ConfocalSettingDefinition:
     EasySRMappingArray: null
@@ -849,7 +848,7 @@ SourceMap:
   Objective.CalibratedMagnification: magnification
   lens_na: lens_na
   immersion: immersion
-  Image.ObjectiveSettings.RefractiveIndex: refractive_index
+  ImmersionLiquid.RefractiveIndex: refractive_index
   HardwareSetting.ConfocalSettingDefinition.EasySRMappingArray: HardwareSetting.ConfocalSettingDefinition.EasySRMappingArray
   HardwareSetting.ConfocalSettingDefinition.EasySRSlider.SRRelative: HardwareSetting.ConfocalSettingDefinition.EasySRSlider.SRRelative
   HardwareSetting.ConfocalSettingDefinition.EasySRSlider.ThreeDRelative: HardwareSetting.ConfocalSettingDefinition.EasySRSlider.ThreeDRelative

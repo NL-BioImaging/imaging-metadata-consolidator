@@ -92,7 +92,7 @@ use; new groups are classes of their own:
 | Image | Type, CropHint, Corrections (contrast, brightness, gamma, black and white level) |
 | Detector | Type, Gain, Offset, Brightness, Contrast, Channel, configuration |
 | Stage | Position, RawPosition, Tilt, Rotation, Bias, MultiStage (sample height, radius) |
-| ObjectiveSettings, Software | Medium, RefractiveIndex; ApplicationID |
+| Software | ApplicationID |
 
 A value with a unit (`WorkingDistance`, `FieldOfView.X`, ...) is one shared class, `Quantity`
 {Value, Unit}, with the unit as the source writes it.

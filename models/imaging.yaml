@@ -5721,8 +5721,6 @@ classes:
     description: This element holds the Setting applied to the Objective used during the Acquisition of this Image as well
       as a reference (the ID attribute) to the Objective in question.
     is_a: Settings
-    mixins:
-    - ObjectiveSettingsExtension
     attributes:
       ImmersionLiquid:
         range: ImmersionLiquid

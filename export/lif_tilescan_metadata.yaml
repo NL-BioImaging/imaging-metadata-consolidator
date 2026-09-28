@@ -10,7 +10,7 @@ Image:
       Field: Instrument[0].Objective[0].CalibratedMagnification
       Source: magnification
     - ID: SourceMapping:1
-      Field: Image[0].ObjectiveSettings.RefractiveIndex
+      Field: Image[0].ObjectiveSettings.ImmersionLiquid.RefractiveIndex
       Source: refractive_index
     - ID: SourceMapping:2
       Field: Instrument[0].GenericDetector[0].Name
@@ -106,7 +106,8 @@ Image:
       Field: Instrument[0].AcquisitionSoftware[0].Name
       Source: HardwareSetting.Software
   ObjectiveSettings:
-    RefractiveIndex: 1.518
+    ImmersionLiquid:
+      RefractiveIndex: 1.518
 CustomProperties:
 - ID: Property:0
   Name: manufacturer
