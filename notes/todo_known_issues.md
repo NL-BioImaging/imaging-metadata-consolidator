@@ -113,7 +113,7 @@ Plan, one commit each:
 6. exact_mappings/close_mappings to the OME LinkML schema
 7. Role TODO reworded (deferred)
 8. release 1.0.0: regenerate, compatibility check (breaking expected), validate, write-up
-Progress: 1-6 done (6: exact_mappings/close_mappings with prefix ome: (https://schemas.incenp.org/ome/v1/core/) on 21 classes and 55 fields, by name and by hand; name matches with another meaning as close (the extension's Detector Type/Gain/Offset hold per-image vendor values, OME's are detector specs); no copy of ome.yaml in the repo (no licence stated), a test checks the prefixes; importing/extending ome.yaml stays open; 5: 338 unit aliases in imaging_units.yaml - LiMi's unit names and an ASCII form (um, uA, C for °C; no bare A for Å) - and the exporter stores an alias as the unit, SourceMapping.SourceValue keeping the source's spelling; Phenom 41 -> 43 typed; 4: rule targets may hold [*], the index of the list item the value comes from; Huygens LambdaEx/Em and an OME document's channel wavelengths -> Pixels.Channel[*].Fluorophore; the whole-list rule Image.Pixels.Channel -> Channel removed, the exporter places an OME document's channels structurally; ome-tiff 39 -> 47 typed; 3: 61 rules retargeted; TALOS's AcquisitionStartDatetime "1683922216" is a Unix timestamp, no datetime, and stays a Property; 2: OME's Medium "Oil" fits no ImmersionLiquidType - LiMi has Mineral/Silicone Oil - and stays a Property; Huygens' RefrIndexLensMedium now meets OME's value, equal, and stays a Property).
+Progress: 1-7 done (7: Role TODO reworded, deferred; 6: exact_mappings/close_mappings with prefix ome: (https://schemas.incenp.org/ome/v1/core/) on 21 classes and 55 fields, by name and by hand; name matches with another meaning as close (the extension's Detector Type/Gain/Offset hold per-image vendor values, OME's are detector specs); no copy of ome.yaml in the repo (no licence stated), a test checks the prefixes; importing/extending ome.yaml stays open; 5: 338 unit aliases in imaging_units.yaml - LiMi's unit names and an ASCII form (um, uA, C for °C; no bare A for Å) - and the exporter stores an alias as the unit, SourceMapping.SourceValue keeping the source's spelling; Phenom 41 -> 43 typed; 4: rule targets may hold [*], the index of the list item the value comes from; Huygens LambdaEx/Em and an OME document's channel wavelengths -> Pixels.Channel[*].Fluorophore; the whole-list rule Image.Pixels.Channel -> Channel removed, the exporter places an OME document's channels structurally; ome-tiff 39 -> 47 typed; 3: 61 rules retargeted; TALOS's AcquisitionStartDatetime "1683922216" is a Unix timestamp, no datetime, and stays a Property; 2: OME's Medium "Oil" fits no ImmersionLiquidType - LiMi has Mineral/Silicone Oil - and stays a Property; Huygens' RefrIndexLensMedium now meets OME's value, equal, and stays a Property).
 
 ## The model and the pipeline
 
@@ -190,4 +190,6 @@ What follows from a new source or new metadata:
 
 ## TODO
 
-- [ ] Light-source role: rules for Transmitted/Fluorescence light sources should set `Role`.
+- [ ] Light-source role, when a source holds light sources (none does yet, so rules setting it would have
+      nothing to act on or be tested with; user, 2026-09-28): rules for Transmitted/Fluorescence light
+      sources should set `LightSource.Role`.
