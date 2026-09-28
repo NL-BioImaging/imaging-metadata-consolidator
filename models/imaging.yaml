@@ -18,6 +18,7 @@ default_range: string
 imports:
 - linkml:types
 - imaging_units
+- imaging_provenance
 types:
   base64Binary:
     typeof: string
@@ -979,7 +980,7 @@ classes:
         description: This empty element refers to an Optical Assembly component placed in this Light Path.
         range: OpticalAssembly
       OpticalApertureSettings:
-        range: MaskingPlateSettings
+        range: OpticalApertureSettings
         inlined: true
         multivalued: true
         inlined_as_list: true
@@ -2481,7 +2482,52 @@ classes:
           Tier: '3'
           description_source: derived from PointDetector.RadiantSensitivity
         description: The unit of RadiantSensitivity.
+  OpticalApertureSettings:
+    description: This element refers to the Optical Aperture device used to acquire this image and it holds the settings that
+      were applied to it during this Acquisition.
+    is_a: Settings
+    abstract: true
+    attributes:
+      TransmittanceProfileFile:
+        range: TransmittanceProfileFile
+        inlined: true
+        multivalued: true
+        inlined_as_list: true
+        description: This element represents a file in .csv or other suitable formats containing the Transmittance profile
+          of this optical component.
+      ReflectanceProfileFile:
+        range: ReflectanceProfileFile
+        inlined: true
+        multivalued: true
+        inlined_as_list: true
+        description: This element represents a file in .csv or other suitable formats containing the Reflectance profile of
+          this optical component.
+      TransmissionWavelengthRangeSettings:
+        range: TransmissionWavelengthRangeSettings
+        inlined: true
+        multivalued: true
+        inlined_as_list: true
+        description: This element records the range of Transmission Wavelengths that were set for this optical component during
+          the Acquisition of this Image. It also records the maximum amount of light transmitted. Multiple of this elements
+          can be used.
+      ReflectionWavelengthRangeSettings:
+        range: ReflectionWavelengthRangeSettings
+        inlined: true
+        multivalued: true
+        inlined_as_list: true
+        description: This element records the range of Reflection Wavelengths that were set for this optical component during
+          the Acquisition of this Image. It also records the maximum amount of light transmitted. Multiple of this elements
+          can be used.
+      ID:
+        description: This is the Unique Identifier of the device used in this case.
+        inlined: false
+        annotations:
+          Tier: '1'
+        range: OpticalAperture
+    slots:
+    - ObjectType
   WavelengthRangeSettingsType:
+    abstract: true
     attributes:
       CutOn:
         range: PositiveFloat
@@ -2562,6 +2608,7 @@ classes:
       produces a periodic modulation of the index of refraction of the medium via the elasto-optical effect and might therefore
       diffract portions of an incident light into one or more directions.
     is_a: ManufacturerSpec
+    abstract: true
     attributes:
       Annotation:
         inlined: false
@@ -2878,6 +2925,7 @@ classes:
     description: This element refers to the Acousto Optical Device used to acquire this image and it holds the settings that
       were applied to it during this Acquisition.
     is_a: Settings
+    abstract: true
     attributes:
       TransmittanceProfileFile:
         range: TransmittanceProfileFile
@@ -2952,6 +3000,7 @@ classes:
     description: This element refers to the Electro-Optical Device used to acquire this image and it holds the settings that
       were applied to it during this Acquisition.
     is_a: Settings
+    abstract: true
     attributes:
       TransmittanceProfileFile:
         range: TransmittanceProfileFile
@@ -3149,6 +3198,16 @@ classes:
       Binary Only OME-TIFF files the top level OME node has changed slightly. It can EITHER: Contain all the previously expected
       elements OR: Contain a single BinaryOnly element that points at its Metadata Only Companion OME-XML file.'
     attributes:
+      ID:
+        description: A unique identifier for this document.
+        identifier: true
+        required: true
+        annotations:
+          source: added for metaseed datasets, which identify their root record; the XSD OME has none
+      Name:
+        description: A user assigned name for this document.
+        annotations:
+          source: added for metaseed datasets, which identify their root record; the XSD OME has none
       Rights:
         range: Rights
         inlined: true
@@ -3296,6 +3355,11 @@ classes:
         range: string
         description: This is the name of the creating application of the OME-XML and preferably its full version. e.g "CompanyName,
           SoftwareName, V2.6.3456" This is optional but we hope it will be set by applications writing out OME-XML from scratch.
+      CustomProperties:
+        description: Source metadata values the model does not model, kept so no metadata is lost.
+        range: Property
+        multivalued: true
+        inlined_as_list: true
     tree_root: true
   OMEBinaryOnly:
     description: Pointer to an external metadata file. If this element is present, then no other metadata may be present in
@@ -4147,6 +4211,11 @@ classes:
         required: true
         annotations:
           Tier: '1'
+      CustomProperties:
+        description: Source metadata values the model does not model, kept so no metadata is lost.
+        range: Property
+        multivalued: true
+        inlined_as_list: true
     annotations:
       Extension: Core
       Domain: MicroscopeHardwareSpecifications
@@ -4333,6 +4402,16 @@ classes:
         description: The Date in which this Image was Acquired.
         annotations:
           Tier: '1'
+      CustomProperties:
+        description: Source metadata values the model does not model, kept so no metadata is lost.
+        range: Property
+        multivalued: true
+        inlined_as_list: true
+      SourceFile:
+        description: The files this Image's metadata was read from.
+        range: SourceFile
+        multivalued: true
+        inlined_as_list: true
     annotations:
       Extension: Core
       Domain: ImageAcquisitionSettings
@@ -9060,7 +9139,7 @@ classes:
   GenericOpticalApertureSettings:
     description: This element holds the Setting applied to a Generic Optical Aperture used during the Acquisition of this
       Channel as well as a reference (the ID attribute) to the Optical Aperture in question.
-    is_a: MaskingPlateSettings
+    is_a: OpticalApertureSettings
     annotations:
       Extension: Basic
       Domain: ImageAcquisitionSettings
@@ -10289,7 +10368,7 @@ classes:
   DiffractionGratingSettings:
     description: This element holds the Setting applied to a Diffraction Grating used during the Acquisition of this Channel
       as well as a reference (the ID attribute) to the Diffraction Grating in question.
-    is_a: MaskingPlateSettings
+    is_a: OpticalApertureSettings
     attributes:
       DiffractionEfficiency:
         range: PercentFraction
@@ -10305,55 +10384,16 @@ classes:
   MaskingPlateSettings:
     description: This element holds the Setting applied to a Masking Plate used during the Acquisition of this Channel as
       well as a reference (the ID attribute) to the Masking Plate in question.
-    is_a: Settings
-    attributes:
-      TransmittanceProfileFile:
-        range: TransmittanceProfileFile
-        inlined: true
-        multivalued: true
-        inlined_as_list: true
-        description: This element represents a file in .csv or other suitable formats containing the Transmittance profile
-          of this optical component.
-      ReflectanceProfileFile:
-        range: ReflectanceProfileFile
-        inlined: true
-        multivalued: true
-        inlined_as_list: true
-        description: This element represents a file in .csv or other suitable formats containing the Reflectance profile of
-          this optical component.
-      TransmissionWavelengthRangeSettings:
-        range: TransmissionWavelengthRangeSettings
-        inlined: true
-        multivalued: true
-        inlined_as_list: true
-        description: This element records the range of Transmission Wavelengths that were set for this optical component during
-          the Acquisition of this Image. It also records the maximum amount of light transmitted. Multiple of this elements
-          can be used.
-      ReflectionWavelengthRangeSettings:
-        range: ReflectionWavelengthRangeSettings
-        inlined: true
-        multivalued: true
-        inlined_as_list: true
-        description: This element records the range of Reflection Wavelengths that were set for this optical component during
-          the Acquisition of this Image. It also records the maximum amount of light transmitted. Multiple of this elements
-          can be used.
-      ID:
-        description: This is the Unique Identifier of the device used in this case.
-        inlined: false
-        annotations:
-          Tier: '1'
-        range: OpticalAperture
+    is_a: OpticalApertureSettings
     annotations:
       Extension: Advanced+Confocal
       Domain: ImageAcquisitionSettings
       Category: Settings
       Tier: '2'
-    slots:
-    - ObjectType
   PinholeSettings:
     description: This element holds the Setting applied to a Pinhole used during the Acquisition of this Channel as well as
       a reference (the ID attribute) to the Pinhole in question.
-    is_a: MaskingPlateSettings
+    is_a: OpticalApertureSettings
     attributes:
       Aperture:
         range: float

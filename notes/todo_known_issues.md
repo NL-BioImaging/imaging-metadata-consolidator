@@ -129,8 +129,37 @@ checks the XSD and JSON content is still in it. Metaseed profiles (and later the
 are generated from it. Descriptions: fill from OME 2016-06 ome.xsd (CC BY 3.0, attributed) and derive
 (enum <- the slot using it, XUnit <- X), each with `annotations: {description_source: ...}`; leave the
 rest empty.
-Next: step 2, the metaseed generator (imaging.yaml -> a metaseed profile named `imaging`, user), then step 3 (test: everything of
-the current fullSchema.yaml represented, old name -> new), step 4 (schema.extended.json into the model).
+Step 2+3 (not committed at the time of writing): `src/MetaseedGenerator.py`, `python src/main.py metaseed`
+-> `models/imaging.metaseed.yaml` (profile `imaging` 0.1): 213 entities, 3483 fields; local metaseed 0.54.0
+(scratch venv, LOCALAPPDATA/APPDATA pointed at the scratchpad) `spec validate`: valid, no problems, no
+warnings. Rules: every concrete class reachable from OME is an entity with inherited slots written out; a
+slot over an ABSTRACT class -> one field per concrete subtype (Instrument.LightSource -> Laser, Arc, ...;
+none required, so "at least one light source" is no longer enforced in metaseed); a concrete range is not
+expanded (SpecsFile holds a FileAnnotation, not a TransmittanceProfileFile, as in the XSD); references ->
+string + `reference: Target.ID` when the target is an entity; enums/types/slot facets -> constraints
+(enum, pattern, minimum, maximum, min_items, max_items); ifabsent -> example; date/datetime/uri kept as
+metaseed types (the old profile had strings); an optional ID identifier where metaseed would otherwise
+take an optional free-text first field (7 entities, e.g. MapEntry, BinData, Rights). Only LightSensor is
+unreachable (XSD: referenced by LightSensorRef, contained nowhere) - its reference stays a plain string.
+Model fixes found on the way (converter + master): the type of an abstract group is abstract
+(AcoustoOpticalDevice, ...), a type used only as a base is abstract (WavelengthRangeSettingsType), and the
+type of an abstract group is never merged into one member (OpticalApertureSettings was merged into
+MaskingPlateSettings, making its siblings inherit from it). Master regenerated once more (--force) and the
+hand edits reapplied by script.
+Hand edits in models/imaging.yaml so far: import `imaging_provenance` (models/imaging_provenance.yaml:
+Property, SourceFile, SourceMapping, as ProfileConverter defined them) with CustomProperties on OME, Image,
+Instrument and SourceFile on Image; OME.ID/Name (metaseed datasets identify their root; the XSD OME has
+none); LightPath Tier 1 (from fullSchema.json).
+Tests: tests/test_metaseed_generator.py - rules on a synthetic LinkML model; the committed profile is up
+to date; every concrete class reachable but LightSensor; everything in the fullSchema.json-based profile
+(ProfileConverter output) has a place in the new one, entities mapped through the nesting (CMOS_WavelengthRange
+-> ComponentWavelengthRange), Description -> Annotation, role prefixes dropped, Tier/InstrumentName/
+InstrumentID/Pump listed as held differently. Mutation-checked.
+Not switched yet: export/ still uses the old profiles (fullSchema.yaml, schema.extended.yaml). Switching
+needs step 4 (schema.extended.json's additions in the master), and the exporter's `fits` must accept
+date/datetime/uri (format-checked) and the mapper's Transmitted_/Fluorescence_ categories must set Role.
+Next: step 4 (schema.extended.json into the master), then switch export/ to the generated profile and
+retire ProfileConverter/ProfileExtender.
 Keep open for later (user): importing/extending ome.yaml. So: same roots as ome.yaml
 (ManufacturerSpec, LightSource, Detector, Settings...), `exact_mappings`/`close_mappings` to ome:
 where the meaning matches.

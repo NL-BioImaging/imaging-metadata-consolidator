@@ -190,20 +190,26 @@ class LinkmlConverter:
         return type_name is not None and (_builtin(type_name) or _local(type_name) in self.simple_types)
 
     def _merged_type(self, type_name):
-        """A named complexType whose only element is one global element: that element's class holds it."""
+        """A named complexType whose only element is one global element: that element's class holds it. Not the
+        type of an abstract group: MaskingPlateSettings is one of OpticalApertureSettingsGroup's members, and its
+        siblings must not inherit from it."""
         users = [name for name, element in self.elements.items() if _local(element.get('type')) == type_name
                  and element.get('abstract') != 'true']
+        group_users = [name for name, element in self.elements.items() if _local(element.get('type')) == type_name
+                       and element.get('abstract') == 'true']
         local_users = [node for node in self.root.iter(XS + 'element')
                        if _local(node.get('type')) == type_name and node.get('name') not in self.elements]
-        return users[0] if len(users) == 1 and not local_users else None
+        return users[0] if len(users) == 1 and not local_users and not group_users else None
 
     def class_of_type(self, type_name):
         return self._merged_type(type_name) or type_name
 
-    def _only_in_abstract_groups(self, type_name):
-        """A type reached only through abstract groups (Detector via DetectorGroup) never occurs bare."""
+    def _never_bare(self, type_name):
+        """The type of an abstract group (AcoustoOpticalDevice of AcoustoOpticalDeviceGroup) only occurs as one of
+        the group's members, even where a member uses the type as is; a named type no element uses
+        (WavelengthRangeSettingsType) only occurs as a base."""
         users = [node for node in self.root.iter(XS + 'element') if _local(node.get('type')) == type_name]
-        return bool(users) and all(node.get('abstract') == 'true' for node in users)
+        return type_name in self.complex_types and (not users or any(node.get('abstract') == 'true' for node in users))
 
     def _head_type(self, element):
         head = self.elements.get(element.get('substitutionGroup'))
@@ -308,7 +314,7 @@ class LinkmlConverter:
         if is_a:
             cls['is_a'] = is_a
         if annotations.pop('xsdfu_abstract', None) or documented.get('abstract') == 'true' \
-                or self._only_in_abstract_groups(name):
+                or self._never_bare(name):
             cls['abstract'] = True
         attributes = {}
         cls['attributes'] = attributes

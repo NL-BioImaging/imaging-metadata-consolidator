@@ -12,6 +12,8 @@ Subcommands:
                profile (see DatasetExporter).
   linkml       Create the LinkML master model (models/imaging.yaml) from the
                LiMi XSD, once (see LinkmlConverter).
+  metaseed     Generate a metaseed profile from the LinkML master model
+               (see MetaseedGenerator).
 """
 
 import argparse
@@ -26,6 +28,8 @@ from convert import convert_files
 from DatasetExporter import DatasetExporter, export_file
 from LinkmlConverter import (DEFAULT_LINKML_FILE, DEFAULT_OME_XSD_FILE, DEFAULT_UNITS_FILE, LinkmlConverter,
                              write_schema)
+from MetaseedGenerator import DEFAULT_PROFILE_FILE as DEFAULT_METASEED_FILE, MetaseedGenerator
+from MetaseedGenerator import write_profile as write_metaseed_profile
 from ProfileConverter import (DEFAULT_EXTENDED_PROFILE_FILE, DEFAULT_EXTENDED_SCHEMA_TREE_FILE,
                               DEFAULT_JSON_SCHEMA_FILE, DEFAULT_PROFILE_FILE, DEFAULT_SCHEMA_TREE_FILE, DEFAULT_XSD_FILE,
                               ProfileConverter, ProfileExtender, write_profile)
@@ -113,6 +117,15 @@ def run_linkml(args):
         print(f'  unresolved reference {where} ({id_type}), kept as a string')
 
 
+def run_metaseed(args):
+    generator = MetaseedGenerator(args.model)
+    profile = generator.generate(args.name, args.version)
+    write_metaseed_profile(profile, args.output)
+    print(f'Wrote {args.output}: profile {profile["name"]} {profile["version"]}, {len(profile["entities"])} entities, '
+          f'{sum(len(entity["fields"]) for entity in profile["entities"].values())} fields; '
+          f'{len(generator.expanded)} slots over an abstract class written as one field per subtype')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -185,6 +198,18 @@ def main():
     linkml_parser.add_argument('--force', action='store_true',
                         help='Overwrite an existing model, discarding any edits to it')
     linkml_parser.set_defaults(func=run_linkml)
+
+    metaseed_parser = subparsers.add_parser(
+        'metaseed', help='Generate a metaseed profile from the LinkML master model')
+    metaseed_parser.add_argument('--model', default=DEFAULT_LINKML_FILE,
+                        help='Path to the LinkML model')
+    metaseed_parser.add_argument('--output', default=DEFAULT_METASEED_FILE,
+                        help='Path to write the metaseed profile YAML to')
+    metaseed_parser.add_argument('--name', default=None,
+                        help="Profile name (default: the model's name)")
+    metaseed_parser.add_argument('--version', default=None,
+                        help="Profile version, in x.y format (default: from the model's version)")
+    metaseed_parser.set_defaults(func=run_metaseed)
 
     args = parser.parse_args()
     args.func(args)
