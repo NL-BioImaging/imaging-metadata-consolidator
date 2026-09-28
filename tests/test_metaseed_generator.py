@@ -44,9 +44,22 @@ classes:
       Range: {range: WavelengthRange, multivalued: true, inlined_as_list: true}
       Sensor: {range: Sensor, inlined: false}
       Label: {range: Label, inlined: true}
+      Shutter: {range: Shutter, multivalued: true, inlined_as_list: true}
+      Lamp: {range: Lamp, multivalued: true, inlined_as_list: true}
   Sensor:
     attributes:
       ID: {identifier: true}
+  Shutter:
+    annotations: {Tier: '2'}
+    attributes:
+      ID: {identifier: true, required: true, annotations: {Tier: '1'}}
+      Speed: {range: float, required: true, annotations: {Tier: '1'}}
+  Lamp:
+    annotations: {Tier: '1'}
+    attributes:
+      ID: {identifier: true, required: true, annotations: {Tier: '1'}}
+      Colour: {required: true, annotations: {Tier: '3'}}
+      Serial: {required: true}
   Label:
     attributes:
       Text: {range: string}
@@ -131,6 +144,19 @@ class MetaseedGeneratorTest(unittest.TestCase):
         self.assertEqual(list(self.fields['Label']), ['ID', 'Text'])
         self.assertTrue(self.fields['Label']['ID']['is_identifier'])
         self.assertNotIn('ID', self.fields['WavelengthRange'])
+
+
+    def test_limi_tier_decides_tier_and_required(self):
+        # the higher tier of field and class; the XSD's "required" holds only at tier 1
+        self.assertEqual((self.fields['Lamp']['ID']['tier'], self.fields['Lamp']['ID']['required']), ('required', True))
+        self.assertEqual((self.fields['Lamp']['Colour']['tier'], self.fields['Lamp']['Colour']['required']),
+                         ('optional', False))
+        self.assertEqual((self.fields['Shutter']['Speed']['tier'], self.fields['Shutter']['Speed']['required']),
+                         ('recommended', False))
+        # a field without a tier of its own takes its class's
+        self.assertEqual((self.fields['Lamp']['Serial']['tier'], self.fields['Lamp']['Serial']['required']),
+                         ('required', True))
+        self.assertNotIn('tier', self.fields['Label']['Text'])
 
 
 class GeneratedProfileTest(unittest.TestCase):

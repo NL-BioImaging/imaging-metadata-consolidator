@@ -18,6 +18,9 @@ from linkml_runtime.utils.schemaview import SchemaView
 DEFAULT_MODEL_FILE = 'models/imaging.yaml'
 DEFAULT_PROFILE_FILE = 'models/imaging.metaseed.yaml'
 
+# LiMi documents at three levels; a field the XSD requires is needed only at its level (MechanicalCalibration is 4)
+LIMI_TIERS = {'1': 'required', '2': 'recommended', '3': 'optional', '4': 'optional'}
+
 RANGES = {'string': 'string', 'integer': 'integer', 'float': 'float', 'double': 'float', 'decimal': 'float',
           'boolean': 'boolean', 'date': 'date', 'datetime': 'datetime', 'uri': 'uri', 'uriorcurie': 'uri'}
 
@@ -79,31 +82,41 @@ class MetaseedGenerator:
                 if not self.classes[name].abstract]
 
     def _fields(self, class_name, slot, queue):
+        tier = self._tier(class_name, slot)
+        required = bool(slot.required) and tier in (None, 'required')
         is_nested = slot.range in self.classes and (slot.inlined or slot.inlined_as_list)
         if is_nested and not self.classes[slot.range].abstract:
             # as in the XSD, only an abstract group holds other types; SpecsFile (a FileAnnotation) does not
             # hold a TransmittanceProfileFile, although that is a FileAnnotation too
             queue.append(slot.range)
-            return [self._nested_field(slot.name, slot, slot.range, slot.required)]
+            return [self._nested_field(slot.name, slot, slot.range, required, tier)]
         if is_nested:
             concrete = self._concrete(slot.range)
             queue.extend(concrete)
             # one field per concrete class; a field can't require "one of these", so none is required
             self.expanded[f'{class_name}.{slot.name}'] = concrete
-            return [self._nested_field(slot.name if name == slot.range else name, slot, name, False)
+            return [self._nested_field(slot.name if name == slot.range else name, slot, name, False, tier)
                     for name in concrete]
-        return [self._value_field(slot)]
+        return [self._value_field(slot, required, tier)]
 
-    def _nested_field(self, name, slot, items, required):
-        field = {'name': name, 'type': 'list' if slot.multivalued else 'entity', 'required': bool(required)}
+    def _tier(self, class_name, slot):
+        """The metaseed tier of `slot` on `class_name`: the higher LiMi tier of the field and its class."""
+        tiers = [_annotation(slot, 'Tier'), _annotation(self.classes[class_name], 'Tier')]
+        known = [tier for tier in tiers if tier in LIMI_TIERS]
+        return LIMI_TIERS[max(known)] if known else None
+
+    def _nested_field(self, name, slot, items, required, tier):
+        field = {'name': name, 'type': 'list' if slot.multivalued else 'entity', 'required': required}
         if slot.description:
             field['description'] = slot.description
+        if tier:
+            field['tier'] = tier
         field['items'] = items
         field['owns'] = True
         self._add_cardinality(field, slot)
         return field
 
-    def _value_field(self, slot):
+    def _value_field(self, slot, required, tier):
         base, constraints = self._base_range(slot)
         field = {'name': slot.name}
         if slot.multivalued:
@@ -111,7 +124,7 @@ class MetaseedGenerator:
             field['items'] = base
         else:
             field['type'] = base
-        field['required'] = bool(slot.required)
+        field['required'] = required
         description = slot.description
         if slot.range in self.classes:
             reference = f'The ID of a {slot.range}.'
@@ -120,6 +133,8 @@ class MetaseedGenerator:
             field['description'] = description
         if slot.range in self.classes and not self.classes[slot.range].abstract:
             field['reference'] = f'{slot.range}.{self._identifier(slot.range)}'
+        if tier:
+            field['tier'] = tier
         if slot.identifier:
             field['is_identifier'] = True
         if constraints:
@@ -160,6 +175,11 @@ class MetaseedGenerator:
         for key, value in (('min_items', slot.minimum_cardinality), ('max_items', slot.maximum_cardinality)):
             if value is not None:
                 field.setdefault('constraints', {})[key] = value
+
+
+def _annotation(element, name):
+    annotations = element.annotations
+    return str(annotations[name].value) if annotations is not None and name in annotations else None
 
 
 def write_profile(profile, filename):

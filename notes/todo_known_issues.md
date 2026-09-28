@@ -42,7 +42,8 @@ exports with their Property records sampled to 25 per anchor; the full run is ~3
 error. Most are LiMi's own requirements the sources do not state (GenericDetector 121: Manufacturer, Model,
 CatalogNumber, QuantumEfficiency, ...; Pixels 108: DimensionOrder, SizeZ/C/T, PixelType; Image 104: ID, Name,
 Instrument, Experiment, Sample, AcquisitionSoftware references; Objective 71; MechanicalStage 60). The Hub
-validates the same way: a Delmic test dataset gave the same 12 issues there (deleted again, soft; the user
+validates the same way (see the tier TODO for the effect of the tier mapping; SVS's one Property
+without a Name is its source key "", kept as it is): a Delmic test dataset gave the same 12 issues there (deleted again, soft; the user
 chose local validation only). Hub datasets need metaseed's tree serialization, not the nested export
 (save_dataset silently stored an empty dataset): `MetaseedClient(...)._facade.load_nested(document)` then
 `serialize(format='tree')`.
@@ -155,8 +156,11 @@ What follows from a new source or new metadata:
 
 ## TODO
 
-- [ ] Map LiMi's per-property tier (1/2/3, the `Tier` annotations) to metaseed's advisory `tier`
-      (required / recommended / optional), so real vendor files are not failed on tier-3 fields.
+- [x] LiMi tiers -> metaseed tiers (2026-09-28): the generator gives every field the higher LiMi tier of the
+      field and its class (1 required, 2 recommended, 3 and MechanicalCalibration's 4 optional), and keeps
+      the XSD's `required` only at tier 1; untiered fields (extension, provenance) keep theirs. Of the 695
+      missing required fields of the exports, 543 are tier 1 and stay; 150 become recommended/optional
+      (EMSIS 47 -> 35, SVS 37 -> 32, platy 34 -> 32, Delmic unchanged at 12, all tier 1).
 - [ ] Unit normalisation (e.g. vendor "um" -> OME "µm") so unit fields can be typed; the
       original spelling must stay recoverable.
 - [ ] Per-channel mapping (e.g. Huygens ChannelData[i] LambdaEx/LambdaEm -> each Channel's
