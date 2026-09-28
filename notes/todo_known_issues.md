@@ -8,7 +8,7 @@ Published on the Hub (account j.j.m.defolter@amsterdamumc.nl): profile `imaging`
 `models/imaging.metaseed.yaml` with the LiMi tiers, 2026-09-28; valid, no problems, no warnings); the
 account holds no datasets. After a change to the master model: regenerate (`python src/main.py
 metaseed`), run metaseed's compatibility check against the last published version (see "Profile
-versions"), bump the version, and push and publish again (the user does this).
+versions"), bump the version, and push and publish again.
 
 ### LiMi XSD slips (worked around in the converter, original names kept)
 
@@ -41,17 +41,21 @@ exports with their Property records sampled to 25 per anchor; the full run is ~3
 5 hours for both): 695 errors, all "Field 'X' is required" - no type, format, constraint or unknown-field
 error. Most are LiMi's own requirements the sources do not state (GenericDetector 121: Manufacturer, Model,
 CatalogNumber, QuantumEfficiency, ...; Pixels 108: DimensionOrder, SizeZ/C/T, PixelType; Image 104: ID, Name,
-Instrument, Experiment, Sample, AcquisitionSoftware references; Objective 71; MechanicalStage 60). The Hub
-validates the same way (see the tier TODO for the effect of the tier mapping; SVS's one Property
-without a Name is its source key "", kept as it is): a Delmic test dataset gave the same 12 issues there (deleted again, soft; the user
-chose local validation only). Hub datasets need metaseed's tree serialization, not the nested export
-(save_dataset silently stored an empty dataset): `MetaseedClient(...)._facade.load_nested(document)` then
+Instrument, Experiment, Sample, AcquisitionSoftware references; Objective 71; MechanicalStage 60). With the
+LiMi tiers (profile 0.2) 543 of them remain, all tier 1 (EMSIS 47 -> 35, SVS 37 -> 32, platy 34 -> 32,
+Delmic 12). SVS's one Property without a Name is its source key "", kept as it is. The Hub validates the
+same way: a Delmic test dataset gave the same 12 issues there (deleted again, soft; the user chose local
+validation only). Hub datasets need metaseed's tree serialization, not the nested export (save_dataset
+silently stored an empty dataset): `MetaseedClient(...)._facade.load_nested(document)` then
 `serialize(format='tree')`.
 
 ### Profile versions (2026-09-28)
 
-`imaging` 0.1 and 0.2 are published on the Hub. metaseed's compatibility check (`metaseed.specs.compare.compare_specs(old, new)`,
-the check behind the Hub's "Breaking changes"): 0.1 -> 0.2 has no breaking change (required bump minor).
+`imaging` 0.1 and 0.2 are published on the Hub. 0.2 adds the LiMi tiers: every field gets the higher LiMi
+tier of the field and its class (1 required, 2 recommended, 3 and MechanicalCalibration's 4 optional), and
+the XSD's `required` holds only at tier 1; untiered fields (extension, provenance) keep theirs. metaseed's
+compatibility check (`metaseed.specs.compare.compare_specs(old, new)`, the check behind the Hub's "Breaking
+changes"): 0.1 -> 0.2 has no breaking change (required bump minor).
 A first 0.2 re-keyed StageLabel (an added ID) and MicroscopeTableSettings (a reference declared as
 identifier); the generator now keeps metaseed's inferred identifier - the first field that is no
 reference - and declares it where a tier made it optional. Run the check before publishing a new version.
@@ -60,8 +64,10 @@ reference - and declares it where a tier made it optional. Run the check before 
 
 metaseed has no inheritance and no "one of": a slot over an abstract class is one field per concrete
 subtype (Instrument.Laser, Instrument.Arc, ...), none required, so "an instrument has a light source" is
-not enforced there. An optional ID identifier is added where metaseed would otherwise take an optional
-free-text first field (MapEntry, BinData, Rights, ...).
+not enforced there. metaseed keys an entity by its `is_identifier` field, else by its first field that is
+no reference; where that field is optional free text, an optional ID identifier is added (MapEntry,
+BinData, Rights, ...), unless it is required in the model and optional only through its tier
+(StageLabel.Name): then it is declared the identifier, so the entity keeps its key.
 
 ### Per-channel mounting medium index
 
@@ -99,7 +105,7 @@ Nothing open.
   importing `imaging_units.yaml` (units enums), `imaging_provenance.yaml` (Property, SourceFile,
   SourceMapping) and `imaging_extension.yaml` (what the source files hold beyond LiMi, mostly EM,
   formerly mappings/schema.extended.json; mixins OMEExtension, InstrumentExtension, ... used by the model's
-  classes, shared Quantity {Value, Unit}, Vector2D, StagePosition). Edited by hand; version 0.1.0, id
+  classes, shared Quantity {Value, Unit}, Vector2D, StagePosition). Edited by hand; version 0.2.0, id
   https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging.
 - Created once from the whole LiMi XSD by `python src/main.py linkml` (src/LinkmlConverter.py; refuses to
   overwrite without --force). Rules: extension base -> `is_a`; an abstract `*Group` -> a slot over its
@@ -154,21 +160,19 @@ Values that fit a declared field are typed, with a `SourceMapping` record (e.g. 
 of paths were considered and not taken (user, 2026-09-28).
 
 What follows from a new source or new metadata:
-- The output/ and export/ freshness tests fail until `convert` and `export` are rerun; the no-data-loss
-  tests confirm every new value is kept.
+- The output/ and export/ freshness tests (tests/test_convert.py, tests/test_dataset_exporter.py) fail
+  until `convert` and `export` are rerun; the no-data-loss tests (tests/test_no_data_loss.py) confirm
+  every new value is kept.
 - `AcquisitionMetadataMapper.unmatched_fields()` lists output paths the model does not have - the
   candidates for new rules.
-- To make a value typed: add a rule to mappings.json (its target a model path; add the field to
-  models/imaging_extension.yaml if missing), rerun `metaseed`, `convert` and `export`; the value moves
-  from a Property to a typed field.
+- To make a value typed: add a rule to mappings.json (its target a model path - a test checks it is in
+  the model; add the field to models/imaging_extension.yaml if missing). A change to the model makes the
+  committed profile out of date (a test fails until `python src/main.py metaseed` is rerun); then rerun
+  `convert` and `export`, and the value moves from a Property to a typed field. To publish the changed
+  profile, see "Hub state".
 
 ## TODO
 
-- [x] LiMi tiers -> metaseed tiers (2026-09-28): the generator gives every field the higher LiMi tier of the
-      field and its class (1 required, 2 recommended, 3 and MechanicalCalibration's 4 optional), and keeps
-      the XSD's `required` only at tier 1; untiered fields (extension, provenance) keep theirs. Of the 695
-      missing required fields of the exports, 543 are tier 1 and stay; 150 become recommended/optional
-      (EMSIS 47 -> 35, SVS 37 -> 32, platy 34 -> 32, Delmic unchanged at 12, all tier 1).
 - [ ] Unit normalisation (e.g. vendor "um" -> OME "µm") so unit fields can be typed; the
       original spelling must stay recoverable.
 - [ ] Per-channel mapping (e.g. Huygens ChannelData[i] LambdaEx/LambdaEm -> each Channel's
@@ -182,4 +186,3 @@ What follows from a new source or new metadata:
 - [ ] `exact_mappings`/`close_mappings` to the OME LinkML schema, keeping importing/extending it open.
 - [ ] Consider adding `DNAcropSmall.ome.json` (full OME + Huygens) as a source: a real test
       that mapped annotation values agree with the image's own OME values.
-- [x] PR for `metaseed-profile`: https://github.com/NL-BioImaging/imaging-metadata-consolidator/pull/2
