@@ -4,11 +4,11 @@
 
 ### Hub state
 
-The Hub account the metaseed token acts as (j.j.m.defolter@amsterdamumc.nl) holds one draft,
-`LiMi-extended` 2.1, matching the retired `models/schema.extended.yaml`. The generated profile
-`imaging` (`models/imaging.metaseed.yaml`) is not on the Hub: at 1.2 MB it is too large for the MCP
-import, and pushing it (metaseed CLI `hub`) waits for the user's go-ahead. Datasets can only be created
-against a published profile, so exports are not validated on the Hub until one is published.
+The Hub account the metaseed token acts as (j.j.m.defolter@amsterdamumc.nl) holds one draft, `imaging`
+0.1, pushed by the user from `models/imaging.metaseed.yaml` (2026-09-28; valid, no problems, no
+warnings); the old `LiMi-extended` draft is gone. Datasets can only be created against a published
+profile, so exports are not validated on the Hub until it is published. After a change to the master
+model, regenerate (`python src/main.py metaseed`) and push the profile again.
 
 ### LiMi XSD slips (worked around in the converter, original names kept)
 
@@ -68,7 +68,7 @@ linkml 1.11.1 in biomero-converter-env; chardet kept at 5.2.0 (linkml's ShEx gen
 ## In progress
 
 Master model and pipeline done (branch `metaseed-profile`, 2026-09-28).
-Open: push the `imaging` profile to the Hub as a new draft?
+Nothing open.
 
 ## The model and the pipeline
 
