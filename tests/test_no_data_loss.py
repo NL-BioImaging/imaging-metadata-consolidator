@@ -251,11 +251,5 @@ class DatasetNoDataLossTest(unittest.TestCase):
                     self.assertEqual(problems, [], '\n'.join(problems))
 
 
-class ExtendedProfileNoDataLossTest(DatasetNoDataLossTest):
-    """The same, exporting against the profile extended with the mapper's extended schema."""
-
-    profile_file = os.path.join(REPO_ROOT, 'models', 'schema.extended.yaml')
-
-
 if __name__ == '__main__':
     unittest.main()

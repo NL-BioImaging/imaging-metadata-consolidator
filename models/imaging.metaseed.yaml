@@ -159,6 +159,41 @@ entities:
       description: Source metadata values the model does not model, kept so no metadata is lost.
       items: Property
       owns: true
+    - name: ElectronSource
+      type: entity
+      required: false
+      items: ElectronSource
+      owns: true
+    - name: ElectronBeam
+      type: entity
+      required: false
+      items: ElectronBeam
+      owns: true
+    - name: ElectronOptics
+      type: entity
+      required: false
+      items: ElectronOptics
+      owns: true
+    - name: Scan
+      type: entity
+      required: false
+      items: Scan
+      owns: true
+    - name: Acquisition
+      type: entity
+      required: false
+      items: Acquisition
+      owns: true
+    - name: Operations
+      type: string
+      required: false
+    - name: Features
+      type: string
+      required: false
+    - name: Annotation
+      type: list
+      items: string
+      required: false
   Rights:
     description: The rights holder of this data and the rights held.
     fields:
@@ -1512,6 +1547,23 @@ entities:
       description: Source metadata values the model does not model, kept so no metadata is lost.
       items: Property
       owns: true
+    - name: Manufacturer
+      type: string
+      required: false
+    - name: Model
+      type: string
+      required: false
+    - name: Type
+      type: string
+      required: false
+    - name: ComputerName
+      type: string
+      required: false
+    - name: Vacuum
+      type: entity
+      required: false
+      items: Vacuum
+      owns: true
   Image:
     description: This element describes the actual Image that was acquired and its meta-data. The elements that are references
       (ending in Ref or Settings) refer to elements defined outside of the Image element. Ref elements are simple links, while
@@ -1679,6 +1731,22 @@ entities:
       description: The files this Image's metadata was read from.
       items: SourceFile
       owns: true
+    - name: Type
+      type: string
+      required: false
+    - name: CropHint
+      type: entity
+      required: false
+      items: CropHint
+      owns: true
+    - name: Corrections
+      type: entity
+      required: false
+      items: Corrections
+      owns: true
+    - name: BinaryResult
+      type: string
+      required: false
   StructuredAnnotations:
     description: An unordered collection of annotation attached to objects in the OME data model.
     fields:
@@ -1828,6 +1896,155 @@ entities:
       items: string
       required: false
       description: For a value combined from several source values (e.g. a date and a time), their source paths.
+  ElectronSource:
+    description: The electron source of an electron microscope.
+    fields:
+    - name: ID
+      type: string
+      required: false
+      is_identifier: true
+      description: An identifier for this record; the model defines none.
+    - name: Type
+      type: string
+      required: false
+  ElectronBeam:
+    description: The electron beam as set for the acquisition.
+    fields:
+    - name: ID
+      type: string
+      required: false
+      is_identifier: true
+      description: An identifier for this record; the model defines none.
+    - name: Type
+      type: string
+      required: false
+    - name: Mode
+      type: string
+      required: false
+    - name: Focus
+      type: float
+      required: false
+    - name: SpotSize
+      type: float
+      required: false
+    - name: SpotIndex
+      type: integer
+      required: false
+    - name: WorkingDistance
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: AccelerationVoltage
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Current
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: EmissionCurrent
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: ConvergenceAngle
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Defocus
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Shift
+      type: entity
+      required: false
+      items: Vector2D
+      owns: true
+    - name: SourceTilt
+      type: entity
+      required: false
+      items: Vector2D
+      owns: true
+    - name: Stigmator
+      type: entity
+      required: false
+      items: Vector2D
+      owns: true
+    - name: HighVoltage
+      type: entity
+      required: false
+      items: HighVoltage
+      owns: true
+  ElectronOptics:
+    description: The electron optics as set for the acquisition.
+    fields:
+    - name: CameraLength
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: OperatingMode
+      type: string
+      required: false
+    - name: OperatingSubMode
+      type: string
+      required: false
+    - name: ProjectorMode
+      type: string
+      required: false
+    - name: GunLensSetting
+      type: string
+      required: false
+    - name: Apertures
+      type: list
+      items: string
+      required: false
+  Scan:
+    description: The scan of a scanning microscope.
+    fields:
+    - name: FieldOfView
+      type: entity
+      required: false
+      items: FieldOfView
+      owns: true
+    - name: Rotation
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: FrameTime
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: LineTime
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: LineIntegrationCount
+      type: integer
+      required: false
+    - name: Detector
+      type: string
+      required: false
+      description: The name of the detector used for the scan.
+  Acquisition:
+    description: Who acquired the image, and when.
+    fields:
+    - name: Operator
+      type: entity
+      required: false
+      items: Operator
+      owns: true
+    - name: StartDate
+      type: string
+      required: false
   Sample:
     description: This field captures a description of the sample that was imaged in this experiment.
     fields:
@@ -2577,6 +2794,9 @@ entities:
       type: string
       required: false
       description: This records the computer Language in which this Software was developed.
+    - name: ApplicationID
+      type: string
+      required: false
   SoftwareModule:
     description: This element represents a commercial, or open-source Software, script, macro, plugin or module utilized for
       any Image Acquisition, Image Analysis or Quality Control task.
@@ -2651,6 +2871,9 @@ entities:
       type: string
       required: false
       description: This records the computer Language in which this Software was developed.
+    - name: ApplicationID
+      type: string
+      required: false
   CalibrationSoftware:
     description: This element describes a software tool utilized to analyze Calibration metrics obtained from this Calibration
       Procedure and generate a suitable Calibration Reports. As an example, such a Software tool might analyzes microscopy
@@ -2729,6 +2952,9 @@ entities:
       type: string
       required: false
       description: This records the computer Language in which this Software was developed.
+    - name: ApplicationID
+      type: string
+      required: false
   EnvironmentalControlDevice:
     description: This element describes an Environmental Control Device available for this Instrument to maintain a controlled
       Imaging Environment during Imaging Environment.
@@ -6407,7 +6633,7 @@ entities:
         - pt
         - Pixel
         - reference frame
-    - name: ApertureNr.
+    - name: ApertureNr
       type: integer
       required: true
       description: This field captures the Number of individual apertures present in this Spatial Mask.
@@ -7444,6 +7670,36 @@ entities:
       required: false
       description: This field describes the XY-axis positioning error (typically expressed in % error) associated with this
         Stage as specified by the Manufacturer.
+    - name: Position
+      type: entity
+      required: false
+      items: StagePosition
+      owns: true
+    - name: Tilt
+      type: entity
+      required: false
+      items: StageTilt
+      owns: true
+    - name: Rotation
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Bias
+      type: entity
+      required: false
+      items: StageBias
+      owns: true
+    - name: RawPosition
+      type: entity
+      required: false
+      items: StagePosition
+      owns: true
+    - name: MultiStage
+      type: entity
+      required: false
+      items: MultiStage
+      owns: true
     - name: Annotation
       type: string
       required: false
@@ -8102,6 +8358,36 @@ entities:
       required: false
       description: This field describes the XY-axis positioning error (typically expressed in % error) associated with this
         Stage as specified by the Manufacturer.
+    - name: Position
+      type: entity
+      required: false
+      items: StagePosition
+      owns: true
+    - name: Tilt
+      type: entity
+      required: false
+      items: StageTilt
+      owns: true
+    - name: Rotation
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Bias
+      type: entity
+      required: false
+      items: StageBias
+      owns: true
+    - name: RawPosition
+      type: entity
+      required: false
+      items: StagePosition
+      owns: true
+    - name: MultiStage
+      type: entity
+      required: false
+      items: MultiStage
+      owns: true
     - name: Annotation
       type: string
       required: false
@@ -17313,6 +17599,32 @@ entities:
       required: false
       description: This field records the Ambient Humidity at which this detector is designed to operate, according to the
         Manufacturer.
+    - name: Type
+      type: string
+      required: false
+      description: The type of detector as the source names it; CCD, CMOS and WaveFrontSensor have their own.
+    - name: Gain
+      type: float
+      required: false
+    - name: Offset
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Contrast
+      type: float
+      required: false
+    - name: Channel
+      type: integer
+      required: false
+    - name: Configuration
+      type: list
+      items: string
+      required: false
+    - name: ActiveConfiguration
+      type: string
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -17668,6 +17980,32 @@ entities:
       required: false
       description: This field records the Ambient Humidity at which this detector is designed to operate, according to the
         Manufacturer.
+    - name: Type
+      type: string
+      required: false
+      description: The type of detector as the source names it; CCD, CMOS and WaveFrontSensor have their own.
+    - name: Gain
+      type: float
+      required: false
+    - name: Offset
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Contrast
+      type: float
+      required: false
+    - name: Channel
+      type: integer
+      required: false
+    - name: Configuration
+      type: list
+      items: string
+      required: false
+    - name: ActiveConfiguration
+      type: string
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -17993,6 +18331,32 @@ entities:
       required: false
       description: This field records the Ambient Humidity at which this detector is designed to operate, according to the
         Manufacturer.
+    - name: Type
+      type: string
+      required: false
+      description: The type of detector as the source names it; CCD, CMOS and WaveFrontSensor have their own.
+    - name: Gain
+      type: float
+      required: false
+    - name: Offset
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Contrast
+      type: float
+      required: false
+    - name: Channel
+      type: integer
+      required: false
+    - name: Configuration
+      type: list
+      items: string
+      required: false
+    - name: ActiveConfiguration
+      type: string
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -18308,6 +18672,32 @@ entities:
       required: false
       description: This field records the Ambient Humidity at which this detector is designed to operate, according to the
         Manufacturer.
+    - name: Type
+      type: string
+      required: false
+      description: The type of detector as the source names it; CCD, CMOS and WaveFrontSensor have their own.
+    - name: Gain
+      type: float
+      required: false
+    - name: Offset
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Contrast
+      type: float
+      required: false
+    - name: Channel
+      type: integer
+      required: false
+    - name: Configuration
+      type: list
+      items: string
+      required: false
+    - name: ActiveConfiguration
+      type: string
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -18772,6 +19162,28 @@ entities:
       required: false
       description: This field records the Ambient Humidity at which this detector is designed to operate, according to the
         Manufacturer.
+    - name: Gain
+      type: float
+      required: false
+    - name: Offset
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Contrast
+      type: float
+      required: false
+    - name: Channel
+      type: integer
+      required: false
+    - name: Configuration
+      type: list
+      items: string
+      required: false
+    - name: ActiveConfiguration
+      type: string
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -19202,6 +19614,32 @@ entities:
       required: false
       description: This field records the Ambient Humidity at which this detector is designed to operate, according to the
         Manufacturer.
+    - name: Type
+      type: string
+      required: false
+      description: The type of detector as the source names it; CCD, CMOS and WaveFrontSensor have their own.
+    - name: Gain
+      type: float
+      required: false
+    - name: Offset
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Contrast
+      type: float
+      required: false
+    - name: Channel
+      type: integer
+      required: false
+    - name: Configuration
+      type: list
+      items: string
+      required: false
+    - name: ActiveConfiguration
+      type: string
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -19641,6 +20079,28 @@ entities:
       required: false
       description: This field records the Ambient Humidity at which this detector is designed to operate, according to the
         Manufacturer.
+    - name: Gain
+      type: float
+      required: false
+    - name: Offset
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Contrast
+      type: float
+      required: false
+    - name: Channel
+      type: integer
+      required: false
+    - name: Configuration
+      type: list
+      items: string
+      required: false
+    - name: ActiveConfiguration
+      type: string
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -20105,6 +20565,32 @@ entities:
       required: false
       description: This field records the Ambient Humidity at which this detector is designed to operate, according to the
         Manufacturer.
+    - name: Type
+      type: string
+      required: false
+      description: The type of detector as the source names it; CCD, CMOS and WaveFrontSensor have their own.
+    - name: Gain
+      type: float
+      required: false
+    - name: Offset
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Contrast
+      type: float
+      required: false
+    - name: Channel
+      type: integer
+      required: false
+    - name: Configuration
+      type: list
+      items: string
+      required: false
+    - name: ActiveConfiguration
+      type: string
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -20560,6 +21046,28 @@ entities:
       required: false
       description: This field records the Ambient Humidity at which this detector is designed to operate, according to the
         Manufacturer.
+    - name: Gain
+      type: float
+      required: false
+    - name: Offset
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Contrast
+      type: float
+      required: false
+    - name: Channel
+      type: integer
+      required: false
+    - name: Configuration
+      type: list
+      items: string
+      required: false
+    - name: ActiveConfiguration
+      type: string
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -24020,6 +24528,24 @@ entities:
       type: string
       required: false
       description: The Lot Number used by the Manufacturer to refer to a specific production batch or lot for this component.
+  Vacuum:
+    description: The vacuum of an electron microscope.
+    fields:
+    - name: BufferVacuum
+      type: float
+      required: false
+    - name: GunVacuum
+      type: float
+      required: false
+    - name: SampleVacuum
+      type: float
+      required: false
+    - name: SystemVacuum
+      type: float
+      required: false
+    - name: VacuumMode
+      type: string
+      required: false
   ImagingEnvironment:
     description: This element describes the environment in which the biological sample was maintained during the Acquisition
       of this Image.
@@ -24290,6 +24816,12 @@ entities:
       required: false
       description: This field records the aperture of the Iris diaphragm, which determines the size of the objective rear
         aperture yielding a variable numerical aperture range between 0.5 and the objective's upper limit.
+    - name: Medium
+      type: string
+      required: false
+    - name: RefractiveIndex
+      type: float
+      required: false
     - name: MapAnnotation
       type: list
       required: false
@@ -25488,6 +26020,39 @@ entities:
       description: Where each value from this file that fits a model field was placed.
       items: SourceMapping
       owns: true
+  CropHint:
+    description: The part of the image to show, in pixels from each edge.
+    fields:
+    - name: Left
+      type: integer
+      required: false
+    - name: Right
+      type: integer
+      required: false
+    - name: Top
+      type: integer
+      required: false
+    - name: Bottom
+      type: integer
+      required: false
+  Corrections:
+    description: Display corrections applied to the image.
+    fields:
+    - name: Contrast
+      type: float
+      required: false
+    - name: Brightness
+      type: float
+      required: false
+    - name: Gamma
+      type: float
+      required: false
+    - name: BlackLevel
+      type: float
+      required: false
+    - name: WhiteLevel
+      type: float
+      required: false
   XMLAnnotation:
     description: An general xml annotation. The contents of this is not processed as OME XML but should still be well-formed
       XML.
@@ -25923,6 +26488,100 @@ entities:
       required: false
       items: Label
       owns: true
+  Quantity:
+    description: A value with the unit its source states, as free text.
+    fields:
+    - name: Value
+      type: float
+      required: false
+    - name: Unit
+      type: string
+      required: false
+      description: The unit as the source writes it, e.g. "um" or "mm".
+  Vector2D:
+    description: A pair of values along X and Y.
+    fields:
+    - name: X
+      type: float
+      required: false
+    - name: Y
+      type: float
+      required: false
+  HighVoltage:
+    description: High-voltage readings of the electron gun, as the source names them.
+    fields:
+    - name: BV
+      type: float
+      required: false
+    - name: Bia
+      type: float
+      required: false
+    - name: CV
+      type: float
+      required: false
+    - name: ExtCurrent
+      type: float
+      required: false
+    - name: ExtVoltage
+      type: float
+      required: false
+    - name: FV
+      type: float
+      required: false
+    - name: FcCurrent
+      type: float
+      required: false
+    - name: FcVoltage
+      type: float
+      required: false
+    - name: HighEmissionMode
+      type: boolean
+      required: false
+    - name: HvCurrent
+      type: float
+      required: false
+    - name: HvMode
+      type: integer
+      required: false
+    - name: HvVoltage
+      type: float
+      required: false
+    - name: Mid10kvVoltage
+      type: float
+      required: false
+    - name: SV
+      type: float
+      required: false
+    - name: SchCurrent
+      type: float
+      required: false
+    - name: SchVoltage
+      type: float
+      required: false
+  FieldOfView:
+    description: The size of the field of view along X and Y.
+    fields:
+    - name: X
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Y
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+  Operator:
+    description: The person operating the microscope.
+    fields:
+    - name: ID
+      type: string
+      required: false
+      is_identifier: true
+      description: An identifier for this record; the model defines none.
+    - name: Name
+      type: string
+      required: false
   MountingMedium:
     description: This element refers to the Mounting Medium that was used during the acquisition of this Image. According
       to ISO 10934-1:2002, a Mounting Medium is a liquid, synthetic resin or other medium in which this Specimen is placed
@@ -26901,6 +27560,89 @@ entities:
         - Pixel
         - reference frame
       example: nm
+  StagePosition:
+    description: The stage position along each axis; RawPosition also has Tilt and Rot.
+    fields:
+    - name: X
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Y
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Z
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: M
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Tilt
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Rot
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+  StageTilt:
+    description: The stage tilt, and its alpha and beta angles.
+    fields:
+    - name: Alpha
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Beta
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Value
+      type: float
+      required: false
+    - name: Unit
+      type: string
+      required: false
+      description: The unit as the source writes it, e.g. "um" or "mm".
+  StageBias:
+    description: The bias applied to the stage.
+    fields:
+    - name: ID
+      type: string
+      required: false
+      is_identifier: true
+      description: An identifier for this record; the model defines none.
+    - name: BiasType
+      type: string
+      required: false
+    - name: Mode
+      type: string
+      required: false
+    - name: Volts
+      type: float
+      required: false
+  MultiStage:
+    description: The sample on a multi-sample stage.
+    fields:
+    - name: SampleHeight
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: SampleRadius
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
   TransmittanceRange:
     description: This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component.
       It also records the maximum amount of light transmitted. Multiple of these elements can be used.

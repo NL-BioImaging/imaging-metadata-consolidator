@@ -11,10 +11,6 @@ StudyDate: '20200101'
 SeriesDate: '20200101'
 Image:
   AcquisitionDate: '20200101'
-  Plane:
-    ExposureTime: 3095
-  Channel:
-    SamplesPerPixel: 1
 ContentDate: '20200101'
 AcquisitionDateTime: '20200101045136.010'
 StudyTime: 042959
@@ -66,6 +62,8 @@ DistanceSourceToPatient: 570.0
 GantryDetectorTilt: 0.0
 TableHeight: 115.8
 AngularPosition: 180.0
+Plane:
+  ExposureTime: 3095
 XRayTubeCurrent: 30
 PatientPosition: FFS
 AcquisitionType: CONSTANT_ANGLE
@@ -95,9 +93,12 @@ PositionReferenceIndicator: ''
 SliceLocation: -461.9
 NumberOfStudyRelatedInstances: 1334
 ImageComments: ''
+Channel:
+  SamplesPerPixel: 1
 PhotometricInterpretation: MONOCHROME2
-Rows: 472
-Columns: 512
+Plate:
+  Rows: 472
+  Columns: 512
 PixelSpacing:
 - 0.9765625
 - 0.9765625
@@ -173,7 +174,7 @@ SourceMap:
   GantryDetectorTilt: GantryDetectorTilt
   TableHeight: TableHeight
   AngularPosition: AngularPosition
-  Image.Plane.ExposureTime: ExposureTime
+  Plane.ExposureTime: ExposureTime
   XRayTubeCurrent: XRayTubeCurrent
   PatientPosition: PatientPosition
   AcquisitionType: AcquisitionType
@@ -201,10 +202,10 @@ SourceMap:
   SliceLocation: SliceLocation
   NumberOfStudyRelatedInstances: NumberOfStudyRelatedInstances
   ImageComments: ImageComments
-  Image.Channel.SamplesPerPixel: SamplesPerPixel
+  Channel.SamplesPerPixel: SamplesPerPixel
   PhotometricInterpretation: PhotometricInterpretation
-  Rows: Rows
-  Columns: Columns
+  Plate.Rows: Rows
+  Plate.Columns: Columns
   PixelSpacing[0]: PixelSpacing[0]
   PixelSpacing[1]: PixelSpacing[1]
   BitsAllocated: BitsAllocated

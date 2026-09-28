@@ -1,11 +1,10 @@
 manufacturer: Leica Microsystems
 model: DMI6000B-CS
-Magnification:
-  Objective:
-    CalibratedMagnification: 40.0
+Objective:
+  CalibratedMagnification: 40.0
 lens_na: 1.3
 immersion: Oil
-Settings:
+Image:
   ObjectiveSettings:
     RefractiveIndex: 1.518
 HardwareSetting:
@@ -842,16 +841,15 @@ HardwareSetting:
   SystemTypeName: TCS SP8
   DataSourceType: 0
   DataSourceTypeName: Confocal
-Software:
-  AcquisitionSoftware:
-    Name: LAS X 3.5.2.18963
+AcquisitionSoftware:
+  Name: LAS X 3.5.2.18963
 SourceMap:
   manufacturer: manufacturer
   model: model
-  Magnification.Objective.CalibratedMagnification: magnification
+  Objective.CalibratedMagnification: magnification
   lens_na: lens_na
   immersion: immersion
-  Settings.ObjectiveSettings.RefractiveIndex: refractive_index
+  Image.ObjectiveSettings.RefractiveIndex: refractive_index
   HardwareSetting.ConfocalSettingDefinition.EasySRMappingArray: HardwareSetting.ConfocalSettingDefinition.EasySRMappingArray
   HardwareSetting.ConfocalSettingDefinition.EasySRSlider.SRRelative: HardwareSetting.ConfocalSettingDefinition.EasySRSlider.SRRelative
   HardwareSetting.ConfocalSettingDefinition.EasySRSlider.ThreeDRelative: HardwareSetting.ConfocalSettingDefinition.EasySRSlider.ThreeDRelative
@@ -1614,7 +1612,7 @@ SourceMap:
   HardwareSetting.ConfocalSettingDefinition.PixelDwellTime: HardwareSetting.ConfocalSettingDefinition.PixelDwellTime
   HardwareSetting.ConfocalSettingDefinition.SystemSerialNumber: HardwareSetting.ConfocalSettingDefinition.SystemSerialNumber
   HardwareSetting.Application: HardwareSetting.Application
-  Software.AcquisitionSoftware.Name: HardwareSetting.Software
+  AcquisitionSoftware.Name: HardwareSetting.Software
   HardwareSetting.HardwareServerVersion: HardwareSetting.HardwareServerVersion
   HardwareSetting.SystemType: HardwareSetting.SystemType
   HardwareSetting.SystemTypeName: HardwareSetting.SystemTypeName

@@ -14,9 +14,8 @@ from DatasetExporter import PROVENANCE_ENTITIES, DatasetExporter, export_file, f
 from convert import read_metadata
 
 
-PROFILE_FILE = os.path.join(REPO_ROOT, 'models', 'fullSchema.yaml')
+PROFILE_FILE = os.path.join(REPO_ROOT, 'models', 'imaging.metaseed.yaml')
 SOURCES_DIR = os.path.join(REPO_ROOT, 'sources')
-EXTENDED_PROFILE_FILE = os.path.join(REPO_ROOT, 'models', 'schema.extended.yaml')
 EXPORT_DIR = os.path.join(REPO_ROOT, 'export')
 CHECKSUM = '0' * 64
 
@@ -56,6 +55,14 @@ class FitsTest(unittest.TestCase):
         self.assertFalse(fits('um', {'type': 'string', 'constraints': {'enum': ['µm']}}))
         self.assertFalse(fits('ABC', {'type': 'string', 'constraints': {'pattern': '^[a-z]+$'}}))
 
+    def test_dates_and_uris_must_parse(self):
+        self.assertTrue(fits('2015-10-19', {'type': 'date'}))
+        self.assertFalse(fits('19/10/2015', {'type': 'date'}))
+        self.assertTrue(fits('2015-10-19T17:18:12-05:00', {'type': 'datetime'}))
+        self.assertFalse(fits('yesterday', {'type': 'datetime'}))
+        self.assertTrue(fits('https://example.org/spec.pdf', {'type': 'uri'}))
+        self.assertFalse(fits(3, {'type': 'uri'}))
+
 
 class DatasetExporterTest(unittest.TestCase):
     @classmethod
@@ -75,38 +82,40 @@ class DatasetExporterTest(unittest.TestCase):
         self.assertNotIn('CustomProperties', image)
 
     def test_value_that_does_not_fit_becomes_a_property(self):
-        dataset = self.export({'Image': {'Pixels': {'PhysicalSizeXUnit': 'um', 'SizeX': 1.5}},
-                               'SourceMap': {'Image.Pixels.PhysicalSizeXUnit': 'unit',
-                                             'Image.Pixels.SizeX': 'Image.Pixels.SizeX'}})
+        dataset = self.export({'Pixels': {'PhysicalSizeXUnit': 'um', 'SizeX': 1.5},
+                               'SourceMap': {'Pixels.PhysicalSizeXUnit': 'unit', 'Pixels.SizeX': 'Pixels.SizeX'}})
 
         image = dataset['Image'][0]
         self.assertEqual(image['Pixels'], {})
         self.assertEqual(image['CustomProperties'], [
-            {'ID': 'Property:0', 'Name': 'unit', 'Value': '"um"', 'SchemaPath': 'Image.Pixels.PhysicalSizeXUnit',
+            {'ID': 'Property:0', 'Name': 'unit', 'Value': '"um"', 'SchemaPath': 'Pixels.PhysicalSizeXUnit',
              'Source': 'SourceFile:0'},
-            {'ID': 'Property:1', 'Name': 'Image.Pixels.SizeX', 'Value': '1.5', 'Source': 'SourceFile:0'},
+            {'ID': 'Property:1', 'Name': 'Pixels.SizeX', 'Value': '1.5', 'Source': 'SourceFile:0'},
         ])
 
     def test_entity_is_placed_along_the_profile_tree(self):
-        dataset = self.export({'Image': {'Plane': {'TheZ': 3}}, 'Magnification': {'Objective': {'LensNA': 1.4}},
-                               'SourceMap': {'Image.Plane.TheZ': 'z', 'Magnification.Objective.LensNA': 'na'}})
+        dataset = self.export({'Plane': {'TheZ': 3}, 'Objective': {'LensNA': 1.4}, 'Filament': {'Name': 'lamp'},
+                               'SourceMap': {'Plane.TheZ': 'z', 'Objective.LensNA': 'na', 'Filament.Name': 'lamp'}})
 
         self.assertEqual(dataset['Image'][0]['Pixels']['Plane'], [{'TheZ': 3}])
         self.assertEqual(dataset['Instrument'][0]['Objective'], [{'LensNA': 1.4}])
+        self.assertEqual(dataset['Instrument'][0]['Filament'], [{'Name': 'lamp'}])
 
-    def test_category_and_title_name_one_entity(self):
-        dataset = self.export({'Fluorescence_LightSource': {'Filament': {'Name': 'lamp'}},
-                               'SourceMap': {'Fluorescence_LightSource.Filament.Name': 'lamp'}})
+    def test_components_nest_in_the_class_their_path_starts_at(self):
+        dataset = self.export({'OME': {'ElectronBeam': {'WorkingDistance': {'Value': 0.005, 'Unit': 'm'}}},
+                               'SourceMap': {'OME.ElectronBeam.WorkingDistance.Value': 'Beam.WD',
+                                             'OME.ElectronBeam.WorkingDistance.Unit': 'Beam.WDUnit'}})
 
-        self.assertEqual(dataset['Instrument'][0]['Fluorescence_LightSource_Filament'], [{'Name': 'lamp'}])
+        self.assertEqual(dataset['ElectronBeam'], {'WorkingDistance': {'Value': 0.005, 'Unit': 'm'}})
+        self.assertEqual([mapping['Field'] for mapping in dataset['Image'][0]['SourceFile'][0]['Mapping']],
+                         ['ElectronBeam.WorkingDistance.Value', 'ElectronBeam.WorkingDistance.Unit'])
 
     def test_unmodelled_values_go_to_the_nearest_anchor(self):
-        dataset = self.export({'Instrument': {'Manufacturer': 'Acme'}, 'Scan': {'FrameTime': {'Value': 2}},
-                               'SourceMap': {'Instrument.Manufacturer': 'Make',
-                                             'Scan.FrameTime.Value': 'Scan.FrameTime'}})
+        dataset = self.export({'Instrument': {'Colour': 'grey'}, 'Scanner': {'Speed': 2},
+                               'SourceMap': {'Instrument.Colour': 'Colour', 'Scanner.Speed': 'Scanner.Speed'}})
 
-        self.assertEqual([record['Name'] for record in dataset['Instrument'][0]['CustomProperties']], ['Make'])
-        self.assertEqual([record['Name'] for record in dataset['CustomProperties']], ['Scan.FrameTime'])
+        self.assertEqual([record['Name'] for record in dataset['Instrument'][0]['CustomProperties']], ['Colour'])
+        self.assertEqual([record['Name'] for record in dataset['CustomProperties']], ['Scanner.Speed'])
 
     def test_taken_field_keeps_the_second_value_as_a_property(self):
         dataset = self.export({'Image': {'Name': 'a'}, 'Other': {'Image': {'Name': 'b'}},
@@ -128,25 +137,15 @@ class DatasetExporterTest(unittest.TestCase):
                 dataset = self.export(mapper.convert_metadata(read_metadata(source_file)))
                 self.assertEqual(unknown_keys(self.exporter, dataset, 'OME'), [])
 
-    def test_sources_export_only_declared_fields_of_the_extended_profile(self):
-        exporter = DatasetExporter(os.path.join(REPO_ROOT, 'models', 'schema.extended.yaml'))
-        mapper = AcquisitionMetadataMapper()
-        for source_file in sorted(glob.glob(os.path.join(SOURCES_DIR, '*.json'))):
-            with self.subTest(source=os.path.basename(source_file)):
-                converted = mapper.convert_metadata(read_metadata(source_file))
-                dataset = exporter.export(converted, 'source.json', CHECKSUM)
-                self.assertEqual(unknown_keys(exporter, dataset, 'OME'), [])
-
     def test_provenance_entities_are_not_placement_targets(self):
         for entity in PROVENANCE_ENTITIES:
             self.assertNotIn(entity, self.exporter.paths)
 
 
 class ExportFolderTest(unittest.TestCase):
-    """export/ must hold what exporting sources/ against the extended profile gives today."""
+    """export/ must hold what exporting sources/ against the generated profile gives today."""
 
-    REGENERATE = ('rerun: python src/main.py export --input sources --output export '
-                  '--profile models/schema.extended.yaml')
+    REGENERATE = 'rerun: python src/main.py export --input sources --output export'
 
     def test_export_holds_one_dataset_per_source(self):
         sources = {os.path.splitext(os.path.basename(path))[0] for path in glob.glob(os.path.join(SOURCES_DIR, '*.json'))}
@@ -155,7 +154,7 @@ class ExportFolderTest(unittest.TestCase):
 
     def test_export_is_up_to_date(self):
         mapper = AcquisitionMetadataMapper()
-        exporter = DatasetExporter(EXTENDED_PROFILE_FILE)
+        exporter = DatasetExporter(PROFILE_FILE)
         with tempfile.TemporaryDirectory() as directory:
             for source_file in sorted(glob.glob(os.path.join(SOURCES_DIR, '*.json'))):
                 name = os.path.splitext(os.path.basename(source_file))[0] + '.yaml'

@@ -1,296 +1,293 @@
-Magnification:
-  Objective:
-    ID: Objective:0
-    ImmersionType: Oil
-    LensNA: 1.4
-    Magnification: 100.0
+Objective:
+  ID: Objective:0
+  ImmersionType: Oil
+  LensNA: 1.4
+  Magnification: 100.0
 id: Objective:0
-Settings:
+Image:
   ObjectiveSettings:
     Medium: Oil
     RefractiveIndex: 1.518
-    ImmersionLiquid:
-      RefractiveIndex: 1.518
-Image:
-  Pixels:
-    PhysicalSizeX: 0.064967
-    PhysicalSizeY: 0.064967
-    PhysicalSizeZ: 0.2128
-    TimeIncrement: 1.0
-SamplePreparation:
-  MountingMedium:
-    RefractiveIndex: 1.458
-Software:
-  SoftwareModule:
-    Version: 24.10.0p6
-  AcquisitionSoftware:
-    Version: 1.3p0
-Annotation:
-- Geometry:
-    SamplingSizes:
-      DeltaXState: Reported
-      DeltaYState: Reported
-      DeltaZState: Reported
-      DeltaTState: Reported
-    Offsets:
-      OffsetX: 61.523749
-      OffsetXState: Default
-      OffsetY: 50.609293
-      OffsetYState: Default
-      OffsetZ: 6.384
-      OffsetZState: Default
-      OffsetT: 0.0
-      OffsetTState: Default
-    Interface:
-      InterFacePrimary: -12.7684
-      InterFacePrimaryState: Estimated
-      InterFaceSecondary: 999993.616
-      InterFaceSecondaryState: Default
-  ChannelData:
-  - MicrParamData:
-      Mode: fluorescence
-      ModeState: Estimated
-      ImagingDirection: upward
-      ImagingDirectionState: Default
-      NumAperture: 1.4
-      NumApertureState: Reported
-      PinholeRadius: 280.0
-      PinholeRadiusState: Default
-      IllPinholeRadius: 0.0
-      IllPinholeRadiusState: Default
-      DetectorMagnif: 100.0
-      DetectorMagnifState: Estimated
-    DetectorData:
-      PPU: 1.0
-      PPUState: Default
-      Baseline: 0.0
-      BaselineState: Default
-      LineAvgCnt: 1.0
-      LineAvgCntState: Default
-      NoiseGain: 1.0
-      NoiseGainState: Default
-    ScatterData:
-      Model: none
-      ModelState: Default
-      FreePath: 1000.0
-      FreePathState: Default
-      RelContrib: 0.0
-      RelContribState: Default
-      Blurring: 0.0
-      BlurringState: Default
-    ChannelID: Channel:0
-    MicroscopeSpec: Widefield
-    MicroscopeSpecState: Reported
-    ExPhotonCnt: 1
-    ExPhotonCntState: Default
-    RefrIndexMediumState: Estimated
-    RefrIndexLensMediumState: Reported
-    PinholeSpacing: 2.53
-    PinholeSpacingState: Default
-    ObjectiveQuality: 80
-    ObjectiveQualityState: Default
-    ExcitationBeamFill: 2.0
-    ExcitationBeamFillState: Default
-    LambdaEm: 461.0
-    LambdaEmState: Estimated
-    LambdaEx: 424.119995
-    LambdaExState: Estimated
-    ScalingFactor: 1.0
-  - MicrParamData:
-      Mode: fluorescence
-      ModeState: Estimated
-      ImagingDirection: upward
-      ImagingDirectionState: Default
-      NumAperture: 1.4
-      NumApertureState: Reported
-      PinholeRadius: 280.0
-      PinholeRadiusState: Default
-      IllPinholeRadius: 0.0
-      IllPinholeRadiusState: Default
-      DetectorMagnif: 100.0
-      DetectorMagnifState: Estimated
-    DetectorData:
-      PPU: 1.0
-      PPUState: Default
-      Baseline: 0.0
-      BaselineState: Default
-      LineAvgCnt: 1.0
-      LineAvgCntState: Default
-      NoiseGain: 1.0
-      NoiseGainState: Default
-    ScatterData:
-      Model: none
-      ModelState: Default
-      FreePath: 1000.0
-      FreePathState: Default
-      RelContrib: 0.0
-      RelContribState: Default
-      Blurring: 0.0
-      BlurringState: Default
-    ChannelID: Channel:1
-    MicroscopeSpec: Widefield
-    MicroscopeSpecState: Reported
-    ExPhotonCnt: 1
-    ExPhotonCntState: Default
-    RefrIndexMedium: 1.458
-    RefrIndexMediumState: Estimated
-    RefrIndexLensMedium: 1.518
-    RefrIndexLensMediumState: Reported
-    PinholeSpacing: 2.53
-    PinholeSpacingState: Default
-    ObjectiveQuality: 80
-    ObjectiveQualityState: Default
-    ExcitationBeamFill: 2.0
-    ExcitationBeamFillState: Default
-    LambdaEm: 610.0
-    LambdaEmState: Estimated
-    LambdaEx: 488.0
-    LambdaExState: Default
-    ScalingFactor: 1.0
-  PDimConfig:
-    Type: generic
-    Size: 1
-  FeatureHistory:
-    FeatureDescription:
-    - String: none;
-    - String: base;
-    - String: Parameter states and STED, SPIM and pdim parameters;
-    - String: Scaling factors;
-    - String: Array detector STED;
-    FeatureCnt: 5
-  SourceKey: Annotation:CustomAttributes:SVI:Image:0
+Pixels:
+  PhysicalSizeX: 0.064967
+  PhysicalSizeY: 0.064967
+  PhysicalSizeZ: 0.2128
+  TimeIncrement: 1.0
+MountingMedium:
+  RefractiveIndex: 1.458
+ImmersionLiquid:
+  RefractiveIndex: 1.518
+SoftwareModule:
+  Version: 24.10.0p6
+AcquisitionSoftware:
+  Version: 1.3p0
+OME:
+  Annotation:
+  - Geometry:
+      SamplingSizes:
+        DeltaXState: Reported
+        DeltaYState: Reported
+        DeltaZState: Reported
+        DeltaTState: Reported
+      Offsets:
+        OffsetX: 61.523749
+        OffsetXState: Default
+        OffsetY: 50.609293
+        OffsetYState: Default
+        OffsetZ: 6.384
+        OffsetZState: Default
+        OffsetT: 0.0
+        OffsetTState: Default
+      Interface:
+        InterFacePrimary: -12.7684
+        InterFacePrimaryState: Estimated
+        InterFaceSecondary: 999993.616
+        InterFaceSecondaryState: Default
+    ChannelData:
+    - MicrParamData:
+        Mode: fluorescence
+        ModeState: Estimated
+        ImagingDirection: upward
+        ImagingDirectionState: Default
+        NumAperture: 1.4
+        NumApertureState: Reported
+        PinholeRadius: 280.0
+        PinholeRadiusState: Default
+        IllPinholeRadius: 0.0
+        IllPinholeRadiusState: Default
+        DetectorMagnif: 100.0
+        DetectorMagnifState: Estimated
+      DetectorData:
+        PPU: 1.0
+        PPUState: Default
+        Baseline: 0.0
+        BaselineState: Default
+        LineAvgCnt: 1.0
+        LineAvgCntState: Default
+        NoiseGain: 1.0
+        NoiseGainState: Default
+      ScatterData:
+        Model: none
+        ModelState: Default
+        FreePath: 1000.0
+        FreePathState: Default
+        RelContrib: 0.0
+        RelContribState: Default
+        Blurring: 0.0
+        BlurringState: Default
+      ChannelID: Channel:0
+      MicroscopeSpec: Widefield
+      MicroscopeSpecState: Reported
+      ExPhotonCnt: 1
+      ExPhotonCntState: Default
+      RefrIndexMediumState: Estimated
+      RefrIndexLensMediumState: Reported
+      PinholeSpacing: 2.53
+      PinholeSpacingState: Default
+      ObjectiveQuality: 80
+      ObjectiveQualityState: Default
+      ExcitationBeamFill: 2.0
+      ExcitationBeamFillState: Default
+      LambdaEm: 461.0
+      LambdaEmState: Estimated
+      LambdaEx: 424.119995
+      LambdaExState: Estimated
+      ScalingFactor: 1.0
+    - MicrParamData:
+        Mode: fluorescence
+        ModeState: Estimated
+        ImagingDirection: upward
+        ImagingDirectionState: Default
+        NumAperture: 1.4
+        NumApertureState: Reported
+        PinholeRadius: 280.0
+        PinholeRadiusState: Default
+        IllPinholeRadius: 0.0
+        IllPinholeRadiusState: Default
+        DetectorMagnif: 100.0
+        DetectorMagnifState: Estimated
+      DetectorData:
+        PPU: 1.0
+        PPUState: Default
+        Baseline: 0.0
+        BaselineState: Default
+        LineAvgCnt: 1.0
+        LineAvgCntState: Default
+        NoiseGain: 1.0
+        NoiseGainState: Default
+      ScatterData:
+        Model: none
+        ModelState: Default
+        FreePath: 1000.0
+        FreePathState: Default
+        RelContrib: 0.0
+        RelContribState: Default
+        Blurring: 0.0
+        BlurringState: Default
+      ChannelID: Channel:1
+      MicroscopeSpec: Widefield
+      MicroscopeSpecState: Reported
+      ExPhotonCnt: 1
+      ExPhotonCntState: Default
+      RefrIndexMedium: 1.458
+      RefrIndexMediumState: Estimated
+      RefrIndexLensMedium: 1.518
+      RefrIndexLensMediumState: Reported
+      PinholeSpacing: 2.53
+      PinholeSpacingState: Default
+      ObjectiveQuality: 80
+      ObjectiveQualityState: Default
+      ExcitationBeamFill: 2.0
+      ExcitationBeamFillState: Default
+      LambdaEm: 610.0
+      LambdaEmState: Estimated
+      LambdaEx: 488.0
+      LambdaExState: Default
+      ScalingFactor: 1.0
+    PDimConfig:
+      Type: generic
+      Size: 1
+    FeatureHistory:
+      FeatureDescription:
+      - String: none;
+      - String: base;
+      - String: Parameter states and STED, SPIM and pdim parameters;
+      - String: Scaling factors;
+      - String: Array detector STED;
+      FeatureCnt: 5
+    SourceKey: Annotation:CustomAttributes:SVI:Image:0
 SourceMap:
-  Magnification.Objective.ID: objective.id
-  Magnification.Objective.ImmersionType: objective.immersion
-  Magnification.Objective.LensNA: objective.lens_na
-  Magnification.Objective.Magnification: objective.nominal_magnification
+  Objective.ID: objective.id
+  Objective.ImmersionType: objective.immersion
+  Objective.LensNA: objective.lens_na
+  Objective.Magnification: objective.nominal_magnification
   id: id
-  Settings.ObjectiveSettings.Medium: medium
-  Settings.ObjectiveSettings.RefractiveIndex: refractive_index
-  Image.Pixels.PhysicalSizeX: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaX
-  Image.Pixels.PhysicalSizeY: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaY
-  Image.Pixels.PhysicalSizeZ: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaZ
-  Image.Pixels.TimeIncrement: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaT
-  SamplePreparation.MountingMedium.RefractiveIndex: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexMedium
-  Settings.ObjectiveSettings.ImmersionLiquid.RefractiveIndex: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexLensMedium
-  Software.SoftwareModule.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.HuygensVersion
-  Software.AcquisitionSoftware.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.OmeWriterVersion
-  Annotation[0].Geometry.SamplingSizes.DeltaXState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaXState
-  Annotation[0].Geometry.SamplingSizes.DeltaYState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaYState
-  Annotation[0].Geometry.SamplingSizes.DeltaZState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaZState
-  Annotation[0].Geometry.SamplingSizes.DeltaTState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaTState
-  Annotation[0].Geometry.Offsets.OffsetX: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetX
-  Annotation[0].Geometry.Offsets.OffsetXState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetXState
-  Annotation[0].Geometry.Offsets.OffsetY: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetY
-  Annotation[0].Geometry.Offsets.OffsetYState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetYState
-  Annotation[0].Geometry.Offsets.OffsetZ: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetZ
-  Annotation[0].Geometry.Offsets.OffsetZState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetZState
-  Annotation[0].Geometry.Offsets.OffsetT: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetT
-  Annotation[0].Geometry.Offsets.OffsetTState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetTState
-  Annotation[0].Geometry.Interface.InterFacePrimary: Annotation:CustomAttributes:SVI:Image:0.Geometry.Interface.InterFacePrimary
-  Annotation[0].Geometry.Interface.InterFacePrimaryState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Interface.InterFacePrimaryState
-  Annotation[0].Geometry.Interface.InterFaceSecondary: Annotation:CustomAttributes:SVI:Image:0.Geometry.Interface.InterFaceSecondary
-  Annotation[0].Geometry.Interface.InterFaceSecondaryState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Interface.InterFaceSecondaryState
-  Annotation[0].ChannelData[0].MicrParamData.Mode: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.Mode
-  Annotation[0].ChannelData[0].MicrParamData.ModeState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.ModeState
-  Annotation[0].ChannelData[0].MicrParamData.ImagingDirection: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.ImagingDirection
-  Annotation[0].ChannelData[0].MicrParamData.ImagingDirectionState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.ImagingDirectionState
-  Annotation[0].ChannelData[0].MicrParamData.NumAperture: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.NumAperture
-  Annotation[0].ChannelData[0].MicrParamData.NumApertureState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.NumApertureState
-  Annotation[0].ChannelData[0].MicrParamData.PinholeRadius: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.PinholeRadius
-  Annotation[0].ChannelData[0].MicrParamData.PinholeRadiusState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.PinholeRadiusState
-  Annotation[0].ChannelData[0].MicrParamData.IllPinholeRadius: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.IllPinholeRadius
-  Annotation[0].ChannelData[0].MicrParamData.IllPinholeRadiusState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.IllPinholeRadiusState
-  Annotation[0].ChannelData[0].MicrParamData.DetectorMagnif: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.DetectorMagnif
-  Annotation[0].ChannelData[0].MicrParamData.DetectorMagnifState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.DetectorMagnifState
-  Annotation[0].ChannelData[0].DetectorData.PPU: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.PPU
-  Annotation[0].ChannelData[0].DetectorData.PPUState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.PPUState
-  Annotation[0].ChannelData[0].DetectorData.Baseline: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.Baseline
-  Annotation[0].ChannelData[0].DetectorData.BaselineState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.BaselineState
-  Annotation[0].ChannelData[0].DetectorData.LineAvgCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.LineAvgCnt
-  Annotation[0].ChannelData[0].DetectorData.LineAvgCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.LineAvgCntState
-  Annotation[0].ChannelData[0].DetectorData.NoiseGain: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.NoiseGain
-  Annotation[0].ChannelData[0].DetectorData.NoiseGainState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.NoiseGainState
-  Annotation[0].ChannelData[0].ScatterData.Model: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.Model
-  Annotation[0].ChannelData[0].ScatterData.ModelState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.ModelState
-  Annotation[0].ChannelData[0].ScatterData.FreePath: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.FreePath
-  Annotation[0].ChannelData[0].ScatterData.FreePathState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.FreePathState
-  Annotation[0].ChannelData[0].ScatterData.RelContrib: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.RelContrib
-  Annotation[0].ChannelData[0].ScatterData.RelContribState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.RelContribState
-  Annotation[0].ChannelData[0].ScatterData.Blurring: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.Blurring
-  Annotation[0].ChannelData[0].ScatterData.BlurringState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.BlurringState
-  Annotation[0].ChannelData[0].ChannelID: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ChannelID
-  Annotation[0].ChannelData[0].MicroscopeSpec: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicroscopeSpec
-  Annotation[0].ChannelData[0].MicroscopeSpecState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicroscopeSpecState
-  Annotation[0].ChannelData[0].ExPhotonCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExPhotonCnt
-  Annotation[0].ChannelData[0].ExPhotonCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExPhotonCntState
-  Annotation[0].ChannelData[0].RefrIndexMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexMediumState
-  Annotation[0].ChannelData[0].RefrIndexLensMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexLensMediumState
-  Annotation[0].ChannelData[0].PinholeSpacing: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].PinholeSpacing
-  Annotation[0].ChannelData[0].PinholeSpacingState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].PinholeSpacingState
-  Annotation[0].ChannelData[0].ObjectiveQuality: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ObjectiveQuality
-  Annotation[0].ChannelData[0].ObjectiveQualityState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ObjectiveQualityState
-  Annotation[0].ChannelData[0].ExcitationBeamFill: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExcitationBeamFill
-  Annotation[0].ChannelData[0].ExcitationBeamFillState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExcitationBeamFillState
-  Annotation[0].ChannelData[0].LambdaEm: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].LambdaEm
-  Annotation[0].ChannelData[0].LambdaEmState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].LambdaEmState
-  Annotation[0].ChannelData[0].LambdaEx: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].LambdaEx
-  Annotation[0].ChannelData[0].LambdaExState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].LambdaExState
-  Annotation[0].ChannelData[0].ScalingFactor: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScalingFactor
-  Annotation[0].ChannelData[1].MicrParamData.Mode: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.Mode
-  Annotation[0].ChannelData[1].MicrParamData.ModeState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.ModeState
-  Annotation[0].ChannelData[1].MicrParamData.ImagingDirection: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.ImagingDirection
-  Annotation[0].ChannelData[1].MicrParamData.ImagingDirectionState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.ImagingDirectionState
-  Annotation[0].ChannelData[1].MicrParamData.NumAperture: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.NumAperture
-  Annotation[0].ChannelData[1].MicrParamData.NumApertureState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.NumApertureState
-  Annotation[0].ChannelData[1].MicrParamData.PinholeRadius: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.PinholeRadius
-  Annotation[0].ChannelData[1].MicrParamData.PinholeRadiusState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.PinholeRadiusState
-  Annotation[0].ChannelData[1].MicrParamData.IllPinholeRadius: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.IllPinholeRadius
-  Annotation[0].ChannelData[1].MicrParamData.IllPinholeRadiusState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.IllPinholeRadiusState
-  Annotation[0].ChannelData[1].MicrParamData.DetectorMagnif: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.DetectorMagnif
-  Annotation[0].ChannelData[1].MicrParamData.DetectorMagnifState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.DetectorMagnifState
-  Annotation[0].ChannelData[1].DetectorData.PPU: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.PPU
-  Annotation[0].ChannelData[1].DetectorData.PPUState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.PPUState
-  Annotation[0].ChannelData[1].DetectorData.Baseline: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.Baseline
-  Annotation[0].ChannelData[1].DetectorData.BaselineState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.BaselineState
-  Annotation[0].ChannelData[1].DetectorData.LineAvgCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.LineAvgCnt
-  Annotation[0].ChannelData[1].DetectorData.LineAvgCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.LineAvgCntState
-  Annotation[0].ChannelData[1].DetectorData.NoiseGain: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.NoiseGain
-  Annotation[0].ChannelData[1].DetectorData.NoiseGainState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.NoiseGainState
-  Annotation[0].ChannelData[1].ScatterData.Model: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.Model
-  Annotation[0].ChannelData[1].ScatterData.ModelState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.ModelState
-  Annotation[0].ChannelData[1].ScatterData.FreePath: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.FreePath
-  Annotation[0].ChannelData[1].ScatterData.FreePathState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.FreePathState
-  Annotation[0].ChannelData[1].ScatterData.RelContrib: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.RelContrib
-  Annotation[0].ChannelData[1].ScatterData.RelContribState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.RelContribState
-  Annotation[0].ChannelData[1].ScatterData.Blurring: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.Blurring
-  Annotation[0].ChannelData[1].ScatterData.BlurringState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.BlurringState
-  Annotation[0].ChannelData[1].ChannelID: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ChannelID
-  Annotation[0].ChannelData[1].MicroscopeSpec: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicroscopeSpec
-  Annotation[0].ChannelData[1].MicroscopeSpecState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicroscopeSpecState
-  Annotation[0].ChannelData[1].ExPhotonCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExPhotonCnt
-  Annotation[0].ChannelData[1].ExPhotonCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExPhotonCntState
-  Annotation[0].ChannelData[1].RefrIndexMedium: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexMedium
-  Annotation[0].ChannelData[1].RefrIndexMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexMediumState
-  Annotation[0].ChannelData[1].RefrIndexLensMedium: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexLensMedium
-  Annotation[0].ChannelData[1].RefrIndexLensMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexLensMediumState
-  Annotation[0].ChannelData[1].PinholeSpacing: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].PinholeSpacing
-  Annotation[0].ChannelData[1].PinholeSpacingState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].PinholeSpacingState
-  Annotation[0].ChannelData[1].ObjectiveQuality: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ObjectiveQuality
-  Annotation[0].ChannelData[1].ObjectiveQualityState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ObjectiveQualityState
-  Annotation[0].ChannelData[1].ExcitationBeamFill: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExcitationBeamFill
-  Annotation[0].ChannelData[1].ExcitationBeamFillState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExcitationBeamFillState
-  Annotation[0].ChannelData[1].LambdaEm: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].LambdaEm
-  Annotation[0].ChannelData[1].LambdaEmState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].LambdaEmState
-  Annotation[0].ChannelData[1].LambdaEx: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].LambdaEx
-  Annotation[0].ChannelData[1].LambdaExState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].LambdaExState
-  Annotation[0].ChannelData[1].ScalingFactor: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScalingFactor
-  Annotation[0].PDimConfig.Type: Annotation:CustomAttributes:SVI:Image:0.PDimConfig.Type
-  Annotation[0].PDimConfig.Size: Annotation:CustomAttributes:SVI:Image:0.PDimConfig.Size
-  Annotation[0].FeatureHistory.FeatureDescription[0].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[0].String
-  Annotation[0].FeatureHistory.FeatureDescription[1].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[1].String
-  Annotation[0].FeatureHistory.FeatureDescription[2].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[2].String
-  Annotation[0].FeatureHistory.FeatureDescription[3].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[3].String
-  Annotation[0].FeatureHistory.FeatureDescription[4].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[4].String
-  Annotation[0].FeatureHistory.FeatureCnt: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureCnt
-  Annotation[0].SourceKey: Annotation:CustomAttributes:SVI:Image:0
+  Image.ObjectiveSettings.Medium: medium
+  Image.ObjectiveSettings.RefractiveIndex: refractive_index
+  Pixels.PhysicalSizeX: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaX
+  Pixels.PhysicalSizeY: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaY
+  Pixels.PhysicalSizeZ: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaZ
+  Pixels.TimeIncrement: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaT
+  MountingMedium.RefractiveIndex: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexMedium
+  ImmersionLiquid.RefractiveIndex: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexLensMedium
+  SoftwareModule.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.HuygensVersion
+  AcquisitionSoftware.Version: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.OmeWriterVersion
+  OME.Annotation[0].Geometry.SamplingSizes.DeltaXState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaXState
+  OME.Annotation[0].Geometry.SamplingSizes.DeltaYState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaYState
+  OME.Annotation[0].Geometry.SamplingSizes.DeltaZState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaZState
+  OME.Annotation[0].Geometry.SamplingSizes.DeltaTState: Annotation:CustomAttributes:SVI:Image:0.Geometry.SamplingSizes.DeltaTState
+  OME.Annotation[0].Geometry.Offsets.OffsetX: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetX
+  OME.Annotation[0].Geometry.Offsets.OffsetXState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetXState
+  OME.Annotation[0].Geometry.Offsets.OffsetY: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetY
+  OME.Annotation[0].Geometry.Offsets.OffsetYState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetYState
+  OME.Annotation[0].Geometry.Offsets.OffsetZ: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetZ
+  OME.Annotation[0].Geometry.Offsets.OffsetZState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetZState
+  OME.Annotation[0].Geometry.Offsets.OffsetT: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetT
+  OME.Annotation[0].Geometry.Offsets.OffsetTState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Offsets.OffsetTState
+  OME.Annotation[0].Geometry.Interface.InterFacePrimary: Annotation:CustomAttributes:SVI:Image:0.Geometry.Interface.InterFacePrimary
+  OME.Annotation[0].Geometry.Interface.InterFacePrimaryState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Interface.InterFacePrimaryState
+  OME.Annotation[0].Geometry.Interface.InterFaceSecondary: Annotation:CustomAttributes:SVI:Image:0.Geometry.Interface.InterFaceSecondary
+  OME.Annotation[0].Geometry.Interface.InterFaceSecondaryState: Annotation:CustomAttributes:SVI:Image:0.Geometry.Interface.InterFaceSecondaryState
+  OME.Annotation[0].ChannelData[0].MicrParamData.Mode: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.Mode
+  OME.Annotation[0].ChannelData[0].MicrParamData.ModeState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.ModeState
+  OME.Annotation[0].ChannelData[0].MicrParamData.ImagingDirection: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.ImagingDirection
+  OME.Annotation[0].ChannelData[0].MicrParamData.ImagingDirectionState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.ImagingDirectionState
+  OME.Annotation[0].ChannelData[0].MicrParamData.NumAperture: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.NumAperture
+  OME.Annotation[0].ChannelData[0].MicrParamData.NumApertureState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.NumApertureState
+  OME.Annotation[0].ChannelData[0].MicrParamData.PinholeRadius: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.PinholeRadius
+  OME.Annotation[0].ChannelData[0].MicrParamData.PinholeRadiusState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.PinholeRadiusState
+  OME.Annotation[0].ChannelData[0].MicrParamData.IllPinholeRadius: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.IllPinholeRadius
+  OME.Annotation[0].ChannelData[0].MicrParamData.IllPinholeRadiusState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.IllPinholeRadiusState
+  OME.Annotation[0].ChannelData[0].MicrParamData.DetectorMagnif: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.DetectorMagnif
+  OME.Annotation[0].ChannelData[0].MicrParamData.DetectorMagnifState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicrParamData.DetectorMagnifState
+  OME.Annotation[0].ChannelData[0].DetectorData.PPU: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.PPU
+  OME.Annotation[0].ChannelData[0].DetectorData.PPUState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.PPUState
+  OME.Annotation[0].ChannelData[0].DetectorData.Baseline: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.Baseline
+  OME.Annotation[0].ChannelData[0].DetectorData.BaselineState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.BaselineState
+  OME.Annotation[0].ChannelData[0].DetectorData.LineAvgCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.LineAvgCnt
+  OME.Annotation[0].ChannelData[0].DetectorData.LineAvgCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.LineAvgCntState
+  OME.Annotation[0].ChannelData[0].DetectorData.NoiseGain: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.NoiseGain
+  OME.Annotation[0].ChannelData[0].DetectorData.NoiseGainState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].DetectorData.NoiseGainState
+  OME.Annotation[0].ChannelData[0].ScatterData.Model: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.Model
+  OME.Annotation[0].ChannelData[0].ScatterData.ModelState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.ModelState
+  OME.Annotation[0].ChannelData[0].ScatterData.FreePath: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.FreePath
+  OME.Annotation[0].ChannelData[0].ScatterData.FreePathState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.FreePathState
+  OME.Annotation[0].ChannelData[0].ScatterData.RelContrib: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.RelContrib
+  OME.Annotation[0].ChannelData[0].ScatterData.RelContribState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.RelContribState
+  OME.Annotation[0].ChannelData[0].ScatterData.Blurring: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.Blurring
+  OME.Annotation[0].ChannelData[0].ScatterData.BlurringState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScatterData.BlurringState
+  OME.Annotation[0].ChannelData[0].ChannelID: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ChannelID
+  OME.Annotation[0].ChannelData[0].MicroscopeSpec: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicroscopeSpec
+  OME.Annotation[0].ChannelData[0].MicroscopeSpecState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].MicroscopeSpecState
+  OME.Annotation[0].ChannelData[0].ExPhotonCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExPhotonCnt
+  OME.Annotation[0].ChannelData[0].ExPhotonCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExPhotonCntState
+  OME.Annotation[0].ChannelData[0].RefrIndexMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexMediumState
+  OME.Annotation[0].ChannelData[0].RefrIndexLensMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].RefrIndexLensMediumState
+  OME.Annotation[0].ChannelData[0].PinholeSpacing: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].PinholeSpacing
+  OME.Annotation[0].ChannelData[0].PinholeSpacingState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].PinholeSpacingState
+  OME.Annotation[0].ChannelData[0].ObjectiveQuality: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ObjectiveQuality
+  OME.Annotation[0].ChannelData[0].ObjectiveQualityState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ObjectiveQualityState
+  OME.Annotation[0].ChannelData[0].ExcitationBeamFill: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExcitationBeamFill
+  OME.Annotation[0].ChannelData[0].ExcitationBeamFillState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ExcitationBeamFillState
+  OME.Annotation[0].ChannelData[0].LambdaEm: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].LambdaEm
+  OME.Annotation[0].ChannelData[0].LambdaEmState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].LambdaEmState
+  OME.Annotation[0].ChannelData[0].LambdaEx: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].LambdaEx
+  OME.Annotation[0].ChannelData[0].LambdaExState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].LambdaExState
+  OME.Annotation[0].ChannelData[0].ScalingFactor: Annotation:CustomAttributes:SVI:Image:0.ChannelData[0].ScalingFactor
+  OME.Annotation[0].ChannelData[1].MicrParamData.Mode: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.Mode
+  OME.Annotation[0].ChannelData[1].MicrParamData.ModeState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.ModeState
+  OME.Annotation[0].ChannelData[1].MicrParamData.ImagingDirection: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.ImagingDirection
+  OME.Annotation[0].ChannelData[1].MicrParamData.ImagingDirectionState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.ImagingDirectionState
+  OME.Annotation[0].ChannelData[1].MicrParamData.NumAperture: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.NumAperture
+  OME.Annotation[0].ChannelData[1].MicrParamData.NumApertureState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.NumApertureState
+  OME.Annotation[0].ChannelData[1].MicrParamData.PinholeRadius: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.PinholeRadius
+  OME.Annotation[0].ChannelData[1].MicrParamData.PinholeRadiusState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.PinholeRadiusState
+  OME.Annotation[0].ChannelData[1].MicrParamData.IllPinholeRadius: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.IllPinholeRadius
+  OME.Annotation[0].ChannelData[1].MicrParamData.IllPinholeRadiusState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.IllPinholeRadiusState
+  OME.Annotation[0].ChannelData[1].MicrParamData.DetectorMagnif: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.DetectorMagnif
+  OME.Annotation[0].ChannelData[1].MicrParamData.DetectorMagnifState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicrParamData.DetectorMagnifState
+  OME.Annotation[0].ChannelData[1].DetectorData.PPU: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.PPU
+  OME.Annotation[0].ChannelData[1].DetectorData.PPUState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.PPUState
+  OME.Annotation[0].ChannelData[1].DetectorData.Baseline: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.Baseline
+  OME.Annotation[0].ChannelData[1].DetectorData.BaselineState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.BaselineState
+  OME.Annotation[0].ChannelData[1].DetectorData.LineAvgCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.LineAvgCnt
+  OME.Annotation[0].ChannelData[1].DetectorData.LineAvgCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.LineAvgCntState
+  OME.Annotation[0].ChannelData[1].DetectorData.NoiseGain: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.NoiseGain
+  OME.Annotation[0].ChannelData[1].DetectorData.NoiseGainState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].DetectorData.NoiseGainState
+  OME.Annotation[0].ChannelData[1].ScatterData.Model: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.Model
+  OME.Annotation[0].ChannelData[1].ScatterData.ModelState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.ModelState
+  OME.Annotation[0].ChannelData[1].ScatterData.FreePath: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.FreePath
+  OME.Annotation[0].ChannelData[1].ScatterData.FreePathState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.FreePathState
+  OME.Annotation[0].ChannelData[1].ScatterData.RelContrib: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.RelContrib
+  OME.Annotation[0].ChannelData[1].ScatterData.RelContribState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.RelContribState
+  OME.Annotation[0].ChannelData[1].ScatterData.Blurring: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.Blurring
+  OME.Annotation[0].ChannelData[1].ScatterData.BlurringState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScatterData.BlurringState
+  OME.Annotation[0].ChannelData[1].ChannelID: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ChannelID
+  OME.Annotation[0].ChannelData[1].MicroscopeSpec: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicroscopeSpec
+  OME.Annotation[0].ChannelData[1].MicroscopeSpecState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].MicroscopeSpecState
+  OME.Annotation[0].ChannelData[1].ExPhotonCnt: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExPhotonCnt
+  OME.Annotation[0].ChannelData[1].ExPhotonCntState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExPhotonCntState
+  OME.Annotation[0].ChannelData[1].RefrIndexMedium: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexMedium
+  OME.Annotation[0].ChannelData[1].RefrIndexMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexMediumState
+  OME.Annotation[0].ChannelData[1].RefrIndexLensMedium: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexLensMedium
+  OME.Annotation[0].ChannelData[1].RefrIndexLensMediumState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].RefrIndexLensMediumState
+  OME.Annotation[0].ChannelData[1].PinholeSpacing: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].PinholeSpacing
+  OME.Annotation[0].ChannelData[1].PinholeSpacingState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].PinholeSpacingState
+  OME.Annotation[0].ChannelData[1].ObjectiveQuality: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ObjectiveQuality
+  OME.Annotation[0].ChannelData[1].ObjectiveQualityState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ObjectiveQualityState
+  OME.Annotation[0].ChannelData[1].ExcitationBeamFill: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExcitationBeamFill
+  OME.Annotation[0].ChannelData[1].ExcitationBeamFillState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ExcitationBeamFillState
+  OME.Annotation[0].ChannelData[1].LambdaEm: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].LambdaEm
+  OME.Annotation[0].ChannelData[1].LambdaEmState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].LambdaEmState
+  OME.Annotation[0].ChannelData[1].LambdaEx: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].LambdaEx
+  OME.Annotation[0].ChannelData[1].LambdaExState: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].LambdaExState
+  OME.Annotation[0].ChannelData[1].ScalingFactor: Annotation:CustomAttributes:SVI:Image:0.ChannelData[1].ScalingFactor
+  OME.Annotation[0].PDimConfig.Type: Annotation:CustomAttributes:SVI:Image:0.PDimConfig.Type
+  OME.Annotation[0].PDimConfig.Size: Annotation:CustomAttributes:SVI:Image:0.PDimConfig.Size
+  OME.Annotation[0].FeatureHistory.FeatureDescription[0].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[0].String
+  OME.Annotation[0].FeatureHistory.FeatureDescription[1].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[1].String
+  OME.Annotation[0].FeatureHistory.FeatureDescription[2].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[2].String
+  OME.Annotation[0].FeatureHistory.FeatureDescription[3].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[3].String
+  OME.Annotation[0].FeatureHistory.FeatureDescription[4].String: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureDescription[4].String
+  OME.Annotation[0].FeatureHistory.FeatureCnt: Annotation:CustomAttributes:SVI:Image:0.FeatureHistory.FeatureCnt
+  OME.Annotation[0].SourceKey: Annotation:CustomAttributes:SVI:Image:0

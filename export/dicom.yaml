@@ -15,6 +15,12 @@ Image:
     - ID: SourceMapping:2
       Field: Image[0].Pixels.Channel[0].SamplesPerPixel
       Source: SamplesPerPixel
+    - ID: SourceMapping:3
+      Field: Plate[0].Rows
+      Source: Rows
+    - ID: SourceMapping:4
+      Field: Plate[0].Columns
+      Source: Columns
   AcquisitionDate: '20200101'
   Pixels:
     Plane:
@@ -367,66 +373,61 @@ CustomProperties:
   Value: '"MONOCHROME2"'
   Source: SourceFile:0
 - ID: Property:86
-  Name: Rows
-  Value: '472'
-  Source: SourceFile:0
-- ID: Property:87
-  Name: Columns
-  Value: '512'
-  Source: SourceFile:0
-- ID: Property:88
   Name: PixelSpacing[0]
   Value: '0.9765625'
   Source: SourceFile:0
-- ID: Property:89
+- ID: Property:87
   Name: PixelSpacing[1]
   Value: '0.9765625'
   Source: SourceFile:0
-- ID: Property:90
+- ID: Property:88
   Name: BitsAllocated
   Value: '16'
   Source: SourceFile:0
-- ID: Property:91
+- ID: Property:89
   Name: BitsStored
   Value: '12'
   Source: SourceFile:0
-- ID: Property:92
+- ID: Property:90
   Name: HighBit
   Value: '11'
   Source: SourceFile:0
-- ID: Property:93
+- ID: Property:91
   Name: PixelRepresentation
   Value: '0'
   Source: SourceFile:0
-- ID: Property:94
+- ID: Property:92
   Name: SmallestImagePixelValue
   Value: '0'
   Source: SourceFile:0
-- ID: Property:95
+- ID: Property:93
   Name: LargestImagePixelValue
   Value: '2985'
   Source: SourceFile:0
-- ID: Property:96
+- ID: Property:94
   Name: WindowCenter
   Value: '-59.54343'
   Source: SourceFile:0
-- ID: Property:97
+- ID: Property:95
   Name: WindowWidth
   Value: '2250.74478149414'
   Source: SourceFile:0
-- ID: Property:98
+- ID: Property:96
   Name: RescaleIntercept
   Value: '-1024.0'
   Source: SourceFile:0
-- ID: Property:99
+- ID: Property:97
   Name: RescaleSlope
   Value: '1.0'
   Source: SourceFile:0
-- ID: Property:100
+- ID: Property:98
   Name: RequestedProcedureID
   Value: '"0000123456"'
   Source: SourceFile:0
-- ID: Property:101
+- ID: Property:99
   Name: ConfidentialityCode
   Value: '"N"'
   Source: SourceFile:0
+Plate:
+- Rows: 472
+  Columns: 512

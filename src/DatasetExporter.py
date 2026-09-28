@@ -1,8 +1,8 @@
-"""Export converted metadata as a metaseed dataset of the LiMi profile.
+"""Export converted metadata as a metaseed dataset of the imaging profile.
 
-Takes AcquisitionMetadataMapper output (the consolidated category -> entity
--> field tree plus its SourceMap) and builds one OME document for the
-profile in models/fullSchema.yaml. A value goes into a typed profile field
+Takes AcquisitionMetadataMapper output (model paths, see ModelPaths, plus
+its SourceMap) and builds one OME document for the profile generated from
+the model (models/imaging.metaseed.yaml). A value goes into a typed field
 only if it fits exactly; anything else becomes a Property record holding its
 source path and JSON-encoded value, so no metadata is lost. Every value
 placed in a typed field gets a SourceMapping record on the SourceFile, so its
@@ -10,6 +10,7 @@ source key is kept too.
 """
 
 import collections
+import datetime
 import hashlib
 import json
 import os.path
@@ -18,9 +19,15 @@ import re
 import yaml
 
 from AcquisitionMetadataMapper import SOURCE_MAP_KEY, leaf_suffixes
-from ProfileConverter import (CUSTOM_PROPERTIES_ANCHORS, DEFAULT_PROFILE_FILE, PROPERTY_ENTITY, ROOT_ENTITY,
-                              SOURCE_FILE_ENTITY, SOURCE_MAPPING_ENTITY)
+from MetaseedGenerator import DEFAULT_PROFILE_FILE
+from ModelPaths import DEFAULT_MODEL_FILE, ModelPaths
 
+# the provenance classes of models/imaging_provenance.yaml, and the classes holding CustomProperties
+ROOT_ENTITY = 'OME'
+PROPERTY_ENTITY = 'Property'
+SOURCE_FILE_ENTITY = 'SourceFile'
+SOURCE_MAPPING_ENTITY = 'SourceMapping'
+CUSTOM_PROPERTIES_ANCHORS = ('OME', 'Image', 'Instrument')
 PROVENANCE_ENTITIES = (PROPERTY_ENTITY, SOURCE_FILE_ENTITY, SOURCE_MAPPING_ENTITY)
 
 
@@ -30,12 +37,21 @@ def file_checksum(filename):
 
 
 class DatasetExporter:
-    def __init__(self, profile_filename=DEFAULT_PROFILE_FILE):
+    def __init__(self, profile_filename=DEFAULT_PROFILE_FILE, model_filename=DEFAULT_MODEL_FILE):
         with open(profile_filename, encoding='utf-8') as file:
             profile = yaml.safe_load(file)
         self.entities = {name: {field['name']: field for field in entity['fields']}
                          for name, entity in profile['entities'].items()}
         self.paths = self._shortest_paths()
+        # Only a class a model path starts at is placed by its name: a source's "Quantity" subtree is no
+        # ElectronBeam.WorkingDistance, although that is where the first Quantity entity sits. An abstract
+        # class's name places into its default subtype (a Leica DetectorList.Detector into GenericDetector).
+        model = ModelPaths(model_filename)
+        self.placeable = {name: name for name in model.tree() if name in self.paths}
+        for name, cls in model.classes.items():
+            default = model.default_subtype(name) if cls.abstract else None
+            if default in self.placeable:
+                self.placeable[name] = default
 
     def _nested_entity(self, field):
         if field['type'] in ('entity', 'list') and field.get('items') in self.entities:
@@ -64,7 +80,7 @@ class DatasetExporter:
             source_file['Format'] = file_format
         image.node.setdefault('SourceFile', []).append(source_file)
         export.source_file = source_file
-        export.walk({key: value for key, value in converted.items() if key != SOURCE_MAP_KEY}, '', None,
+        export.walk({key: value for key, value in converted.items() if key != SOURCE_MAP_KEY}, '',
                     export.root)
         if export.mappings:
             source_file['Mapping'] = export.mappings
@@ -109,17 +125,15 @@ class _Export:
             instance = self.child(instance, field, entity, is_list, index if position == len(steps) - 1 else 0)
         return instance
 
-    def entity_named(self, key, parent_key):
-        paths = self.exporter.paths
-        combined = f'{parent_key}_{key}'
-        return combined if combined in paths else key if key in paths else None
+    def entity_named(self, key):
+        return self.exporter.placeable.get(key)
 
-    def walk(self, node, path, parent_key, anchor_only, instance=None):
+    def walk(self, node, path, anchor_only, instance=None):
         """Place every entry of `node` (at mapper output `path`): in `instance`'s fields, a new entity, or a Property."""
         for key, value in node.items():
             converted_path = f'{path}.{key}' if path else str(key)
             field = self.exporter.entities[instance.entity].get(key) if instance is not None else None
-            entity = self.entity_named(key, parent_key)
+            entity = self.entity_named(key)
             is_record = isinstance(value, dict) and value
             is_record_list = isinstance(value, list) and value and all(isinstance(item, dict) and item for item in value)
             nested = self.exporter._nested_entity(field) if field is not None else None
@@ -128,7 +142,7 @@ class _Export:
                 for index, record in enumerate(records):
                     child = self.child(instance, key, nested, field['type'] == 'list', index)
                     item_path = f'{converted_path}[{index}]' if is_record_list else converted_path
-                    self.walk(record, item_path, key, child.anchor, child)
+                    self.walk(record, item_path, child.anchor, child)
             elif field is not None and nested is None and key not in instance.node and fits(value, field):
                 instance.node[key] = value
                 self.add_mapping(instance.child_path(key), converted_path)
@@ -137,12 +151,14 @@ class _Export:
                 for index, record in enumerate(records):
                     target = self.instance_at(self.exporter.paths[entity], index)
                     item_path = f'{converted_path}[{index}]' if is_record_list else converted_path
-                    self.walk(record, item_path, key, target.anchor, target)
-            elif field is None and is_record:
-                self.walk(value, converted_path, key, anchor_only)
-            elif field is None and is_record_list:
+                    self.walk(record, item_path, target.anchor, target)
+            # a record that fits no field is taken apart like an undeclared one (OME.Operations is declared, as a
+            # string, but TALOS holds an object there, whose keys such as "Aperture[C1].Name" no path can re-parse)
+            elif (field is None or nested is None) and is_record:
+                self.walk(value, converted_path, anchor_only)
+            elif (field is None or nested is None) and is_record_list:
                 for index, record in enumerate(value):
-                    self.walk(record, f'{converted_path}[{index}]', key, anchor_only)
+                    self.walk(record, f'{converted_path}[{index}]', anchor_only)
             else:
                 self.add_properties(anchor_only, converted_path, value)
 
@@ -188,6 +204,9 @@ def fits(value, field):
     constraints = field.get('constraints', {})
     fits_type = {
         'string': isinstance(value, str),
+        'uri': isinstance(value, str),
+        'date': isinstance(value, str) and _parses(datetime.date.fromisoformat, value),
+        'datetime': isinstance(value, str) and _parses(datetime.datetime.fromisoformat, value),
         'integer': isinstance(value, int) and not isinstance(value, bool),
         'float': isinstance(value, (int, float)) and not isinstance(value, bool),
         'boolean': isinstance(value, bool),
@@ -196,6 +215,14 @@ def fits(value, field):
     fits_pattern = ('pattern' not in constraints
                     or (isinstance(value, str) and re.fullmatch(constraints['pattern'], value) is not None))
     return fits_type and fits_enum and fits_pattern
+
+
+def _parses(parse, text):
+    try:
+        parse(text)
+        return True
+    except ValueError:
+        return False
 
 
 def export_file(source_file, output_file, mapper, exporter):

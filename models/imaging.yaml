@@ -19,6 +19,7 @@ imports:
 - linkml:types
 - imaging_units
 - imaging_provenance
+- imaging_extension
 types:
   base64Binary:
     typeof: string
@@ -336,6 +337,8 @@ classes:
           Recorded in the XSD as the Split annotation of each light source.'
     annotations:
       xsdfu_plural: LightSources
+      default_subtype: GenericExcitationSource
+      default_subtype_source: LiMi's generic light source (an arbitrary light source not described by the other subtypes)
     slots:
     - ObjectType
   Filter:
@@ -478,6 +481,8 @@ classes:
           Tier: '3'
     annotations:
       xsdfu_plural: Filters
+      default_subtype: GenericFilter
+      default_subtype_source: LiMi's generic subtype
     slots:
     - ObjectType
   MirroringDevice:
@@ -690,12 +695,16 @@ classes:
           Tier: '3'
     annotations:
       xsdfu_plural: Dichroics
+      default_subtype: GenericDichroic
+      default_subtype_source: LiMi's generic subtype
   Detector:
     description: This element describes a Detector available for this Instrument. An Instrument may have more than one Detector
       of different types, such as a Photomultiplier, or a Camera. The Detector ID can be used as a reference within the Channel
       element. The values stored in Detector represent the fixed values, variable values modified during the Acquisition go
       in DetectorSettings.
     is_a: ManufacturerSpec
+    mixins:
+    - DetectorExtension
     abstract: true
     attributes:
       RelayLens:
@@ -835,6 +844,8 @@ classes:
           Tier: '3'
     annotations:
       xsdfu_plural: Detectors
+      default_subtype: GenericDetector
+      default_subtype_source: LiMi's generic subtype
     slots:
     - ObjectType
   ComponentWavelengthRange:
@@ -1225,6 +1236,9 @@ classes:
           Tier: '3'
     slots:
     - ObjectType
+    annotations:
+      default_subtype: GenericDetectorSettings
+      default_subtype_source: LiMi's generic subtype
   Annotation:
     description: An annotation from which all others are ultimately derived.
     abstract: true
@@ -1505,6 +1519,8 @@ classes:
   Software:
     description: This element represents a commercial, or open-source Software, script, macro, plugin or module utilized for
       any Image Acquisition or Quality Control task related to this Instrument.
+    mixins:
+    - SoftwareExtension
     abstract: true
     attributes:
       SoftwareModule:
@@ -1599,6 +1615,8 @@ classes:
           Tier: '3'
     annotations:
       xsdfu_plural: Software tools
+      default_subtype: AcquisitionSoftware
+      default_subtype_source: 'chosen by the user: no generic software in LiMi'
     slots:
     - ObjectType
   SamplePositioning:
@@ -1779,6 +1797,8 @@ classes:
       holds the Sample Holder. In many cases, this device is capable of mechanical movements (as in a Mechanical Stage) to
       allow easy positioning and rotation of the Sample in the X-, Y-, and Z-axes.
     is_a: SamplePositioning
+    mixins:
+    - StageExtension
     abstract: true
     attributes:
       XYMaxVelocity:
@@ -1876,6 +1896,9 @@ classes:
           Stage as specified by the Manufacturer.
         annotations:
           Tier: '2'
+    annotations:
+      default_subtype: MechanicalStage
+      default_subtype_source: 'chosen by the user: no generic stage in LiMi'
   LightSourceCoupling:
     description: This element describes the device(s)/method(s) used to couple an available Light Source(s) with this Microscope
       Stand to transfer light to the specimen. A typical light Microscope has a Light Coupling device for each available Light
@@ -2309,6 +2332,9 @@ classes:
         description: The unit of Density.
     slots:
     - ObjectType
+    annotations:
+      default_subtype: GenericLens
+      default_subtype_source: LiMi's generic subtype
   Camera:
     description: This element describes a Camera available for this Instrument. A Camera is a device that converts optical
       brightness into an electrical signal using a grid of pixel sensor unit cells and then reproduces an image of the specimen.
@@ -2526,6 +2552,9 @@ classes:
         range: OpticalAperture
     slots:
     - ObjectType
+    annotations:
+      default_subtype: GenericOpticalApertureSettings
+      default_subtype_source: LiMi's generic subtype
   WavelengthRangeSettingsType:
     abstract: true
     attributes:
@@ -3197,6 +3226,8 @@ classes:
       An OME file may contain any or all of this information. With the creation of the Metadata Only Companion OME-XML and
       Binary Only OME-TIFF files the top level OME node has changed slightly. It can EITHER: Contain all the previously expected
       elements OR: Contain a single BinaryOnly element that points at its Metadata Only Companion OME-XML file.'
+    mixins:
+    - OMEExtension
     attributes:
       ID:
         description: A unique identifier for this document.
@@ -3930,6 +3961,8 @@ classes:
       Plane or more commonly Channel elements associated with a given Image Acquisition session. It is understood that the
       Light Path configuration can be different for each Channel, but cannot be different for each timepoint or each Plane
       of an XYZ stack.
+    mixins:
+    - InstrumentExtension
     attributes:
       MicroscopeStand:
         range: MicroscopeStand
@@ -4227,6 +4260,8 @@ classes:
       (ending in Ref or Settings) refer to elements defined outside of the Image element. Ref elements are simple links, while
       Settings elements are links with additional values. If any of the required Image attributes or elements are missing,
       its guaranteed to be an invalid document.
+    mixins:
+    - ImageExtension
     attributes:
       Instrument:
         inlined: false
@@ -5626,6 +5661,8 @@ classes:
     description: This element holds the Setting applied to the Objective used during the Acquisition of this Image as well
       as a reference (the ID attribute) to the Objective in question.
     is_a: Settings
+    mixins:
+    - ObjectiveSettingsExtension
     attributes:
       ImmersionLiquid:
         range: ImmersionLiquid
@@ -9942,12 +9979,13 @@ classes:
           Tier: '2'
           description_source: derived from MaskingPlate.ApertureSize
         description: The unit of ApertureSize.
-      ApertureNr.:
+      ApertureNr:
         range: integer
         description: This field captures the Number of individual apertures present in this Spatial Mask.
         required: true
         annotations:
           Tier: '2'
+          xsd_name: ApertureNr.
       ApertureShape:
         range: string
         description: This field captures the Shape of individual apertures present in this Spatial Mask.

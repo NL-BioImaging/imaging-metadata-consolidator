@@ -10,8 +10,8 @@ Image:
       Field: Image[0].Name
       Source: name
     - ID: SourceMapping:1
-      Field: Image[0].AcquisitionDate
-      Source: datetime
+      Field: Image[0].Type
+      Source: picturetype
     - ID: SourceMapping:2
       Field: Image[0].Pixels.PhysicalSizeX
       Source: pixelsizex
@@ -19,22 +19,24 @@ Image:
       Field: Image[0].Pixels.PhysicalSizeY
       Source: pixelsizey
     - ID: SourceMapping:4
-      Field: Image[0].Type
-      Source: picturetype
-    - ID: SourceMapping:5
       Field: Instrument[0].Objective[0].CalibratedMagnification
       Source: magnification
-    - ID: SourceMapping:6
-      Field: Detector.Name
+    - ID: SourceMapping:5
+      Field: Instrument[0].GenericDetector[0].Name
       Source: cameraname
   Name: ''
-  AcquisitionDate: '2025-05-28 10:54:00'
+  CustomProperties:
+  - ID: Property:0
+    Name: datetime
+    Value: '"2025-05-28 10:54:00"'
+    SchemaPath: Image.AcquisitionDate
+    Source: SourceFile:0
+  Type: ''
   Pixels:
     PhysicalSizeX: 1.652845302290227e-09
     PhysicalSizeY: 1.652845302290227e-09
-  Type: ''
 Instrument:
 - Objective:
   - CalibratedMagnification: 6000.0
-Detector:
-  Name: ''
+  GenericDetector:
+  - Name: ''

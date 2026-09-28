@@ -5,27 +5,43 @@
 ### Hub state
 
 The Hub account the metaseed token acts as (j.j.m.defolter@amsterdamumc.nl) holds one draft,
-`LiMi-extended` 2.1, matching `models/schema.extended.yaml` (valid, no warnings). Datasets can only be
-created against a published profile, so exports are not validated on the Hub until it is published.
+`LiMi-extended` 2.1, matching the retired `models/schema.extended.yaml`. The generated profile
+`imaging` (`models/imaging.metaseed.yaml`) is not on the Hub: at 1.2 MB it is too large for the MCP
+import, and pushing it (metaseed CLI `hub`) waits for the user's go-ahead. Datasets can only be created
+against a published profile, so exports are not validated on the Hub until one is published.
 
-### Unused shared entities in the profile
+### LiMi XSD slips (worked around in the converter, original names kept)
 
-9 entities are unreachable from the `OME` root: `IlluminationWavelengthRange`, `LEDModule`,
-`WavelengthRange`, `TransmittanceRange`, `ReflectanceRange`, `ReflectionWavelengthRangeSettings`,
-`TransmissionWavelengthRangeSettings`, `WavelengthProfileFile`, `Pump`. The JSON gives each parent
-its own inline copy instead (e.g. `Arc_IlluminationWavelengthRange`), and `Laser.Pump` points to
-`Laser`. Kept, not deleted; `tests/test_profile_converter.py` pins this set.
+- OpticalAperture uses `LensID` as its ID type; FilterCubeRef extends FilterCubeRef with a generic LSID;
+  StageInsertRef/LightSensorRef name their ID attribute StageInsertID/LightSensorID.
+- BeamSplitter has both an attribute and an element `TransmittanceProfileFile` (element slot ->
+  `TransmittanceProfileFileElement`); MaskingPlate has an attribute named `ApertureNr.` (slot `ApertureNr`,
+  `xsd_name` annotation) - a dot would split the slot's path.
+- Typo `lluminationPowerSettingsUnit` (LightSourceSettings) kept; 7 unit slots have no value slot of their
+  name (ReadNoiseUnit, XYZResolutionUnit, WavelengthUnit, MinTemperatureUnit, DevianceAngleUnit,
+  ObservedIlluminationPowerAtBackObjectiveUnit, lluminationPowerSettingsUnit).
+- LightSensor is referenced (LightSensorRef) but no element contains it: the only class the generated
+  profile cannot reach; its references stay plain strings.
+- LightPath has no Tier in the XSD; Tier 1 taken from fullSchema.json (hand edit, `Tier_source`).
 
-### Links to entities fullSchema.json never defines
+### Stricter than the old profile
 
-22 fields link to `Filter`, `Lens`, `MirroringDevice`, `Aperture` (5 each), `Experimenter`,
-`LightSensor`, which have no schema of their own; they stay plain `string` fields.
+The model keeps the XSD's types, so some values the old JSON-based profile typed as strings are now
+Property records: instrument/sample-holder IDs that do not match the LSID patterns (`SS1735`, Phenom's and
+TALOS's instrument IDs), and acquisition datetimes, since LiMi types Image.AcquisitionDate as `xsd:date`
+(OME: dateTime). See "In progress".
+
+### Generated metaseed profile
+
+metaseed has no inheritance and no "one of": a slot over an abstract class is one field per concrete
+subtype (Instrument.Laser, Instrument.Arc, ...), none required, so "an instrument has a light source" is
+not enforced there. An optional ID identifier is added where metaseed would otherwise take an optional
+free-text first field (MapEntry, BinData, Rights, ...).
 
 ### Per-channel mounting medium index
 
-`ome-tiff` reports `RefrIndexMedium` per channel; channel 0's value goes to the top-level
-`SamplePreparation.MountingMedium.RefractiveIndex`, channel 1's collides and stays in its channel
-item (recorded in the SourceMap). Accepted asymmetry.
+`ome-tiff` reports `RefrIndexMedium` per channel; channel 0's value goes to MountingMedium.RefractiveIndex,
+channel 1's collides and stays in its channel item (recorded in the SourceMap). Accepted asymmetry.
 
 ### DICOM source holds dummy patient details
 
@@ -34,272 +50,61 @@ item (recorded in the SourceMap). Accepted asymmetry.
 identifiers (user, 2026-09-25), so they can be committed and shared. A real DICOM source would need
 de-identifying before it is added.
 
-### Local metaseed CLI writes to AppData
+### Local metaseed CLI
 
-`metaseed spec save` writes to `%LOCALAPPDATA%/metaseed/specs`, whatever `HOME` is set to. Point
-`LOCALAPPDATA` (and `APPDATA`) at a scratch folder when trying profiles locally.
+Not installed in biomero-converter-env; a scratch venv (`pip install metaseed`, 0.54.0) works. It writes
+to `%LOCALAPPDATA%/metaseed`, whatever `HOME` is set to: point `LOCALAPPDATA` and `APPDATA` at a scratch
+folder. `metaseed spec import <draft> models/imaging.metaseed.yaml` then `metaseed spec validate <draft>`:
+valid, no problems, no warnings (2026-09-28).
+
+### Environment
+
+linkml 1.11.1 in biomero-converter-env; chardet kept at 5.2.0 (linkml's ShEx generator pyshexc wants
+>=7.4.1 but is unused; requests warns on 7.x).
 
 ## In progress
 
-Current task (user, 2026-09-28): a LinkML model as the main model, with no duplicated submodels;
-the metaseed profiles become generated output. Reference:
-https://github.com/gouttegd/yamf-playground/blob/main/linkml/ome/ome.yaml (`is_a`, `abstract`,
-`mixins`, one class used as `range` of several slots, `inlined: false` for ID references).
-Established (not built yet):
-- metaseed has no inheritance: a spec with `abstract`/`extends` keys is rejected ("Extra inputs are
-  not permitted", Hub probe). One child entity nested under several parents is valid, no warnings
-  (Hub probe, deleted).
-- The duplication comes from `fullSchema.json`, not the XSD: the XSD defines Filament, Arc, LED,
-  GenericExcitationSource once (substitutionGroup `LightSourceGroup`), TransmittanceRange etc. once
-  (`ref=`), and has 20 abstract groups (LightSourceGroup, DetectorGroup, CameraGroup, FilterGroup,
-  LensGroup, ...). The JSON copies per parent (`Arc_IlluminationWavelengthRange`, 7 TransmittanceRange
-  copies, ...) and per role (`Transmitted_`/`Fluorescence_LightSource_*`, identical), and inlines
-  inherited fields (CCD: 14 Detector + 17 Camera fields). Each property's `category` names its level.
-- The 9 unreachable entities are the shared originals of these copies (base LiMi, not the extension).
-- Detector/Prism/PolarizationOptics WavelengthRange has a `WavelengthProfile` URI attribute (XSD
-  local definition) where the shared WavelengthRange has a `WavelengthProfileFile` list.
-Plan:
-1. `models/imaging.yaml` built from the XSD (inheritance, abstract groups, shared elements, refs)
-   + fullSchema.json (descriptions, tiers, enums, units, required); fields defined once, at the
-   level their `category` names. Originals stay untouched in models/.
-2. Generator LinkML -> metaseed YAML (`fullSchema.yaml`, later `schema.extended.yaml`).
-3. Test: every entity and field of the current fullSchema.yaml is represented (old name -> new).
-4. Move schema.extended.json's additions into the LinkML model; the mapper reads it later.
-Decided (user): the LinkML YAML is the master model, replacing fullSchema.json; metaseed is only a
-generated output, so its shape (abstract types as per-subtype lists for now) is a generator detail.
-Decided (user): LinkML in the style of ome.yaml, own file set (`models/imaging.yaml` + units),
-LiMi's own names (PascalCase). Polymorphic slots (`Instrument.LightSource`, range the abstract
-parent, type designator), inherited fields once, `inlined: false` for XSD `*Ref`s. Role: one
-`LightSource` list + `Role` enum (Transmitted/Fluorescence, multivalued), limited per class by the
-XSD's `Split` annotation (Arc, Laser, MultiLaserEngine: Fluorescence only).
-Decided (user): the whole XSD, not only what the JSON covers (~100 more concrete elements: ROI,
-Plate/Screen, annotations, TIRF, ...). linkml 1.11.1 installed in biomero-converter-env (chardet kept
-at 5.2.0: linkml's pyshexc, the ShEx generator, wants >=7.4.1 but is unused; requests warns on 7.x).
-XSD -> LinkML rules (`src/LinkmlConverter.py`, design choices, tell the user):
-- global element with inline type -> class; `extension base` -> `is_a`; a substitution-group member
-  without a type -> `is_a` the head's type (UprightMicroscopeStand is_a MicroscopeStand).
-- abstract `*Group` element -> no class; where used, slot named after its type (`LightSource`), range
-  the abstract type class; subtypes via a `designates_type` slot.
-- `*Ref` elements/types (extend Reference) -> slot without the `Ref` suffix, range the class whose ID
-  has that ID type, `inlined: false` (as JSON and ome.yaml). XSD name kept as annotation.
-- element typed by a named complexType used by one element only -> one class (TransmittanceRange);
-  used by several -> the type is a class and each element `is_a` it.
-- local element with its own content -> class `<Owner><Name>` unless identical to the global one.
-- text-only elements (Description) -> string slots; simpleContent (BinData) -> class with a value slot.
-- attributes: `use="required"` -> required, `default` -> `ifabsent`; enums -> enums (units in
-  `imaging_units.yaml`, xsd-fu unit metadata as annotations); ID/number restrictions -> LinkML types.
-- XSD documentation (Description, Tier, Category, Domain, Extension, Model_Settings, Split) ->
-  description + annotations. xsd-fu code-generation hints (plural, ordered, ...) -> annotations.
-JSON vs XSD (checked): JSON renames `*Ref` -> name without Ref, `AnnotationRef` -> `Description`
-(string), adds a constant `Tier` property (= the XSD's Tier annotation), and readonly
-Image.InstrumentName/InstrumentID (from InstrumentRef). Detectors, Prism and PolarizationOptics have a
-local WavelengthRange (with a WavelengthProfile URI) besides the global one.
-Progress (not committed): step 1 done. `python src/main.py linkml` wrote `models/imaging.yaml` +
-`models/imaging_units.yaml` (refuses to overwrite without --force: they are the master now). 247 classes,
-136 enums, 16 unit enums, 71 types; metamodel-valid; lint only standard_naming (PascalCase kept) and
-missing-description warnings. `models/ome-2016-06.xsd` added (descriptions source, CC BY 3.0; attribution
-in the model's `comments`). linkml added to environment.yml. `tests/test_linkml_converter.py`: synthetic
-XSD per rule (substitution/is_a, polymorphic group slot, Ref, Settings ID, merged type, attribute/element
-clash, Role from Split, docs/defaults, units schema, OME + derived descriptions, valid output), and on the
-master: metamodel-valid, keeps everything a fresh conversion yields (mutation-checked: a removed class,
-slot and enum value are each reported), every fullSchema.json property (4 listed exceptions), instance
-validation (Laser + Filament in one list; Laser with Role Transmitted and a Filament with LaserMedium
-rejected), no per-parent copies. 102 tests pass.
-JSON coverage (every fullSchema.json schema/property has a slot, Ref-stripped, Description ->
-Annotation, Tier -> annotation): all but Image.InstrumentName/InstrumentID (readonly, derived from
-the Instrument reference) and Pump (= Laser.Pump reference). LightPath's Tier (the XSD has none) taken
-from the JSON (1) by hand in models/imaging.yaml, with `Tier_source` - the first hand edit (user).
-Schema id: https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging (user).
-XSD slips found: OpticalAperture uses LensID; FilterCubeRef extends FilterCubeRef with a generic LSID;
-StageInsertRef/LightSensorRef use StageInsertID/LightSensorID; BeamSplitter has both an attribute and
-an element TransmittanceProfileFile (element slot -> TransmittanceProfileFileElement); attribute typo
-`lluminationPowerSettingsUnit` (LightSourceSettings) kept as is; 7 unit slots have no value slot of
-their name (ReadNoiseUnit, XYZResolutionUnit, WavelengthUnit, MinTemperatureUnit, DevianceAngleUnit,
-ObservedIlluminationPowerAtBackObjectiveUnit, lluminationPowerSettingsUnit).
-Missing descriptions (user asked whether they can be filled): XSD, fullSchema.json and LiMi_Model.json
-(an expanded XSD tree) have the same gaps. OME 2016-06 ome.xsd (CC BY 3.0) fills ~29 (2 classes, 3
-slots, 12 unit slots, 12 enums). Derivable from the model: 118 of 126 enums from the slot using them,
-170 of 177 unit slots from the value slot next to them. Not sourceable: 863 enum values, 60 ID types
-(derivable from the name), ~50 slots.
-Decided (user, 2026-09-28): the model is named `imaging` (not limi: it extends LiMi), version 0.1.0 of
-its own (the description names the LiMi XSD version it started from).
-Decided (user, 2026-09-28): `models/imaging.yaml` (+ `imaging_units.yaml`) is the master model, edited by
-hand once generated; the converter bootstraps it once and stays for comparing a future LiMi XSD; a test
-checks the XSD and JSON content is still in it. Metaseed profiles (and later the mapper's schema trees)
-are generated from it. Descriptions: fill from OME 2016-06 ome.xsd (CC BY 3.0, attributed) and derive
-(enum <- the slot using it, XUnit <- X), each with `annotations: {description_source: ...}`; leave the
-rest empty.
-Step 2+3 (not committed at the time of writing): `src/MetaseedGenerator.py`, `python src/main.py metaseed`
--> `models/imaging.metaseed.yaml` (profile `imaging` 0.1): 213 entities, 3483 fields; local metaseed 0.54.0
-(scratch venv, LOCALAPPDATA/APPDATA pointed at the scratchpad) `spec validate`: valid, no problems, no
-warnings. Rules: every concrete class reachable from OME is an entity with inherited slots written out; a
-slot over an ABSTRACT class -> one field per concrete subtype (Instrument.LightSource -> Laser, Arc, ...;
-none required, so "at least one light source" is no longer enforced in metaseed); a concrete range is not
-expanded (SpecsFile holds a FileAnnotation, not a TransmittanceProfileFile, as in the XSD); references ->
-string + `reference: Target.ID` when the target is an entity; enums/types/slot facets -> constraints
-(enum, pattern, minimum, maximum, min_items, max_items); ifabsent -> example; date/datetime/uri kept as
-metaseed types (the old profile had strings); an optional ID identifier where metaseed would otherwise
-take an optional free-text first field (7 entities, e.g. MapEntry, BinData, Rights). Only LightSensor is
-unreachable (XSD: referenced by LightSensorRef, contained nowhere) - its reference stays a plain string.
-Model fixes found on the way (converter + master): the type of an abstract group is abstract
-(AcoustoOpticalDevice, ...), a type used only as a base is abstract (WavelengthRangeSettingsType), and the
-type of an abstract group is never merged into one member (OpticalApertureSettings was merged into
-MaskingPlateSettings, making its siblings inherit from it). Master regenerated once more (--force) and the
-hand edits reapplied by script.
-Hand edits in models/imaging.yaml so far: import `imaging_provenance` (models/imaging_provenance.yaml:
-Property, SourceFile, SourceMapping, as ProfileConverter defined them) with CustomProperties on OME, Image,
-Instrument and SourceFile on Image; OME.ID/Name (metaseed datasets identify their root; the XSD OME has
-none); LightPath Tier 1 (from fullSchema.json).
-Tests: tests/test_metaseed_generator.py - rules on a synthetic LinkML model; the committed profile is up
-to date; every concrete class reachable but LightSensor; everything in the fullSchema.json-based profile
-(ProfileConverter output) has a place in the new one, entities mapped through the nesting (CMOS_WavelengthRange
--> ComponentWavelengthRange), Description -> Annotation, role prefixes dropped, Tier/InstrumentName/
-InstrumentID/Pump listed as held differently. Mutation-checked.
-Not switched yet: export/ still uses the old profiles (fullSchema.yaml, schema.extended.yaml). Switching
-needs step 4 (schema.extended.json's additions in the master), and the exporter's `fits` must accept
-date/datetime/uri (format-checked) and the mapper's Transmitted_/Fluorescence_ categories must set Role.
-Next: step 4 (schema.extended.json into the master), then switch export/ to the generated profile and
-retire ProfileConverter/ProfileExtender.
-Keep open for later (user): importing/extending ome.yaml. So: same roots as ome.yaml
-(ManufacturerSpec, LightSource, Detector, Settings...), `exact_mappings`/`close_mappings` to ome:
-where the meaning matches.
+Master model and pipeline done (branch `metaseed-profile`, 2026-09-28).
+Open questions for the user:
+- Image.AcquisitionDate: keep LiMi's `xsd:date` (sources' datetimes stay Properties) or use OME's dateTime
+  (a hand edit in models/imaging.yaml; 5 sources' dates become typed again)?
+- IDs that do not match the XSD's LSID patterns (e.g. Instrument.ID `SS1735`): keep the patterns, or relax
+  them in the model?
+- Push the `imaging` profile to the Hub as a new draft?
 
-Export: mapper output -> a metaseed dataset of the LiMi profile (`OME` root), so real source files
-can be validated with `validate_dataset` / `metaseed validate`, without losing any source value or
-key name.
+## The model and the pipeline
 
-Done so far (branch `metaseed-profile`, pushed; PR #2 open):
-- 5385662 profile converter (`python src/main.py profile`): `fullSchema.json` + containment from
-  `LiMi_XMLSchema.xsd` -> `models/fullSchema.yaml`, `OME` root; valid in metaseed (local and Hub).
-- a914b1f every converted file carries a `SourceMap` {output path: source path}; collapsed keys
-  kept as `id`/`SourceKey`; no overwrites (fall back to the source path, or fail loudly); empty
-  containers kept. `tests/test_no_data_loss.py` checks every source leaf, value and type, at the
-  output path its SourceMap entry names, in memory and after a YAML round trip.
-- 938fcf5 mappings.json rules resolve from the document root inside list items (the Annotation
-  rules put Software versions and the medium index inside `Annotation[0]` before).
-- a59807f profile gains `Property` (ID, Name = source path, Value = JSON-encoded, Unit, Source =
-  SourceFile ID) as `CustomProperties` on `OME`, `Image`, `Instrument`, and `SourceFile` (ID, Name,
-  SHA-256 Checksum, Format) as a list on `Image`.
-
-Findings for the export:
-- Dataset format: the root entity as a nested YAML/JSON document, children inline (dicts and
-  lists). `metaseed validate <file> -p limi -v 2.1 -e OME` reports missing required fields and
-  rejects any undeclared key ("Extra inputs are not permitted").
-- Mapper output is `category -> entity -> field` (`schema.extended.json`): an entity instance is
-  wherever an entity name holds a dict (`Detector.Channel` is an integer, not the entity).
-  Placement must follow the profile tree, not the categories: `Image.Plane`/`Image.Channel` go
-  under `Pixels`; take the shortest path from `OME`.
-- Category-level fields (`Instrument.Manufacturer`, `Detector.Gain`, ...) and all EM groups have
-  no profile field -> `Property` records.
-- Real data will fail many required fields (the JSON marks e.g. Manufacturer/CatalogNumber
-  required everywhere) - see the tier TODO.
-
-Plan:
-1. Rule: a value goes into a typed field only if it fits exactly (type, constraints, free slot);
-   otherwise a `Property` with its source path (from the SourceMap) and JSON-encoded value, under
-   the nearest anchor (`Image`, `Instrument`, else `OME`).
-2. One `SourceFile` per converted file (name, SHA-256).
-3. Extend the no-data-loss test to the export: every source leaf recoverable from the dataset.
-4. Validate the exported sources with the local CLI, then on the Hub.
-
-Progress (not committed yet):
-- 1-3 done: `src/DatasetExporter.py`, `python src/main.py export --input sources --output <dir>`;
-  profile gains `SourceMapping` and `Property.SchemaPath` (146 entities, valid in metaseed).
-- `tests/test_dataset_exporter.py` (placement, fits, anchors, collisions, only declared keys on all
-  sources) and `DatasetNoDataLossTest` in `tests/test_no_data_loss.py` (every source path's value
-  or key recovered from the dataset's SourceMappings + Properties, in memory and from the written
-  YAML). Mutation-checked: a dropped Property, a dropped mapping and a changed value are each
-  reported. 48 tests pass.
-- Most values are Properties for now, e.g. TFS TALOSF: 6 typed mappings, 1950 Properties (EM
-  metadata has no profile fields yet - see the extension TODO). Vendor units like "um" don't fit
-  OME's unit enums ("µm") and stay Properties.
-- eea2c52 export committed. Tier made optional (profile regenerated, valid; not committed yet).
-- 4 local `metaseed validate` of the 8 datasets (profile at c04ce0c): 6 finished, 155 errors, all
-  "Field 'X' is required" - no unknown keys, no type or constraint errors. The two TALOS datasets
-  (1950 / 3008 Properties) did not finish within 10 min; validation takes ~2-3s a record locally
-  (Delmic 2 records 17s, Cikteq 81 records 209s, ome-tiff 134 records 333s). An earlier run only
-  seemed to hang because the laptop was offline/asleep.
-- Missing required fields are LiMi's own requirements the sources don't state (Image.Name/ID,
-  Pixels.DimensionOrder/SizeZ/C/T/PixelType, Objective.Manufacturer/Model/CatalogNumber,
-  AcquisitionSoftware.Developer/WebsiteURL, Experiment.Purpose, Sample.Organism, ...).
-- Next: validate on the Hub (validate_dataset) once the Hub draft is re-imported. Required fields
-  in the destination model are ignored for now (user).
-- ome-tiff reached few typed fields because `sources/ome-tiff.json` is mostly one Huygens SVI
-  annotation (124 of 128 Properties) with Huygens names, which no name match can place. (Name
-  matching compares the whole source path to schema path ends; no `Metadata.`-style wrapper
-  exists in real files, so no tail matching needed.) Added 5 Huygens rules, validated against
-  `napari-meta-tiff/output/DNAcropSmall.ome.json` (same image, its own OME Pixels + the same
-  annotation): DeltaX/Y/Z = PhysicalSizeX/Y/Z (µm), DeltaT = TimeIncrement (s),
-  RefrIndexLensMedium = OME ObjectiveSettings.RefractiveIndex (immersion, 1.518) ->
-  LiMi ObjectiveSettings.ImmersionLiquid.RefractiveIndex. ome-tiff typed values 6 -> 11.
-  Not added: LambdaEx/LambdaEm (per channel; OME stores 424/461 where Huygens has
-  424.119995/461.0).
-
-Decided (user): values placed in typed fields keep their source key through `SourceMapping`
-records (ID, Field = dataset path, Source = source path), listed as `Mapping` on each
-`SourceFile` - the metaseed form of the SourceMap. Each value is stored once.
-
-Design choices made while building (tell the user; open to change):
-- `Property` also gets `SchemaPath`: the mapper's consolidated path (e.g.
-  `ElectronBeam.WorkingDistance.Value`), so the export doesn't lose the mapping work for
-  unmodelled values.
-- An int fits a float field (same JSON number). null, a type mismatch, a value outside an enum
-  or a taken slot -> Property.
-- One source file = one dataset: shared singletons (`Image[0]`, `Instrument[0]`, ...) along each
-  entity's shortest path from `OME`; an entity found as a dict merges into the first instance, a
-  list's i-th item into the i-th.
-- `Fluorescence_LightSource.Filament` in the mapper output -> profile entity
-  `Fluorescence_LightSource_Filament` (category + title, when that is an entity name).
-- `Tier` is a schema constant no source states: the converter makes it optional on every entity
-  (was required on 100), rather than filling it in.
-
-Current task (user): take refinements from imaging-metadata-converter without losing anything.
-- Step 1: merge its mappings.json (18 new rules: TIFF/EXIF tags, full OME-shaped source, Stage.M,
-  Microscope.SystemVacuum) into ours, keeping our rules it dropped (flat ome-tiff shape `objective.*`,
-  `medium`, `refractive_index`) and the 5 Huygens rules - our sources/ keep the old shape (step 2,
-  replacing sources/ with its examples, not requested). schema.extended.json: its 2 additions.
-- Step 3: vendor tag wrappers (`FEI_TITAN`, `FibicsXML`, ...): rules match as if the wrapper were
-  absent, the SourceMap keeps the full path, unmapped fields stay under the wrapper, collisions use
-  the no-overwrite fallback. The converter's version lifts fields with setdefault (drops a value on
-  a key collision, order dependent) and drops the wrapper key; on its own examples it silently loses
-  EMSIS Xarosa's EXIF DateTimeDigitized (overwritten by OlympusSIS.datetime). Converter not changed.
-- Committed 77472a8 (and f0d9f62: every mapping target declared in schema.extended.json). Mappings merged (202 converter + 194 ours -> 212, insertions only, no
-  general wildcard ahead of a more specific one); schema.extended.json = converter's (superset: the
-  2 additions). Wrapper handling in `convert_metadata` + 4 synthetic tests; 55 tests pass. Only our
-  Zeiss output changed (the new Stage.M and SystemVacuum rules). On the converter's 9 wrapped
-  examples our mapper has 0 loss problems (exact SourceMap check); differences from the converter's
-  output are all by design: unmapped fields stay under the wrapper, and EMSIS keeps both timestamps
-  (EXIF DateTimeDigitized in Image.AcquisitionDate - first written wins - and OlympusSIS.datetime at
-  its source path).
-
-Extended profile (not committed): `models/schema.extended.yaml` (profile name LiMi-extended) =
-fullSchema.yaml + what mappings/schema.extended.json adds beyond schema.json, generated by
-`ProfileExtender` in src/ProfileConverter.py: `python src/main.py profile` writes it next to
-fullSchema.yaml. Tests: ProfileExtenderTest (placement, nothing replaced, reachability, committed
-file up to date - fails until the profile is regenerated after a schema.extended.json change) and
-ExtendedProfileNoDataLossTest + declared-fields check on all sources. Committed 10ab52a; the
-sources exported with it are in export/ (7b33745). Additions to a profile entity go on it
-(Instrument, Image, ObjectiveSettings); non-entity categories become group entities under OME
-(Detector, Software, SamplePositioning -> _Stage -> _Position ...); new top-level groups
-(ElectronBeam, ElectronOptics, ElectronSource, Scan, Acquisition) under OME; nested names qualified
-by path; number -> float, object -> string, array -> list of string; clashes skipped (OME's own
-CustomProperties). 196 entities; every added entity gets an optional ID (is_identifier), as LiMi
-entities have; metaseed: valid, no problems, no warnings (Hub draft LiMi-extended showed 5
-identifier warnings before this). Export with `--profile models/schema.extended.yaml`: no loss on all 8 sources; typed values
-e.g. Cikteq 5 -> 43, Phenom 8 -> 41, Zeiss 3 -> 44; TALOS 6 -> 18 (most TALOS metadata has no rule).
-
-Done (not committed yet): one source key -> several targets, and several keys combined into one
-target. Design: (1) a mappings.json target may be a list; the value goes to the first (usual fallback), copies to
-the others where free; each gets a SourceMap entry. (2) mappings/combinations.json: {target, sources,
-format} - parts joined with spaces, parsed with the strptime format, written as ISO 8601; added only
-when all parts are present and parse and the target is free; originals stay; SourceMap entry is the list
-of parts. (3) export: SourceMapping gains optional DerivedFrom (list); data-loss tests accept several
-records of one source when equal, and a derived value does not count as recovering its parts.
-First use: SVS MPP -> PhysicalSizeX + PhysicalSizeY; Date + Time + Time Zone -> Image.AcquisitionDate.
-A list of targets is refused (ValueError) for a group or list moved as a whole - only single values.
-Result: SVS export 7 -> 9 typed (PhysicalSizeY; AcquisitionDate 2015-10-19T17:18:12-05:00 with
-DerivedFrom); only the SVS output/export changed; both profiles valid, no warnings; 86 tests.
-Still not expressible: value transformations such as SVS Exposure Time x Exposure Scale.
+- Master model: `models/imaging.yaml` (LinkML, style of the OME LinkML schema
+  https://github.com/gouttegd/yamf-playground/blob/main/linkml/ome/ome.yaml, LiMi's PascalCase names),
+  importing `imaging_units.yaml` (units enums), `imaging_provenance.yaml` (Property, SourceFile,
+  SourceMapping) and `imaging_extension.yaml` (what the source files hold beyond LiMi, mostly EM,
+  formerly mappings/schema.extended.json; mixins OMEExtension, InstrumentExtension, ... used by the model's
+  classes, shared Quantity {Value, Unit}, Vector2D, StagePosition). Edited by hand; version 0.1.0, id
+  https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging.
+- Created once from the whole LiMi XSD by `python src/main.py linkml` (src/LinkmlConverter.py; refuses to
+  overwrite without --force). Rules: extension base -> `is_a`; an abstract `*Group` -> a slot over its
+  (abstract) type with a type designator; `*Ref` -> a reference slot without `Ref` (`inlined: false`);
+  Settings' ID refers to the component; the XSD's `Split` -> a `Role` field on LightSource, limited per
+  class; descriptions the XSD lacks from OME 2016-06 ome.xsd (`models/ome-2016-06.xsd`, CC BY 3.0,
+  attributed) or derived, each with `description_source`. The converter stays for comparing a future
+  LiMi XSD; a test checks everything it yields is still in the master.
+- Hand edits so far: the three imports and their mixins/CustomProperties/SourceFile slots; OME.ID/Name
+  (metaseed datasets identify their root); LightPath Tier; MaskingPlate.ApertureNr; `default_subtype`
+  annotations on abstract classes (LiMi's Generic* subtypes; Stage -> MechanicalStage and Software ->
+  AcquisitionSoftware chosen by the user) - where values for an abstract class go.
+- Model paths (src/ModelPaths.py): start at a class with an identifier (OME, Image, Pixels, Laser, ...) and
+  run through components without one: `OME.ElectronBeam.WorkingDistance.Value`,
+  `Image.ObjectiveSettings.Medium`, `MechanicalStage.Position.X.Value`. mappings.json targets are these
+  paths (tested); the mapper's name matching indexes them, plus aliases for abstract classes
+  (`Detector.Name` -> `GenericDetector.Name`).
+- metaseed profile: `python src/main.py metaseed` -> `models/imaging.metaseed.yaml` (src/MetaseedGenerator.py,
+  profile `imaging`), inherited fields written out, references as ID strings, constraints from enums,
+  patterns and bounds. The exporter places a record by name only at a class a model path starts at (or an
+  abstract class, into its default subtype), never at a component.
+- Kept as references, read by nothing: models/LiMi_XMLSchema.xsd, models/fullSchema.json (a test checks
+  every property is in the model), models/LiMi_Model.json, mappings/schema.json.
+- Retired (in git history): mappings/schema.extended.json, src/ProfileConverter.py (ProfileConverter,
+  ProfileExtender, `profile` command), models/fullSchema.yaml, models/schema.extended.yaml.
 
 ## How new, unmapped metadata is kept
 
@@ -308,43 +113,47 @@ Nothing a source holds is dropped; unmapped metadata stays reachable at its sour
 In `output/` (mapper, `convert`), for example with a source
 `{Make: Acme, NewVendorKey: 42, Beam: {WD: 0.005, NewBeamSetting: 'on'}, Odd: {Deep: {Value: 1.5}},
 ACME_TAG: {Model: X1-rev2, Serial: S123}}`:
-- `NewVendorKey` (no rule, no schema name match) stays at `NewVendorKey`.
-- `Beam.NewBeamSetting` lands at `ElectronBeam.NewBeamSetting`: a subtree rule (`Beam.*` ->
-  `ElectronBeam`) carries new fields of that group along.
+- `NewVendorKey` (no rule, no model name match) stays at `NewVendorKey`.
+- `Beam.NewBeamSetting` lands at `OME.ElectronBeam.NewBeamSetting`: a subtree rule (`Beam.*` ->
+  `OME.ElectronBeam`) carries new fields of that group along.
 - `Odd.Deep.Value` (unknown group) stays as it is.
 - `ACME_TAG` is a vendor wrapper: its unmapped `Serial` stays at `ACME_TAG.Serial`; its `Model` has a
-  rule, but `Instrument.Model` is already taken by the top-level `Model`, so it stays at
-  `ACME_TAG.Model` instead of overwriting.
+  rule and goes to `Instrument.Model`, as if the wrapper were absent (had a top-level `Model` taken
+  `Instrument.Model` first, it would stay at `ACME_TAG.Model` instead of overwriting).
 - Every leaf gets a SourceMap entry (output path -> source path), e.g.
-  `ElectronBeam.NewBeamSetting: Beam.NewBeamSetting`.
+  `OME.ElectronBeam.NewBeamSetting: Beam.NewBeamSetting`.
 
 In `export/` (metaseed dataset, `export`): metaseed rejects undeclared keys, so each such value is a
 `Property` record under `CustomProperties` of the nearest anchor (Image, Instrument, else OME): `Name` =
-source path, `Value` = JSON-encoded value, `SchemaPath` = where a rule moved it (e.g. `Name:
-Beam.NewBeamSetting, Value: '"on"', SchemaPath: ElectronBeam.NewBeamSetting`). Values that fit a
-declared field are typed, with a `SourceMapping` record (e.g. `Make` -> `Instrument[0].Manufacturer`).
+source path, `Value` = JSON-encoded value, `SchemaPath` = where a rule moved it. A record that fits no
+declared field (a vendor object where the model has a string) is taken apart into one Property per leaf.
+Values that fit a declared field are typed, with a `SourceMapping` record (e.g. `Make` ->
+`Instrument[0].Manufacturer`).
 
 What follows from a new source or new metadata:
 - The output/ and export/ freshness tests fail until `convert` and `export` are rerun; the no-data-loss
   tests confirm every new value is kept.
-- `AcquisitionMetadataMapper.unmatched_fields()` lists output paths the schema does not model - the
+- `AcquisitionMetadataMapper.unmatched_fields()` lists output paths the model does not have - the
   candidates for new rules.
-- To make a value typed: add a rule to mappings.json (and the target to schema.extended.json if
-  missing), rerun `profile`, `convert` and `export`; the value moves from a Property to a typed field.
+- To make a value typed: add a rule to mappings.json (its target a model path; add the field to
+  models/imaging_extension.yaml if missing), rerun `metaseed`, `convert` and `export`; the value moves
+  from a Property to a typed field.
 
 ## TODO
 
-- [ ] Map LiMi's per-property tier (1/2/3) to metaseed's advisory `tier` (required /
-      recommended / optional), so real vendor files are not failed on tier-3 fields.
-- [x] Metadata beyond LiMi in the profile: done as `models/schema.extended.yaml` (LiMi-extended),
-      generated from `schema.extended.json` (10ab52a).
+- [ ] Map LiMi's per-property tier (1/2/3, the `Tier` annotations) to metaseed's advisory `tier`
+      (required / recommended / optional), so real vendor files are not failed on tier-3 fields.
 - [ ] Unit normalisation (e.g. vendor "um" -> OME "µm") so unit fields can be typed; the
       original spelling must stay recoverable.
 - [ ] Per-channel mapping (e.g. Huygens ChannelData[i] LambdaEx/LambdaEm -> each Channel's
       Fluorophore wavelengths): rules resolve from the root, so each channel's value collides.
-- [ ] `medium`/`refractive_index` map to `Settings.ObjectiveSettings.Medium/RefractiveIndex`,
-      which exist only in schema.extended.json, not LiMi (LiMi: ObjectiveSettings.ImmersionLiquid).
+- [ ] ObjectiveSettings.Medium/RefractiveIndex (extension) duplicate LiMi's ImmersionLiquid; decide
+      whether the flat ome-tiff `medium`/`refractive_index` rules should target ImmersionLiquid instead.
+- [ ] Light-source role: rules for Transmitted/Fluorescence light sources should set `Role`.
+- [ ] EM groups hang under OME (as schema.extended.json had them); ElectronBeam/Optics/Source are
+      instrument components or settings, Scan/Acquisition acquisition settings - move when the mapper
+      paths can follow. Acquisition.Operator might be LiMi's Experimenter.
+- [ ] `exact_mappings`/`close_mappings` to the OME LinkML schema, keeping importing/extending it open.
 - [ ] Consider adding `DNAcropSmall.ome.json` (full OME + Huygens) as a source: a real test
       that mapped annotation values agree with the image's own OME values.
-- [ ] Decide whether to delete the 9 unreachable entities (see Known issues).
 - [x] PR for `metaseed-profile`: https://github.com/NL-BioImaging/imaging-metadata-consolidator/pull/2

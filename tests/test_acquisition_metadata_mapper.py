@@ -10,7 +10,9 @@ SRC_DIR = os.path.join(REPO_ROOT, 'src')
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
-from AcquisitionMetadataMapper import AcquisitionMetadataMapper
+from AcquisitionMetadataMapper import (DEFAULT_COMBINATIONS_FILE, DEFAULT_MAPPINGS_FILE, AcquisitionMetadataMapper,
+                                       rule_targets)
+from ModelPaths import ModelPaths
 
 
 class AcquisitionMetadataMapperTest(unittest.TestCase):
@@ -42,11 +44,11 @@ class AcquisitionMetadataMapperTest(unittest.TestCase):
 
         converted = self.mapper.convert_metadata(svs)
 
-        self.assertEqual(converted['Image'], {'Pixels': {'PhysicalSizeX': 0.4936, 'PhysicalSizeY': 0.4936,
-                                                         'SizeX': 28448, 'SizeY': 21839},
-                                              'ID': 18489,
-                                              'Plane': {'PositionX': 29.282969, 'PositionY': 13.628824}})
-        self.assertEqual(converted['Magnification'], {'Objective': {'Magnification': 20}})
+        self.assertEqual(converted['Pixels'], {'PhysicalSizeX': 0.4936, 'PhysicalSizeY': 0.4936,
+                                               'SizeX': 28448, 'SizeY': 21839})
+        self.assertEqual(converted['Image'], {'ID': 18489})
+        self.assertEqual(converted['Plane'], {'PositionX': 29.282969, 'PositionY': 13.628824})
+        self.assertEqual(converted['Objective'], {'Magnification': 20})
         self.assertEqual(converted['Instrument'], {'ID': 'SS1735'})
 
     def test_huygens_sampling_sizes_map_to_pixels(self):
@@ -57,9 +59,33 @@ class AcquisitionMetadataMapperTest(unittest.TestCase):
 
         converted = self.mapper.convert_metadata({'Annotation:CustomAttributes:SVI:Image:0': annotation})
 
-        self.assertEqual(converted['Image']['Pixels'], {'PhysicalSizeX': 0.064967, 'PhysicalSizeY': 0.064967,
-                                                        'PhysicalSizeZ': 0.2128, 'TimeIncrement': 1.0})
-        self.assertEqual(converted['Settings']['ObjectiveSettings']['ImmersionLiquid'], {'RefractiveIndex': 1.518})
+        self.assertEqual(converted['Pixels'], {'PhysicalSizeX': 0.064967, 'PhysicalSizeY': 0.064967,
+                                               'PhysicalSizeZ': 0.2128, 'TimeIncrement': 1.0})
+        self.assertEqual(converted['ImmersionLiquid'], {'RefractiveIndex': 1.518})
+
+
+class RuleTargetsTest(unittest.TestCase):
+    """Every rule targets the imaging model: a field, or a group a whole subtree moves into."""
+
+    def test_every_target_is_in_the_model(self):
+        tree = ModelPaths().tree()
+        paths = set()
+
+        def collect(node, path=''):
+            for key, value in node.items():
+                current = f'{path}.{key}' if path else key
+                paths.add(current)
+                if isinstance(value, dict):
+                    collect(value, current)
+
+        collect(tree)
+        with open(os.path.join(REPO_ROOT, DEFAULT_MAPPINGS_FILE), encoding='utf-8') as file:
+            mappings = json.load(file)
+        with open(os.path.join(REPO_ROOT, DEFAULT_COMBINATIONS_FILE), encoding='utf-8') as file:
+            combinations = json.load(file)
+        targets = [target for rule in mappings.values() for target in rule_targets(rule)]
+        targets += [combination['target'] for combination in combinations]
+        self.assertEqual([target for target in targets if target.removesuffix('[]') not in paths], [])
 
 
 class LosslessMappingTest(unittest.TestCase):

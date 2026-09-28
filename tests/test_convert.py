@@ -14,7 +14,7 @@ from convert import convert_file, read_metadata, write_metadata
 
 SOURCES_DIR = os.path.join(REPO_ROOT, 'sources')
 OUTPUT_DIR = os.path.join(REPO_ROOT, 'output')
-SCHEMA_FILE = os.path.join(REPO_ROOT, 'mappings', 'schema.extended.json')
+SCHEMA_FILE = os.path.join(REPO_ROOT, 'models', 'imaging.yaml')
 MAPPINGS_FILE = os.path.join(REPO_ROOT, 'mappings', 'mappings.json')
 
 

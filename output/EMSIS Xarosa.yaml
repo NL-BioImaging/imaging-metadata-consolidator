@@ -1,20 +1,19 @@
 Image:
   Name: ''
   AcquisitionDate: '2025-05-28 10:54:00'
-  Pixels:
-    PhysicalSizeX: 1.652845302290227e-09
-    PhysicalSizeY: 1.652845302290227e-09
   Type: ''
-Magnification:
-  Objective:
-    CalibratedMagnification: 6000.0
-Detector:
+Pixels:
+  PhysicalSizeX: 1.652845302290227e-09
+  PhysicalSizeY: 1.652845302290227e-09
+Objective:
+  CalibratedMagnification: 6000.0
+GenericDetector:
   Name: ''
 SourceMap:
   Image.Name: name
   Image.AcquisitionDate: datetime
-  Image.Pixels.PhysicalSizeX: pixelsizex
-  Image.Pixels.PhysicalSizeY: pixelsizey
-  Magnification.Objective.CalibratedMagnification: magnification
-  Detector.Name: cameraname
+  Pixels.PhysicalSizeX: pixelsizex
+  Pixels.PhysicalSizeY: pixelsizey
+  Objective.CalibratedMagnification: magnification
+  GenericDetector.Name: cameraname
   Image.Type: picturetype

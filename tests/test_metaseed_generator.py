@@ -1,4 +1,3 @@
-import collections
 import os
 import sys
 import tempfile
@@ -12,26 +11,14 @@ if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
 from MetaseedGenerator import MetaseedGenerator
-from ProfileConverter import ProfileConverter
 
 
 MODEL_FILE = os.path.join(REPO_ROOT, 'models', 'imaging.yaml')
 PROFILE_FILE = os.path.join(REPO_ROOT, 'models', 'imaging.metaseed.yaml')
-JSON_SCHEMA_FILE = os.path.join(REPO_ROOT, 'models', 'fullSchema.json')
-XSD_FILE = os.path.join(REPO_ROOT, 'models', 'LiMi_XMLSchema.xsd')
 
 # The LiMi XSD references a LightSensor (LightSensorRef) but no element contains one.
 UNREACHABLE = {'LightSensor'}
 
-# What the fullSchema.json-based profile has that the generated one holds differently
-OLD_FIELD_NAMES = {'Description': 'Annotation'}  # the JSON's name for AnnotationRef
-OLD_ONLY = {
-    'Tier': 'a constant of each class: an annotation in the model, no dataset field',
-    'Image.InstrumentName': 'readonly display of the referenced Instrument',
-    'Image.InstrumentID': 'readonly; Image.Instrument holds the ID',
-    'Pump': 'the XSD Pump element is a LaserRef: the Laser.Pump reference',
-}
-ROLE_PREFIXES = ('Transmitted_LightSource_', 'Fluorescence_LightSource_')
 
 SYNTHETIC_MODEL = """
 id: https://example.org/synthetic
@@ -161,45 +148,8 @@ class GeneratedProfileTest(unittest.TestCase):
         self.assertEqual(committed, self.profile, 'rerun `python src/main.py metaseed`')
 
     def test_every_concrete_class_reachable(self):
-        concrete = {name for name, cls in self.generator.classes.items() if not cls.abstract}
+        concrete = {name for name, cls in self.generator.classes.items() if not cls.abstract and not cls.mixin}
         self.assertEqual(concrete - set(self.entities), UNREACHABLE)
-
-    def test_holds_everything_of_the_fullschema_json_profile(self):
-        old = ProfileConverter(JSON_SCHEMA_FILE, XSD_FILE).convert()['entities']
-        new = {name: {field['name']: field for field in entity['fields']} for name, entity in self.entities.items()}
-        entity_map = self._map_entities(old, new)
-        missing = []
-        for old_name, entity in old.items():
-            new_name = entity_map.get(old_name, old_name if old_name in new else None)
-            if new_name is None and old_name not in OLD_ONLY:
-                missing.append(old_name)
-            for field in entity['fields'] if new_name else []:
-                name = self._new_field_name(field['name'])
-                if name not in new[new_name] and field['name'] not in OLD_ONLY \
-                        and f'{old_name}.{field["name"]}' not in OLD_ONLY:
-                    missing.append(f'{old_name}.{field["name"]} -> {new_name}.{name}')
-        self.assertEqual(missing, [])
-
-    @staticmethod
-    def _new_field_name(name):
-        for prefix in ROLE_PREFIXES:
-            name = name.removeprefix(prefix)
-        return OLD_FIELD_NAMES.get(name, name)
-
-    def _map_entities(self, old, new):
-        """Old entity -> new, following the nesting from the root: the old per-parent copies
-        (CMOS_WavelengthRange) map to what the new parent nests there (ComponentWavelengthRange)."""
-        entity_map = {self.profile['root_entity']: self.profile['root_entity']}
-        queue = collections.deque([self.profile['root_entity']])
-        while queue:
-            old_parent = queue.popleft()
-            for field in old[old_parent]['fields']:
-                new_field = new[entity_map[old_parent]].get(self._new_field_name(field['name']))
-                child = field.get('items')
-                if child in old and child not in entity_map and new_field is not None and new_field.get('items') in new:
-                    entity_map[child] = new_field['items']
-                    queue.append(child)
-        return entity_map
 
 
 if __name__ == '__main__':

@@ -35,7 +35,7 @@ SpimData:
         type: affine
       timepoint: 0
       setup: 0
-Software:
+AcquisitionSoftware:
   Version: 0.2
 SourceMap:
   SpimData.BasePath.type: SpimData.BasePath.type
@@ -60,4 +60,4 @@ SourceMap:
   SpimData.ViewRegistrations.ViewRegistration.ViewTransform.type: SpimData.ViewRegistrations.ViewRegistration.ViewTransform.type
   SpimData.ViewRegistrations.ViewRegistration.timepoint: SpimData.ViewRegistrations.ViewRegistration.timepoint
   SpimData.ViewRegistrations.ViewRegistration.setup: SpimData.ViewRegistrations.ViewRegistration.setup
-  Software.Version: SpimData.version
+  AcquisitionSoftware.Version: SpimData.version

@@ -4,9 +4,8 @@ Aperio Image Library v12:
 ? ''
 : null
 28448x21839 [0,100 27888x21739] (240x240) J2K/KDU Q: 70
-Magnification:
-  Objective:
-    Magnification: 20
+Objective:
+  Magnification: 20
 StripeWidth: 2032
 Instrument:
   ID: SS1735
@@ -15,22 +14,22 @@ Date: 10/19/15
 Time: '17:18:12'
 Time Zone: GMT-05:00
 User: 08e1f1aa-01fa-41e5-aa13-9af07029387e
-Image:
-  Pixels:
-    PhysicalSizeX: 0.4936
-    PhysicalSizeY: 0.4936
-    SizeX: 28448
-    SizeY: 21839
-  Plane:
-    PositionX: 29.282969
-    PositionY: 13.628824
-  ID: 18489
-  AcquisitionDate: '2015-10-19T17:18:12-05:00'
+Pixels:
+  PhysicalSizeX: 0.4936
+  PhysicalSizeY: 0.4936
+  SizeX: 28448
+  SizeY: 21839
+Plane:
+  PositionX: 29.282969
+  PositionY: 13.628824
 LineCameraSkew: 0.001055
 LineAreaXOffset: 0.01646
 LineAreaYOffset: -0.009263
 Focus Offset: -0.0005
 DSR ID: 129.112.7.45
+Image:
+  ID: 18489
+  AcquisitionDate: '2015-10-19T17:18:12-05:00'
 Exposure Time: 109
 Exposure Scale: 1.0e-06
 DisplayColor: 0
@@ -41,7 +40,7 @@ SourceMap:
   : ''
   28448x21839 [0,100 27888x21739] (240x240) J2K/KDU Q: 28448x21839 [0,100 27888x21739]
     (240x240) J2K/KDU Q
-  Magnification.Objective.Magnification: AppMag
+  Objective.Magnification: AppMag
   StripeWidth: StripeWidth
   Instrument.ID: ScanScope ID
   Filename: Filename
@@ -49,10 +48,10 @@ SourceMap:
   Time: Time
   Time Zone: Time Zone
   User: User
-  Image.Pixels.PhysicalSizeX: MPP
-  Image.Pixels.PhysicalSizeY: MPP
-  Image.Plane.PositionX: Left
-  Image.Plane.PositionY: Top
+  Pixels.PhysicalSizeX: MPP
+  Pixels.PhysicalSizeY: MPP
+  Plane.PositionX: Left
+  Plane.PositionY: Top
   LineCameraSkew: LineCameraSkew
   LineAreaXOffset: LineAreaXOffset
   LineAreaYOffset: LineAreaYOffset
@@ -62,8 +61,8 @@ SourceMap:
   Exposure Time: Exposure Time
   Exposure Scale: Exposure Scale
   DisplayColor: DisplayColor
-  Image.Pixels.SizeX: OriginalWidth
-  Image.Pixels.SizeY: OriginalHeight
+  Pixels.SizeX: OriginalWidth
+  Pixels.SizeY: OriginalHeight
   ICC Profile: ICC Profile
   Image.AcquisitionDate:
   - Date

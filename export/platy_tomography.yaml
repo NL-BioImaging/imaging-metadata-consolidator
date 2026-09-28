@@ -98,9 +98,12 @@ CustomProperties:
   Name: SpimData.ViewRegistrations.ViewRegistration.setup
   Value: '0'
   Source: SourceFile:0
-- ID: Property:22
-  Name: SpimData.version
-  Value: '0.2'
-  SchemaPath: Software.Version
-  Source: SourceFile:0
-Software: {}
+Instrument:
+- AcquisitionSoftware:
+  - {}
+  CustomProperties:
+  - ID: Property:22
+    Name: SpimData.version
+    Value: '0.2'
+    SchemaPath: AcquisitionSoftware.Version
+    Source: SourceFile:0

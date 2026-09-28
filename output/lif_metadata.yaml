@@ -1,11 +1,10 @@
 manufacturer: Leica Microsystems
 model: MICA
-Magnification:
-  Objective:
-    CalibratedMagnification: 10.0
+Objective:
+  CalibratedMagnification: 10.0
 lens_na: 0.32
 immersion: Air
-Settings:
+Image:
   ObjectiveSettings:
     RefractiveIndex: 1.0
 HardwareSetting:
@@ -449,16 +448,15 @@ HardwareSetting:
   SystemTypeName: MICA
   DataSourceType: 1
   DataSourceTypeName: Camera
-Software:
-  AcquisitionSoftware:
-    Name: LAS X 6.2.1.27469
+AcquisitionSoftware:
+  Name: LAS X 6.2.1.27469
 SourceMap:
   manufacturer: manufacturer
   model: model
-  Magnification.Objective.CalibratedMagnification: magnification
+  Objective.CalibratedMagnification: magnification
   lens_na: lens_na
   immersion: immersion
-  Settings.ObjectiveSettings.RefractiveIndex: refractive_index
+  Image.ObjectiveSettings.RefractiveIndex: refractive_index
   HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[0].MirrorX: HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[0].MirrorX
   HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[0].MirrorY: HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[0].MirrorY
   HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[1].MirrorX: HardwareSetting.CameraSettingDefinition.IndividualCameraGroup.PerCameraSetting[1].MirrorX
@@ -941,7 +939,7 @@ SourceMap:
   HardwareSetting.CameraSettingDefinition.UserManagementUserName: HardwareSetting.CameraSettingDefinition.UserManagementUserName
   HardwareSetting.CameraSettingDefinition.IsMultiCam: HardwareSetting.CameraSettingDefinition.IsMultiCam
   HardwareSetting.Application: HardwareSetting.Application
-  Software.AcquisitionSoftware.Name: HardwareSetting.Software
+  AcquisitionSoftware.Name: HardwareSetting.Software
   HardwareSetting.HardwareServerVersion: HardwareSetting.HardwareServerVersion
   HardwareSetting.SystemType: HardwareSetting.SystemType
   HardwareSetting.SystemTypeName: HardwareSetting.SystemTypeName

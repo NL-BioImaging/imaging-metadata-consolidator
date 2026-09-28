@@ -1,8 +1,8 @@
 """Map per-source acquisition metadata onto the consolidated schema.
 
 Uses the field mappings in mappings/mappings.json to translate vendor-
-specific metadata trees into the consolidated model defined by
-mappings/schema.extended.json. This module works purely with in-memory
+specific metadata trees into the imaging model (models/imaging.yaml, see
+ModelPaths for the paths it uses). This module works purely with in-memory
 dicts; see convert.py for the reusable API that converts a single source
 file with this module, and main.py for the CLI entry point.
 
@@ -16,8 +16,10 @@ import os.path
 from datetime import datetime
 from fnmatch import fnmatchcase
 
+from ModelPaths import DEFAULT_MODEL_FILE, ModelPaths
 
-DEFAULT_SCHEMA_FILE = 'mappings/schema.extended.json'
+
+DEFAULT_SCHEMA_FILE = DEFAULT_MODEL_FILE
 DEFAULT_MAPPINGS_FILE = 'mappings/mappings.json'
 DEFAULT_COMBINATIONS_FILE = 'mappings/combinations.json'
 SOURCE_MAP_KEY = 'SourceMap'
@@ -26,7 +28,7 @@ SOURCE_MAP_KEY = 'SourceMap'
 class AcquisitionMetadataMapper:
     """Maps vendor-specific acquisition metadata onto the consolidated schema.
 
-    Loads schema.extended.json and mappings.json once, then converts one or
+    Loads the model's paths and mappings.json once, then converts one or
     more metadata dicts using `convert_metadata`. Resolution for each field
     happens in two steps: first the explicit mappings.json rules (exact or
     "Prefix.*" wildcard), then, for anything left unmapped, a fallback match
@@ -37,10 +39,15 @@ class AcquisitionMetadataMapper:
 
     def __init__(self, schema_file=DEFAULT_SCHEMA_FILE, mappings_file=DEFAULT_MAPPINGS_FILE,
                  combinations_file=DEFAULT_COMBINATIONS_FILE):
-        self.schema = self._load_json(schema_file)
+        # a LinkML model, or (for tests) a JSON tree of the same {name: subtree or type} shape
+        model = ModelPaths(schema_file) if schema_file.endswith(('.yaml', '.yml')) else None
+        self.schema = model.tree() if model else self._load_json(schema_file)
         self.mappings = self._load_json(mappings_file)
         self.combinations = self._load_json(combinations_file) if os.path.exists(combinations_file) else []
         self._schema_index = self._build_schema_index(self.schema)
+        # "Detector.Name" in a source still names a field, of the model's default detector (GenericDetector)
+        for alias, path in (model.aliases() if model else {}).items():
+            self._schema_index.setdefault(tuple(part.lower() for part in alias.split('.')), path)
         self._known_keys, self._known_key_patterns = self._build_known_key_index(self.mappings, self.schema)
 
     @staticmethod
@@ -488,7 +495,7 @@ class AcquisitionMetadataMapper:
                 provenance[combination['target']] = list(combination['sources'])
 
     def unmatched_fields(self, metadata):
-        """List the output paths of leaf fields not represented in schema.extended.json.
+        """List the output paths of leaf fields not represented in the model.
 
         Converts `metadata`, then walks the *full* output and flags every
         leaf whose complete path is not itself a leaf declared in the

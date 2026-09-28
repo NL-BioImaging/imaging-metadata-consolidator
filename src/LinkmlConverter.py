@@ -358,8 +358,11 @@ class LinkmlConverter:
         attributes['Value'] = slot
 
     def _add_attribute(self, owner, node, attributes):
-        name = node.get('name')
+        # a dot would split the slot's path (the XSD's MaskingPlate has an attribute "ApertureNr.")
+        name = node.get('name').replace('.', '')
         description, annotations = _documentation(node)
+        if name != node.get('name'):
+            annotations['xsd_name'] = node.get('name')
         inline = node.find(XS + 'simpleType')
         slot = self._simple_range(node.get('type'), owner, name, inline)
         if description:
