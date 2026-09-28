@@ -34,6 +34,19 @@ model, regenerate (`python src/main.py metaseed`) and push the profile again.
   `xsd_pattern` annotation only, so vendor IDs (`SS1735`, `9953543`) fit Instrument.ID. The UUID type keeps
   its pattern (a file link, no object ID).
 
+### Validation of the exports (2026-09-28)
+
+All 13 export/ datasets validated with the local metaseed 0.54.0 against `imaging` 0.1 (the two TALOS
+exports with their Property records sampled to 25 per anchor; the full run is ~3.5 s a record, so about
+5 hours for both): 695 errors, all "Field 'X' is required" - no type, format, constraint or unknown-field
+error. Most are LiMi's own requirements the sources do not state (GenericDetector 121: Manufacturer, Model,
+CatalogNumber, QuantumEfficiency, ...; Pixels 108: DimensionOrder, SizeZ/C/T, PixelType; Image 104: ID, Name,
+Instrument, Experiment, Sample, AcquisitionSoftware references; Objective 71; MechanicalStage 60). The Hub
+validates the same way: a Delmic test dataset gave the same 12 issues there (deleted again, soft; the user
+chose local validation only). Hub datasets need metaseed's tree serialization, not the nested export
+(save_dataset silently stored an empty dataset): `MetaseedClient(...)._facade.load_nested(document)` then
+`serialize(format='tree')`.
+
 ### Generated metaseed profile
 
 metaseed has no inheritance and no "one of": a slot over an abstract class is one field per concrete
