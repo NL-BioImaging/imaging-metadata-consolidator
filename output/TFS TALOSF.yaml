@@ -11,10 +11,9 @@ Instrument:
     VacuumMode: Ready
 AcquisitionSoftware:
   Version: 2.10.1
-OME:
-  Acquisition:
-    StartDate: '1683922216'
-  ElectronBeam:
+Image:
+  AcquisitionDate: '1683922216'
+  ElectronBeamSettings:
     Type: ''
     AccelerationVoltage:
       Value: '80000'
@@ -24,9 +23,7 @@ OME:
     Focus: '0.00049394757581738011'
     Defocus:
       Value: '4.357877185027627e-07'
-  ElectronSource:
-    Type: SFEG
-  ElectronOptics:
+  ElectronOpticsSettings:
     GunLensSetting: '1'
     ExtractorVoltage: '4500'
     C1LensIntensity: '0.18007874086202763'
@@ -87,7 +84,7 @@ OME:
     ProbeMode: '1'
     CameraLength:
       Value: '0.20499999999999999'
-  Scan:
+  ScanSettings:
     FieldOfView:
       X:
         Value: '8.1920000000000022e-06'
@@ -107,6 +104,145 @@ OME:
       Value: '424.55040000000002'
     Rotation:
       Value: '0'
+  BinaryResult:
+    AcquisitionUnit: ''
+    CompositionType: ''
+    DetectorIndex: '4'
+    Detector: HAADF
+    Offset:
+      x: '0'
+      y: '0'
+    Encoding: ''
+Acquisition:
+  AcquisitionDatetime:
+    DateTime: '0'
+ElectronSource:
+  Type: SFEG
+EnergyFilter:
+  EntranceApertureType: ''
+MechanicalStage:
+  Position:
+    X:
+      Value: '-3.565290000000008e-05'
+    Y:
+      Value: '2.7880518000000015e-05'
+    Z:
+      Value: '-0.00016588146'
+  Tilt:
+    Alpha:
+      Value: '-0.00010274500000013157'
+    Beta:
+      Value: '8.4731148788705459e-06'
+SampleHolder:
+  Type: FEI Double Tilt
+Pixels:
+  SizeX: '2048'
+  SizeY: '2048'
+  PhysicalSizeX: '4.0000000000000011e-09'
+  PhysicalSizeY: '4.0000000000000011e-09'
+  PhysicalSizeXUnit: m
+  PhysicalSizeYUnit: m
+Plane:
+  PixelDwellTime: '0.0001'
+GenericDetector:
+  Configuration:
+  - DetectorName: BM-Ceta
+    DetectorType: ImagingDetector
+    ExposureMode: ''
+    Binning:
+      width: '1'
+      height: '1'
+    ReadOutArea:
+      left: '0'
+      top: '0'
+      right: '4096'
+      bottom: '4096'
+    ExposureTime: '0.5'
+    Shutters:
+      Shutter-0:
+        Position: PostSpecimen
+        Type: Electrostatic
+    DarkGainCorrectionType: '3'
+    id: Detector-0
+  - DetectorName: DualX1
+    DetectorType: AnalyticalDetector
+    Inserted: 'true'
+    Enabled: 'true'
+    ElevationAngle: '0.34906585000000001'
+    AzimuthAngle: '1.5707963267948966'
+    CollectionAngle: '0.90101100000000001'
+    Dispersion: '5'
+    PulseProcessTime: '2.9081620097620193e-06'
+    RealTime: '424.70166195152729'
+    LiveTime: '285.18219999999997'
+    InputCountRate: '132519'
+    OutputCountRate: '88985'
+    AnalyticalDetectorShutterState: '1'
+    OffsetEnergy: '-480.05000000000001'
+    ElectronicsNoise: '12.145301744118672'
+    BeginEnergy: '150'
+    id: Detector-1
+  - DetectorName: DualX2
+    DetectorType: AnalyticalDetector
+    Inserted: 'true'
+    Enabled: 'true'
+    ElevationAngle: '0.34906585000000001'
+    AzimuthAngle: '-1.5707963267948966'
+    CollectionAngle: '0.90101100000000001'
+    Dispersion: '5'
+    PulseProcessTime: '2.9081620097620193e-06'
+    RealTime: '424.70166195152729'
+    LiveTime: '285.18219999999997'
+    InputCountRate: '132519'
+    OutputCountRate: '88985'
+    AnalyticalDetectorShutterState: '1'
+    OffsetEnergy: '-480.05000000000001'
+    ElectronicsNoise: '13.249420084493098'
+    BeginEnergy: '150'
+    id: Detector-2
+  - DetectorName: Flucam
+    DetectorType: ImagingDetector
+    ExposureMode: ''
+    Gain: '0.69999999999999996'
+    Binning:
+      width: '2'
+      height: '2'
+    ReadOutArea:
+      left: '0'
+      top: '0'
+      right: '512'
+      bottom: '512'
+    ExposureTime: '0.0016000000000000001'
+    Shutters:
+      Shutter-0:
+        Position: None
+        Type: Electrostatic
+    DarkGainCorrectionType: '3'
+    id: Detector-3
+  - DetectorName: HAADF
+    DetectorType: ScanningDetector
+    Inserted: 'true'
+    Enabled: 'true'
+    Gain: '18.579199760535872'
+    Offset: '-4.5638399999999999'
+    CollectionAngleRange:
+      begin: '0.046715186654504498'
+      end: '0.20000000000000001'
+    id: Detector-4
+  ActiveConfiguration:
+    DetectorName: HAADF
+    DetectorType: ScanningDetector
+    Inserted: 'true'
+    Enabled: 'true'
+    Gain: '18.579199760535872'
+    Offset: '-4.5638399999999999'
+    CollectionAngleRange:
+      begin: '0.046715186654504498'
+      end: '0.20000000000000001'
+Sample:
+  SampleId: '6232'
+GasInjectionSystems: ''
+OME:
   CustomProperties:
     Aperture[C1].Name:
       type: string
@@ -2124,141 +2260,6 @@ OME:
         - /Presentation/Displays/ImageDisplay/d4926810796f4a658216422b426f097d
         spectrums:
         - Summed: /Data/Spectrum/e9bd8771452f45b58b77cf9e4f9c9db6
-Image:
-  AcquisitionDate: '0'
-  BinaryResult:
-    AcquisitionUnit: ''
-    CompositionType: ''
-    DetectorIndex: '4'
-    Detector: HAADF
-    Offset:
-      x: '0'
-      y: '0'
-    Encoding: ''
-EnergyFilter:
-  EntranceApertureType: ''
-MechanicalStage:
-  Position:
-    X:
-      Value: '-3.565290000000008e-05'
-    Y:
-      Value: '2.7880518000000015e-05'
-    Z:
-      Value: '-0.00016588146'
-  Tilt:
-    Alpha:
-      Value: '-0.00010274500000013157'
-    Beta:
-      Value: '8.4731148788705459e-06'
-SampleHolder:
-  Type: FEI Double Tilt
-Pixels:
-  SizeX: '2048'
-  SizeY: '2048'
-  PhysicalSizeX: '4.0000000000000011e-09'
-  PhysicalSizeY: '4.0000000000000011e-09'
-  PhysicalSizeXUnit: m
-  PhysicalSizeYUnit: m
-Plane:
-  PixelDwellTime: '0.0001'
-GenericDetector:
-  Configuration:
-  - DetectorName: BM-Ceta
-    DetectorType: ImagingDetector
-    ExposureMode: ''
-    Binning:
-      width: '1'
-      height: '1'
-    ReadOutArea:
-      left: '0'
-      top: '0'
-      right: '4096'
-      bottom: '4096'
-    ExposureTime: '0.5'
-    Shutters:
-      Shutter-0:
-        Position: PostSpecimen
-        Type: Electrostatic
-    DarkGainCorrectionType: '3'
-    id: Detector-0
-  - DetectorName: DualX1
-    DetectorType: AnalyticalDetector
-    Inserted: 'true'
-    Enabled: 'true'
-    ElevationAngle: '0.34906585000000001'
-    AzimuthAngle: '1.5707963267948966'
-    CollectionAngle: '0.90101100000000001'
-    Dispersion: '5'
-    PulseProcessTime: '2.9081620097620193e-06'
-    RealTime: '424.70166195152729'
-    LiveTime: '285.18219999999997'
-    InputCountRate: '132519'
-    OutputCountRate: '88985'
-    AnalyticalDetectorShutterState: '1'
-    OffsetEnergy: '-480.05000000000001'
-    ElectronicsNoise: '12.145301744118672'
-    BeginEnergy: '150'
-    id: Detector-1
-  - DetectorName: DualX2
-    DetectorType: AnalyticalDetector
-    Inserted: 'true'
-    Enabled: 'true'
-    ElevationAngle: '0.34906585000000001'
-    AzimuthAngle: '-1.5707963267948966'
-    CollectionAngle: '0.90101100000000001'
-    Dispersion: '5'
-    PulseProcessTime: '2.9081620097620193e-06'
-    RealTime: '424.70166195152729'
-    LiveTime: '285.18219999999997'
-    InputCountRate: '132519'
-    OutputCountRate: '88985'
-    AnalyticalDetectorShutterState: '1'
-    OffsetEnergy: '-480.05000000000001'
-    ElectronicsNoise: '13.249420084493098'
-    BeginEnergy: '150'
-    id: Detector-2
-  - DetectorName: Flucam
-    DetectorType: ImagingDetector
-    ExposureMode: ''
-    Gain: '0.69999999999999996'
-    Binning:
-      width: '2'
-      height: '2'
-    ReadOutArea:
-      left: '0'
-      top: '0'
-      right: '512'
-      bottom: '512'
-    ExposureTime: '0.0016000000000000001'
-    Shutters:
-      Shutter-0:
-        Position: None
-        Type: Electrostatic
-    DarkGainCorrectionType: '3'
-    id: Detector-3
-  - DetectorName: HAADF
-    DetectorType: ScanningDetector
-    Inserted: 'true'
-    Enabled: 'true'
-    Gain: '18.579199760535872'
-    Offset: '-4.5638399999999999'
-    CollectionAngleRange:
-      begin: '0.046715186654504498'
-      end: '0.20000000000000001'
-    id: Detector-4
-  ActiveConfiguration:
-    DetectorName: HAADF
-    DetectorType: ScanningDetector
-    Inserted: 'true'
-    Enabled: 'true'
-    Gain: '18.579199760535872'
-    Offset: '-4.5638399999999999'
-    CollectionAngleRange:
-      begin: '0.046715186654504498'
-      end: '0.20000000000000001'
-Sample:
-  SampleId: '6232'
-GasInjectionSystems: ''
 SourceMap:
   Instrument.MetadataDefinitionVersion: Core.MetadataDefinitionVersion
   Instrument.MetadataSchemaVersion: Core.MetadataSchemaVersion
@@ -2269,71 +2270,71 @@ SourceMap:
   Instrument.Type: Instrument.InstrumentClass
   Instrument.Model: Instrument.InstrumentModel
   Instrument.ComputerName: Instrument.ComputerName
-  OME.Acquisition.StartDate: Acquisition.AcquisitionStartDatetime.DateTime
-  Image.AcquisitionDate: Acquisition.AcquisitionDatetime.DateTime
-  OME.ElectronBeam.Type: Acquisition.BeamType
-  OME.ElectronSource.Type: Acquisition.SourceType
-  OME.ElectronOptics.GunLensSetting: Optics.GunLensSetting
-  OME.ElectronOptics.ExtractorVoltage: Optics.ExtractorVoltage
-  OME.ElectronBeam.AccelerationVoltage.Value: Optics.AccelerationVoltage
-  OME.ElectronBeam.SpotIndex: Optics.SpotIndex
-  OME.ElectronOptics.C1LensIntensity: Optics.C1LensIntensity
-  OME.ElectronOptics.C2LensIntensity: Optics.C2LensIntensity
-  OME.ElectronOptics.ObjectiveLensIntensity: Optics.ObjectiveLensIntensity
-  OME.ElectronOptics.IntermediateLensIntensity: Optics.IntermediateLensIntensity
-  OME.ElectronOptics.DiffractionLensIntensity: Optics.DiffractionLensIntensity
-  OME.ElectronOptics.Projector1LensIntensity: Optics.Projector1LensIntensity
-  OME.ElectronOptics.Projector2LensIntensity: Optics.Projector2LensIntensity
-  OME.ElectronOptics.MiniCondenserLensIntensity: Optics.MiniCondenserLensIntensity
-  OME.ElectronBeam.ConvergenceAngle.Value: Optics.BeamConvergence
-  OME.ElectronOptics.ScreenCurrent: Optics.ScreenCurrent
-  OME.ElectronOptics.LastMeasuredScreenCurrent: Optics.LastMeasuredScreenCurrent
-  OME.Scan.FieldOfView.X.Value: Optics.FullScanFieldOfView.x
-  OME.Scan.FieldOfView.Y.Value: Optics.FullScanFieldOfView.y
-  OME.ElectronOptics.Focus: Optics.Focus
-  OME.ElectronBeam.Focus: Optics.StemFocus
-  OME.ElectronBeam.Defocus.Value: Optics.Defocus
-  OME.ElectronOptics.HighMagnificationMode: Optics.HighMagnificationMode
-  OME.ElectronOptics.Apertures[0].Name: Optics.Apertures.Aperture-0.Name
-  OME.ElectronOptics.Apertures[0].Number: Optics.Apertures.Aperture-0.Number
-  OME.ElectronOptics.Apertures[0].MechanismType: Optics.Apertures.Aperture-0.MechanismType
-  OME.ElectronOptics.Apertures[0].Type: Optics.Apertures.Aperture-0.Type
-  OME.ElectronOptics.Apertures[0].Diameter: Optics.Apertures.Aperture-0.Diameter
-  OME.ElectronOptics.Apertures[0].Enabled: Optics.Apertures.Aperture-0.Enabled
-  OME.ElectronOptics.Apertures[0].PositionOffset.x: Optics.Apertures.Aperture-0.PositionOffset.x
-  OME.ElectronOptics.Apertures[0].PositionOffset.y: Optics.Apertures.Aperture-0.PositionOffset.y
-  OME.ElectronOptics.Apertures[0].id: Optics.Apertures.Aperture-0
-  OME.ElectronOptics.Apertures[1].Name: Optics.Apertures.Aperture-1.Name
-  OME.ElectronOptics.Apertures[1].Number: Optics.Apertures.Aperture-1.Number
-  OME.ElectronOptics.Apertures[1].MechanismType: Optics.Apertures.Aperture-1.MechanismType
-  OME.ElectronOptics.Apertures[1].Type: Optics.Apertures.Aperture-1.Type
-  OME.ElectronOptics.Apertures[1].Diameter: Optics.Apertures.Aperture-1.Diameter
-  OME.ElectronOptics.Apertures[1].Enabled: Optics.Apertures.Aperture-1.Enabled
-  OME.ElectronOptics.Apertures[1].PositionOffset.x: Optics.Apertures.Aperture-1.PositionOffset.x
-  OME.ElectronOptics.Apertures[1].PositionOffset.y: Optics.Apertures.Aperture-1.PositionOffset.y
-  OME.ElectronOptics.Apertures[1].id: Optics.Apertures.Aperture-1
-  OME.ElectronOptics.Apertures[2].Name: Optics.Apertures.Aperture-2.Name
-  OME.ElectronOptics.Apertures[2].Number: Optics.Apertures.Aperture-2.Number
-  OME.ElectronOptics.Apertures[2].MechanismType: Optics.Apertures.Aperture-2.MechanismType
-  OME.ElectronOptics.Apertures[2].Type: Optics.Apertures.Aperture-2.Type
-  OME.ElectronOptics.Apertures[2].PositionOffset.x: Optics.Apertures.Aperture-2.PositionOffset.x
-  OME.ElectronOptics.Apertures[2].PositionOffset.y: Optics.Apertures.Aperture-2.PositionOffset.y
-  OME.ElectronOptics.Apertures[2].id: Optics.Apertures.Aperture-2
-  OME.ElectronOptics.Apertures[3].Name: Optics.Apertures.Aperture-3.Name
-  OME.ElectronOptics.Apertures[3].Number: Optics.Apertures.Aperture-3.Number
-  OME.ElectronOptics.Apertures[3].MechanismType: Optics.Apertures.Aperture-3.MechanismType
-  OME.ElectronOptics.Apertures[3].Type: Optics.Apertures.Aperture-3.Type
-  OME.ElectronOptics.Apertures[3].PositionOffset.x: Optics.Apertures.Aperture-3.PositionOffset.x
-  OME.ElectronOptics.Apertures[3].PositionOffset.y: Optics.Apertures.Aperture-3.PositionOffset.y
-  OME.ElectronOptics.Apertures[3].id: Optics.Apertures.Aperture-3
-  OME.ElectronOptics.OperatingMode: Optics.OperatingMode
-  OME.ElectronOptics.OperatingSubMode: Optics.TemOperatingSubMode
-  OME.ElectronOptics.ProjectorMode: Optics.ProjectorMode
-  OME.ElectronOptics.EFTEMOn: Optics.EFTEMOn
-  OME.ElectronOptics.ObjectiveLensMode: Optics.ObjectiveLensMode
-  OME.ElectronOptics.IlluminationMode: Optics.IlluminationMode
-  OME.ElectronOptics.ProbeMode: Optics.ProbeMode
-  OME.ElectronOptics.CameraLength.Value: Optics.CameraLength
+  Image.AcquisitionDate: Acquisition.AcquisitionStartDatetime.DateTime
+  Acquisition.AcquisitionDatetime.DateTime: Acquisition.AcquisitionDatetime.DateTime
+  Image.ElectronBeamSettings.Type: Acquisition.BeamType
+  ElectronSource.Type: Acquisition.SourceType
+  Image.ElectronOpticsSettings.GunLensSetting: Optics.GunLensSetting
+  Image.ElectronOpticsSettings.ExtractorVoltage: Optics.ExtractorVoltage
+  Image.ElectronBeamSettings.AccelerationVoltage.Value: Optics.AccelerationVoltage
+  Image.ElectronBeamSettings.SpotIndex: Optics.SpotIndex
+  Image.ElectronOpticsSettings.C1LensIntensity: Optics.C1LensIntensity
+  Image.ElectronOpticsSettings.C2LensIntensity: Optics.C2LensIntensity
+  Image.ElectronOpticsSettings.ObjectiveLensIntensity: Optics.ObjectiveLensIntensity
+  Image.ElectronOpticsSettings.IntermediateLensIntensity: Optics.IntermediateLensIntensity
+  Image.ElectronOpticsSettings.DiffractionLensIntensity: Optics.DiffractionLensIntensity
+  Image.ElectronOpticsSettings.Projector1LensIntensity: Optics.Projector1LensIntensity
+  Image.ElectronOpticsSettings.Projector2LensIntensity: Optics.Projector2LensIntensity
+  Image.ElectronOpticsSettings.MiniCondenserLensIntensity: Optics.MiniCondenserLensIntensity
+  Image.ElectronBeamSettings.ConvergenceAngle.Value: Optics.BeamConvergence
+  Image.ElectronOpticsSettings.ScreenCurrent: Optics.ScreenCurrent
+  Image.ElectronOpticsSettings.LastMeasuredScreenCurrent: Optics.LastMeasuredScreenCurrent
+  Image.ScanSettings.FieldOfView.X.Value: Optics.FullScanFieldOfView.x
+  Image.ScanSettings.FieldOfView.Y.Value: Optics.FullScanFieldOfView.y
+  Image.ElectronOpticsSettings.Focus: Optics.Focus
+  Image.ElectronBeamSettings.Focus: Optics.StemFocus
+  Image.ElectronBeamSettings.Defocus.Value: Optics.Defocus
+  Image.ElectronOpticsSettings.HighMagnificationMode: Optics.HighMagnificationMode
+  Image.ElectronOpticsSettings.Apertures[0].Name: Optics.Apertures.Aperture-0.Name
+  Image.ElectronOpticsSettings.Apertures[0].Number: Optics.Apertures.Aperture-0.Number
+  Image.ElectronOpticsSettings.Apertures[0].MechanismType: Optics.Apertures.Aperture-0.MechanismType
+  Image.ElectronOpticsSettings.Apertures[0].Type: Optics.Apertures.Aperture-0.Type
+  Image.ElectronOpticsSettings.Apertures[0].Diameter: Optics.Apertures.Aperture-0.Diameter
+  Image.ElectronOpticsSettings.Apertures[0].Enabled: Optics.Apertures.Aperture-0.Enabled
+  Image.ElectronOpticsSettings.Apertures[0].PositionOffset.x: Optics.Apertures.Aperture-0.PositionOffset.x
+  Image.ElectronOpticsSettings.Apertures[0].PositionOffset.y: Optics.Apertures.Aperture-0.PositionOffset.y
+  Image.ElectronOpticsSettings.Apertures[0].id: Optics.Apertures.Aperture-0
+  Image.ElectronOpticsSettings.Apertures[1].Name: Optics.Apertures.Aperture-1.Name
+  Image.ElectronOpticsSettings.Apertures[1].Number: Optics.Apertures.Aperture-1.Number
+  Image.ElectronOpticsSettings.Apertures[1].MechanismType: Optics.Apertures.Aperture-1.MechanismType
+  Image.ElectronOpticsSettings.Apertures[1].Type: Optics.Apertures.Aperture-1.Type
+  Image.ElectronOpticsSettings.Apertures[1].Diameter: Optics.Apertures.Aperture-1.Diameter
+  Image.ElectronOpticsSettings.Apertures[1].Enabled: Optics.Apertures.Aperture-1.Enabled
+  Image.ElectronOpticsSettings.Apertures[1].PositionOffset.x: Optics.Apertures.Aperture-1.PositionOffset.x
+  Image.ElectronOpticsSettings.Apertures[1].PositionOffset.y: Optics.Apertures.Aperture-1.PositionOffset.y
+  Image.ElectronOpticsSettings.Apertures[1].id: Optics.Apertures.Aperture-1
+  Image.ElectronOpticsSettings.Apertures[2].Name: Optics.Apertures.Aperture-2.Name
+  Image.ElectronOpticsSettings.Apertures[2].Number: Optics.Apertures.Aperture-2.Number
+  Image.ElectronOpticsSettings.Apertures[2].MechanismType: Optics.Apertures.Aperture-2.MechanismType
+  Image.ElectronOpticsSettings.Apertures[2].Type: Optics.Apertures.Aperture-2.Type
+  Image.ElectronOpticsSettings.Apertures[2].PositionOffset.x: Optics.Apertures.Aperture-2.PositionOffset.x
+  Image.ElectronOpticsSettings.Apertures[2].PositionOffset.y: Optics.Apertures.Aperture-2.PositionOffset.y
+  Image.ElectronOpticsSettings.Apertures[2].id: Optics.Apertures.Aperture-2
+  Image.ElectronOpticsSettings.Apertures[3].Name: Optics.Apertures.Aperture-3.Name
+  Image.ElectronOpticsSettings.Apertures[3].Number: Optics.Apertures.Aperture-3.Number
+  Image.ElectronOpticsSettings.Apertures[3].MechanismType: Optics.Apertures.Aperture-3.MechanismType
+  Image.ElectronOpticsSettings.Apertures[3].Type: Optics.Apertures.Aperture-3.Type
+  Image.ElectronOpticsSettings.Apertures[3].PositionOffset.x: Optics.Apertures.Aperture-3.PositionOffset.x
+  Image.ElectronOpticsSettings.Apertures[3].PositionOffset.y: Optics.Apertures.Aperture-3.PositionOffset.y
+  Image.ElectronOpticsSettings.Apertures[3].id: Optics.Apertures.Aperture-3
+  Image.ElectronOpticsSettings.OperatingMode: Optics.OperatingMode
+  Image.ElectronOpticsSettings.OperatingSubMode: Optics.TemOperatingSubMode
+  Image.ElectronOpticsSettings.ProjectorMode: Optics.ProjectorMode
+  Image.ElectronOpticsSettings.EFTEMOn: Optics.EFTEMOn
+  Image.ElectronOpticsSettings.ObjectiveLensMode: Optics.ObjectiveLensMode
+  Image.ElectronOpticsSettings.IlluminationMode: Optics.IlluminationMode
+  Image.ElectronOpticsSettings.ProbeMode: Optics.ProbeMode
+  Image.ElectronOpticsSettings.CameraLength.Value: Optics.CameraLength
   EnergyFilter.EntranceApertureType: EnergyFilter.EntranceApertureType
   MechanicalStage.Position.X.Value: Stage.Position.x
   MechanicalStage.Position.Y.Value: Stage.Position.y
@@ -2344,16 +2345,16 @@ SourceMap:
   Pixels.SizeX: Scan.ScanSize.width
   Pixels.SizeY: Scan.ScanSize.height
   Plane.PixelDwellTime: Scan.DwellTime
-  OME.Scan.ScanArea.left: Scan.ScanArea.left
-  OME.Scan.ScanArea.top: Scan.ScanArea.top
-  OME.Scan.ScanArea.right: Scan.ScanArea.right
-  OME.Scan.ScanArea.bottom: Scan.ScanArea.bottom
-  OME.Scan.MainsLockOn: Scan.MainsLockOn
-  OME.Scan.LineTime.Value: Scan.LineTime
-  OME.Scan.LineIntegrationCount: Scan.LineIntegrationCount
-  OME.Scan.LineInterlacing: Scan.LineInterlacing
-  OME.Scan.FrameTime.Value: Scan.FrameTime
-  OME.Scan.Rotation.Value: Scan.ScanRotation
+  Image.ScanSettings.ScanArea.left: Scan.ScanArea.left
+  Image.ScanSettings.ScanArea.top: Scan.ScanArea.top
+  Image.ScanSettings.ScanArea.right: Scan.ScanArea.right
+  Image.ScanSettings.ScanArea.bottom: Scan.ScanArea.bottom
+  Image.ScanSettings.MainsLockOn: Scan.MainsLockOn
+  Image.ScanSettings.LineTime.Value: Scan.LineTime
+  Image.ScanSettings.LineIntegrationCount: Scan.LineIntegrationCount
+  Image.ScanSettings.LineInterlacing: Scan.LineInterlacing
+  Image.ScanSettings.FrameTime.Value: Scan.FrameTime
+  Image.ScanSettings.Rotation.Value: Scan.ScanRotation
   Instrument.Vacuum.VacuumMode: Vacuum.VacuumMode
   GenericDetector.Configuration[0].DetectorName: Detectors.Detector-0.DetectorName
   GenericDetector.Configuration[0].DetectorType: Detectors.Detector-0.DetectorType

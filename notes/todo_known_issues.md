@@ -113,7 +113,7 @@ Plan, one commit each:
 6. exact_mappings/close_mappings to the OME LinkML schema
 7. Role TODO reworded (deferred)
 8. release 1.0.0: regenerate, compatibility check (breaking expected), validate, write-up
-Progress: 1-2 done (2: OME's Medium "Oil" fits no ImmersionLiquidType - LiMi has Mineral/Silicone Oil - and stays a Property; Huygens' RefrIndexLensMedium now meets OME's value, equal, and stays a Property).
+Progress: 1-3 done (3: 61 rules retargeted; TALOS's AcquisitionStartDatetime "1683922216" is a Unix timestamp, no datetime, and stays a Property; 2: OME's Medium "Oil" fits no ImmersionLiquidType - LiMi has Mineral/Silicone Oil - and stays a Property; Huygens' RefrIndexLensMedium now meets OME's value, equal, and stays a Property).
 
 ## The model and the pipeline
 
@@ -137,7 +137,7 @@ Progress: 1-2 done (2: OME's Medium "Oil" fits no ImmersionLiquidType - LiMi has
   annotations on abstract classes (LiMi's Generic* subtypes; Stage -> MechanicalStage and Software ->
   AcquisitionSoftware chosen by the user) - where values for an abstract class go.
 - Model paths (src/ModelPaths.py): start at a class with an identifier (OME, Image, Pixels, Laser, ...) and
-  run through components without one: `OME.ElectronBeam.WorkingDistance.Value`,
+  run through components without one: `Image.ElectronBeamSettings.WorkingDistance.Value`,
   `Image.ObjectiveSettings.Medium`, `MechanicalStage.Position.X.Value`. mappings.json targets are these
   paths (tested); the mapper's name matching indexes them, plus aliases for abstract classes
   (`Detector.Name` -> `GenericDetector.Name`).
@@ -158,14 +158,14 @@ In `output/` (mapper, `convert`), for example with a source
 `{Make: Acme, NewVendorKey: 42, Beam: {WD: 0.005, NewBeamSetting: 'on'}, Odd: {Deep: {Value: 1.5}},
 ACME_TAG: {Model: X1-rev2, Serial: S123}}`:
 - `NewVendorKey` (no rule, no model name match) stays at `NewVendorKey`.
-- `Beam.NewBeamSetting` lands at `OME.ElectronBeam.NewBeamSetting`: a subtree rule (`Beam.*` ->
-  `OME.ElectronBeam`) carries new fields of that group along.
+- `Beam.NewBeamSetting` lands at `Image.ElectronBeamSettings.NewBeamSetting`: a subtree rule (`Beam.*` ->
+  `Image.ElectronBeamSettings`) carries new fields of that group along.
 - `Odd.Deep.Value` (unknown group) stays as it is.
 - `ACME_TAG` is a vendor wrapper: its unmapped `Serial` stays at `ACME_TAG.Serial`; its `Model` has a
   rule and goes to `Instrument.Model`, as if the wrapper were absent (had a top-level `Model` taken
   `Instrument.Model` first, it would stay at `ACME_TAG.Model` instead of overwriting).
 - Every leaf gets a SourceMap entry (output path -> source path), e.g.
-  `OME.ElectronBeam.NewBeamSetting: Beam.NewBeamSetting`.
+  `Image.ElectronBeamSettings.NewBeamSetting: Beam.NewBeamSetting`.
 
 In `export/` (metaseed dataset, `export`): metaseed rejects undeclared keys, so each such value is a
 `Property` record under `CustomProperties` of the nearest anchor (Image, Instrument, else OME): `Name` =
@@ -195,7 +195,4 @@ What follows from a new source or new metadata:
 - [ ] Per-channel mapping (e.g. Huygens ChannelData[i] LambdaEx/LambdaEm -> each Channel's
       Fluorophore wavelengths): rules resolve from the root, so each channel's value collides.
 - [ ] Light-source role: rules for Transmitted/Fluorescence light sources should set `Role`.
-- [ ] EM groups hang under OME (as schema.extended.json had them); ElectronBeam/Optics/Source are
-      instrument components or settings, Scan/Acquisition acquisition settings - move when the mapper
-      paths can follow. Acquisition.Operator might be LiMi's Experimenter.
 - [ ] `exact_mappings`/`close_mappings` to the OME LinkML schema, keeping importing/extending it open.

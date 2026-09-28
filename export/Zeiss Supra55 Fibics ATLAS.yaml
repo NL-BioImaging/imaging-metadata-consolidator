@@ -31,38 +31,38 @@ Image:
       Field: Image[0].CropHint.Bottom
       Source: FibicsXML.Fibics.Image.BoundingBox.Bottom
     - ID: SourceMapping:8
+      Field: Image[0].ScanSettings.FieldOfView.X.Unit
+      Source: FibicsXML.Fibics.Scan.FOV_X.units
+    - ID: SourceMapping:9
+      Field: Image[0].ScanSettings.FieldOfView.X.Value
+      Source: FibicsXML.Fibics.Scan.FOV_X.value
+    - ID: SourceMapping:10
+      Field: Image[0].ScanSettings.FieldOfView.Y.Unit
+      Source: FibicsXML.Fibics.Scan.FOV_Y.units
+    - ID: SourceMapping:11
+      Field: Image[0].ScanSettings.FieldOfView.Y.Value
+      Source: FibicsXML.Fibics.Scan.FOV_Y.value
+    - ID: SourceMapping:12
+      Field: Image[0].ScanSettings.Rotation.Unit
+      Source: FibicsXML.Fibics.Scan.ScanRot.units
+    - ID: SourceMapping:13
+      Field: Image[0].ScanSettings.Rotation.Value
+      Source: FibicsXML.Fibics.Scan.ScanRot.value
+    - ID: SourceMapping:14
+      Field: Image[0].ElectronBeamSettings.Focus
+      Source: FibicsXML.Fibics.Scan.Focus
+    - ID: SourceMapping:15
+      Field: Image[0].ElectronBeamSettings.Stigmator.X
+      Source: FibicsXML.Fibics.Scan.StigX
+    - ID: SourceMapping:16
+      Field: Image[0].ElectronBeamSettings.Stigmator.Y
+      Source: FibicsXML.Fibics.Scan.StigY
+    - ID: SourceMapping:17
       Field: Image[0].Corrections.Brightness
       Source: FibicsXML.Fibics.ImageCorrections.Brightness
-    - ID: SourceMapping:9
+    - ID: SourceMapping:18
       Field: Image[0].Corrections.Contrast
       Source: FibicsXML.Fibics.ImageCorrections.Contrast
-    - ID: SourceMapping:10
-      Field: Scan.FieldOfView.X.Unit
-      Source: FibicsXML.Fibics.Scan.FOV_X.units
-    - ID: SourceMapping:11
-      Field: Scan.FieldOfView.X.Value
-      Source: FibicsXML.Fibics.Scan.FOV_X.value
-    - ID: SourceMapping:12
-      Field: Scan.FieldOfView.Y.Unit
-      Source: FibicsXML.Fibics.Scan.FOV_Y.units
-    - ID: SourceMapping:13
-      Field: Scan.FieldOfView.Y.Value
-      Source: FibicsXML.Fibics.Scan.FOV_Y.value
-    - ID: SourceMapping:14
-      Field: Scan.Rotation.Unit
-      Source: FibicsXML.Fibics.Scan.ScanRot.units
-    - ID: SourceMapping:15
-      Field: Scan.Rotation.Value
-      Source: FibicsXML.Fibics.Scan.ScanRot.value
-    - ID: SourceMapping:16
-      Field: ElectronBeam.Focus
-      Source: FibicsXML.Fibics.Scan.Focus
-    - ID: SourceMapping:17
-      Field: ElectronBeam.Stigmator.X
-      Source: FibicsXML.Fibics.Scan.StigX
-    - ID: SourceMapping:18
-      Field: ElectronBeam.Stigmator.Y
-      Source: FibicsXML.Fibics.Scan.StigY
     - ID: SourceMapping:19
       Field: Instrument[0].MechanicalStage[0].Bias.Volts
       Source: FibicsXML.Fibics.StageBias.Volts
@@ -166,25 +166,81 @@ Image:
     SchemaPath: Image.InvertedSignal
     Source: SourceFile:0
   - ID: Property:6
+    Name: FibicsXML.Fibics.Scan.LineAvg
+    Value: '1'
+    SchemaPath: Image.ScanSettings.LineAvg
+    Source: SourceFile:0
+  - ID: Property:7
+    Name: FibicsXML.Fibics.Scan.Ux
+    Value: '0.00255054620872196'
+    SchemaPath: Image.ScanSettings.Ux
+    Source: SourceFile:0
+  - ID: Property:8
+    Name: FibicsXML.Fibics.Scan.Uy
+    Value: '0'
+    SchemaPath: Image.ScanSettings.Uy
+    Source: SourceFile:0
+  - ID: Property:9
+    Name: FibicsXML.Fibics.Scan.Vx
+    Value: '0'
+    SchemaPath: Image.ScanSettings.Vx
+    Source: SourceFile:0
+  - ID: Property:10
+    Name: FibicsXML.Fibics.Scan.Vy
+    Value: '-0.00255054620872196'
+    SchemaPath: Image.ScanSettings.Vy
+    Source: SourceFile:0
+  - ID: Property:11
+    Name: FibicsXML.Fibics.Scan.AppliedScaleCorrection
+    Value: '1'
+    SchemaPath: Image.ScanSettings.AppliedScaleCorrection
+    Source: SourceFile:0
+  - ID: Property:12
+    Name: FibicsXML.Fibics.Scan.ShiftX
+    Value: '0'
+    SchemaPath: Image.ScanSettings.ShiftX
+    Source: SourceFile:0
+  - ID: Property:13
+    Name: FibicsXML.Fibics.Scan.ShiftY
+    Value: '0'
+    SchemaPath: Image.ScanSettings.ShiftY
+    Source: SourceFile:0
+  - ID: Property:14
     Name: FibicsXML.Fibics.ImageCorrections.Invert
     Value: 'false'
     SchemaPath: Image.Corrections.Invert
     Source: SourceFile:0
-  - ID: Property:7
+  - ID: Property:15
     Name: FibicsXML.Fibics.ImageCorrections.XBrightSlope
     Value: '0'
     SchemaPath: Image.Corrections.XBrightSlope
     Source: SourceFile:0
-  - ID: Property:8
+  - ID: Property:16
     Name: FibicsXML.Fibics.ImageCorrections.YBrightSlope
     Value: '0'
     SchemaPath: Image.Corrections.YBrightSlope
     Source: SourceFile:0
-  - ID: Property:9
+  - ID: Property:17
     Name: FibicsXML.Fibics.ImageCorrections.RBrightSlope
     Value: '0'
     SchemaPath: Image.Corrections.RBrightSlope
     Source: SourceFile:0
+  ScanSettings:
+    FieldOfView:
+      X:
+        Unit: um
+        Value: 129.044885430288
+      Y:
+        Unit: um
+        Value: 126.336205356625
+    Rotation:
+      Unit: deg
+      Value: 0
+  ElectronBeamSettings:
+    Focus: 0
+    Stigmator:
+      X: 0
+      Y: 0
   Corrections:
     Brightness: 0
     Contrast: 1
@@ -261,64 +317,8 @@ Instrument:
         Value: 0
   Vacuum:
     SystemVacuum: 0
-Scan:
-  FieldOfView:
-    X:
-      Unit: um
-      Value: 129.044885430288
-    Y:
-      Unit: um
-      Value: 126.336205356625
-  Rotation:
-    Unit: deg
-    Value: 0
 CustomProperties:
-- ID: Property:10
-  Name: FibicsXML.Fibics.Scan.LineAvg
-  Value: '1'
-  SchemaPath: OME.Scan.LineAvg
-  Source: SourceFile:0
-- ID: Property:11
-  Name: FibicsXML.Fibics.Scan.Ux
-  Value: '0.00255054620872196'
-  SchemaPath: OME.Scan.Ux
-  Source: SourceFile:0
-- ID: Property:12
-  Name: FibicsXML.Fibics.Scan.Uy
-  Value: '0'
-  SchemaPath: OME.Scan.Uy
-  Source: SourceFile:0
-- ID: Property:13
-  Name: FibicsXML.Fibics.Scan.Vx
-  Value: '0'
-  SchemaPath: OME.Scan.Vx
-  Source: SourceFile:0
-- ID: Property:14
-  Name: FibicsXML.Fibics.Scan.Vy
-  Value: '-0.00255054620872196'
-  SchemaPath: OME.Scan.Vy
-  Source: SourceFile:0
-- ID: Property:15
-  Name: FibicsXML.Fibics.Scan.AppliedScaleCorrection
-  Value: '1'
-  SchemaPath: OME.Scan.AppliedScaleCorrection
-  Source: SourceFile:0
-- ID: Property:16
-  Name: FibicsXML.Fibics.Scan.ShiftX
-  Value: '0'
-  SchemaPath: OME.Scan.ShiftX
-  Source: SourceFile:0
-- ID: Property:17
-  Name: FibicsXML.Fibics.Scan.ShiftY
-  Value: '0'
-  SchemaPath: OME.Scan.ShiftY
-  Source: SourceFile:0
 - ID: Property:20
   Name: FibicsXML.Fibics.version
   Value: '1.2'
   Source: SourceFile:0
-ElectronBeam:
-  Focus: 0
-  Stigmator:
-    X: 0
-    Y: 0

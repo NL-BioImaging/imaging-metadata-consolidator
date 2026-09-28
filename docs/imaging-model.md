@@ -87,12 +87,18 @@ use; new groups are classes of their own:
 
 | Where | What |
 |---|---|
-| OME | ElectronSource, ElectronBeam (type, mode, focus, spot size, working distance, acceleration voltage, currents, convergence angle, defocus, shift, source tilt, stigmator, high-voltage readings), ElectronOptics (camera length, operating and projector modes, gun lens, apertures), Scan (field of view, rotation, frame and line time, line integration, detector), Acquisition (operator, start date) |
-| Instrument | Manufacturer, Model, Type, ComputerName, Vacuum (buffer, gun, sample, system vacuum, mode) |
+| Image | ElectronBeamSettings (type, mode, focus, spot size, working distance, acceleration voltage, currents, convergence angle, defocus, shift, source tilt, stigmator, high-voltage readings; the electron source it applies to), ElectronOpticsSettings (camera length, operating and projector modes, gun lens, apertures), ScanSettings (field of view, rotation, frame and line time, line integration, detector) |
+| Instrument | Manufacturer, Model, Type, ComputerName, Vacuum (buffer, gun, sample, system vacuum, mode), ElectronSource (type) |
 | Image | Type, CropHint, Corrections (contrast, brightness, gamma, black and white level) |
 | Detector | Type, Gain, Offset, Brightness, Contrast, Channel, configuration |
 | Stage | Position, RawPosition, Tilt, Rotation, Bias, MultiStage (sample height, radius) |
 | Software | ApplicationID |
+
+The EM groups follow LiMi's split between hardware and settings, as Objective and ObjectiveSettings do: the
+electron source is part of the Instrument, and how the beam, the optics and the scan were set for an image
+are that Image's `ElectronBeamSettings` (which refers to its electron source), `ElectronOpticsSettings` and
+`ScanSettings`. The operator is LiMi's `Experimenter` (`UserName`), the start of acquisition
+`Image.AcquisitionDate`.
 
 A value with a unit (`WorkingDistance`, `FieldOfView.X`, ...) is one shared class, `Quantity`
 {Value, Unit}, with the unit as the source writes it.
@@ -135,7 +141,7 @@ inheritance, so:
   with the rules in `mappings/mappings.json` (226 rules) and `mappings/combinations.json`, falling back to
   matching source names against the model. Levels that only wrap a source's metadata (a vendor tag such
   as `FEI_TITAN.FeiImage`, or the root of a whole OME document) are left out of the paths the rules see. A path starts at a class with an identifier and runs through
-  its components: `OME.ElectronBeam.WorkingDistance.Value`, `Pixels.PhysicalSizeX`,
+  its components: `Image.ElectronBeamSettings.WorkingDistance.Value`, `Pixels.PhysicalSizeX`,
   `MechanicalStage.Position.X.Value`. Unmapped keys stay at their source path; every value's source path
   is recorded.
 - `python src/main.py export` (`src/DatasetExporter.py`) builds one metaseed dataset per source file. A

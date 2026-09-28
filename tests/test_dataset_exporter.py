@@ -106,13 +106,15 @@ class DatasetExporterTest(unittest.TestCase):
         self.assertEqual(dataset['Instrument'][0]['Filament'], [{'Name': 'lamp'}])
 
     def test_components_nest_in_the_class_their_path_starts_at(self):
-        dataset = self.export({'OME': {'ElectronBeam': {'WorkingDistance': {'Value': 0.005, 'Unit': 'm'}}},
-                               'SourceMap': {'OME.ElectronBeam.WorkingDistance.Value': 'Beam.WD',
-                                             'OME.ElectronBeam.WorkingDistance.Unit': 'Beam.WDUnit'}})
+        dataset = self.export({'Image': {'ElectronBeamSettings': {'WorkingDistance': {'Value': 0.005, 'Unit': 'm'}}},
+                               'SourceMap': {'Image.ElectronBeamSettings.WorkingDistance.Value': 'Beam.WD',
+                                             'Image.ElectronBeamSettings.WorkingDistance.Unit': 'Beam.WDUnit'}})
 
-        self.assertEqual(dataset['ElectronBeam'], {'WorkingDistance': {'Value': 0.005, 'Unit': 'm'}})
-        self.assertEqual([mapping['Field'] for mapping in dataset['Image'][0]['SourceFile'][0]['Mapping']],
-                         ['ElectronBeam.WorkingDistance.Value', 'ElectronBeam.WorkingDistance.Unit'])
+        image = dataset['Image'][0]
+        self.assertEqual(image['ElectronBeamSettings'], {'WorkingDistance': {'Value': 0.005, 'Unit': 'm'}})
+        self.assertEqual([mapping['Field'] for mapping in image['SourceFile'][0]['Mapping']],
+                         ['Image[0].ElectronBeamSettings.WorkingDistance.Value',
+                          'Image[0].ElectronBeamSettings.WorkingDistance.Unit'])
 
     def test_unmodelled_values_go_to_the_nearest_anchor(self):
         dataset = self.export({'Instrument': {'Colour': 'grey'}, 'Scanner': {'Speed': 2},

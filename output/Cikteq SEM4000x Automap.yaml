@@ -1,5 +1,5 @@
-OME:
-  ElectronBeam:
+Image:
+  ElectronBeamSettings:
     Stigmator:
       X: 0.01
       Y: 0.03
@@ -43,7 +43,7 @@ OME:
       SV: 10001.2
       SchCurrent: 3.52
       SchVoltage: 300.68
-  Scan:
+  ScanSettings:
     FieldOfView:
       X:
         Value: 21.12µm
@@ -53,15 +53,6 @@ OME:
       Value: 2min52s
     Interlaced: 0/1
     LineAdd: 1
-  Acquisition:
-    Operator:
-      BottomInfoShowEnable: 2038
-      DateTimeFmt: yyyy/MM/dd HH:mm:ss
-      MagType: 1
-      RulerText: SEM4000X
-      TimeStamp: 1784735089
-      Name: "\x01"
-      VacuumType: 0
 GenericDetector:
   Brightness: 50.0
   Channel: 1
@@ -107,30 +98,38 @@ TiltCorrect:
   IsTiltCorrent: false
   PreTiltAngle: 0.0
   TiltCompensateMode: 0
+Experimenter:
+  BottomInfoShowEnable: 2038
+  DateTimeFmt: yyyy/MM/dd HH:mm:ss
+  MagType: 1
+  RulerText: SEM4000X
+  TimeStamp: 1784735089
+  UserName: "\x01"
+  VacuumType: 0
 SourceMap:
-  OME.ElectronBeam.Stigmator.X: Beam.AstigX
-  OME.ElectronBeam.Stigmator.Y: Beam.AstigY
-  OME.ElectronBeam.BeamDownX: Beam.BeamDownX
-  OME.ElectronBeam.BeamDownY: Beam.BeamDownY
-  OME.ElectronBeam.Mode: Beam.BeamMode
-  OME.ElectronBeam.Type: Beam.BeamType
-  OME.ElectronBeam.BeamUpX: Beam.BeamUpX
-  OME.ElectronBeam.BeamUpY: Beam.BeamUpY
-  OME.ElectronBeam.Condenser: Beam.Condenser
-  OME.ElectronBeam.Condenser2: Beam.Condenser2
-  OME.ElectronBeam.ElectricMoveX: Beam.ElectricMoveX
-  OME.ElectronBeam.ElectricMoveY: Beam.ElectricMoveY
-  OME.ElectronBeam.ElectricRotate: Beam.ElectricRotate
-  OME.ElectronBeam.Focus: Beam.Focus
-  OME.Scan.FieldOfView.X.Value: Beam.HFW
-  OME.ElectronBeam.ImagingMode: Beam.ImagingMode
-  OME.ElectronBeam.Current.Value: Beam.RealAbsCurrent
-  OME.ElectronBeam.Shift.X: Beam.ShiftX
-  OME.ElectronBeam.Shift.Y: Beam.ShiftY
-  OME.ElectronBeam.TiltX: Beam.TiltX
-  OME.ElectronBeam.TiltY: Beam.TiltY
-  OME.ElectronBeam.VisibleMultiple: Beam.VisibleMultiple
-  OME.ElectronBeam.WorkingDistance.Value: Beam.WD
+  Image.ElectronBeamSettings.Stigmator.X: Beam.AstigX
+  Image.ElectronBeamSettings.Stigmator.Y: Beam.AstigY
+  Image.ElectronBeamSettings.BeamDownX: Beam.BeamDownX
+  Image.ElectronBeamSettings.BeamDownY: Beam.BeamDownY
+  Image.ElectronBeamSettings.Mode: Beam.BeamMode
+  Image.ElectronBeamSettings.Type: Beam.BeamType
+  Image.ElectronBeamSettings.BeamUpX: Beam.BeamUpX
+  Image.ElectronBeamSettings.BeamUpY: Beam.BeamUpY
+  Image.ElectronBeamSettings.Condenser: Beam.Condenser
+  Image.ElectronBeamSettings.Condenser2: Beam.Condenser2
+  Image.ElectronBeamSettings.ElectricMoveX: Beam.ElectricMoveX
+  Image.ElectronBeamSettings.ElectricMoveY: Beam.ElectricMoveY
+  Image.ElectronBeamSettings.ElectricRotate: Beam.ElectricRotate
+  Image.ElectronBeamSettings.Focus: Beam.Focus
+  Image.ScanSettings.FieldOfView.X.Value: Beam.HFW
+  Image.ElectronBeamSettings.ImagingMode: Beam.ImagingMode
+  Image.ElectronBeamSettings.Current.Value: Beam.RealAbsCurrent
+  Image.ElectronBeamSettings.Shift.X: Beam.ShiftX
+  Image.ElectronBeamSettings.Shift.Y: Beam.ShiftY
+  Image.ElectronBeamSettings.TiltX: Beam.TiltX
+  Image.ElectronBeamSettings.TiltY: Beam.TiltY
+  Image.ElectronBeamSettings.VisibleMultiple: Beam.VisibleMultiple
+  Image.ElectronBeamSettings.WorkingDistance.Value: Beam.WD
   GenericDetector.Brightness: Detector.Brightness
   GenericDetector.Channel: Detector.Channel
   GenericDetector.ConsumerBrightness: Detector.ConsumerBrightness
@@ -139,28 +138,28 @@ SourceMap:
   GenericDetector.Name: Detector.DetectorName
   GenericDetector.Gain: Detector.Gain
   GenericDetector.PMT: Detector.PMT
-  OME.ElectronBeam.HighVoltage.BV: HV.BV
-  OME.ElectronBeam.HighVoltage.Bia: HV.Bia
-  OME.ElectronBeam.HighVoltage.CV: HV.CV
-  OME.ElectronBeam.HighVoltage.ExtCurrent: HV.ExtCurrent
-  OME.ElectronBeam.HighVoltage.ExtVoltage: HV.ExtVoltage
-  OME.ElectronBeam.HighVoltage.FV: HV.FV
-  OME.ElectronBeam.HighVoltage.FcCurrent: HV.FcCurrent
-  OME.ElectronBeam.HighVoltage.FcVoltage: HV.FcVoltage
-  OME.ElectronBeam.HighVoltage.HighEmissionMode: HV.HighEmissionMode
-  OME.ElectronBeam.HighVoltage.HvCurrent: HV.HvCurrent
-  OME.ElectronBeam.HighVoltage.HvMode: HV.HvMode
-  OME.ElectronBeam.HighVoltage.HvVoltage: HV.HvVoltage
-  OME.ElectronBeam.HighVoltage.Mid10kvVoltage: HV.Mid10kvVoltage
-  OME.ElectronBeam.HighVoltage.SV: HV.SV
-  OME.ElectronBeam.HighVoltage.SchCurrent: HV.SchCurrent
-  OME.ElectronBeam.HighVoltage.SchVoltage: HV.SchVoltage
+  Image.ElectronBeamSettings.HighVoltage.BV: HV.BV
+  Image.ElectronBeamSettings.HighVoltage.Bia: HV.Bia
+  Image.ElectronBeamSettings.HighVoltage.CV: HV.CV
+  Image.ElectronBeamSettings.HighVoltage.ExtCurrent: HV.ExtCurrent
+  Image.ElectronBeamSettings.HighVoltage.ExtVoltage: HV.ExtVoltage
+  Image.ElectronBeamSettings.HighVoltage.FV: HV.FV
+  Image.ElectronBeamSettings.HighVoltage.FcCurrent: HV.FcCurrent
+  Image.ElectronBeamSettings.HighVoltage.FcVoltage: HV.FcVoltage
+  Image.ElectronBeamSettings.HighVoltage.HighEmissionMode: HV.HighEmissionMode
+  Image.ElectronBeamSettings.HighVoltage.HvCurrent: HV.HvCurrent
+  Image.ElectronBeamSettings.HighVoltage.HvMode: HV.HvMode
+  Image.ElectronBeamSettings.HighVoltage.HvVoltage: HV.HvVoltage
+  Image.ElectronBeamSettings.HighVoltage.Mid10kvVoltage: HV.Mid10kvVoltage
+  Image.ElectronBeamSettings.HighVoltage.SV: HV.SV
+  Image.ElectronBeamSettings.HighVoltage.SchCurrent: HV.SchCurrent
+  Image.ElectronBeamSettings.HighVoltage.SchVoltage: HV.SchVoltage
   Other.BottomInfoVacuum: Other.BottomInfoVacuum
-  OME.Scan.Drift: Scan.Drift
-  OME.Scan.FramAdd: Scan.FramAdd
-  OME.Scan.FrameTime.Value: Scan.FrameTime
-  OME.Scan.Interlaced: Scan.Interlaced
-  OME.Scan.LineAdd: Scan.LineAdd
+  Image.ScanSettings.Drift: Scan.Drift
+  Image.ScanSettings.FramAdd: Scan.FramAdd
+  Image.ScanSettings.FrameTime.Value: Scan.FrameTime
+  Image.ScanSettings.Interlaced: Scan.Interlaced
+  Image.ScanSettings.LineAdd: Scan.LineAdd
   Plane.PixelDwellTime: Scan.PointTime
   Pixels.SizeX: Scan.ResolutionX
   Pixels.SizeY: Scan.ResolutionY
@@ -179,13 +178,13 @@ SourceMap:
   TiltCorrect.IsTiltCorrent: TiltCorrect.IsTiltCorrent
   TiltCorrect.PreTiltAngle: TiltCorrect.PreTiltAngle
   TiltCorrect.TiltCompensateMode: TiltCorrect.TiltCompensateMode
-  OME.Acquisition.Operator.BottomInfoShowEnable: User.BottomInfoShowEnable
-  OME.Acquisition.Operator.DateTimeFmt: User.DateTimeFmt
-  OME.Acquisition.Operator.MagType: User.MagType
-  OME.Acquisition.Operator.RulerText: User.RulerText
-  OME.Acquisition.Operator.TimeStamp: User.TimeStamp
-  OME.Acquisition.Operator.Name: User.UserName
-  OME.Acquisition.Operator.VacuumType: User.VacuumType
+  Experimenter.BottomInfoShowEnable: User.BottomInfoShowEnable
+  Experimenter.DateTimeFmt: User.DateTimeFmt
+  Experimenter.MagType: User.MagType
+  Experimenter.RulerText: User.RulerText
+  Experimenter.TimeStamp: User.TimeStamp
+  Experimenter.UserName: User.UserName
+  Experimenter.VacuumType: User.VacuumType
   Instrument.Vacuum.BufferVacuum: Vacuum.BufferVacuum
   Instrument.Vacuum.GunVacuum: Vacuum.GunVacuum
   Instrument.Vacuum.SampleVacuum: Vacuum.SampleVacuum

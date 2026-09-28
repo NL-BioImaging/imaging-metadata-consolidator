@@ -159,31 +159,6 @@ entities:
       description: Source metadata values the model does not model, kept so no metadata is lost.
       items: Property
       owns: true
-    - name: ElectronSource
-      type: entity
-      required: false
-      items: ElectronSource
-      owns: true
-    - name: ElectronBeam
-      type: entity
-      required: false
-      items: ElectronBeam
-      owns: true
-    - name: ElectronOptics
-      type: entity
-      required: false
-      items: ElectronOptics
-      owns: true
-    - name: Scan
-      type: entity
-      required: false
-      items: Scan
-      owns: true
-    - name: Acquisition
-      type: entity
-      required: false
-      items: Acquisition
-      owns: true
     - name: Operations
       type: string
       required: false
@@ -1667,6 +1642,13 @@ entities:
       tier: required
       items: Vacuum
       owns: true
+    - name: ElectronSource
+      type: list
+      required: false
+      description: The electron sources of this microscope.
+      tier: required
+      items: ElectronSource
+      owns: true
   Image:
     description: This element describes the actual Image that was acquired and its meta-data. The elements that are references
       (ending in Ref or Settings) refer to elements defined outside of the Image element. Ref elements are simple links, while
@@ -1873,6 +1855,24 @@ entities:
       tier: required
       items: Corrections
       owns: true
+    - name: ElectronBeamSettings
+      type: entity
+      required: false
+      tier: required
+      items: ElectronBeamSettings
+      owns: true
+    - name: ElectronOpticsSettings
+      type: entity
+      required: false
+      tier: required
+      items: ElectronOpticsSettings
+      owns: true
+    - name: ScanSettings
+      type: entity
+      required: false
+      tier: required
+      items: ScanSettings
+      owns: true
     - name: BinaryResult
       type: string
       required: false
@@ -2024,155 +2024,6 @@ entities:
       items: string
       required: false
       description: For a value combined from several source values (e.g. a date and a time), their source paths.
-  ElectronSource:
-    description: The electron source of an electron microscope.
-    fields:
-    - name: ID
-      type: string
-      required: false
-      is_identifier: true
-      description: An identifier for this record; the model defines none.
-    - name: Type
-      type: string
-      required: false
-  ElectronBeam:
-    description: The electron beam as set for the acquisition.
-    fields:
-    - name: ID
-      type: string
-      required: false
-      is_identifier: true
-      description: An identifier for this record; the model defines none.
-    - name: Type
-      type: string
-      required: false
-    - name: Mode
-      type: string
-      required: false
-    - name: Focus
-      type: float
-      required: false
-    - name: SpotSize
-      type: float
-      required: false
-    - name: SpotIndex
-      type: integer
-      required: false
-    - name: WorkingDistance
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: AccelerationVoltage
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: Current
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: EmissionCurrent
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: ConvergenceAngle
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: Defocus
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: Shift
-      type: entity
-      required: false
-      items: Vector2D
-      owns: true
-    - name: SourceTilt
-      type: entity
-      required: false
-      items: Vector2D
-      owns: true
-    - name: Stigmator
-      type: entity
-      required: false
-      items: Vector2D
-      owns: true
-    - name: HighVoltage
-      type: entity
-      required: false
-      items: HighVoltage
-      owns: true
-  ElectronOptics:
-    description: The electron optics as set for the acquisition.
-    fields:
-    - name: CameraLength
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: OperatingMode
-      type: string
-      required: false
-    - name: OperatingSubMode
-      type: string
-      required: false
-    - name: ProjectorMode
-      type: string
-      required: false
-    - name: GunLensSetting
-      type: string
-      required: false
-    - name: Apertures
-      type: list
-      items: string
-      required: false
-  Scan:
-    description: The scan of a scanning microscope.
-    fields:
-    - name: FieldOfView
-      type: entity
-      required: false
-      items: FieldOfView
-      owns: true
-    - name: Rotation
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: FrameTime
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: LineTime
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: LineIntegrationCount
-      type: integer
-      required: false
-    - name: Detector
-      type: string
-      required: false
-      description: The name of the detector used for the scan.
-  Acquisition:
-    description: Who acquired the image, and when.
-    fields:
-    - name: Operator
-      type: entity
-      required: false
-      items: Operator
-      owns: true
-    - name: StartDate
-      type: string
-      required: false
   Sample:
     description: This field captures a description of the sample that was imaged in this experiment.
     fields:
@@ -26739,6 +26590,17 @@ entities:
     - name: VacuumMode
       type: string
       required: false
+  ElectronSource:
+    description: An electron source of an electron microscope (hardware; how it was set for an image is the image's ElectronBeamSettings).
+    fields:
+    - name: ID
+      type: string
+      required: true
+      description: A unique identifier for this electron source.
+      is_identifier: true
+    - name: Type
+      type: string
+      required: false
   ImagingEnvironment:
     description: This element describes the environment in which the biological sample was maintained during the Acquisition
       of this Image.
@@ -28351,6 +28213,138 @@ entities:
     - name: WhiteLevel
       type: float
       required: false
+  ElectronBeamSettings:
+    description: The electron beam as set for the acquisition of this image, in LiMi's hardware/settings split.
+    fields:
+    - name: ID
+      type: string
+      required: false
+      is_identifier: true
+      description: An identifier for this record; the model defines none.
+    - name: ElectronSource
+      type: string
+      required: false
+      description: The electron source these settings apply to. (The ID of a ElectronSource.)
+      reference: ElectronSource.ID
+    - name: Type
+      type: string
+      required: false
+    - name: Mode
+      type: string
+      required: false
+    - name: Focus
+      type: float
+      required: false
+    - name: SpotSize
+      type: float
+      required: false
+    - name: SpotIndex
+      type: integer
+      required: false
+    - name: WorkingDistance
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: AccelerationVoltage
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Current
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: EmissionCurrent
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: ConvergenceAngle
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Defocus
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Shift
+      type: entity
+      required: false
+      items: Vector2D
+      owns: true
+    - name: SourceTilt
+      type: entity
+      required: false
+      items: Vector2D
+      owns: true
+    - name: Stigmator
+      type: entity
+      required: false
+      items: Vector2D
+      owns: true
+    - name: HighVoltage
+      type: entity
+      required: false
+      items: HighVoltage
+      owns: true
+  ElectronOpticsSettings:
+    description: The electron optics as set for the acquisition of this image.
+    fields:
+    - name: CameraLength
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: OperatingMode
+      type: string
+      required: false
+    - name: OperatingSubMode
+      type: string
+      required: false
+    - name: ProjectorMode
+      type: string
+      required: false
+    - name: GunLensSetting
+      type: string
+      required: false
+    - name: Apertures
+      type: list
+      items: string
+      required: false
+  ScanSettings:
+    description: The scan of a scanning microscope, as set for the acquisition of this image.
+    fields:
+    - name: FieldOfView
+      type: entity
+      required: false
+      items: FieldOfView
+      owns: true
+    - name: Rotation
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: FrameTime
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: LineTime
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: LineIntegrationCount
+      type: integer
+      required: false
+    - name: Detector
+      type: string
+      required: false
+      description: The name of the detector used for the scan.
   XMLAnnotation:
     description: An general xml annotation. The contents of this is not processed as OME XML but should still be well-formed
       XML.
@@ -28790,100 +28784,6 @@ entities:
       required: false
       items: Label
       owns: true
-  Quantity:
-    description: A value with the unit its source states, as free text.
-    fields:
-    - name: Value
-      type: float
-      required: false
-    - name: Unit
-      type: string
-      required: false
-      description: The unit as the source writes it, e.g. "um" or "mm".
-  Vector2D:
-    description: A pair of values along X and Y.
-    fields:
-    - name: X
-      type: float
-      required: false
-    - name: Y
-      type: float
-      required: false
-  HighVoltage:
-    description: High-voltage readings of the electron gun, as the source names them.
-    fields:
-    - name: BV
-      type: float
-      required: false
-    - name: Bia
-      type: float
-      required: false
-    - name: CV
-      type: float
-      required: false
-    - name: ExtCurrent
-      type: float
-      required: false
-    - name: ExtVoltage
-      type: float
-      required: false
-    - name: FV
-      type: float
-      required: false
-    - name: FcCurrent
-      type: float
-      required: false
-    - name: FcVoltage
-      type: float
-      required: false
-    - name: HighEmissionMode
-      type: boolean
-      required: false
-    - name: HvCurrent
-      type: float
-      required: false
-    - name: HvMode
-      type: integer
-      required: false
-    - name: HvVoltage
-      type: float
-      required: false
-    - name: Mid10kvVoltage
-      type: float
-      required: false
-    - name: SV
-      type: float
-      required: false
-    - name: SchCurrent
-      type: float
-      required: false
-    - name: SchVoltage
-      type: float
-      required: false
-  FieldOfView:
-    description: The size of the field of view along X and Y.
-    fields:
-    - name: X
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-    - name: Y
-      type: entity
-      required: false
-      items: Quantity
-      owns: true
-  Operator:
-    description: The person operating the microscope.
-    fields:
-    - name: ID
-      type: string
-      required: false
-      is_identifier: true
-      description: An identifier for this record; the model defines none.
-    - name: Name
-      type: string
-      required: false
   MountingMedium:
     description: This element refers to the Mounting Medium that was used during the acquisition of this Image. According
       to ISO 10934-1:2002, a Mounting Medium is a liquid, synthetic resin or other medium in which this Specimen is placed
@@ -29968,6 +29868,16 @@ entities:
       required: false
       items: Quantity
       owns: true
+    - name: Value
+      type: float
+      required: false
+    - name: Unit
+      type: string
+      required: false
+      description: The unit as the source writes it, e.g. "um" or "mm".
+  Quantity:
+    description: A value with the unit its source states, as free text.
+    fields:
     - name: Value
       type: float
       required: false
@@ -32201,6 +32111,79 @@ entities:
       items: string
       required: false
       description: For a value combined from several source values (e.g. a date and a time), their source paths.
+  Vector2D:
+    description: A pair of values along X and Y.
+    fields:
+    - name: X
+      type: float
+      required: false
+    - name: Y
+      type: float
+      required: false
+  HighVoltage:
+    description: High-voltage readings of the electron gun, as the source names them.
+    fields:
+    - name: BV
+      type: float
+      required: false
+    - name: Bia
+      type: float
+      required: false
+    - name: CV
+      type: float
+      required: false
+    - name: ExtCurrent
+      type: float
+      required: false
+    - name: ExtVoltage
+      type: float
+      required: false
+    - name: FV
+      type: float
+      required: false
+    - name: FcCurrent
+      type: float
+      required: false
+    - name: FcVoltage
+      type: float
+      required: false
+    - name: HighEmissionMode
+      type: boolean
+      required: false
+    - name: HvCurrent
+      type: float
+      required: false
+    - name: HvMode
+      type: integer
+      required: false
+    - name: HvVoltage
+      type: float
+      required: false
+    - name: Mid10kvVoltage
+      type: float
+      required: false
+    - name: SV
+      type: float
+      required: false
+    - name: SchCurrent
+      type: float
+      required: false
+    - name: SchVoltage
+      type: float
+      required: false
+  FieldOfView:
+    description: The size of the field of view along X and Y.
+    fields:
+    - name: X
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
+    - name: Y
+      type: entity
+      required: false
+      items: Quantity
+      owns: true
   XMLAnnotationValue:
     fields:
     - name: ID

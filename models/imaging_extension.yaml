@@ -33,21 +33,6 @@ classes:
   OMEExtension:
     mixin: true
     attributes:
-      ElectronSource:
-        range: ElectronSource
-        inlined: true
-      ElectronBeam:
-        range: ElectronBeam
-        inlined: true
-      ElectronOptics:
-        range: ElectronOptics
-        inlined: true
-      Scan:
-        range: Scan
-        inlined: true
-      Acquisition:
-        range: Acquisition
-        inlined: true
       Operations:
         annotations: {schema_extended_path: Operations, source_type: object}
       Features:
@@ -70,6 +55,11 @@ classes:
       Vacuum:
         range: Vacuum
         inlined: true
+      ElectronSource:
+        description: The electron sources of this microscope.
+        range: ElectronSource
+        multivalued: true
+        inlined_as_list: true
   Vacuum:
     description: The vacuum of an electron microscope.
     attributes:
@@ -98,6 +88,15 @@ classes:
         inlined: true
       Corrections:
         range: Corrections
+        inlined: true
+      ElectronBeamSettings:
+        range: ElectronBeamSettings
+        inlined: true
+      ElectronOpticsSettings:
+        range: ElectronOpticsSettings
+        inlined: true
+      ScanSettings:
+        range: ScanSettings
         inlined: true
       BinaryResult:
         annotations: {schema_extended_path: Image.BinaryResult, source_type: object}
@@ -247,13 +246,21 @@ classes:
         inlined: true
 
   ElectronSource:
-    description: The electron source of an electron microscope.
+    description: An electron source of an electron microscope (hardware; how it was set for an image is the
+      image's ElectronBeamSettings).
     attributes:
+      ID:
+        description: A unique identifier for this electron source.
+        identifier: true
       Type:
         annotations: {schema_extended_path: ElectronSource.Type}
-  ElectronBeam:
-    description: The electron beam as set for the acquisition.
+  ElectronBeamSettings:
+    description: The electron beam as set for the acquisition of this image, in LiMi's hardware/settings split.
     attributes:
+      ElectronSource:
+        description: The electron source these settings apply to.
+        range: ElectronSource
+        inlined: false
       Type:
         annotations: {schema_extended_path: ElectronBeam.Type}
       Mode:
@@ -332,8 +339,8 @@ classes:
         range: float
       SchVoltage:
         range: float
-  ElectronOptics:
-    description: The electron optics as set for the acquisition.
+  ElectronOpticsSettings:
+    description: The electron optics as set for the acquisition of this image.
     attributes:
       CameraLength:
         range: Quantity
@@ -349,8 +356,8 @@ classes:
       Apertures:
         multivalued: true
         annotations: {schema_extended_path: ElectronOptics.Apertures, source_type: array}
-  Scan:
-    description: The scan of a scanning microscope.
+  ScanSettings:
+    description: The scan of a scanning microscope, as set for the acquisition of this image.
     attributes:
       FieldOfView:
         range: FieldOfView
@@ -379,16 +386,3 @@ classes:
       Y:
         range: Quantity
         inlined: true
-  Acquisition:
-    description: Who acquired the image, and when.
-    attributes:
-      Operator:
-        range: Operator
-        inlined: true
-      StartDate:
-        annotations: {schema_extended_path: Acquisition.StartDate}
-  Operator:
-    description: The person operating the microscope.
-    attributes:
-      Name:
-        annotations: {schema_extended_path: Acquisition.Operator.Name}

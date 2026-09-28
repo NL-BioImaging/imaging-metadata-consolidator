@@ -16,15 +16,7 @@ Image:
   Contrast: 0
   Brightness: 0
   InvertedSignal: false
-  Corrections:
-    Invert: false
-    Brightness: 0
-    Contrast: 1
-    XBrightSlope: 0
-    YBrightSlope: 0
-    RBrightSlope: 0
-OME:
-  Scan:
+  ScanSettings:
     LineAvg: 1
     FieldOfView:
       X:
@@ -43,11 +35,18 @@ OME:
     AppliedScaleCorrection: 1
     ShiftX: 0
     ShiftY: 0
-  ElectronBeam:
+  ElectronBeamSettings:
     Focus: 0
     Stigmator:
       X: 0
       Y: 0
+  Corrections:
+    Invert: false
+    Brightness: 0
+    Contrast: 1
+    XBrightSlope: 0
+    YBrightSlope: 0
+    RBrightSlope: 0
 MechanicalStage:
   Bias:
     BiasType: null
@@ -112,23 +111,23 @@ SourceMap:
   Image.Contrast: FibicsXML.Fibics.Image.Contrast
   Image.Brightness: FibicsXML.Fibics.Image.Brightness
   Image.InvertedSignal: FibicsXML.Fibics.Image.InvertedSignal
-  OME.Scan.LineAvg: FibicsXML.Fibics.Scan.LineAvg
-  OME.Scan.FieldOfView.X.Unit: FibicsXML.Fibics.Scan.FOV_X.units
-  OME.Scan.FieldOfView.X.Value: FibicsXML.Fibics.Scan.FOV_X.value
-  OME.Scan.FieldOfView.Y.Unit: FibicsXML.Fibics.Scan.FOV_Y.units
-  OME.Scan.FieldOfView.Y.Value: FibicsXML.Fibics.Scan.FOV_Y.value
-  OME.Scan.Rotation.Unit: FibicsXML.Fibics.Scan.ScanRot.units
-  OME.Scan.Rotation.Value: FibicsXML.Fibics.Scan.ScanRot.value
-  OME.Scan.Ux: FibicsXML.Fibics.Scan.Ux
-  OME.Scan.Uy: FibicsXML.Fibics.Scan.Uy
-  OME.Scan.Vx: FibicsXML.Fibics.Scan.Vx
-  OME.Scan.Vy: FibicsXML.Fibics.Scan.Vy
-  OME.ElectronBeam.Focus: FibicsXML.Fibics.Scan.Focus
-  OME.ElectronBeam.Stigmator.X: FibicsXML.Fibics.Scan.StigX
-  OME.ElectronBeam.Stigmator.Y: FibicsXML.Fibics.Scan.StigY
-  OME.Scan.AppliedScaleCorrection: FibicsXML.Fibics.Scan.AppliedScaleCorrection
-  OME.Scan.ShiftX: FibicsXML.Fibics.Scan.ShiftX
-  OME.Scan.ShiftY: FibicsXML.Fibics.Scan.ShiftY
+  Image.ScanSettings.LineAvg: FibicsXML.Fibics.Scan.LineAvg
+  Image.ScanSettings.FieldOfView.X.Unit: FibicsXML.Fibics.Scan.FOV_X.units
+  Image.ScanSettings.FieldOfView.X.Value: FibicsXML.Fibics.Scan.FOV_X.value
+  Image.ScanSettings.FieldOfView.Y.Unit: FibicsXML.Fibics.Scan.FOV_Y.units
+  Image.ScanSettings.FieldOfView.Y.Value: FibicsXML.Fibics.Scan.FOV_Y.value
+  Image.ScanSettings.Rotation.Unit: FibicsXML.Fibics.Scan.ScanRot.units
+  Image.ScanSettings.Rotation.Value: FibicsXML.Fibics.Scan.ScanRot.value
+  Image.ScanSettings.Ux: FibicsXML.Fibics.Scan.Ux
+  Image.ScanSettings.Uy: FibicsXML.Fibics.Scan.Uy
+  Image.ScanSettings.Vx: FibicsXML.Fibics.Scan.Vx
+  Image.ScanSettings.Vy: FibicsXML.Fibics.Scan.Vy
+  Image.ElectronBeamSettings.Focus: FibicsXML.Fibics.Scan.Focus
+  Image.ElectronBeamSettings.Stigmator.X: FibicsXML.Fibics.Scan.StigX
+  Image.ElectronBeamSettings.Stigmator.Y: FibicsXML.Fibics.Scan.StigY
+  Image.ScanSettings.AppliedScaleCorrection: FibicsXML.Fibics.Scan.AppliedScaleCorrection
+  Image.ScanSettings.ShiftX: FibicsXML.Fibics.Scan.ShiftX
+  Image.ScanSettings.ShiftY: FibicsXML.Fibics.Scan.ShiftY
   MechanicalStage.Bias.BiasType: FibicsXML.Fibics.StageBias.BiasType
   MechanicalStage.Bias.Mode: FibicsXML.Fibics.StageBias.Mode
   MechanicalStage.Bias.Volts: FibicsXML.Fibics.StageBias.Volts
