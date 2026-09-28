@@ -4,11 +4,11 @@
 
 ### Hub state
 
-Published on the Hub (account j.j.m.defolter@amsterdamumc.nl): profile `imaging` 0.1 and 0.2 (0.2 =
-`models/imaging.metaseed.yaml` with the LiMi tiers, 2026-09-28; valid, no problems, no warnings); the
-account holds no datasets. After a change to the master model: regenerate (`python src/main.py
-metaseed`), run metaseed's compatibility check against the last published version (see "Profile
-versions"), bump the version, and push and publish again.
+Published on the Hub (account j.j.m.defolter@amsterdamumc.nl): profile `imaging` 0.1, 0.2 and 1.0 (1.0 =
+`models/imaging.metaseed.yaml`, model 1.0.0, 2026-09-28; valid, no problems, no warnings); the account holds
+no datasets. After a change to the master model: regenerate (`python src/main.py metaseed`), run metaseed's
+compatibility check against the last published version (see "Profile versions"), bump the version, and push
+and publish again.
 
 ### LiMi XSD slips (worked around in the converter, original names kept)
 
@@ -51,7 +51,7 @@ silently stored an empty dataset): `MetaseedClient(...)._facade.load_nested(docu
 
 ### Profile versions (2026-09-28)
 
-`imaging` 0.1 and 0.2 are published on the Hub; 1.0 (model 1.0.0) is ready to push and publish. 1.0 against
+`imaging` 0.1, 0.2 and 1.0 are published on the Hub. 1.0 against
 0.2: 16 breaking changes, all intended (required bump major) - the EM groups moved from OME into Instrument
 and Image, ObjectiveSettings.Medium/RefractiveIndex removed, the UUID fields strings with a pattern, and
 ElectronSource.ID required (an identifier, as all LiMi hardware IDs). 0.2 adds the LiMi tiers: every field gets the higher LiMi
