@@ -64,14 +64,23 @@ class MetaseedGenerator:
         if description:
             entity['description'] = description
         fields = []
-        for slot in self.view.class_induced_slots(class_name):
-            if not slot.designates_type:
-                fields += self._fields(class_name, slot, queue)
-        first = fields[0] if fields else None
-        if not any(field.get('is_identifier') for field in fields) and not any(field['name'] == 'ID' for field in fields)                 and (first is None or (first['type'] == 'string' and not first['required'] and 'constraints' not in first)):
-            # metaseed would take that optional free-text first field as the identifier
-            fields.insert(0, {'name': 'ID', 'type': 'string', 'required': False, 'is_identifier': True,
-                              'description': 'An identifier for this record; the model defines none.'})
+        slots = [slot for slot in self.view.class_induced_slots(class_name) if not slot.designates_type]
+        for slot in slots:
+            fields += self._fields(class_name, slot, queue)
+        model_required = {slot.name: bool(slot.required) for slot in slots}
+        # metaseed keys an entity by its is_identifier field, else by its first field that is no reference
+        inferred = next((field for field in fields if not field.get('reference')), None)
+        weak = inferred is None or (inferred['type'] == 'string' and not inferred['required']
+                                    and 'constraints' not in inferred)
+        if not any(field.get('is_identifier') for field in fields) and weak:
+            if inferred is not None and model_required.get(inferred['name']):
+                # required in the model, optional only through its LiMi tier (StageLabel.Name): it keeps being
+                # the identifier, now declared, so a new profile version does not re-key existing datasets
+                inferred['is_identifier'] = True
+            elif not any(field['name'] == 'ID' for field in fields):
+                # metaseed would take that optional free-text field as the identifier
+                fields.insert(0, {'name': 'ID', 'type': 'string', 'required': False, 'is_identifier': True,
+                                  'description': 'An identifier for this record; the model defines none.'})
         names = [field['name'] for field in fields]
         assert len(names) == len(set(names)), (class_name, [name for name in names if names.count(name) > 1])
         entity['fields'] = fields

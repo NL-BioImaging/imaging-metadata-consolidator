@@ -46,6 +46,7 @@ classes:
       Label: {range: Label, inlined: true}
       Shutter: {range: Shutter, multivalued: true, inlined_as_list: true}
       Lamp: {range: Lamp, multivalued: true, inlined_as_list: true}
+      Marker: {range: Marker, multivalued: true, inlined_as_list: true}
   Sensor:
     attributes:
       ID: {identifier: true}
@@ -54,6 +55,10 @@ classes:
     attributes:
       ID: {identifier: true, required: true, annotations: {Tier: '1'}}
       Speed: {range: float, required: true, annotations: {Tier: '1'}}
+  Marker:
+    attributes:
+      Sensor: {range: Sensor, inlined: false, required: true}
+      Name: {required: true, annotations: {Tier: '2'}}
   Lamp:
     annotations: {Tier: '1'}
     attributes:
@@ -157,6 +162,15 @@ class MetaseedGeneratorTest(unittest.TestCase):
         self.assertEqual((self.fields['Lamp']['Serial']['tier'], self.fields['Lamp']['Serial']['required']),
                          ('required', True))
         self.assertNotIn('tier', self.fields['Label']['Text'])
+
+
+    def test_identifier_kept_when_a_tier_relaxes_it(self):
+        # metaseed keys Marker by its first field that is no reference, Name; the tier makes Name optional, so
+        # the generator declares it rather than adding an ID, which would re-key existing datasets
+        self.assertEqual([field['name'] for field in self.entities['Marker']['fields']], ['Sensor', 'Name'])
+        self.assertTrue(self.fields['Marker']['Name']['is_identifier'])
+        self.assertFalse(self.fields['Marker']['Name']['required'])
+        self.assertNotIn('is_identifier', self.fields['Marker']['Sensor'])
 
 
 class GeneratedProfileTest(unittest.TestCase):

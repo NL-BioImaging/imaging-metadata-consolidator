@@ -3,7 +3,7 @@ name: imaging
 title: Imaging metadata model
 description: 'Microscopy imaging metadata, based on the LiMi (4DN-BINA-OME) model: converted from models/LiMi_XMLSchema.xsd
   (version 02.00, namespace http://www.NamespaceTest.org/Schemas/NBO/2020-11).'
-version: 0.1.0
+version: 0.2.0
 comments:
 - 'Descriptions annotated with description_source "OME 2016-06 ome.xsd" are from the OME Data Model (Copyright (C) 2002 -
   2016 Open Microscopy Environment), licensed under CC BY 3.0: http://www.openmicroscopy.org/info/attribution'

@@ -48,6 +48,15 @@ chose local validation only). Hub datasets need metaseed's tree serialization, n
 (save_dataset silently stored an empty dataset): `MetaseedClient(...)._facade.load_nested(document)` then
 `serialize(format='tree')`.
 
+### Profile versions (2026-09-28)
+
+`imaging` 0.1 is published on the Hub; the model is now 0.2.0 (profile 0.2, tiers), to be pushed and
+published by the user. metaseed's compatibility check (`metaseed.specs.compare.compare_specs(old, new)`,
+the check behind the Hub's "Breaking changes"): 0.1 -> 0.2 has no breaking change (required bump minor).
+A first 0.2 re-keyed StageLabel (an added ID) and MicroscopeTableSettings (a reference declared as
+identifier); the generator now keeps metaseed's inferred identifier - the first field that is no
+reference - and declares it where a tier made it optional. Run the check before publishing a new version.
+
 ### Generated metaseed profile
 
 metaseed has no inheritance and no "one of": a slot over an abstract class is one field per concrete

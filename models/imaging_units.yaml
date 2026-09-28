@@ -2,7 +2,7 @@ id: https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imagin
 name: imaging_units
 title: Imaging metadata units
 description: The units enumerations of the imaging metadata model, from models/LiMi_XMLSchema.xsd.
-version: 0.1.0
+version: 0.2.0
 prefixes:
   linkml: https://w3id.org/linkml/
   imaging: https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging/

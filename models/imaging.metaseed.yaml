@@ -1,6 +1,6 @@
 name: imaging
-version: '0.1'
-description: 'Generated from imaging 0.1.0 (https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging).
+version: '0.2'
+description: 'Generated from imaging 0.2.0 (https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging).
   Microscopy imaging metadata, based on the LiMi (4DN-BINA-OME) model: converted from models/LiMi_XMLSchema.xsd (version 02.00,
   namespace http://www.NamespaceTest.org/Schemas/NBO/2020-11).'
 root_entity: OME
@@ -27066,16 +27066,12 @@ entities:
     description: The StageLabel is used to specify the Name and Position for a Stage position in the Microscope's reference
       frame.
     fields:
-    - name: ID
-      type: string
-      required: false
-      is_identifier: true
-      description: An identifier for this record; the model defines none.
     - name: Name
       type: string
       required: false
       description: A User-defined Name for this Stage Label.
       tier: recommended
+      is_identifier: true
     - name: X
       type: float
       required: false
@@ -35632,6 +35628,7 @@ entities:
       required: false
       description: This is the Unique Identifier of the device used in this case. (The ID of a MirroringDevice.)
       tier: recommended
+      is_identifier: true
     - name: ActualMountedAngle
       type: float
       required: false
