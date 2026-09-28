@@ -1,4 +1,5 @@
 AcquisitionSoftware:
+  Name: Fibics ATLAS Export
   Version: ZEISS Atlas 5 Client v5.3.2
   Date: '1899-12-30T00:00:00.000+01:00'
   SupportsTransparency: true
@@ -93,70 +94,73 @@ MechanicalStage:
 Instrument:
   Vacuum:
     SystemVacuum: 0
-version: 1.2
+FibicsXML:
+  Fibics:
+    version: 1.2
 SourceMap:
-  AcquisitionSoftware.Version: Application.Version
-  AcquisitionSoftware.Date: Application.Date
-  AcquisitionSoftware.SupportsTransparency: Application.SupportsTransparency
-  AcquisitionSoftware.TransparentPixelValue: Application.TransparentPixelValue
-  Pixels.SizeX: Image.Width
-  Pixels.SizeY: Image.Height
-  Image.CropHint.Left: Image.BoundingBox.Left
-  Image.CropHint.Right: Image.BoundingBox.Right
-  Image.CropHint.Top: Image.BoundingBox.Top
-  Image.CropHint.Bottom: Image.BoundingBox.Bottom
-  Image.Contrast: Image.Contrast
-  Image.Brightness: Image.Brightness
-  Image.InvertedSignal: Image.InvertedSignal
-  OME.Scan.LineAvg: Scan.LineAvg
-  OME.Scan.FieldOfView.X.Unit: Scan.FOV_X.units
-  OME.Scan.FieldOfView.X.Value: Scan.FOV_X.value
-  OME.Scan.FieldOfView.Y.Unit: Scan.FOV_Y.units
-  OME.Scan.FieldOfView.Y.Value: Scan.FOV_Y.value
-  OME.Scan.Rotation.Unit: Scan.ScanRot.units
-  OME.Scan.Rotation.Value: Scan.ScanRot.value
-  OME.Scan.Ux: Scan.Ux
-  OME.Scan.Uy: Scan.Uy
-  OME.Scan.Vx: Scan.Vx
-  OME.Scan.Vy: Scan.Vy
-  OME.ElectronBeam.Focus: Scan.Focus
-  OME.ElectronBeam.Stigmator.X: Scan.StigX
-  OME.ElectronBeam.Stigmator.Y: Scan.StigY
-  OME.Scan.AppliedScaleCorrection: Scan.AppliedScaleCorrection
-  OME.Scan.ShiftX: Scan.ShiftX
-  OME.Scan.ShiftY: Scan.ShiftY
-  MechanicalStage.Bias.BiasType: StageBias.BiasType
-  MechanicalStage.Bias.Mode: StageBias.Mode
-  MechanicalStage.Bias.Volts: StageBias.Volts
-  MechanicalStage.Position.X.Unit: Stage.X.units
-  MechanicalStage.Position.X.Value: Stage.X.value
-  MechanicalStage.Position.Y.Unit: Stage.Y.units
-  MechanicalStage.Position.Y.Value: Stage.Y.value
-  MechanicalStage.Position.Z.Unit: Stage.Z.units
-  MechanicalStage.Position.Z.Value: Stage.Z.value
-  MechanicalStage.Tilt.Unit: Stage.Tilt.units
-  MechanicalStage.Tilt.Value: Stage.Tilt.value
-  MechanicalStage.Rotation.Unit: Stage.Rot.units
-  MechanicalStage.Rotation.Value: Stage.Rot.value
-  MechanicalStage.Position.M.Unit: Stage.M.units
-  MechanicalStage.Position.M.Value: Stage.M.value
-  MechanicalStage.RawPosition.X.Unit: RawStage.X.units
-  MechanicalStage.RawPosition.X.Value: RawStage.X.value
-  MechanicalStage.RawPosition.Y.Unit: RawStage.Y.units
-  MechanicalStage.RawPosition.Y.Value: RawStage.Y.value
-  MechanicalStage.RawPosition.Z.Unit: RawStage.Z.units
-  MechanicalStage.RawPosition.Z.Value: RawStage.Z.value
-  MechanicalStage.RawPosition.Tilt.Unit: RawStage.Tilt.units
-  MechanicalStage.RawPosition.Tilt.Value: RawStage.Tilt.value
-  MechanicalStage.RawPosition.Rot.Unit: RawStage.Rot.units
-  MechanicalStage.RawPosition.Rot.Value: RawStage.Rot.value
-  MechanicalStage.RawPosition.M.Unit: RawStage.M.units
-  MechanicalStage.RawPosition.M.Value: RawStage.M.value
-  Image.Corrections.Invert: ImageCorrections.Invert
-  Image.Corrections.Brightness: ImageCorrections.Brightness
-  Image.Corrections.Contrast: ImageCorrections.Contrast
-  Image.Corrections.XBrightSlope: ImageCorrections.XBrightSlope
-  Image.Corrections.YBrightSlope: ImageCorrections.YBrightSlope
-  Image.Corrections.RBrightSlope: ImageCorrections.RBrightSlope
-  Instrument.Vacuum.SystemVacuum: Microscope.SystemVacuum
-  version: version
+  AcquisitionSoftware.Name: Software
+  AcquisitionSoftware.Version: FibicsXML.Fibics.Application.Version
+  AcquisitionSoftware.Date: FibicsXML.Fibics.Application.Date
+  AcquisitionSoftware.SupportsTransparency: FibicsXML.Fibics.Application.SupportsTransparency
+  AcquisitionSoftware.TransparentPixelValue: FibicsXML.Fibics.Application.TransparentPixelValue
+  Pixels.SizeX: FibicsXML.Fibics.Image.Width
+  Pixels.SizeY: FibicsXML.Fibics.Image.Height
+  Image.CropHint.Left: FibicsXML.Fibics.Image.BoundingBox.Left
+  Image.CropHint.Right: FibicsXML.Fibics.Image.BoundingBox.Right
+  Image.CropHint.Top: FibicsXML.Fibics.Image.BoundingBox.Top
+  Image.CropHint.Bottom: FibicsXML.Fibics.Image.BoundingBox.Bottom
+  Image.Contrast: FibicsXML.Fibics.Image.Contrast
+  Image.Brightness: FibicsXML.Fibics.Image.Brightness
+  Image.InvertedSignal: FibicsXML.Fibics.Image.InvertedSignal
+  OME.Scan.LineAvg: FibicsXML.Fibics.Scan.LineAvg
+  OME.Scan.FieldOfView.X.Unit: FibicsXML.Fibics.Scan.FOV_X.units
+  OME.Scan.FieldOfView.X.Value: FibicsXML.Fibics.Scan.FOV_X.value
+  OME.Scan.FieldOfView.Y.Unit: FibicsXML.Fibics.Scan.FOV_Y.units
+  OME.Scan.FieldOfView.Y.Value: FibicsXML.Fibics.Scan.FOV_Y.value
+  OME.Scan.Rotation.Unit: FibicsXML.Fibics.Scan.ScanRot.units
+  OME.Scan.Rotation.Value: FibicsXML.Fibics.Scan.ScanRot.value
+  OME.Scan.Ux: FibicsXML.Fibics.Scan.Ux
+  OME.Scan.Uy: FibicsXML.Fibics.Scan.Uy
+  OME.Scan.Vx: FibicsXML.Fibics.Scan.Vx
+  OME.Scan.Vy: FibicsXML.Fibics.Scan.Vy
+  OME.ElectronBeam.Focus: FibicsXML.Fibics.Scan.Focus
+  OME.ElectronBeam.Stigmator.X: FibicsXML.Fibics.Scan.StigX
+  OME.ElectronBeam.Stigmator.Y: FibicsXML.Fibics.Scan.StigY
+  OME.Scan.AppliedScaleCorrection: FibicsXML.Fibics.Scan.AppliedScaleCorrection
+  OME.Scan.ShiftX: FibicsXML.Fibics.Scan.ShiftX
+  OME.Scan.ShiftY: FibicsXML.Fibics.Scan.ShiftY
+  MechanicalStage.Bias.BiasType: FibicsXML.Fibics.StageBias.BiasType
+  MechanicalStage.Bias.Mode: FibicsXML.Fibics.StageBias.Mode
+  MechanicalStage.Bias.Volts: FibicsXML.Fibics.StageBias.Volts
+  MechanicalStage.Position.X.Unit: FibicsXML.Fibics.Stage.X.units
+  MechanicalStage.Position.X.Value: FibicsXML.Fibics.Stage.X.value
+  MechanicalStage.Position.Y.Unit: FibicsXML.Fibics.Stage.Y.units
+  MechanicalStage.Position.Y.Value: FibicsXML.Fibics.Stage.Y.value
+  MechanicalStage.Position.Z.Unit: FibicsXML.Fibics.Stage.Z.units
+  MechanicalStage.Position.Z.Value: FibicsXML.Fibics.Stage.Z.value
+  MechanicalStage.Tilt.Unit: FibicsXML.Fibics.Stage.Tilt.units
+  MechanicalStage.Tilt.Value: FibicsXML.Fibics.Stage.Tilt.value
+  MechanicalStage.Rotation.Unit: FibicsXML.Fibics.Stage.Rot.units
+  MechanicalStage.Rotation.Value: FibicsXML.Fibics.Stage.Rot.value
+  MechanicalStage.Position.M.Unit: FibicsXML.Fibics.Stage.M.units
+  MechanicalStage.Position.M.Value: FibicsXML.Fibics.Stage.M.value
+  MechanicalStage.RawPosition.X.Unit: FibicsXML.Fibics.RawStage.X.units
+  MechanicalStage.RawPosition.X.Value: FibicsXML.Fibics.RawStage.X.value
+  MechanicalStage.RawPosition.Y.Unit: FibicsXML.Fibics.RawStage.Y.units
+  MechanicalStage.RawPosition.Y.Value: FibicsXML.Fibics.RawStage.Y.value
+  MechanicalStage.RawPosition.Z.Unit: FibicsXML.Fibics.RawStage.Z.units
+  MechanicalStage.RawPosition.Z.Value: FibicsXML.Fibics.RawStage.Z.value
+  MechanicalStage.RawPosition.Tilt.Unit: FibicsXML.Fibics.RawStage.Tilt.units
+  MechanicalStage.RawPosition.Tilt.Value: FibicsXML.Fibics.RawStage.Tilt.value
+  MechanicalStage.RawPosition.Rot.Unit: FibicsXML.Fibics.RawStage.Rot.units
+  MechanicalStage.RawPosition.Rot.Value: FibicsXML.Fibics.RawStage.Rot.value
+  MechanicalStage.RawPosition.M.Unit: FibicsXML.Fibics.RawStage.M.units
+  MechanicalStage.RawPosition.M.Value: FibicsXML.Fibics.RawStage.M.value
+  Image.Corrections.Invert: FibicsXML.Fibics.ImageCorrections.Invert
+  Image.Corrections.Brightness: FibicsXML.Fibics.ImageCorrections.Brightness
+  Image.Corrections.Contrast: FibicsXML.Fibics.ImageCorrections.Contrast
+  Image.Corrections.XBrightSlope: FibicsXML.Fibics.ImageCorrections.XBrightSlope
+  Image.Corrections.YBrightSlope: FibicsXML.Fibics.ImageCorrections.YBrightSlope
+  Image.Corrections.RBrightSlope: FibicsXML.Fibics.ImageCorrections.RBrightSlope
+  Instrument.Vacuum.SystemVacuum: FibicsXML.Fibics.Microscope.SystemVacuum
+  FibicsXML.Fibics.version: FibicsXML.Fibics.version

@@ -132,8 +132,9 @@ inheritance, so:
 ## 4. From source files to datasets
 
 - `python src/main.py convert` (`src/AcquisitionMetadataMapper.py`) maps each source file onto model paths
-  with the rules in `mappings/mappings.json` (220 rules) and `mappings/combinations.json`, falling back to
-  matching source names against the model. A path starts at a class with an identifier and runs through
+  with the rules in `mappings/mappings.json` (226 rules) and `mappings/combinations.json`, falling back to
+  matching source names against the model. Levels that only wrap a source's metadata (a vendor tag such
+  as `FEI_TITAN.FeiImage`, or the root of a whole OME document) are left out of the paths the rules see. A path starts at a class with an identifier and runs through
   its components: `OME.ElectronBeam.WorkingDistance.Value`, `Pixels.PhysicalSizeX`,
   `MechanicalStage.Position.X.Value`. Unmapped keys stay at their source path; every value's source path
   is recorded.

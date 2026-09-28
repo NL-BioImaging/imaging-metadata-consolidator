@@ -64,6 +64,63 @@ class AcquisitionMetadataMapperTest(unittest.TestCase):
         self.assertEqual(converted['ImmersionLiquid'], {'RefractiveIndex': 1.518})
 
 
+class ModelDocumentTest(unittest.TestCase):
+    """A source that is a document of the model itself, wrapped in its root (a full OME export)."""
+
+    def test_rules_match_below_the_model_root(self):
+        annotation = {'FeatureHistory': {'HuygensVersion': '23.10'}, 'Vendor': {'Setting': 'x'}}
+        document = {'OME': {'Creator': 'Huygens', 'StructuredAnnotations': {'XMLAnnotation': {'Value': annotation}},
+                            'Image': {'Name': 'cell'}}}
+
+        converted = AcquisitionMetadataMapper().convert_metadata(document)
+
+        # the rule for the annotation applies as if OME were absent; what no rule maps stays under OME
+        self.assertEqual(converted['SoftwareModule'], {'Version': '23.10'})
+        self.assertEqual(converted['OME']['Creator'], 'Huygens')
+        self.assertEqual(converted['SourceMap']['SoftwareModule.Version'],
+                         'OME.StructuredAnnotations.XMLAnnotation.Value.FeatureHistory.HuygensVersion')
+        self.assertEqual(converted['Image'], {'Name': 'cell'})
+        self.assertEqual(converted['OME']['StructuredAnnotations']['XMLAnnotation']['Value']['Vendor'],
+                         {'Setting': 'x'})
+
+
+class HuygensRulesAgreeWithOmeTest(unittest.TestCase):
+    """sources/ome-tiff.json is a full OME export holding both the image's own OME values and Huygens' SVI
+    annotation of it: what the Huygens rules take from the annotation must be what OME states."""
+
+    ANNOTATION = 'StructuredAnnotations.XMLAnnotation.Value.'
+    # the OME field (path in the OME document) each Huygens rule's value also stands in
+    OME_COUNTERPARTS = {
+        'Geometry.SamplingSizes.DeltaX': 'Image.Pixels.PhysicalSizeX',
+        'Geometry.SamplingSizes.DeltaY': 'Image.Pixels.PhysicalSizeY',
+        'Geometry.SamplingSizes.DeltaZ': 'Image.Pixels.PhysicalSizeZ',
+        'Geometry.SamplingSizes.DeltaT': 'Image.Pixels.TimeIncrement',
+        'ChannelData.RefrIndexLensMedium': 'Image.ObjectiveSettings.RefractiveIndex',
+    }
+
+    def test_huygens_values_are_the_images_own(self):
+        with open(os.path.join(REPO_ROOT, 'sources', 'ome-tiff.json'), encoding='utf-8') as file:
+            ome = json.load(file)['OME']
+        with open(os.path.join(REPO_ROOT, DEFAULT_MAPPINGS_FILE), encoding='utf-8') as file:
+            rules = [rule.removeprefix(self.ANNOTATION) for rule in json.load(file) if rule.startswith(self.ANNOTATION)]
+        checked = [rule for rule in rules if rule in self.OME_COUNTERPARTS]
+        self.assertEqual(sorted(checked), sorted(self.OME_COUNTERPARTS))
+        for rule in checked:
+            with self.subTest(rule=rule):
+                huygens = _values(ome['StructuredAnnotations']['XMLAnnotation']['Value'], rule.split('.'))
+                own = _values(ome, self.OME_COUNTERPARTS[rule].split('.'))
+                self.assertEqual(set(huygens), set(own))
+
+
+def _values(node, parts):
+    """The values at `parts` below `node`, through every item of a list on the way."""
+    if isinstance(node, list):
+        return [value for item in node for value in _values(item, parts)]
+    if not parts:
+        return [node]
+    return _values(node[parts[0]], parts[1:]) if isinstance(node, dict) and parts[0] in node else []
+
+
 class RuleTargetsTest(unittest.TestCase):
     """Every rule targets the imaging model: a field, or a group a whole subtree moves into."""
 
@@ -222,6 +279,27 @@ class LosslessMappingTest(unittest.TestCase):
         self.assertEqual(converted, {'Instrument': {'Manufacturer': 'Acme'}, 'FEI_TITAN': {'databarHeight': 0},
                                      'SourceMap': {'Instrument.Manufacturer': 'FEI_TITAN.Make',
                                                    'FEI_TITAN.databarHeight': 'FEI_TITAN.databarHeight'}})
+
+    def test_two_level_vendor_wrapper_is_left_out_of_rule_paths_only(self):
+        mapper = self.mapper_for({'Make': 'Instrument.Manufacturer'})
+
+        converted = mapper.convert_metadata({'FEI_TITAN': {'FeiImage': {'Make': 'Acme', 'databarHeight': 0}}})
+
+        self.assertEqual(converted, {'Instrument': {'Manufacturer': 'Acme'},
+                                     'FEI_TITAN': {'FeiImage': {'databarHeight': 0}},
+                                     'SourceMap': {'Instrument.Manufacturer': 'FEI_TITAN.FeiImage.Make',
+                                                   'FEI_TITAN.FeiImage.databarHeight':
+                                                       'FEI_TITAN.FeiImage.databarHeight'}})
+
+    def test_wrapper_level_holding_several_keys_ends_the_wrapper(self):
+        # below FibicsXML.Fibics the keys are the vendor's own groups; the rules match from there
+        mapper = self.mapper_for({'Scan.Focus': 'OME.ElectronBeam.Focus'})
+
+        converted = mapper.convert_metadata({'FibicsXML': {'Fibics': {'Scan': {'Focus': 2.5}, 'version': 1}}})
+
+        self.assertEqual(converted['OME'], {'ElectronBeam': {'Focus': 2.5}})
+        self.assertEqual(converted['FibicsXML'], {'Fibics': {'version': 1}})
+        self.assertEqual(converted['SourceMap']['OME.ElectronBeam.Focus'], 'FibicsXML.Fibics.Scan.Focus')
 
     def test_wrapped_value_colliding_with_a_top_level_one_is_kept(self):
         mapper = self.mapper_for({'DateTime': 'Image.AcquisitionDate', 'datetime': 'Image.AcquisitionDate'})

@@ -42,6 +42,7 @@ class AcquisitionMetadataMapper:
         # a LinkML model, or (for tests) a JSON tree of the same {name: subtree or type} shape
         model = ModelPaths(schema_file) if schema_file.endswith(('.yaml', '.yml')) else None
         self.schema = model.tree() if model else self._load_json(schema_file)
+        self._root = model.root if model else None
         self.mappings = self._load_json(mappings_file)
         self.combinations = self._load_json(combinations_file) if os.path.exists(combinations_file) else []
         self._schema_index = self._build_schema_index(self.schema)
@@ -121,18 +122,28 @@ class AcquisitionMetadataMapper:
                     count += 1
         return count
 
-    def _is_vendor_wrapper(self, key, value):
-        """Whether top-level `key` only wraps `value`, contributing no meaning to the mapping.
+    def _vendor_wrapper(self, key, value):
+        """(wrapper path, wrapped contents) when top-level `key` only wraps `value`, else None.
 
         A source that reads its metadata straight from a file's tags keys
         each vendor's blob by the tag it came from ("FEI_TITAN",
-        "FibicsXML", ...), a level the rules know nothing about and which
-        stops every rule below it from matching. A key is taken to be such a
-        wrapper only when no rule and no model field names it, and leaving
-        it out of the rule paths lets strictly more of its contents resolve.
+        "FibicsXML", ...), sometimes two levels deep ("FEI_TITAN.FeiImage",
+        "FibicsXML.Fibics"): levels the rules know nothing about, which stop
+        every rule below them from matching. A document of the model itself
+        is wrapped in its root ("OME"). A level counts as wrapping when no
+        rule and no model field names it (the model's root excepted), and
+        the deepest one is taken below which strictly more leaves resolve.
         """
-        return (isinstance(value, dict) and not self._is_known_key(str(key))
-                and self._resolvable_leaf_count(value) > self._resolvable_leaf_count(value, str(key)))
+        if not isinstance(value, dict) or (self._is_known_key(str(key)) and key != self._root):
+            return None
+        levels = [(str(key), value)]
+        while len(levels[-1][1]) == 1:
+            inner_key, inner = next(iter(levels[-1][1].items()))
+            if not isinstance(inner, dict) or self._is_known_key(str(inner_key)):
+                break
+            levels.append((f'{levels[-1][0]}.{inner_key}', inner))
+        return next(((prefix, contents) for prefix, contents in reversed(levels)
+                     if self._resolvable_leaf_count(contents) > self._resolvable_leaf_count(contents, prefix)), None)
 
     def _resolve_schema_path(self, source_path):
         """Resolve a dotted source path via the schema fallback, or None."""
@@ -454,7 +465,7 @@ class AcquisitionMetadataMapper:
         Returns the converted dict, with a top-level SOURCE_MAP_KEY section
         mapping every output leaf path to the source path it came from, so
         renamed and collapsed keys stay recoverable from the output alone.
-        A top-level vendor tag wrapper (see `_is_vendor_wrapper`) is left out
+        A top-level vendor tag wrapper (see `_vendor_wrapper`) is left out
         of the paths rules are matched against, but nothing else about it
         is: its unmapped fields stay under it, and every source path keeps it.
         """
@@ -464,11 +475,13 @@ class AcquisitionMetadataMapper:
         provenance = {}
         result = {}
         for key, value in metadata.items():
-            if self._is_vendor_wrapper(key, value):
+            wrapper = self._vendor_wrapper(key, value)
+            if wrapper is not None:
                 # Rules see the wrapper's contents as top-level fields, while unmapped ones stay under the
                 # wrapper and the SourceMap keeps the full source path.
-                self._apply_mappings(value, result, path=str(key), rule_path='', provenance=provenance,
-                                     origin=str(key))
+                prefix, contents = wrapper
+                self._apply_mappings(contents, result, path=prefix, rule_path='', provenance=provenance,
+                                     origin=prefix)
             else:
                 self._apply_mappings({key: value}, result, provenance=provenance)
         self._apply_combinations(metadata, result, provenance)

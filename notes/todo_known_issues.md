@@ -95,8 +95,21 @@ linkml 1.11.1 in biomero-converter-env; chardet kept at 5.2.0 (linkml's ShEx gen
 
 ## In progress
 
-Master model and pipeline done (branch `metaseed-profile`, 2026-09-28).
-Nothing open.
+Current task (user, 2026-09-28): the sources keep their metadata top levels now (d5314b3): Phenom is
+`FEI_TITAN.FeiImage.{...}`, Zeiss `FibicsXML.Fibics.{...}` (+ top-level `Software`), ome-tiff the full OME
+document `OME.{Instrument, Image, StructuredAnnotations, Creator, UUID}` (DNAcropSmall.ome.json).
+Done (not committed yet): the mapper's vendor wrapper may span several levels (it descends through
+single-key dicts of unknown keys and takes the deepest level below which strictly more leaves resolve),
+and the model's root `OME` counts as one, so rules see a model document's contents as top-level fields;
+unmapped fields stay under the wrapper, the SourceMap keeps full paths. 6 Huygens rules added in their
+`StructuredAnnotations.XMLAnnotation.Value.*` form (the `Annotation:CustomAttributes:SVI:Image:*` ones stay).
+Typed values vs the exports before d5314b3: Phenom 41 -> 41, Zeiss 44 -> 45 (+AcquisitionSoftware.Name from
+`Software`), ome-tiff 13 -> 41 (Pixels, channels, TiffData, IDs, UUID); no field typed before is lost.
+Test: the Huygens values agree with the image's own OME values (DeltaX/Y/Z/T = Pixels.PhysicalSizeX/Y/Z,
+TimeIncrement; RefrIndexLensMedium = ObjectiveSettings.RefractiveIndex 1.518). metaseed validation of the
+three changed exports against 0.2 running.
+Decided (user): rule `Creator` -> `OME.Creator` (was SoftwareModule.Name, from the converter merge); only
+ome-tiff has the key.
 
 ## The model and the pipeline
 
@@ -184,5 +197,3 @@ What follows from a new source or new metadata:
       instrument components or settings, Scan/Acquisition acquisition settings - move when the mapper
       paths can follow. Acquisition.Operator might be LiMi's Experimenter.
 - [ ] `exact_mappings`/`close_mappings` to the OME LinkML schema, keeping importing/extending it open.
-- [ ] Consider adding `DNAcropSmall.ome.json` (full OME + Huygens) as a source: a real test
-      that mapped annotation values agree with the image's own OME values.

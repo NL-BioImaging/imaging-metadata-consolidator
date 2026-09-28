@@ -3,132 +3,132 @@ Image:
 - SourceFile:
   - ID: SourceFile:0
     Name: TFS Phenom Pharos.json
-    Checksum: 9bf5a17404c4a94402e9ccae37e48b36952b571af753737a621b620c256190e0
+    Checksum: f8b9f3cce9c82ed0f62f8e2084c3587bc8c64a28a83f9af2e000b76ee701da2d
     Format: json
     Mapping:
     - ID: SourceMapping:0
       Field: Image[0].Pixels.PhysicalSizeX
-      Source: pixelWidth.value
+      Source: FEI_TITAN.FeiImage.pixelWidth.value
     - ID: SourceMapping:1
       Field: Image[0].Pixels.PhysicalSizeY
-      Source: pixelHeight.value
+      Source: FEI_TITAN.FeiImage.pixelHeight.value
     - ID: SourceMapping:2
       Field: Image[0].AcquisitionDate
-      Source: time
+      Source: FEI_TITAN.FeiImage.time
     - ID: SourceMapping:3
       Field: Image[0].CropHint.Left
-      Source: cropHint.left
+      Source: FEI_TITAN.FeiImage.cropHint.left
     - ID: SourceMapping:4
       Field: Image[0].CropHint.Top
-      Source: cropHint.top
+      Source: FEI_TITAN.FeiImage.cropHint.top
     - ID: SourceMapping:5
       Field: Image[0].CropHint.Right
-      Source: cropHint.right
+      Source: FEI_TITAN.FeiImage.cropHint.right
     - ID: SourceMapping:6
       Field: Image[0].CropHint.Bottom
-      Source: cropHint.bottom
+      Source: FEI_TITAN.FeiImage.cropHint.bottom
     - ID: SourceMapping:7
       Field: Image[0].Corrections.Contrast
-      Source: appliedContrast
+      Source: FEI_TITAN.FeiImage.appliedContrast
     - ID: SourceMapping:8
       Field: Image[0].Corrections.Brightness
-      Source: appliedBrightness
+      Source: FEI_TITAN.FeiImage.appliedBrightness
     - ID: SourceMapping:9
       Field: Image[0].Corrections.Gamma
-      Source: appliedGamma
+      Source: FEI_TITAN.FeiImage.appliedGamma
     - ID: SourceMapping:10
       Field: Image[0].Corrections.BlackLevel
-      Source: displayBlackLevel
+      Source: FEI_TITAN.FeiImage.displayBlackLevel
     - ID: SourceMapping:11
       Field: Image[0].Corrections.WhiteLevel
-      Source: displayWhiteLevel
+      Source: FEI_TITAN.FeiImage.displayWhiteLevel
     - ID: SourceMapping:12
       Field: Scan.LineIntegrationCount
-      Source: integrations
+      Source: FEI_TITAN.FeiImage.integrations
     - ID: SourceMapping:13
       Field: Scan.Rotation.Value
-      Source: acquisition.scan.rotation
+      Source: FEI_TITAN.FeiImage.acquisition.scan.rotation
     - ID: SourceMapping:14
       Field: Scan.Detector
-      Source: acquisition.scan.detector
+      Source: FEI_TITAN.FeiImage.acquisition.scan.detector
     - ID: SourceMapping:15
       Field: ElectronBeam.SpotSize
-      Source: acquisition.scan.spotSize
+      Source: FEI_TITAN.FeiImage.acquisition.scan.spotSize
     - ID: SourceMapping:16
       Field: ElectronBeam.Shift.X
-      Source: acquisition.scan.beamShift.x
+      Source: FEI_TITAN.FeiImage.acquisition.scan.beamShift.x
     - ID: SourceMapping:17
       Field: ElectronBeam.Shift.Y
-      Source: acquisition.scan.beamShift.y
+      Source: FEI_TITAN.FeiImage.acquisition.scan.beamShift.y
     - ID: SourceMapping:18
       Field: ElectronBeam.SourceTilt.X
-      Source: acquisition.scan.sourceTilt.x
+      Source: FEI_TITAN.FeiImage.acquisition.scan.sourceTilt.x
     - ID: SourceMapping:19
       Field: ElectronBeam.SourceTilt.Y
-      Source: acquisition.scan.sourceTilt.y
+      Source: FEI_TITAN.FeiImage.acquisition.scan.sourceTilt.y
     - ID: SourceMapping:20
       Field: ElectronBeam.Stigmator.X
-      Source: acquisition.scan.stigmator.x
+      Source: FEI_TITAN.FeiImage.acquisition.scan.stigmator.x
     - ID: SourceMapping:21
       Field: ElectronBeam.Stigmator.Y
-      Source: acquisition.scan.stigmator.y
+      Source: FEI_TITAN.FeiImage.acquisition.scan.stigmator.y
     - ID: SourceMapping:22
       Field: ElectronBeam.AccelerationVoltage.Unit
-      Source: acquisition.scan.highVoltage.unit
+      Source: FEI_TITAN.FeiImage.acquisition.scan.highVoltage.unit
     - ID: SourceMapping:23
       Field: ElectronBeam.AccelerationVoltage.Value
-      Source: acquisition.scan.highVoltage.value
+      Source: FEI_TITAN.FeiImage.acquisition.scan.highVoltage.value
     - ID: SourceMapping:24
       Field: ElectronBeam.EmissionCurrent.Unit
-      Source: acquisition.scan.emissionCurrent.unit
+      Source: FEI_TITAN.FeiImage.acquisition.scan.emissionCurrent.unit
     - ID: SourceMapping:25
       Field: ElectronBeam.EmissionCurrent.Value
-      Source: acquisition.scan.emissionCurrent.value
+      Source: FEI_TITAN.FeiImage.acquisition.scan.emissionCurrent.value
     - ID: SourceMapping:26
       Field: ElectronBeam.WorkingDistance.Unit
-      Source: workingDistance.unit
+      Source: FEI_TITAN.FeiImage.workingDistance.unit
     - ID: SourceMapping:27
       Field: ElectronBeam.WorkingDistance.Value
-      Source: workingDistance.value
+      Source: FEI_TITAN.FeiImage.workingDistance.value
     - ID: SourceMapping:28
       Field: Instrument[0].MechanicalStage[0].Position.X.Value
-      Source: samplePosition.x
+      Source: FEI_TITAN.FeiImage.samplePosition.x
     - ID: SourceMapping:29
       Field: Instrument[0].MechanicalStage[0].Position.Y.Value
-      Source: samplePosition.y
+      Source: FEI_TITAN.FeiImage.samplePosition.y
     - ID: SourceMapping:30
       Field: Instrument[0].MechanicalStage[0].MultiStage.SampleRadius.Unit
-      Source: multiStage.sampleRadius.unit
+      Source: FEI_TITAN.FeiImage.multiStage.sampleRadius.unit
     - ID: SourceMapping:31
       Field: Instrument[0].MechanicalStage[0].MultiStage.SampleRadius.Value
-      Source: multiStage.sampleRadius.value
+      Source: FEI_TITAN.FeiImage.multiStage.sampleRadius.value
     - ID: SourceMapping:32
       Field: Instrument[0].MechanicalStage[0].MultiStage.SampleHeight.Unit
-      Source: multiStage.sampleHeight.unit
+      Source: FEI_TITAN.FeiImage.multiStage.sampleHeight.unit
     - ID: SourceMapping:33
       Field: Instrument[0].MechanicalStage[0].MultiStage.SampleHeight.Value
-      Source: multiStage.sampleHeight.value
+      Source: FEI_TITAN.FeiImage.multiStage.sampleHeight.value
     - ID: SourceMapping:34
       Field: Instrument[0].Type
-      Source: instrument.type
+      Source: FEI_TITAN.FeiImage.instrument.type
     - ID: SourceMapping:35
       Field: Instrument[0].ID
-      Source: instrument.uniqueID
+      Source: FEI_TITAN.FeiImage.instrument.uniqueID
     - ID: SourceMapping:36
       Field: Instrument[0].Model
-      Source: instrument.edition
+      Source: FEI_TITAN.FeiImage.instrument.edition
     - ID: SourceMapping:37
       Field: Image[0].Pixels.Plane[0].PixelDwellTimeUnit
-      Source: acquisition.scan.dwellTime.unit
+      Source: FEI_TITAN.FeiImage.acquisition.scan.dwellTime.unit
     - ID: SourceMapping:38
       Field: Image[0].Pixels.Plane[0].PixelDwellTime
-      Source: acquisition.scan.dwellTime.value
+      Source: FEI_TITAN.FeiImage.acquisition.scan.dwellTime.value
     - ID: SourceMapping:39
       Field: Instrument[0].AcquisitionSoftware[0].Version
-      Source: instrument.softwareVersion
+      Source: FEI_TITAN.FeiImage.instrument.softwareVersion
     - ID: SourceMapping:40
       Field: Experiment[0].Sample[0].SampleHolder[0].ID
-      Source: instrument.sampleHolder.id
+      Source: FEI_TITAN.FeiImage.instrument.sampleHolder.id
   Pixels:
     PhysicalSizeX: 1.143158459049694
     PhysicalSizeY: 1.143158459049694
@@ -137,12 +137,12 @@ Image:
       PixelDwellTime: 499.9999999999999
   CustomProperties:
   - ID: Property:4
-    Name: pixelWidth.unit
+    Name: FEI_TITAN.FeiImage.pixelWidth.unit
     Value: '"um"'
     SchemaPath: Pixels.PhysicalSizeXUnit
     Source: SourceFile:0
   - ID: Property:5
-    Name: pixelHeight.unit
+    Name: FEI_TITAN.FeiImage.pixelHeight.unit
     Value: '"um"'
     SchemaPath: Pixels.PhysicalSizeYUnit
     Source: SourceFile:0
@@ -160,123 +160,123 @@ Image:
     WhiteLevel: 1
 CustomProperties:
 - ID: Property:0
-  Name: databarHeight
+  Name: FEI_TITAN.FeiImage.databarHeight
   Value: '0'
   Source: SourceFile:0
 - ID: Property:1
-  Name: databarFields
+  Name: FEI_TITAN.FeiImage.databarFields
   Value: '699'
   Source: SourceFile:0
 - ID: Property:2
-  Name: databarLabel
+  Name: FEI_TITAN.FeiImage.databarLabel
   Value: 'null'
   Source: SourceFile:0
 - ID: Property:3
-  Name: displayWidth
+  Name: FEI_TITAN.FeiImage.displayWidth
   Value: '0'
   Source: SourceFile:0
 - ID: Property:6
-  Name: currentUser
+  Name: FEI_TITAN.FeiImage.currentUser
   Value: 'null'
   SchemaPath: OME.Acquisition.Operator.Name
   Source: SourceFile:0
 - ID: Property:7
-  Name: acquisition.scan.scanHW
+  Name: FEI_TITAN.FeiImage.acquisition.scan.scanHW
   Value: '"ZYNQ"'
   SchemaPath: OME.Scan.scanHW
   Source: SourceFile:0
 - ID: Property:8
-  Name: acquisition.scan.acqHW
+  Name: FEI_TITAN.FeiImage.acquisition.scan.acqHW
   Value: '"ZYNQ"'
   SchemaPath: OME.Scan.acqHW
   Source: SourceFile:0
 - ID: Property:9
-  Name: acquisition.scan.spotPresetName
+  Name: FEI_TITAN.FeiImage.acquisition.scan.spotPresetName
   Value: '"Image"'
   SchemaPath: OME.Scan.spotPresetName
   Source: SourceFile:0
 - ID: Property:10
-  Name: acquisition.scan.interlace
+  Name: FEI_TITAN.FeiImage.acquisition.scan.interlace
   Value: '1'
   SchemaPath: OME.Scan.interlace
   Source: SourceFile:0
 - ID: Property:11
-  Name: acquisition.scan.detectorMixFactors.bsdA
+  Name: FEI_TITAN.FeiImage.acquisition.scan.detectorMixFactors.bsdA
   Value: '0'
   SchemaPath: OME.Scan.detectorMixFactors.bsdA
   Source: SourceFile:0
 - ID: Property:12
-  Name: acquisition.scan.detectorMixFactors.bsdB
+  Name: FEI_TITAN.FeiImage.acquisition.scan.detectorMixFactors.bsdB
   Value: '0'
   SchemaPath: OME.Scan.detectorMixFactors.bsdB
   Source: SourceFile:0
 - ID: Property:13
-  Name: acquisition.scan.detectorMixFactors.bsdC
+  Name: FEI_TITAN.FeiImage.acquisition.scan.detectorMixFactors.bsdC
   Value: '0'
   SchemaPath: OME.Scan.detectorMixFactors.bsdC
   Source: SourceFile:0
 - ID: Property:14
-  Name: acquisition.scan.detectorMixFactors.bsdD
+  Name: FEI_TITAN.FeiImage.acquisition.scan.detectorMixFactors.bsdD
   Value: '0'
   SchemaPath: OME.Scan.detectorMixFactors.bsdD
   Source: SourceFile:0
 - ID: Property:15
-  Name: acquisition.scan.detectorMixFactors.sed
+  Name: FEI_TITAN.FeiImage.acquisition.scan.detectorMixFactors.sed
   Value: '0'
   SchemaPath: OME.Scan.detectorMixFactors.sed
   Source: SourceFile:0
 - ID: Property:16
-  Name: acquisition.scan.detectorMixFactors.stem
+  Name: FEI_TITAN.FeiImage.acquisition.scan.detectorMixFactors.stem
   Value: '0'
   SchemaPath: OME.Scan.detectorMixFactors.stem
   Source: SourceFile:0
 - ID: Property:17
-  Name: acquisition.scan.sourceTime.unit
+  Name: FEI_TITAN.FeiImage.acquisition.scan.sourceTime.unit
   Value: '"h"'
   SchemaPath: OME.Scan.sourceTime.unit
   Source: SourceFile:0
 - ID: Property:18
-  Name: acquisition.scan.sourceTime.value
+  Name: FEI_TITAN.FeiImage.acquisition.scan.sourceTime.value
   Value: '7634'
   SchemaPath: OME.Scan.sourceTime.value
   Source: SourceFile:0
 - ID: Property:19
-  Name: acquisition.scan.sourceId
+  Name: FEI_TITAN.FeiImage.acquisition.scan.sourceId
   Value: '25'
   SchemaPath: OME.Scan.sourceId
   Source: SourceFile:0
 - ID: Property:20
-  Name: acquisition.scan.emissionCurrentPresetName
+  Name: FEI_TITAN.FeiImage.acquisition.scan.emissionCurrentPresetName
   Value: 'null'
   SchemaPath: OME.Scan.emissionCurrentPresetName
   Source: SourceFile:0
 - ID: Property:21
-  Name: acquisition.scan.filamentPower.unit
+  Name: FEI_TITAN.FeiImage.acquisition.scan.filamentPower.unit
   Value: '"W"'
   SchemaPath: OME.Scan.filamentPower.unit
   Source: SourceFile:0
 - ID: Property:22
-  Name: acquisition.scan.filamentPower.value
+  Name: FEI_TITAN.FeiImage.acquisition.scan.filamentPower.value
   Value: '0'
   SchemaPath: OME.Scan.filamentPower.value
   Source: SourceFile:0
 - ID: Property:23
-  Name: acquisition.scan.scanCenter.x
+  Name: FEI_TITAN.FeiImage.acquisition.scan.scanCenter.x
   Value: '0'
   SchemaPath: OME.Scan.scanCenter.x
   Source: SourceFile:0
 - ID: Property:24
-  Name: acquisition.scan.scanCenter.y
+  Name: FEI_TITAN.FeiImage.acquisition.scan.scanCenter.y
   Value: '0'
   SchemaPath: OME.Scan.scanCenter.y
   Source: SourceFile:0
 - ID: Property:25
-  Name: acquisition.scan.scanScale
+  Name: FEI_TITAN.FeiImage.acquisition.scan.scanScale
   Value: '1'
   SchemaPath: OME.Scan.scanScale
   Source: SourceFile:0
 - ID: Property:55
-  Name: instrument.sampleHolder.type
+  Name: FEI_TITAN.FeiImage.instrument.sampleHolder.type
   Value: '1'
   SchemaPath: SampleHolder.Type
   Source: SourceFile:0
@@ -323,147 +323,147 @@ Instrument:
         Value: 0
   CustomProperties:
   - ID: Property:26
-    Name: samplePressureEstimate
+    Name: FEI_TITAN.FeiImage.samplePressureEstimate
     Value: '21.03543261569751'
     SchemaPath: Instrument.Vacuum
     Source: SourceFile:0
   - ID: Property:27
-    Name: acquisition.scan.detectors.QBSD.gain
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.QBSD.gain
     Value: '45'
     SchemaPath: GenericDetector.Configuration[0].gain
     Source: SourceFile:0
   - ID: Property:28
-    Name: acquisition.scan.detectors.QBSD.offset
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.QBSD.offset
     Value: '-1.444569852509731'
     SchemaPath: GenericDetector.Configuration[0].offset
     Source: SourceFile:0
   - ID: Property:29
-    Name: acquisition.scan.detectors.QBSD.mixFactor
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.QBSD.mixFactor
     Value: '1'
     SchemaPath: GenericDetector.Configuration[0].mixFactor
     Source: SourceFile:0
   - ID: Property:30
-    Name: acquisition.scan.detectors.QBSD.A
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.QBSD.A
     Value: '"+"'
     SchemaPath: GenericDetector.Configuration[0].A
     Source: SourceFile:0
   - ID: Property:31
-    Name: acquisition.scan.detectors.QBSD.B
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.QBSD.B
     Value: '"+"'
     SchemaPath: GenericDetector.Configuration[0].B
     Source: SourceFile:0
   - ID: Property:32
-    Name: acquisition.scan.detectors.QBSD.C
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.QBSD.C
     Value: '"+"'
     SchemaPath: GenericDetector.Configuration[0].C
     Source: SourceFile:0
   - ID: Property:33
-    Name: acquisition.scan.detectors.QBSD.D
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.QBSD.D
     Value: '"+"'
     SchemaPath: GenericDetector.Configuration[0].D
     Source: SourceFile:0
   - ID: Property:34
-    Name: acquisition.scan.detectors.QBSD
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.QBSD
     Value: '"QBSD"'
     SchemaPath: GenericDetector.Configuration[0].id
     Source: SourceFile:0
   - ID: Property:35
-    Name: acquisition.scan.detectors.SED.gain
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.SED.gain
     Value: '0'
     SchemaPath: GenericDetector.Configuration[1].gain
     Source: SourceFile:0
   - ID: Property:36
-    Name: acquisition.scan.detectors.SED.offset
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.SED.offset
     Value: '0'
     SchemaPath: GenericDetector.Configuration[1].offset
     Source: SourceFile:0
   - ID: Property:37
-    Name: acquisition.scan.detectors.SED.scintillatorVoltage
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.SED.scintillatorVoltage
     Value: '0'
     SchemaPath: GenericDetector.Configuration[1].scintillatorVoltage
     Source: SourceFile:0
   - ID: Property:38
-    Name: acquisition.scan.detectors.SED.mixFactor
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.SED.mixFactor
     Value: '0'
     SchemaPath: GenericDetector.Configuration[1].mixFactor
     Source: SourceFile:0
   - ID: Property:39
-    Name: acquisition.scan.detectors.SED
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.SED
     Value: '"SED"'
     SchemaPath: GenericDetector.Configuration[1].id
     Source: SourceFile:0
   - ID: Property:40
-    Name: acquisition.scan.detectors.STEM.mixFactor
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.mixFactor
     Value: '0'
     SchemaPath: GenericDetector.Configuration[2].mixFactor
     Source: SourceFile:0
   - ID: Property:41
-    Name: acquisition.scan.detectors.STEM.segmentSelection.bf1
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.bf1
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.bf1
     Source: SourceFile:0
   - ID: Property:42
-    Name: acquisition.scan.detectors.STEM.segmentSelection.bf2
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.bf2
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.bf2
     Source: SourceFile:0
   - ID: Property:43
-    Name: acquisition.scan.detectors.STEM.segmentSelection.bf3
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.bf3
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.bf3
     Source: SourceFile:0
   - ID: Property:44
-    Name: acquisition.scan.detectors.STEM.segmentSelection.bf4
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.bf4
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.bf4
     Source: SourceFile:0
   - ID: Property:45
-    Name: acquisition.scan.detectors.STEM.segmentSelection.df1
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.df1
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.df1
     Source: SourceFile:0
   - ID: Property:46
-    Name: acquisition.scan.detectors.STEM.segmentSelection.ha1
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.ha1
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.ha1
     Source: SourceFile:0
   - ID: Property:47
-    Name: acquisition.scan.detectors.STEM.segmentSelection.ha2
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.ha2
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.ha2
     Source: SourceFile:0
   - ID: Property:48
-    Name: acquisition.scan.detectors.STEM.segmentSelection.ha3
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.ha3
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.ha3
     Source: SourceFile:0
   - ID: Property:49
-    Name: acquisition.scan.detectors.STEM.segmentSelection.ha4
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.ha4
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.ha4
     Source: SourceFile:0
   - ID: Property:50
-    Name: acquisition.scan.detectors.STEM.segmentSelection.ha5
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.ha5
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.ha5
     Source: SourceFile:0
   - ID: Property:51
-    Name: acquisition.scan.detectors.STEM.segmentSelection.ha6
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM.segmentSelection.ha6
     Value: 'true'
     SchemaPath: GenericDetector.Configuration[2].segmentSelection.ha6
     Source: SourceFile:0
   - ID: Property:52
-    Name: acquisition.scan.detectors.STEM
+    Name: FEI_TITAN.FeiImage.acquisition.scan.detectors.STEM
     Value: '"STEM"'
     SchemaPath: GenericDetector.Configuration[2].id
     Source: SourceFile:0
   - ID: Property:53
-    Name: applicationID
+    Name: FEI_TITAN.FeiImage.applicationID
     Value: 'null'
     SchemaPath: AcquisitionSoftware.ApplicationID
     Source: SourceFile:0
   - ID: Property:54
-    Name: PPI.version
+    Name: FEI_TITAN.FeiImage.PPI.version
     Value: '"2.1.0_release"'
     SchemaPath: AcquisitionSoftware.version
     Source: SourceFile:0
