@@ -2,12 +2,12 @@ databarHeight: 0
 databarFields: 699
 databarLabel: null
 displayWidth: 0
+Pixels:
+  PhysicalSizeXUnit: um
+  PhysicalSizeX: 1.143158459049694
+  PhysicalSizeYUnit: um
+  PhysicalSizeY: 1.143158459049694
 Image:
-  Pixels:
-    PhysicalSizeXUnit: um
-    PhysicalSizeX: 1.143158459049694
-    PhysicalSizeYUnit: um
-    PhysicalSizeY: 1.143158459049694
   AcquisitionDate: '2024-02-06T13:21:05'
   CropHint:
     Left: 0
@@ -20,80 +20,80 @@ Image:
     Gamma: 1
     BlackLevel: 0
     WhiteLevel: 1
-  Plane:
-    PixelDwellTimeUnit: ns
-    PixelDwellTime: 499.9999999999999
-Acquisition:
-  Operator:
-    Name: null
-Scan:
-  LineIntegrationCount: 1
-  scanHW: ZYNQ
-  acqHW: ZYNQ
-  spotPresetName: Image
-  Rotation:
-    Value: 0
-  interlace: 1
-  Detector: bsd-all
-  detectorMixFactors:
-    bsdA: 0
-    bsdB: 0
-    bsdC: 0
-    bsdD: 0
-    sed: 0
-    stem: 0
-  sourceTime:
-    unit: h
-    value: 7634
-  sourceId: 25
-  emissionCurrentPresetName: null
-  filamentPower:
-    unit: W
-    value: 0
-  scanCenter:
-    x: 0
-    y: 0
-  scanScale: 1
-SamplePositioning:
-  Stage:
-    Position:
-      X:
-        Value: 0
-      Y:
-        Value: 0
-    MultiStage:
-      SampleRadius:
-        Unit: m
-        Value: 0
-      SampleHeight:
-        Unit: m
-        Value: 0
+OME:
+  Acquisition:
+    Operator:
+      Name: null
+  Scan:
+    LineIntegrationCount: 1
+    scanHW: ZYNQ
+    acqHW: ZYNQ
+    spotPresetName: Image
+    Rotation:
+      Value: 0
+    interlace: 1
+    Detector: bsd-all
+    detectorMixFactors:
+      bsdA: 0
+      bsdB: 0
+      bsdC: 0
+      bsdD: 0
+      sed: 0
+      stem: 0
+    sourceTime:
+      unit: h
+      value: 7634
+    sourceId: 25
+    emissionCurrentPresetName: null
+    filamentPower:
+      unit: W
+      value: 0
+    scanCenter:
+      x: 0
+      y: 0
+    scanScale: 1
+  ElectronBeam:
+    SpotSize: 1.3
+    Shift:
+      X: 0
+      Y: 0
+    SourceTilt:
+      X: -0.01264028954658525
+      Y: 0.04815130014055247
+    Stigmator:
+      X: -0.002342132828530364
+      Y: -0.00855233682146137
+    AccelerationVoltage:
+      Unit: kV
+      Value: -5
+    EmissionCurrent:
+      Unit: uA
+      Value: 135.9021671305527
+    WorkingDistance:
+      Unit: mm
+      Value: 3.334999999999997
+MechanicalStage:
+  Position:
+    X:
+      Value: 0
+    Y:
+      Value: 0
+  MultiStage:
+    SampleRadius:
+      Unit: m
+      Value: 0
+    SampleHeight:
+      Unit: m
+      Value: 0
 Instrument:
   Vacuum: 21.03543261569751
   Type: Phenom
   ID: MVE084613-20046-F
   Model: Phenom Pharos G2
-ElectronBeam:
-  SpotSize: 1.3
-  Shift:
-    X: 0
-    Y: 0
-  SourceTilt:
-    X: -0.01264028954658525
-    Y: 0.04815130014055247
-  Stigmator:
-    X: -0.002342132828530364
-    Y: -0.00855233682146137
-  AccelerationVoltage:
-    Unit: kV
-    Value: -5
-  EmissionCurrent:
-    Unit: uA
-    Value: 135.9021671305527
-  WorkingDistance:
-    Unit: mm
-    Value: 3.334999999999997
-Detector:
+Plane:
+  PixelDwellTimeUnit: ns
+  PixelDwellTime: 499.9999999999999
+GenericDetector:
   Configuration:
   - gain: 45
     offset: -1.444569852509731
@@ -122,12 +122,108 @@ Detector:
       ha5: true
       ha6: true
     id: STEM
-Software:
-  AcquisitionSoftware:
-    Version: 6.6.0.rel.d7a92301af.27465
+AcquisitionSoftware:
+  Version: 6.6.0.rel.d7a92301af.27465
   ApplicationID: null
   version: 2.1.0_release
-SamplePreparation:
-  SampleHolder:
-    Type: 1
-    ID: 0147e8ac1a0000b2
+SampleHolder:
+  Type: 1
+  ID: 0147e8ac1a0000b2
+SourceMap:
+  databarHeight: databarHeight
+  databarFields: databarFields
+  databarLabel: databarLabel
+  displayWidth: displayWidth
+  Pixels.PhysicalSizeXUnit: pixelWidth.unit
+  Pixels.PhysicalSizeX: pixelWidth.value
+  Pixels.PhysicalSizeYUnit: pixelHeight.unit
+  Pixels.PhysicalSizeY: pixelHeight.value
+  Image.AcquisitionDate: time
+  OME.Acquisition.Operator.Name: currentUser
+  OME.Scan.LineIntegrationCount: integrations
+  Image.CropHint.Left: cropHint.left
+  Image.CropHint.Top: cropHint.top
+  Image.CropHint.Right: cropHint.right
+  Image.CropHint.Bottom: cropHint.bottom
+  MechanicalStage.Position.X.Value: samplePosition.x
+  MechanicalStage.Position.Y.Value: samplePosition.y
+  MechanicalStage.MultiStage.SampleRadius.Unit: multiStage.sampleRadius.unit
+  MechanicalStage.MultiStage.SampleRadius.Value: multiStage.sampleRadius.value
+  MechanicalStage.MultiStage.SampleHeight.Unit: multiStage.sampleHeight.unit
+  MechanicalStage.MultiStage.SampleHeight.Value: multiStage.sampleHeight.value
+  Image.Corrections.Contrast: appliedContrast
+  Image.Corrections.Brightness: appliedBrightness
+  Image.Corrections.Gamma: appliedGamma
+  Image.Corrections.BlackLevel: displayBlackLevel
+  Image.Corrections.WhiteLevel: displayWhiteLevel
+  Instrument.Vacuum: samplePressureEstimate
+  OME.Scan.scanHW: acquisition.scan.scanHW
+  OME.Scan.acqHW: acquisition.scan.acqHW
+  Plane.PixelDwellTimeUnit: acquisition.scan.dwellTime.unit
+  Plane.PixelDwellTime: acquisition.scan.dwellTime.value
+  OME.ElectronBeam.SpotSize: acquisition.scan.spotSize
+  OME.Scan.spotPresetName: acquisition.scan.spotPresetName
+  OME.Scan.Rotation.Value: acquisition.scan.rotation
+  OME.Scan.interlace: acquisition.scan.interlace
+  OME.Scan.Detector: acquisition.scan.detector
+  OME.Scan.detectorMixFactors.bsdA: acquisition.scan.detectorMixFactors.bsdA
+  OME.Scan.detectorMixFactors.bsdB: acquisition.scan.detectorMixFactors.bsdB
+  OME.Scan.detectorMixFactors.bsdC: acquisition.scan.detectorMixFactors.bsdC
+  OME.Scan.detectorMixFactors.bsdD: acquisition.scan.detectorMixFactors.bsdD
+  OME.Scan.detectorMixFactors.sed: acquisition.scan.detectorMixFactors.sed
+  OME.Scan.detectorMixFactors.stem: acquisition.scan.detectorMixFactors.stem
+  GenericDetector.Configuration[0].gain: acquisition.scan.detectors.QBSD.gain
+  GenericDetector.Configuration[0].offset: acquisition.scan.detectors.QBSD.offset
+  GenericDetector.Configuration[0].mixFactor: acquisition.scan.detectors.QBSD.mixFactor
+  GenericDetector.Configuration[0].A: acquisition.scan.detectors.QBSD.A
+  GenericDetector.Configuration[0].B: acquisition.scan.detectors.QBSD.B
+  GenericDetector.Configuration[0].C: acquisition.scan.detectors.QBSD.C
+  GenericDetector.Configuration[0].D: acquisition.scan.detectors.QBSD.D
+  GenericDetector.Configuration[0].id: acquisition.scan.detectors.QBSD
+  GenericDetector.Configuration[1].gain: acquisition.scan.detectors.SED.gain
+  GenericDetector.Configuration[1].offset: acquisition.scan.detectors.SED.offset
+  GenericDetector.Configuration[1].scintillatorVoltage: acquisition.scan.detectors.SED.scintillatorVoltage
+  GenericDetector.Configuration[1].mixFactor: acquisition.scan.detectors.SED.mixFactor
+  GenericDetector.Configuration[1].id: acquisition.scan.detectors.SED
+  GenericDetector.Configuration[2].mixFactor: acquisition.scan.detectors.STEM.mixFactor
+  GenericDetector.Configuration[2].segmentSelection.bf1: acquisition.scan.detectors.STEM.segmentSelection.bf1
+  GenericDetector.Configuration[2].segmentSelection.bf2: acquisition.scan.detectors.STEM.segmentSelection.bf2
+  GenericDetector.Configuration[2].segmentSelection.bf3: acquisition.scan.detectors.STEM.segmentSelection.bf3
+  GenericDetector.Configuration[2].segmentSelection.bf4: acquisition.scan.detectors.STEM.segmentSelection.bf4
+  GenericDetector.Configuration[2].segmentSelection.df1: acquisition.scan.detectors.STEM.segmentSelection.df1
+  GenericDetector.Configuration[2].segmentSelection.ha1: acquisition.scan.detectors.STEM.segmentSelection.ha1
+  GenericDetector.Configuration[2].segmentSelection.ha2: acquisition.scan.detectors.STEM.segmentSelection.ha2
+  GenericDetector.Configuration[2].segmentSelection.ha3: acquisition.scan.detectors.STEM.segmentSelection.ha3
+  GenericDetector.Configuration[2].segmentSelection.ha4: acquisition.scan.detectors.STEM.segmentSelection.ha4
+  GenericDetector.Configuration[2].segmentSelection.ha5: acquisition.scan.detectors.STEM.segmentSelection.ha5
+  GenericDetector.Configuration[2].segmentSelection.ha6: acquisition.scan.detectors.STEM.segmentSelection.ha6
+  GenericDetector.Configuration[2].id: acquisition.scan.detectors.STEM
+  OME.ElectronBeam.Shift.X: acquisition.scan.beamShift.x
+  OME.ElectronBeam.Shift.Y: acquisition.scan.beamShift.y
+  OME.ElectronBeam.SourceTilt.X: acquisition.scan.sourceTilt.x
+  OME.ElectronBeam.SourceTilt.Y: acquisition.scan.sourceTilt.y
+  OME.ElectronBeam.Stigmator.X: acquisition.scan.stigmator.x
+  OME.ElectronBeam.Stigmator.Y: acquisition.scan.stigmator.y
+  OME.Scan.sourceTime.unit: acquisition.scan.sourceTime.unit
+  OME.Scan.sourceTime.value: acquisition.scan.sourceTime.value
+  OME.Scan.sourceId: acquisition.scan.sourceId
+  OME.ElectronBeam.AccelerationVoltage.Unit: acquisition.scan.highVoltage.unit
+  OME.ElectronBeam.AccelerationVoltage.Value: acquisition.scan.highVoltage.value
+  OME.ElectronBeam.EmissionCurrent.Unit: acquisition.scan.emissionCurrent.unit
+  OME.ElectronBeam.EmissionCurrent.Value: acquisition.scan.emissionCurrent.value
+  OME.Scan.emissionCurrentPresetName: acquisition.scan.emissionCurrentPresetName
+  OME.Scan.filamentPower.unit: acquisition.scan.filamentPower.unit
+  OME.Scan.filamentPower.value: acquisition.scan.filamentPower.value
+  OME.Scan.scanCenter.x: acquisition.scan.scanCenter.x
+  OME.Scan.scanCenter.y: acquisition.scan.scanCenter.y
+  OME.Scan.scanScale: acquisition.scan.scanScale
+  OME.ElectronBeam.WorkingDistance.Unit: workingDistance.unit
+  OME.ElectronBeam.WorkingDistance.Value: workingDistance.value
+  Instrument.Type: instrument.type
+  AcquisitionSoftware.Version: instrument.softwareVersion
+  Instrument.ID: instrument.uniqueID
+  Instrument.Model: instrument.edition
+  SampleHolder.Type: instrument.sampleHolder.type
+  SampleHolder.ID: instrument.sampleHolder.id
+  AcquisitionSoftware.ApplicationID: applicationID
+  AcquisitionSoftware.version: PPI.version
