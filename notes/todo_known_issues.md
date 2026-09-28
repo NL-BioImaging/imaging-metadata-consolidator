@@ -84,6 +84,17 @@ channel 1's collides and stays in its channel item (recorded in the SourceMap). 
 identifiers (user, 2026-09-25), so they can be committed and shared. A real DICOM source would need
 de-identifying before it is added.
 
+### Validating datasets with metaseed is slow - worked around (2026-09-28)
+
+`metaseed validate` took ~3.5-10 s a record (TALOS ~3,000 records: hours). Profiled: almost all the time is
+metaseed re-reading and re-parsing the 1.2 MB profile YAML (pure-Python yaml, ~4 s each) - a new SpecLoader,
+with an empty `_profile_cache`, for every nested entity it validates (49 loads for EMSIS). Sharing one cache
+across loaders (patch `metaseed.specs.loader.SpecLoader.__init__` to set `self._profile_cache` to one dict,
+then run `metaseed.cli.app.app` as `metaseed validate ...`) gives identical results in seconds: all 13 full
+exports against 1.0 in 36 s. Validation against 1.0 (full, no sampling): Delmic 12, EMSIS 35, SVS 32, platy
+32, DICOM 30, Zeiss 31, Cikteq 40, Phenom 54, ome-tiff 57, Leica 29, Leica tilescan 97, TALOS 56, TALOS 2 56
+errors - all "Field 'X' is required", no other error, no crash. Worth reporting to metaseed.
+
 ### Local metaseed CLI
 
 Not installed in biomero-converter-env; a scratch venv (`pip install metaseed`, 0.54.0) works. It writes
@@ -116,7 +127,7 @@ Plan, one commit each:
 6. exact_mappings/close_mappings to the OME LinkML schema
 7. Role TODO reworded (deferred)
 8. release 1.0.0: regenerate, compatibility check (breaking expected), validate, write-up
-Progress: 1-8 done, 8 = release 1.0.0 (validation of the exports against 1.0 running); (7: Role TODO reworded, deferred; 6: exact_mappings/close_mappings with prefix ome: (https://schemas.incenp.org/ome/v1/core/) on 21 classes and 55 fields, by name and by hand; name matches with another meaning as close (the extension's Detector Type/Gain/Offset hold per-image vendor values, OME's are detector specs); no copy of ome.yaml in the repo (no licence stated), a test checks the prefixes; importing/extending ome.yaml stays open; 5: 338 unit aliases in imaging_units.yaml - LiMi's unit names and an ASCII form (um, uA, C for °C; no bare A for Å) - and the exporter stores an alias as the unit, SourceMapping.SourceValue keeping the source's spelling; Phenom 41 -> 43 typed; 4: rule targets may hold [*], the index of the list item the value comes from; Huygens LambdaEx/Em and an OME document's channel wavelengths -> Pixels.Channel[*].Fluorophore; the whole-list rule Image.Pixels.Channel -> Channel removed, the exporter places an OME document's channels structurally; ome-tiff 39 -> 47 typed; 3: 61 rules retargeted; TALOS's AcquisitionStartDatetime "1683922216" is a Unix timestamp, no datetime, and stays a Property; 2: OME's Medium "Oil" fits no ImmersionLiquidType - LiMi has Mineral/Silicone Oil - and stays a Property; Huygens' RefrIndexLensMedium now meets OME's value, equal, and stays a Property).
+Progress: 1-8 done, 8 = release 1.0.0 (exports validated against 1.0, see "Validating datasets with metaseed is slow"); (7: Role TODO reworded, deferred; 6: exact_mappings/close_mappings with prefix ome: (https://schemas.incenp.org/ome/v1/core/) on 21 classes and 55 fields, by name and by hand; name matches with another meaning as close (the extension's Detector Type/Gain/Offset hold per-image vendor values, OME's are detector specs); no copy of ome.yaml in the repo (no licence stated), a test checks the prefixes; importing/extending ome.yaml stays open; 5: 338 unit aliases in imaging_units.yaml - LiMi's unit names and an ASCII form (um, uA, C for °C; no bare A for Å) - and the exporter stores an alias as the unit, SourceMapping.SourceValue keeping the source's spelling; Phenom 41 -> 43 typed; 4: rule targets may hold [*], the index of the list item the value comes from; Huygens LambdaEx/Em and an OME document's channel wavelengths -> Pixels.Channel[*].Fluorophore; the whole-list rule Image.Pixels.Channel -> Channel removed, the exporter places an OME document's channels structurally; ome-tiff 39 -> 47 typed; 3: 61 rules retargeted; TALOS's AcquisitionStartDatetime "1683922216" is a Unix timestamp, no datetime, and stays a Property; 2: OME's Medium "Oil" fits no ImmersionLiquidType - LiMi has Mineral/Silicone Oil - and stays a Property; Huygens' RefrIndexLensMedium now meets OME's value, equal, and stays a Property).
 
 ## The model and the pipeline
 
