@@ -41,6 +41,100 @@ de-identifying before it is added.
 
 ## In progress
 
+Current task (user, 2026-09-28): a LinkML model as the main model, with no duplicated submodels;
+the metaseed profiles become generated output. Reference:
+https://github.com/gouttegd/yamf-playground/blob/main/linkml/ome/ome.yaml (`is_a`, `abstract`,
+`mixins`, one class used as `range` of several slots, `inlined: false` for ID references).
+Established (not built yet):
+- metaseed has no inheritance: a spec with `abstract`/`extends` keys is rejected ("Extra inputs are
+  not permitted", Hub probe). One child entity nested under several parents is valid, no warnings
+  (Hub probe, deleted).
+- The duplication comes from `fullSchema.json`, not the XSD: the XSD defines Filament, Arc, LED,
+  GenericExcitationSource once (substitutionGroup `LightSourceGroup`), TransmittanceRange etc. once
+  (`ref=`), and has 20 abstract groups (LightSourceGroup, DetectorGroup, CameraGroup, FilterGroup,
+  LensGroup, ...). The JSON copies per parent (`Arc_IlluminationWavelengthRange`, 7 TransmittanceRange
+  copies, ...) and per role (`Transmitted_`/`Fluorescence_LightSource_*`, identical), and inlines
+  inherited fields (CCD: 14 Detector + 17 Camera fields). Each property's `category` names its level.
+- The 9 unreachable entities are the shared originals of these copies (base LiMi, not the extension).
+- Detector/Prism/PolarizationOptics WavelengthRange has a `WavelengthProfile` URI attribute (XSD
+  local definition) where the shared WavelengthRange has a `WavelengthProfileFile` list.
+Plan:
+1. `models/imaging.yaml` built from the XSD (inheritance, abstract groups, shared elements, refs)
+   + fullSchema.json (descriptions, tiers, enums, units, required); fields defined once, at the
+   level their `category` names. Originals stay untouched in models/.
+2. Generator LinkML -> metaseed YAML (`fullSchema.yaml`, later `schema.extended.yaml`).
+3. Test: every entity and field of the current fullSchema.yaml is represented (old name -> new).
+4. Move schema.extended.json's additions into the LinkML model; the mapper reads it later.
+Decided (user): the LinkML YAML is the master model, replacing fullSchema.json; metaseed is only a
+generated output, so its shape (abstract types as per-subtype lists for now) is a generator detail.
+Decided (user): LinkML in the style of ome.yaml, own file set (`models/imaging.yaml` + units),
+LiMi's own names (PascalCase). Polymorphic slots (`Instrument.LightSource`, range the abstract
+parent, type designator), inherited fields once, `inlined: false` for XSD `*Ref`s. Role: one
+`LightSource` list + `Role` enum (Transmitted/Fluorescence, multivalued), limited per class by the
+XSD's `Split` annotation (Arc, Laser, MultiLaserEngine: Fluorescence only).
+Decided (user): the whole XSD, not only what the JSON covers (~100 more concrete elements: ROI,
+Plate/Screen, annotations, TIRF, ...). linkml 1.11.1 installed in biomero-converter-env (chardet kept
+at 5.2.0: linkml's pyshexc, the ShEx generator, wants >=7.4.1 but is unused; requests warns on 7.x).
+XSD -> LinkML rules (`src/LinkmlConverter.py`, design choices, tell the user):
+- global element with inline type -> class; `extension base` -> `is_a`; a substitution-group member
+  without a type -> `is_a` the head's type (UprightMicroscopeStand is_a MicroscopeStand).
+- abstract `*Group` element -> no class; where used, slot named after its type (`LightSource`), range
+  the abstract type class; subtypes via a `designates_type` slot.
+- `*Ref` elements/types (extend Reference) -> slot without the `Ref` suffix, range the class whose ID
+  has that ID type, `inlined: false` (as JSON and ome.yaml). XSD name kept as annotation.
+- element typed by a named complexType used by one element only -> one class (TransmittanceRange);
+  used by several -> the type is a class and each element `is_a` it.
+- local element with its own content -> class `<Owner><Name>` unless identical to the global one.
+- text-only elements (Description) -> string slots; simpleContent (BinData) -> class with a value slot.
+- attributes: `use="required"` -> required, `default` -> `ifabsent`; enums -> enums (units in
+  `imaging_units.yaml`, xsd-fu unit metadata as annotations); ID/number restrictions -> LinkML types.
+- XSD documentation (Description, Tier, Category, Domain, Extension, Model_Settings, Split) ->
+  description + annotations. xsd-fu code-generation hints (plural, ordered, ...) -> annotations.
+JSON vs XSD (checked): JSON renames `*Ref` -> name without Ref, `AnnotationRef` -> `Description`
+(string), adds a constant `Tier` property (= the XSD's Tier annotation), and readonly
+Image.InstrumentName/InstrumentID (from InstrumentRef). Detectors, Prism and PolarizationOptics have a
+local WavelengthRange (with a WavelengthProfile URI) besides the global one.
+Progress (not committed): step 1 done. `python src/main.py linkml` wrote `models/imaging.yaml` +
+`models/imaging_units.yaml` (refuses to overwrite without --force: they are the master now). 247 classes,
+136 enums, 16 unit enums, 71 types; metamodel-valid; lint only standard_naming (PascalCase kept) and
+missing-description warnings. `models/ome-2016-06.xsd` added (descriptions source, CC BY 3.0; attribution
+in the model's `comments`). linkml added to environment.yml. `tests/test_linkml_converter.py`: synthetic
+XSD per rule (substitution/is_a, polymorphic group slot, Ref, Settings ID, merged type, attribute/element
+clash, Role from Split, docs/defaults, units schema, OME + derived descriptions, valid output), and on the
+master: metamodel-valid, keeps everything a fresh conversion yields (mutation-checked: a removed class,
+slot and enum value are each reported), every fullSchema.json property (4 listed exceptions), instance
+validation (Laser + Filament in one list; Laser with Role Transmitted and a Filament with LaserMedium
+rejected), no per-parent copies. 102 tests pass.
+JSON coverage (every fullSchema.json schema/property has a slot, Ref-stripped, Description ->
+Annotation, Tier -> annotation): all but Image.InstrumentName/InstrumentID (readonly, derived from
+the Instrument reference) and Pump (= Laser.Pump reference). LightPath's Tier (the XSD has none) taken
+from the JSON (1) by hand in models/imaging.yaml, with `Tier_source` - the first hand edit (user).
+Schema id: https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging (user).
+XSD slips found: OpticalAperture uses LensID; FilterCubeRef extends FilterCubeRef with a generic LSID;
+StageInsertRef/LightSensorRef use StageInsertID/LightSensorID; BeamSplitter has both an attribute and
+an element TransmittanceProfileFile (element slot -> TransmittanceProfileFileElement); attribute typo
+`lluminationPowerSettingsUnit` (LightSourceSettings) kept as is; 7 unit slots have no value slot of
+their name (ReadNoiseUnit, XYZResolutionUnit, WavelengthUnit, MinTemperatureUnit, DevianceAngleUnit,
+ObservedIlluminationPowerAtBackObjectiveUnit, lluminationPowerSettingsUnit).
+Missing descriptions (user asked whether they can be filled): XSD, fullSchema.json and LiMi_Model.json
+(an expanded XSD tree) have the same gaps. OME 2016-06 ome.xsd (CC BY 3.0) fills ~29 (2 classes, 3
+slots, 12 unit slots, 12 enums). Derivable from the model: 118 of 126 enums from the slot using them,
+170 of 177 unit slots from the value slot next to them. Not sourceable: 863 enum values, 60 ID types
+(derivable from the name), ~50 slots.
+Decided (user, 2026-09-28): the model is named `imaging` (not limi: it extends LiMi), version 0.1.0 of
+its own (the description names the LiMi XSD version it started from).
+Decided (user, 2026-09-28): `models/imaging.yaml` (+ `imaging_units.yaml`) is the master model, edited by
+hand once generated; the converter bootstraps it once and stays for comparing a future LiMi XSD; a test
+checks the XSD and JSON content is still in it. Metaseed profiles (and later the mapper's schema trees)
+are generated from it. Descriptions: fill from OME 2016-06 ome.xsd (CC BY 3.0, attributed) and derive
+(enum <- the slot using it, XUnit <- X), each with `annotations: {description_source: ...}`; leave the
+rest empty.
+Next: step 2, the metaseed generator (imaging.yaml -> a metaseed profile named `imaging`, user), then step 3 (test: everything of
+the current fullSchema.yaml represented, old name -> new), step 4 (schema.extended.json into the model).
+Keep open for later (user): importing/extending ome.yaml. So: same roots as ome.yaml
+(ManufacturerSpec, LightSource, Detector, Settings...), `exact_mappings`/`close_mappings` to ome:
+where the meaning matches.
+
 Export: mapper output -> a metaseed dataset of the LiMi profile (`OME` root), so real source files
 can be validated with `validate_dataset` / `metaseed validate`, without losing any source value or
 key name.
