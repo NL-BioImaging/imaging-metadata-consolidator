@@ -6,7 +6,7 @@ description: Metadata beyond LiMi that the source files hold, mostly electron mi
   the imaging model's classes use; each field's schema_extended_path annotation is its path in
   schema.extended.json. Values of type object in schema.extended.json are strings here (annotation
   source_type), arrays multivalued strings.
-version: 0.2.0
+version: 1.0.0
 prefixes:
   linkml: https://w3id.org/linkml/
   imaging: https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging/

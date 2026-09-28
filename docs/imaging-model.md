@@ -1,6 +1,6 @@
 # The imaging metadata model
 
-How the imaging metadata model (`models/imaging.yaml`, version 0.2.0) was made, how it was extended
+How the imaging metadata model (`models/imaging.yaml`, version 1.0.0) was made, how it was extended
 beyond LiMi with the metadata the source files hold (mostly electron microscopy), and how the model and
 the datasets exported with it were validated.
 
@@ -14,7 +14,7 @@ the datasets exported with it were validated.
 - It is extended with what the source files hold beyond LiMi, mostly electron-microscopy metadata
   (electron beam, optics, source, scan, vacuum, stage positions, detector settings).
 - `models/imaging.yaml` is the master: it is edited by hand. A metaseed profile is generated from it
-  (`models/imaging.metaseed.yaml`, profile `imaging` 0.2), and so are the paths the mapper maps source
+  (`models/imaging.metaseed.yaml`, profile `imaging` 1.0), and so are the paths the mapper maps source
   metadata onto.
 - The model is checked against the LinkML metamodel and against its sources (nothing of the XSD or of
   LiMi's JSON schemas is lost). The profile is checked by metaseed. All 13 example source files were
@@ -127,8 +127,7 @@ does not model: its source path and JSON-encoded value), so that no metadata is 
 `python src/main.py metaseed` (`src/MetaseedGenerator.py`) writes the profile. metaseed has no
 inheritance, so:
 
-- every concrete class reachable from `OME` is an entity with its inherited fields written out (230
-  entities, 3673 fields);
+- every concrete class reachable from `OME` is an entity with its inherited fields written out (228 entities, 3667 fields);
 - a slot over an abstract class becomes one field per subtype (`Instrument.Laser`, `Instrument.Arc`, ...);
   none of them can be required, since metaseed has no "one of";
 - references are ID strings; enumerations, patterns and bounds become constraints;
@@ -177,13 +176,16 @@ inheritance, so:
 **The profile**
 
 - metaseed 0.54.0 `spec validate`: valid, no problems, no warnings; the same on the Hub, where profile
-  `imaging` 0.1 was published.
+  profiles `imaging` 0.1 and 0.2 were published.
 - Tests: every concrete class is reachable from OME (except LightSensor, which the XSD contains nowhere),
   and the committed profile is what the model generates.
-- Version 0.2 against the published 0.1, with metaseed's own compatibility check
-  (`metaseed.specs.compare.compare_specs`): no breaking changes, so a minor version is enough; the changes
-  are 458 fields no longer required (tiers), field tiers and descriptions, and two identifiers now
-  declared explicitly (the fields they were already keyed by).
+- Each version against the one published before it, with metaseed's own compatibility check
+  (`metaseed.specs.compare.compare_specs`), the check behind the Hub's "breaking changes": 0.2 against 0.1
+  had none (458 fields no longer required through the tiers), so a minor version was enough. 1.0 against
+  0.2 has 16, all intended, so it is a major version: the EM groups moved from OME into Instrument and Image
+  (5 entities and 5 OME fields removed), ObjectiveSettings.Medium/RefractiveIndex removed (they are
+  ImmersionLiquid's), the three UUID fields are strings with a pattern instead of URIs (metaseed failed on
+  a pattern on a URI), and the electron source, now referable hardware, requires an ID.
 
 **The datasets**
 
@@ -212,4 +214,4 @@ python -m pytest                                              # all of the check
 
 With the metaseed CLI (`pip install metaseed`): `metaseed spec import <draft> models/imaging.metaseed.yaml`,
 `metaseed spec validate <draft>`, `metaseed spec save <draft>`, then
-`metaseed validate export/<name>.yaml -p imaging -v 0.2 -e OME`.
+`metaseed validate export/<name>.yaml -p imaging -v 1.0 -e OME`.

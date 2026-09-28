@@ -1,6 +1,6 @@
 name: imaging
-version: '0.2'
-description: 'Generated from imaging 0.2.0 (https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging).
+version: '1.0'
+description: 'Generated from imaging 1.0.0 (https://github.com/NL-BioImaging/imaging-metadata-consolidator/models/imaging).
   Microscopy imaging metadata, based on the LiMi (4DN-BINA-OME) model: converted from models/LiMi_XMLSchema.xsd (version 02.00,
   namespace http://www.NamespaceTest.org/Schemas/NBO/2020-11).'
 root_entity: OME
