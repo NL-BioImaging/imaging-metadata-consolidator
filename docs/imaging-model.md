@@ -142,14 +142,16 @@ inheritance, so:
 ## 4. From source files to datasets
 
 - `python src/main.py convert` (`src/AcquisitionMetadataMapper.py`) maps each source file onto model paths
-  with the rules in `mappings/mappings.json` (235 rules) and `mappings/combinations.json`, falling back to
-  matching source names against the model. Levels that only wrap a source's metadata (a vendor tag such
-  as `FEI_TITAN.FeiImage`, or the root of a whole OME document) are left out of the paths the rules see. A
-  value from a list item can go to the same item of a model list: a rule target
-  `Pixels.Channel[*].Fluorophore.ExcitationWavelength` sends each channel's value to its own channel. A path starts at a class with an identifier and runs through
+  with the rules in `mappings/mappings.json` (233 rules) and `mappings/combinations.json`, falling back to
+  matching source names against the model. A path starts at a class with an identifier and runs through
   its components: `Image.ElectronBeamSettings.WorkingDistance.Value`, `Pixels.PhysicalSizeX`,
-  `MechanicalStage.Position.X.Value`. Unmapped keys stay at their source path; every value's source path
-  is recorded.
+  `MechanicalStage.Position.X.Value`. Levels that only wrap a source's metadata (a vendor tag such as
+  `FEI_TITAN.FeiImage`, or the root of a whole OME document) are left out of the paths the rules see. A
+  value from a list item can go to the same item of a model list: a rule target
+  `Pixels.Channel[*].Fluorophore.ExcitationWavelength` sends each channel's value to its own channel.
+  `combinations.json` turns values into ISO 8601 datetimes: several parts joined and parsed with a strptime
+  format (SVS's Date, Time and Time Zone), or a Unix timestamp (format `unix`, TALOS; 0 counts as unset).
+  Unmapped keys stay at their source path; every value's source path is recorded.
 - `python src/main.py export` (`src/DatasetExporter.py`) builds one metaseed dataset per source file. A
   value goes into a field only if it fits exactly (type, enumeration, format, free slot), with a
   `SourceMapping` naming its source key; anything else becomes a `Property` with its source path and
