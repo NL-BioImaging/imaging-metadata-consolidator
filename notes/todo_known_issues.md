@@ -113,7 +113,7 @@ scratch folder when trying profiles locally.
 
 ## In progress
 
-Nothing (2026-09-28).
+Nothing: decommissioned into imaging-metadata-converter (2026-09-29), whose notes/todo_known_issues.md carries these notes on.
 
 ## The model and the pipeline
 
