@@ -65,8 +65,6 @@
     "Instrument.InstrumentModel": "Instrument.Model",
     "Instrument.InstrumentClass": "Instrument.Type",
     "Instrument.ControlSoftwareVersion": "AcquisitionSoftware.Version",
-    "Acquisition.AcquisitionStartDatetime.DateTime": "Image.AcquisitionDate",
-    "Acquisition.AcquisitionDatetime.DateTime": "Image.AcquisitionDate",
     "Acquisition.BeamType": "Image.ElectronBeamSettings.Type",
     "Acquisition.SourceType": "ElectronSource.Type",
     "Optics.AccelerationVoltage": "Image.ElectronBeamSettings.AccelerationVoltage.Value",

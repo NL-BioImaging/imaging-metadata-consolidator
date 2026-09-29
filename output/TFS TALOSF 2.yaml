@@ -11,8 +11,12 @@ Instrument:
     VacuumMode: Ready
 AcquisitionSoftware:
   Version: 2.7.1
+Acquisition:
+  AcquisitionStartDatetime:
+    DateTime: '1646847822'
+  AcquisitionDatetime:
+    DateTime: '0'
 Image:
-  AcquisitionDate: '1646847822'
   ElectronBeamSettings:
     Type: ''
     AccelerationVoltage:
@@ -112,9 +116,7 @@ Image:
       x: '-2.5599999999999992e-06'
       y: '-2.5599999999999992e-06'
     Encoding: ''
-Acquisition:
-  AcquisitionDatetime:
-    DateTime: '0'
+  AcquisitionDate: '2022-03-09T17:43:42+00:00'
 ElectronSource:
   Type: SFEG
 EnergyFilter:
@@ -3474,7 +3476,7 @@ SourceMap:
   Instrument.Type: Instrument.InstrumentClass
   Instrument.Model: Instrument.InstrumentModel
   Instrument.ComputerName: Instrument.ComputerName
-  Image.AcquisitionDate: Acquisition.AcquisitionStartDatetime.DateTime
+  Acquisition.AcquisitionStartDatetime.DateTime: Acquisition.AcquisitionStartDatetime.DateTime
   Acquisition.AcquisitionDatetime.DateTime: Acquisition.AcquisitionDatetime.DateTime
   Image.ElectronBeamSettings.Type: Acquisition.BeamType
   ElectronSource.Type: Acquisition.SourceType
@@ -7183,3 +7185,5 @@ SourceMap:
   OME.Features.SIFeature.e125fe5c4f5348f8b32af9611730b212.imageDisplays[7]: Features.SIFeature.e125fe5c4f5348f8b32af9611730b212.imageDisplays[7]
   OME.Features.SIFeature.e125fe5c4f5348f8b32af9611730b212.spectrums[0].Summed: Features.SIFeature.e125fe5c4f5348f8b32af9611730b212.spectrums[0].Summed
   GenericDetector.ActiveConfiguration: DetectorMetadata
+  Image.AcquisitionDate:
+  - Acquisition.AcquisitionStartDatetime.DateTime

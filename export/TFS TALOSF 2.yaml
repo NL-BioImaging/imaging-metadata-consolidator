@@ -43,384 +43,389 @@ Image:
       Field: Image[0].ElectronOpticsSettings.ProjectorMode
       Source: Optics.ProjectorMode
     - ID: SourceMapping:12
+      Field: Image[0].AcquisitionDate
+      Source: Acquisition.AcquisitionStartDatetime.DateTime
+      DerivedFrom:
+      - Acquisition.AcquisitionStartDatetime.DateTime
+    - ID: SourceMapping:13
       Field: Instrument[0].ElectronSource[0].Type
       Source: Acquisition.SourceType
-    - ID: SourceMapping:13
+    - ID: SourceMapping:14
       Field: Experiment[0].Sample[0].SampleHolder[0].Type
       Source: Stage.HolderType
-    - ID: SourceMapping:14
+    - ID: SourceMapping:15
       Field: Image[0].Pixels.PhysicalSizeXUnit
       Source: BinaryResult.PixelUnitX
-    - ID: SourceMapping:15
+    - ID: SourceMapping:16
       Field: Image[0].Pixels.PhysicalSizeYUnit
       Source: BinaryResult.PixelUnitY
+  ElectronBeamSettings:
+    Type: ''
+    AccelerationVoltage: {}
+    ConvergenceAngle: {}
+    Defocus: {}
   CustomProperties:
-  - ID: Property:3
-    Name: Acquisition.AcquisitionStartDatetime.DateTime
-    Value: '"1646847822"'
-    SchemaPath: Image.AcquisitionDate
-    Source: SourceFile:0
-  - ID: Property:4
+  - ID: Property:5
     Name: Optics.AccelerationVoltage
     Value: '"80000"'
     SchemaPath: Image.ElectronBeamSettings.AccelerationVoltage.Value
     Source: SourceFile:0
-  - ID: Property:5
+  - ID: Property:6
     Name: Optics.SpotIndex
     Value: '"3"'
     SchemaPath: Image.ElectronBeamSettings.SpotIndex
     Source: SourceFile:0
-  - ID: Property:6
+  - ID: Property:7
     Name: Optics.BeamConvergence
     Value: '"0.01575"'
     SchemaPath: Image.ElectronBeamSettings.ConvergenceAngle.Value
     Source: SourceFile:0
-  - ID: Property:7
+  - ID: Property:8
     Name: Optics.StemFocus
     Value: '"0.00014316878066399324"'
     SchemaPath: Image.ElectronBeamSettings.Focus
     Source: SourceFile:0
-  - ID: Property:8
+  - ID: Property:9
     Name: Optics.Defocus
     Value: '"3.9653945906137231e-06"'
     SchemaPath: Image.ElectronBeamSettings.Defocus.Value
     Source: SourceFile:0
-  - ID: Property:9
+  - ID: Property:10
     Name: Optics.ExtractorVoltage
     Value: '"4500"'
     SchemaPath: Image.ElectronOpticsSettings.ExtractorVoltage
     Source: SourceFile:0
-  - ID: Property:10
+  - ID: Property:11
     Name: Optics.C1LensIntensity
     Value: '"0.15325850248336792"'
     SchemaPath: Image.ElectronOpticsSettings.C1LensIntensity
     Source: SourceFile:0
-  - ID: Property:11
+  - ID: Property:12
     Name: Optics.C2LensIntensity
     Value: '"0.55978876352310181"'
     SchemaPath: Image.ElectronOpticsSettings.C2LensIntensity
     Source: SourceFile:0
-  - ID: Property:12
+  - ID: Property:13
     Name: Optics.ObjectiveLensIntensity
     Value: '"0.79769915342330933"'
     SchemaPath: Image.ElectronOpticsSettings.ObjectiveLensIntensity
     Source: SourceFile:0
-  - ID: Property:13
+  - ID: Property:14
     Name: Optics.IntermediateLensIntensity
     Value: '"-0.04735536128282547"'
     SchemaPath: Image.ElectronOpticsSettings.IntermediateLensIntensity
     Source: SourceFile:0
-  - ID: Property:14
+  - ID: Property:15
     Name: Optics.DiffractionLensIntensity
     Value: '"0.26931595802307129"'
     SchemaPath: Image.ElectronOpticsSettings.DiffractionLensIntensity
     Source: SourceFile:0
-  - ID: Property:15
+  - ID: Property:16
     Name: Optics.Projector1LensIntensity
     Value: '"0.589241623878479"'
     SchemaPath: Image.ElectronOpticsSettings.Projector1LensIntensity
     Source: SourceFile:0
-  - ID: Property:16
+  - ID: Property:17
     Name: Optics.Projector2LensIntensity
     Value: '"0.98021739721298218"'
     SchemaPath: Image.ElectronOpticsSettings.Projector2LensIntensity
     Source: SourceFile:0
-  - ID: Property:17
+  - ID: Property:18
     Name: Optics.MiniCondenserLensIntensity
     Value: '"0.61476558446884155"'
     SchemaPath: Image.ElectronOpticsSettings.MiniCondenserLensIntensity
     Source: SourceFile:0
-  - ID: Property:18
+  - ID: Property:19
     Name: Optics.ScreenCurrent
     Value: '"4.4763959373203257e-09"'
     SchemaPath: Image.ElectronOpticsSettings.ScreenCurrent
     Source: SourceFile:0
-  - ID: Property:19
+  - ID: Property:20
     Name: Optics.LastMeasuredScreenCurrent
     Value: '"4.4763959373203257e-09"'
     SchemaPath: Image.ElectronOpticsSettings.LastMeasuredScreenCurrent
     Source: SourceFile:0
-  - ID: Property:20
+  - ID: Property:21
     Name: Optics.Focus
     Value: '"0"'
     SchemaPath: Image.ElectronOpticsSettings.Focus
     Source: SourceFile:0
-  - ID: Property:21
+  - ID: Property:22
     Name: Optics.HighMagnificationMode
     Value: '"None"'
     SchemaPath: Image.ElectronOpticsSettings.HighMagnificationMode
     Source: SourceFile:0
-  - ID: Property:22
+  - ID: Property:23
     Name: Optics.Apertures.Aperture-0.Name
     Value: '"C1"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[0].Name
     Source: SourceFile:0
-  - ID: Property:23
+  - ID: Property:24
     Name: Optics.Apertures.Aperture-0.Number
     Value: '"1"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[0].Number
     Source: SourceFile:0
-  - ID: Property:24
+  - ID: Property:25
     Name: Optics.Apertures.Aperture-0.MechanismType
     Value: '"Motorized"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[0].MechanismType
     Source: SourceFile:0
-  - ID: Property:25
+  - ID: Property:26
     Name: Optics.Apertures.Aperture-0.Type
     Value: '"Circular"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[0].Type
     Source: SourceFile:0
-  - ID: Property:26
+  - ID: Property:27
     Name: Optics.Apertures.Aperture-0.Diameter
     Value: '"0.002"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[0].Diameter
     Source: SourceFile:0
-  - ID: Property:27
+  - ID: Property:28
     Name: Optics.Apertures.Aperture-0.Enabled
     Value: '"0"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[0].Enabled
     Source: SourceFile:0
-  - ID: Property:28
+  - ID: Property:29
     Name: Optics.Apertures.Aperture-0.PositionOffset.x
     Value: '"0.00058848000000000006"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[0].PositionOffset.x
     Source: SourceFile:0
-  - ID: Property:29
+  - ID: Property:30
     Name: Optics.Apertures.Aperture-0.PositionOffset.y
     Value: '"0.0015404800000000001"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[0].PositionOffset.y
     Source: SourceFile:0
-  - ID: Property:30
+  - ID: Property:31
     Name: Optics.Apertures.Aperture-0
     Value: '"Aperture-0"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[0].id
     Source: SourceFile:0
-  - ID: Property:31
+  - ID: Property:32
     Name: Optics.Apertures.Aperture-1.Name
     Value: '"C2"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[1].Name
     Source: SourceFile:0
-  - ID: Property:32
+  - ID: Property:33
     Name: Optics.Apertures.Aperture-1.Number
     Value: '"2"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[1].Number
     Source: SourceFile:0
-  - ID: Property:33
+  - ID: Property:34
     Name: Optics.Apertures.Aperture-1.MechanismType
     Value: '"Motorized"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[1].MechanismType
     Source: SourceFile:0
-  - ID: Property:34
+  - ID: Property:35
     Name: Optics.Apertures.Aperture-1.Type
     Value: '"Circular"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[1].Type
     Source: SourceFile:0
-  - ID: Property:35
+  - ID: Property:36
     Name: Optics.Apertures.Aperture-1.Diameter
     Value: '"0.00014999999999999999"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[1].Diameter
     Source: SourceFile:0
-  - ID: Property:36
+  - ID: Property:37
     Name: Optics.Apertures.Aperture-1.Enabled
     Value: '"0"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[1].Enabled
     Source: SourceFile:0
-  - ID: Property:37
+  - ID: Property:38
     Name: Optics.Apertures.Aperture-1.PositionOffset.x
     Value: '"0.00030384000000000005"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[1].PositionOffset.x
     Source: SourceFile:0
-  - ID: Property:38
+  - ID: Property:39
     Name: Optics.Apertures.Aperture-1.PositionOffset.y
     Value: '"0.00068895999999999996"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[1].PositionOffset.y
     Source: SourceFile:0
-  - ID: Property:39
+  - ID: Property:40
     Name: Optics.Apertures.Aperture-1
     Value: '"Aperture-1"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[1].id
     Source: SourceFile:0
-  - ID: Property:40
+  - ID: Property:41
     Name: Optics.Apertures.Aperture-2.Name
     Value: '"OBJ"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[2].Name
     Source: SourceFile:0
-  - ID: Property:41
+  - ID: Property:42
     Name: Optics.Apertures.Aperture-2.Number
     Value: '"4"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[2].Number
     Source: SourceFile:0
-  - ID: Property:42
+  - ID: Property:43
     Name: Optics.Apertures.Aperture-2.MechanismType
     Value: '"Motorized"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[2].MechanismType
     Source: SourceFile:0
-  - ID: Property:43
+  - ID: Property:44
     Name: Optics.Apertures.Aperture-2.Type
     Value: '"None"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[2].Type
     Source: SourceFile:0
-  - ID: Property:44
+  - ID: Property:45
     Name: Optics.Apertures.Aperture-2.PositionOffset.x
     Value: '"0.00051488"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[2].PositionOffset.x
     Source: SourceFile:0
-  - ID: Property:45
+  - ID: Property:46
     Name: Optics.Apertures.Aperture-2.PositionOffset.y
     Value: '"0.00087312000000000002"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[2].PositionOffset.y
     Source: SourceFile:0
-  - ID: Property:46
+  - ID: Property:47
     Name: Optics.Apertures.Aperture-2
     Value: '"Aperture-2"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[2].id
     Source: SourceFile:0
-  - ID: Property:47
+  - ID: Property:48
     Name: Optics.Apertures.Aperture-3.Name
     Value: '"SA"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[3].Name
     Source: SourceFile:0
-  - ID: Property:48
+  - ID: Property:49
     Name: Optics.Apertures.Aperture-3.Number
     Value: '"5"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[3].Number
     Source: SourceFile:0
-  - ID: Property:49
+  - ID: Property:50
     Name: Optics.Apertures.Aperture-3.MechanismType
     Value: '"Motorized"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[3].MechanismType
     Source: SourceFile:0
-  - ID: Property:50
+  - ID: Property:51
     Name: Optics.Apertures.Aperture-3.Type
     Value: '"None"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[3].Type
     Source: SourceFile:0
-  - ID: Property:51
+  - ID: Property:52
     Name: Optics.Apertures.Aperture-3.PositionOffset.x
     Value: '"0.00013103999999999999"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[3].PositionOffset.x
     Source: SourceFile:0
-  - ID: Property:52
+  - ID: Property:53
     Name: Optics.Apertures.Aperture-3.PositionOffset.y
     Value: '"-0.00066224000000000003"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[3].PositionOffset.y
     Source: SourceFile:0
-  - ID: Property:53
+  - ID: Property:54
     Name: Optics.Apertures.Aperture-3
     Value: '"Aperture-3"'
     SchemaPath: Image.ElectronOpticsSettings.Apertures[3].id
     Source: SourceFile:0
-  - ID: Property:54
+  - ID: Property:55
     Name: Optics.EFTEMOn
     Value: '"false"'
     SchemaPath: Image.ElectronOpticsSettings.EFTEMOn
     Source: SourceFile:0
-  - ID: Property:55
+  - ID: Property:56
     Name: Optics.ObjectiveLensMode
     Value: '"HM"'
     SchemaPath: Image.ElectronOpticsSettings.ObjectiveLensMode
     Source: SourceFile:0
-  - ID: Property:56
+  - ID: Property:57
     Name: Optics.IlluminationMode
     Value: '"None"'
     SchemaPath: Image.ElectronOpticsSettings.IlluminationMode
     Source: SourceFile:0
-  - ID: Property:57
+  - ID: Property:58
     Name: Optics.ProbeMode
     Value: '"1"'
     SchemaPath: Image.ElectronOpticsSettings.ProbeMode
     Source: SourceFile:0
-  - ID: Property:58
+  - ID: Property:59
     Name: Optics.CameraLength
     Value: '"0.20499999999999999"'
     SchemaPath: Image.ElectronOpticsSettings.CameraLength.Value
     Source: SourceFile:0
-  - ID: Property:59
+  - ID: Property:60
     Name: Optics.FullScanFieldOfView.x
     Value: '"5.1199999999999984e-06"'
     SchemaPath: Image.ScanSettings.FieldOfView.X.Value
     Source: SourceFile:0
-  - ID: Property:60
+  - ID: Property:61
     Name: Optics.FullScanFieldOfView.y
     Value: '"5.1199999999999984e-06"'
     SchemaPath: Image.ScanSettings.FieldOfView.Y.Value
     Source: SourceFile:0
-  - ID: Property:61
+  - ID: Property:62
     Name: Scan.ScanArea.left
     Value: '"0"'
     SchemaPath: Image.ScanSettings.ScanArea.left
     Source: SourceFile:0
-  - ID: Property:62
+  - ID: Property:63
     Name: Scan.ScanArea.top
     Value: '"0"'
     SchemaPath: Image.ScanSettings.ScanArea.top
     Source: SourceFile:0
-  - ID: Property:63
+  - ID: Property:64
     Name: Scan.ScanArea.right
     Value: '"1"'
     SchemaPath: Image.ScanSettings.ScanArea.right
     Source: SourceFile:0
-  - ID: Property:64
+  - ID: Property:65
     Name: Scan.ScanArea.bottom
     Value: '"1"'
     SchemaPath: Image.ScanSettings.ScanArea.bottom
     Source: SourceFile:0
-  - ID: Property:65
+  - ID: Property:66
     Name: Scan.MainsLockOn
     Value: '"false"'
     SchemaPath: Image.ScanSettings.MainsLockOn
     Source: SourceFile:0
-  - ID: Property:66
+  - ID: Property:67
     Name: Scan.LineTime
     Value: '"0.20730000000000001"'
     SchemaPath: Image.ScanSettings.LineTime.Value
     Source: SourceFile:0
-  - ID: Property:67
+  - ID: Property:68
     Name: Scan.LineIntegrationCount
     Value: '"1"'
     SchemaPath: Image.ScanSettings.LineIntegrationCount
     Source: SourceFile:0
-  - ID: Property:68
+  - ID: Property:69
     Name: Scan.LineInterlacing
     Value: '"1"'
     SchemaPath: Image.ScanSettings.LineInterlacing
     Source: SourceFile:0
-  - ID: Property:69
+  - ID: Property:70
     Name: Scan.FrameTime
     Value: '"424.55040000000002"'
     SchemaPath: Image.ScanSettings.FrameTime.Value
     Source: SourceFile:0
-  - ID: Property:70
+  - ID: Property:71
     Name: Scan.ScanRotation
     Value: '"-3.1415926535897931"'
     SchemaPath: Image.ScanSettings.Rotation.Value
     Source: SourceFile:0
-  - ID: Property:71
+  - ID: Property:72
     Name: BinaryResult.AcquisitionUnit
     Value: '""'
     SchemaPath: Image.BinaryResult.AcquisitionUnit
     Source: SourceFile:0
-  - ID: Property:72
+  - ID: Property:73
     Name: BinaryResult.CompositionType
     Value: '""'
     SchemaPath: Image.BinaryResult.CompositionType
     Source: SourceFile:0
-  - ID: Property:73
+  - ID: Property:74
     Name: BinaryResult.Detector
     Value: '"DualX"'
     SchemaPath: Image.BinaryResult.Detector
     Source: SourceFile:0
-  - ID: Property:74
+  - ID: Property:75
     Name: BinaryResult.Offset.x
     Value: '"-2.5599999999999992e-06"'
     SchemaPath: Image.BinaryResult.Offset.x
     Source: SourceFile:0
-  - ID: Property:75
+  - ID: Property:76
     Name: BinaryResult.Offset.y
     Value: '"-2.5599999999999992e-06"'
     SchemaPath: Image.BinaryResult.Offset.y
     Source: SourceFile:0
-  - ID: Property:76
+  - ID: Property:77
     Name: BinaryResult.Encoding
     Value: '""'
     SchemaPath: Image.BinaryResult.Encoding
@@ -450,11 +455,6 @@ Image:
     Value: '"0.0001"'
     SchemaPath: Plane.PixelDwellTime
     Source: SourceFile:0
-  ElectronBeamSettings:
-    Type: ''
-    AccelerationVoltage: {}
-    ConvergenceAngle: {}
-    Defocus: {}
   ElectronOpticsSettings:
     GunLensSetting: '4'
     OperatingMode: '2'
@@ -468,6 +468,7 @@ Image:
     LineTime: {}
     FrameTime: {}
     Rotation: {}
+  AcquisitionDate: '2022-03-09T17:43:42+00:00'
   Pixels:
     PhysicalSizeXUnit: m
     PhysicalSizeYUnit: m
@@ -1032,7 +1033,11 @@ Instrument:
   GenericDetector:
   - {}
 CustomProperties:
-- ID: Property:77
+- ID: Property:3
+  Name: Acquisition.AcquisitionStartDatetime.DateTime
+  Value: '"1646847822"'
+  Source: SourceFile:0
+- ID: Property:4
   Name: Acquisition.AcquisitionDatetime.DateTime
   Value: '"0"'
   Source: SourceFile:0

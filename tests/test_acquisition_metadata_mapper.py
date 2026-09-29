@@ -346,6 +346,18 @@ class LosslessMappingTest(unittest.TestCase):
         self.assertEqual(converted['Pixels']['Channel'], [{'Wavelength': 424}, {'Wavelength': 488}])
         self.assertEqual(converted['Data'][0], {'Lambda': 424.12})
 
+    def test_unix_timestamp_becomes_an_iso_datetime_and_zero_is_unset(self):
+        combinations = [{'target': 'Image.AcquisitionDate', 'sources': ['Acquired.DateTime'], 'format': 'unix'},
+                        {'target': 'Image.AcquisitionDate', 'sources': ['Started.DateTime'], 'format': 'unix'}]
+        mapper = self.mapper_for({}, combinations)
+
+        converted = mapper.convert_metadata({'Acquired': {'DateTime': '0'}, 'Started': {'DateTime': '1683922216'}})
+
+        # "0" is TALOS's unset time: the second timestamp fills the date, and both originals stay
+        self.assertEqual(converted['Image'], {'AcquisitionDate': '2023-05-12T20:10:16+00:00'})
+        self.assertEqual(converted['SourceMap']['Image.AcquisitionDate'], ['Started.DateTime'])
+        self.assertEqual((converted['Acquired'], converted['Started']), ({'DateTime': '0'}, {'DateTime': '1683922216'}))
+
     def test_wrapped_value_colliding_with_a_top_level_one_is_kept(self):
         mapper = self.mapper_for({'DateTime': 'Image.AcquisitionDate', 'datetime': 'Image.AcquisitionDate'})
 

@@ -14,7 +14,7 @@ field names that match the schema, just without a vendor-specific prefix.
 import json
 import os.path
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from fnmatch import fnmatchcase
 
 from ModelPaths import DEFAULT_MODEL_FILE, ModelPaths
@@ -503,7 +503,7 @@ class AcquisitionMetadataMapper:
         """Add each combinations.json value whose parts the source holds, e.g. Date + Time + Time Zone.
 
         The parts, looked up by source path, are joined with spaces, parsed
-        with the entry's strptime format and written as ISO 8601 at its
+        with the entry's strptime format (or "unix", seconds since 1970) and written as ISO 8601 at its
         target - only where that is free, and only when every part is there
         and parses. The parts themselves stay where the mapping put them;
         the combined value's SourceMap entry is the list of its parts.
@@ -571,7 +571,12 @@ def value_at_path(metadata, dotted_path):
 
 
 def parse_combination(text, date_format):
-    """`text` parsed with the strptime `date_format`, as ISO 8601, or None if it does not parse."""
+    """`text` parsed with the strptime `date_format`, as ISO 8601, or None if it does not parse. The format
+    "unix" reads seconds since 1970 (UTC); 0 is taken as unset (TALOS writes "0" for a time it lacks), not
+    as 1970-01-01."""
+    if date_format == 'unix':
+        seconds = int(text) if text.strip().isdigit() else 0
+        return datetime.fromtimestamp(seconds, tz=timezone.utc).isoformat() if seconds > 0 else None
     try:
         return datetime.strptime(text, date_format).isoformat()
     except ValueError:

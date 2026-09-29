@@ -86,8 +86,10 @@ metaseed's containment order (each after every entity nesting it).
 
 ### Values that stay Properties by design
 
-- TALOS: AcquisitionDatetime "0" (a placeholder) and AcquisitionStartDatetime "1683922216" (a Unix timestamp)
-  are no datetime; a conversion rule could type the timestamp.
+- TALOS: AcquisitionDatetime and AcquisitionStartDatetime are Unix timestamps; combinations.json converts them
+  (format "unix", seconds since 1970, UTC) into Image.AcquisitionDate, AcquisitionDatetime first. A "0" is an
+  unset time, not converted, so TALOS's date comes from AcquisitionStartDatetime (2023-05-12T20:10:16+00:00,
+  2022-03-09T17:43:42+00:00); the raw timestamps stay Properties, as every combination's parts do.
 - ome-tiff: OME's ObjectiveSettings Medium "Oil" fits no LiMi ImmersionLiquidType (Mineral Oil, Silicone
   Oil, ...), and is not guessed.
 - Where a source states a value twice (ome-tiff's Huygens annotation and its own OME fields: pixel sizes,
